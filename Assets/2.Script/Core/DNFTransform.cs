@@ -6,11 +6,6 @@ public class DNFTransform : MonoBehaviour
 {
     #region Variables
 
-    public static readonly int xRate = 16;
-    public static readonly int yRate = 9;
-    private static readonly float convRate = (float)yRate / xRate;
-    private static readonly float invConvRate = (float)xRate / yRate;
-
     [Header("Transform objects for Character Transform")]
     private Transform posTransform = null;
     private Transform yPosTransform = null;
@@ -47,10 +42,10 @@ public class DNFTransform : MonoBehaviour
         set
         {
             Vector3 pos = posTransform.position;
-            pos.y = value * convRate;
+            pos.y = value * GlobalDefine.ConvRate;
             posTransform.position = pos;
         }
-        get => posTransform.position.y * invConvRate;
+        get => posTransform.position.y * GlobalDefine.InvConvRate;
     }
 
     public Vector3 Position
