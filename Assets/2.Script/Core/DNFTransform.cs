@@ -65,13 +65,13 @@ public class DNFTransform : MonoBehaviour
 
     public bool HasYObj => yPosTransform != null;
 
-    public Vector3 LocalScale 
+    public float LocalScale
     {
-        set 
+        set
         {
-            scaleTransform.localScale = value; 
-        } 
-        get => scaleTransform.localScale;
+            scaleTransform.localScale = new Vector3(value, value, 1f);
+        }
+        get => scaleTransform.localScale.x;
     }
 
     #endregion Properties
