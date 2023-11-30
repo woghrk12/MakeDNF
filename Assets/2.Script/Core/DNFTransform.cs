@@ -30,9 +30,9 @@ public class DNFTransform : MonoBehaviour
     {
         set
         {
-            Vector3 pos = yPosTransform.position;
+            Vector3 pos = yPosTransform.localPosition;
             pos.y = value;
-            yPosTransform.position = pos;
+            yPosTransform.localPosition = pos;
         }
         get => yPosTransform.localPosition.y;
     }
