@@ -5,7 +5,7 @@ using UnityEditor;
 public class Hitbox_Editor : Editor
 {
     public enum ECoordinateMode { XZ, XY }
-    public enum EHitboxEditMode { NONE, SIZE, OFFSET, PIVOT }
+    public enum EHitboxEditMode { NONE = -1, SIZE, OFFSET, PIVOT }
 
     #region Variables
 
@@ -15,6 +15,11 @@ public class Hitbox_Editor : Editor
     [Header("The variables for switching the edit mode")]
     private ECoordinateMode coordMode = ECoordinateMode.XZ;
     private EHitboxEditMode editMode = EHitboxEditMode.NONE;
+
+    [Header("Transform variables for calculating the hitbox position")]
+    private Transform posTransform = null;
+    private Transform yPosTransform = null;
+    private Transform scaleTransform = null;
 
     [Header("The variables for temporary info of the hitbox")]
     private Vector3 position = Vector3.zero;
@@ -35,12 +40,9 @@ public class Hitbox_Editor : Editor
         offset = hitbox.Offset;
         pivot = hitbox.Pivot;
 
-        Transform posTransform = hitbox.transform;
-        Transform yPosTransform = posTransform.GetChild(0);
-        Transform scaleTransform = yPosTransform.GetChild(0);
-
-        position = new Vector3(posTransform.position.x, yPosTransform.localPosition.y, posTransform.position.y * GlobalDefine.InvConvRate);
-        localScale = scaleTransform.localScale.x;
+        posTransform = hitbox.transform;
+        yPosTransform = posTransform.GetChild(0);
+        scaleTransform = yPosTransform.GetChild(0);
 
         if (hitbox.HitboxType == EHitboxType.NONE)
         {
@@ -54,8 +56,19 @@ public class Hitbox_Editor : Editor
 
         if (hitbox.HitboxType == EHitboxType.NONE) return;
 
+        position = new Vector3(posTransform.position.x, yPosTransform.localPosition.y, posTransform.position.y * GlobalDefine.InvConvRate);
+        localScale = scaleTransform.localScale.x;
+
+        DrawHitbox();
+
+        if (Application.isPlaying)
+        {
+            editMode = EHitboxEditMode.NONE;
+            return;
+        }
+
         Event curEvent = Event.current;
-        if (!Application.isPlaying && curEvent.type == EventType.KeyDown)
+        if (curEvent.type == EventType.KeyDown)
         {
             if (curEvent.keyCode == KeyCode.F1) editMode = EHitboxEditMode.NONE;
             if (curEvent.keyCode == KeyCode.F2) editMode = EHitboxEditMode.SIZE;
@@ -66,8 +79,6 @@ public class Hitbox_Editor : Editor
                 coordMode = coordMode == ECoordinateMode.XZ ? ECoordinateMode.XY : ECoordinateMode.XZ;
         }
 
-        DrawHitbox();
-        
         switch (editMode)
         {
             case EHitboxEditMode.SIZE:
@@ -157,8 +168,8 @@ public class Hitbox_Editor : Editor
             // Show the circle-shaped hitbox by using x, z axis of DNF transform
             float angle = Mathf.Acos(GlobalDefine.ConvRate) * Mathf.Rad2Deg;
             Handles.DrawWireArc(new Vector3(center.x, center.z * GlobalDefine.ConvRate, 0f),
-                Quaternion.AngleAxis(angle, hitbox.transform.right) * hitbox.transform.forward,
-                hitbox.transform.right,
+                Quaternion.AngleAxis(angle, Vector3.right) * Vector3.forward,
+                Vector3.right,
                 360f,
                 wireSize.x * 0.5f);
         }
