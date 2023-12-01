@@ -9,11 +9,14 @@ public class Hitbox_Editor : Editor
 
     #region Variables
 
+    [Header("The variable of target component")]
     private Hitbox hitbox = null;
 
+    [Header("The variables for switching the edit mode")]
     private ECoordinateMode coordMode = ECoordinateMode.XZ;
     private EHitboxEditMode editMode = EHitboxEditMode.NONE;
 
+    [Header("The variables for temporary info of the hitbox")]
     private Vector3 position = Vector3.zero;
     private Vector3 size = Vector3.zero;
     private Vector3 offset = Vector3.zero;
@@ -129,6 +132,11 @@ public class Hitbox_Editor : Editor
 
     #region Methods
 
+    /// <summary>
+    /// Draw the hitbox colliders by using the hitbox info.
+    /// The collider of XZ coordinates will appear red, and the collider of XY coordinates will appear green.
+    /// The shape of the collider of XZ coordinates is a circle, it only depends on the X-coordinate.
+    /// </summary>
     private void DrawHitbox()
     {
         Vector3 minHitboxPos = position + offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
@@ -166,6 +174,12 @@ public class Hitbox_Editor : Editor
         #endregion XY Coordinates
     }
 
+    /// <summary>
+    /// Draw the controllers of the hitbox size.
+    /// The direction of the arrow changes depending on the pivot. 
+    /// The criterion for the arrow changing direction is 0.5f.
+    /// The minimum value for the size is 0f.
+    /// </summary>
     private void DrawSizeHandler()
     {
         Vector3 minHitboxPos = position + offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
@@ -225,6 +239,10 @@ public class Hitbox_Editor : Editor
         }
     }
 
+    /// <summary>
+    /// Draw the controllers of the hitbox offset.
+    /// Determine how far apart the position of the object is from the position of the hitbox.
+    /// </summary>
     private void DrawOffsetHandler()
     {
         Vector3 changedPos = position + offset;
@@ -247,6 +265,11 @@ public class Hitbox_Editor : Editor
         }
     }
 
+    /// <summary>
+    /// Draw the controllers of the hitbox pivot.
+    /// Scale the hitbox with the pivot as the reference.
+    /// The value of pivot is between 0f and 1f.
+    /// </summary>
     private void DrawPivotHandler()
     {
         Vector3 minHitboxPos = position + offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
