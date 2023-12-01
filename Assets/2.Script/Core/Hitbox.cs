@@ -24,8 +24,6 @@ public class Hitbox : MonoBehaviour
     #region Properties
 
     public EHitboxType HitboxType => hitboxType;
-    public Vector3 MaxHitboxPos => maxHitboxPos;
-    public Vector3 MinHitboxPos => minHitboxPos;
 
     #endregion Properties
 
