@@ -80,9 +80,9 @@ public class DNFTransform : MonoBehaviour
 
     private void Awake()
     {
-        posTransform = GetComponent<Transform>();
-        yPosTransform = posTransform.GetComponentInChildren<Transform>();
-        scaleTransform = yPosTransform.GetComponentInChildren<Transform>();
+        posTransform = transform;
+        yPosTransform = posTransform.GetChild(0);
+        scaleTransform = yPosTransform.GetChild(0);
     }
 
     #endregion Unity Events
