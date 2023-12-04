@@ -21,16 +21,19 @@ public abstract class PlayerButton : MonoBehaviour
 
     #region Unity Events
 
-    private void Update()
+    protected virtual void Update()
     {
-        SetButtonState();
+        if (isPressed)
+        {
+            buttonState = onPressed ? EButtonState.PRESSED : EButtonState.DOWN;
+            onPressed = true;
+        }
+        else
+        {
+            buttonState = onPressed ? EButtonState.UP : EButtonState.IDLE;
+            onPressed = false;
+        }
     }
 
     #endregion Unity Events
-
-    #region Abstract Methods
-
-    public abstract void SetButtonState();
-
-    #endregion Abstract Methods
 }

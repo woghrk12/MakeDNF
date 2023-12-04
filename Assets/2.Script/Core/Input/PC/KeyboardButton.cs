@@ -8,7 +8,20 @@ public class KeyboardButton : PlayerButton
 
     #endregion Variables
 
-    public override void SetButtonState()
+    #region Unity Events
+
+    protected override void Update()
+    {
+        SetButtonState();
+
+        base.Update();
+    }
+
+    #endregion Unity Events
+
+    #region Methods
+
+    private void SetButtonState()
     {
         if (Input.GetKeyDown(keyCode))
         {
@@ -18,17 +31,7 @@ public class KeyboardButton : PlayerButton
         {
             isPressed = false;
         }
-
-        if (isPressed)
-        {
-            buttonState = onPressed ? EButtonState.PRESSED : EButtonState.DOWN;
-            onPressed = true;
-        }
-        else
-        {
-            buttonState = onPressed ? EButtonState.UP : EButtonState.IDLE;
-            onPressed = false;
-        }
-        Debug.Log(buttonState);
     }
+
+    #endregion Methods
 }
