@@ -6,15 +6,34 @@ public class DNFTransform : MonoBehaviour
 {
     #region Variables
 
+    /// <summary>
+    /// Transform component used to determine the position in the XZ planes.
+    /// Movement along the X-axis is determined by the transform's x value.
+    /// Movement along the Z-axis is determined by the transform's y value with multiplying a certain ratio.
+    /// </summary>
     [Header("Transform objects for Character Transform")]
     private Transform posTransform = null;
+
+    /// <summary>
+    /// Transform component used to determine the position in the Y axis.
+    /// yPosTransform exists as a child object of the posTransform.
+    /// </summary>
     private Transform yPosTransform = null;
+    
+    /// <summary>
+    /// Transform component used to determine the scale value of the object.
+    /// scaleTransform exists as a child object of the yPosTransform.
+    /// </summary>
     private Transform scaleTransform = null;
 
     #endregion Variables
 
     #region Properties
 
+    /// <summary>
+    /// X component of the DNFTransform.
+    /// It changes in proportion to the x-value of the position in the posTransform.
+    /// </summary>
     public float X
     {
         set
@@ -26,6 +45,10 @@ public class DNFTransform : MonoBehaviour
         get => posTransform.position.x;
     }
 
+    /// <summary>
+    /// Y component of the DNFTransform.
+    /// It changes in proportion to the y-value of the local position in the yPosTransform.
+    /// </summary>
     public float Y
     {
         set
@@ -37,6 +60,11 @@ public class DNFTransform : MonoBehaviour
         get => yPosTransform.localPosition.y;
     }
 
+    /// <summary>
+    /// Z component of the DNFTransform.
+    /// It changes in proportion to the screen ratio for the y-value of the position in the posTransform.
+    /// Refer to the GlobalDefine class. (ConvRate, InvConvRate)
+    /// </summary>
     public float Z
     {
         set
@@ -48,6 +76,10 @@ public class DNFTransform : MonoBehaviour
         get => posTransform.position.y * GlobalDefine.InvConvRate;
     }
 
+    /// <summary>
+    /// The world position of DNFTransform.
+    /// If yPosTransform do not exists, the y-value of DNFTransform will be fixed at 0.
+    /// </summary>
     public Vector3 Position
     {
         set
@@ -63,8 +95,15 @@ public class DNFTransform : MonoBehaviour
         get => new Vector3(X, HasYObj ? Y : 0f, Z);
     }
 
+    /// <summary>
+    /// Return whether yPosTransform exists or not.
+    /// </summary>
     public bool HasYObj => yPosTransform != null;
 
+    /// <summary>
+    /// Scale value of the object.
+    /// Modify the x and y values of the localScale in the scaleTransform.
+    /// </summary>
     public float LocalScale
     {
         set
