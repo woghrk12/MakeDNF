@@ -4,28 +4,24 @@ using UnityEngine;
 public class CharacterMove : MonoBehaviour
 {
     private DNFTransform dnfTransform = null;
+    private PlayerJoystick joystick = null;
 
     [SerializeField] private float xMoveSpeed = 1f;
     [SerializeField] private float zMoveSpeed = 1f;
-    private Vector3 moveDirection = Vector3.zero;
 
     private void Awake()
     {
         dnfTransform = GetComponent<DNFTransform>();
     }
 
-    private void Update()
+    private void Start()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
-        moveDirection.x = h;
-        moveDirection.z = v;
+        joystick = GameManager.Input.PlayerJoystick;
     }
 
     private void FixedUpdate()
     {
-        Move(moveDirection);
+        Move(joystick.MoveDirection);
     }
 
     public void Move(Vector3 moveDir)
