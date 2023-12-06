@@ -9,13 +9,13 @@ public class ResourceManager
         return Resources.Load(path);
     }
 
-    public GameObject Instantiate(string path)
+    public GameObject Instantiate(string path, Transform parent = null)
     {
         Object source = Load(path);
 
         if (source == null) return null;
 
-        return GameObject.Instantiate(source) as GameObject;
+        return GameObject.Instantiate(source, parent) as GameObject;
     }
 
     #endregion Methods
