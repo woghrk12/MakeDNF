@@ -8,7 +8,14 @@ public abstract class PlayerButton : MonoBehaviour
 
     [SerializeField] private EKeyName keyName = EKeyName.NONE;
 
+    /// <summary>
+    /// Whether the button is pressed during this frame.
+    /// </summary>
     protected bool isPressed = false;
+    
+    /// <summary>
+    /// Whether the button is in a pressed state.
+    /// </summary>
     protected bool onPressed = false;
 
     protected EButtonState buttonState = EButtonState.IDLE;
@@ -17,7 +24,11 @@ public abstract class PlayerButton : MonoBehaviour
 
     #region Properties
 
+    /// <summary>
+    /// Indicate the function interacting with the button.
+    /// </summary>
     public EKeyName KeyName => keyName;
+
     public EButtonState ButtonState => buttonState;
 
     #endregion Properties
