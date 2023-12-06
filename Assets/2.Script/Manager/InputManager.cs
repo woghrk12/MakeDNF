@@ -36,8 +36,10 @@ public class InputManager
 #endif
             , GameManager.Instance.transform).transform;
 
+        // Initialize the player joystick
         playerJoystick = inputSystem.GetChild(0).GetComponent<PlayerJoystick>();
         
+        // Initialize the player buttons
         int childCount = inputSystem.childCount;
         for (int i = 1; i < childCount; i++)
         {
