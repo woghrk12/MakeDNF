@@ -4,7 +4,7 @@ public class KeyboardButton : PlayerButton
 {
     #region Variables
 
-    private KeyCode keyCode = KeyCode.None;
+    [SerializeField] private KeyCode keyCode = KeyCode.None;
 
     #endregion Variables
 

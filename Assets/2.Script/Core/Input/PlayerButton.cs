@@ -5,16 +5,19 @@ public abstract class PlayerButton : MonoBehaviour
     public enum EButtonState { IDLE, DOWN, PRESSED, UP }
 
     #region Variables
-    
+
+    [SerializeField] private EKeyName keyName = EKeyName.NONE;
+
     protected bool isPressed = false;
     protected bool onPressed = false;
 
     protected EButtonState buttonState = EButtonState.IDLE;
-
+    
     #endregion Variables
 
     #region Properties
 
+    public EKeyName KeyName => keyName;
     public EButtonState ButtonState => buttonState;
 
     #endregion Properties
