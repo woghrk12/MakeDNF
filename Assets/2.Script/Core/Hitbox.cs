@@ -122,8 +122,6 @@ public class Hitbox : MonoBehaviour
     /// Check for collisions between box-shaped hitbox objects in the XZ coordinate.
     /// Compare the maximum and minimum values along each axis.
     /// </summary>
-    /// <param name="box1">One of the box-shaped hitbox for checking collisions</param>
-    /// <param name="box2">One of the box-shaped hitbox for checking collisions</param>
     /// <returns>true if a collision occurs in XZ coordinate</returns>
     private bool CheckBB(Hitbox box1, Hitbox box2)
     {
@@ -144,8 +142,6 @@ public class Hitbox : MonoBehaviour
     /// Check for collisions between circle-shaped hitbox objects.
     /// Compare the distance between the centers of each circle with the sum of their radius.
     /// </summary>
-    /// <param name="circle1">One of the circle-shaped hitbox for checking collisions</param>
-    /// <param name="circle2">One of the circle-shaped hitbox for checking collisions</param>
     /// <returns>true if a collision occurs in XZ coordinate</returns>
     private bool CheckCC(Hitbox circle1, Hitbox circle2)
     {
@@ -171,8 +167,6 @@ public class Hitbox : MonoBehaviour
     /// Check for collisions between the box-shaped hitbox and the circle-shaped hitbox.
     /// Divide the space around the box into 9 regions and determine based on the position of the circle.
     /// </summary>
-    /// <param name="box">the box-shaped hitbox for checking collisions</param>
-    /// <param name="circle">the circle-shaped hitbox for checking collisions</param>
     /// <returns>true if a collision occurs in XZ coordinate</returns>
     private bool CheckBC(Hitbox box, Hitbox circle)
     {
@@ -224,8 +218,6 @@ public class Hitbox : MonoBehaviour
     /// Check for collisions between hitbox objects in the Y coordinate.
     /// Compare the range of maximum and minimum y-values.
     /// </summary>
-    /// <param name="hitbox1">One of the hitbox objects for checking the collisions</param>
-    /// <param name="hitbox2">One of the hitbox objects for checking the collisions</param>
     /// <returns>true if a collision occurs in Y coordinate</returns>
     private bool CheckYCollision(Hitbox hitbox1, Hitbox hitbox2)
     {
