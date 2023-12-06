@@ -5,14 +5,23 @@ public class InputManager
 {
     #region Variables
 
-    public PlayerJoystick playerJoystick = null;
-    public Dictionary<EKeyName, PlayerButton> playerButtonDictionary = new();
+    private PlayerJoystick playerJoystick = null;
+    private Dictionary<EKeyName, PlayerButton> playerButtonDictionary = new();
 
     #endregion Variables
 
     #region Properties
 
+    /// <summary>
+    /// Joystick class handling user's directional input.
+    /// The returned direction vector is based on the DNFTransform.
+    /// </summary>
     public PlayerJoystick PlayerJoystick => playerJoystick;
+    
+    /// <summary>
+    /// The dictionary containing player buttons. 
+    /// Key : the role of the button. (Base Attack, Jump, etc)
+    /// </summary>
     public Dictionary<EKeyName, PlayerButton> PlayerButtonDictionary => playerButtonDictionary;
 
     #endregion Properties
