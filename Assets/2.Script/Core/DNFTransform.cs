@@ -8,21 +8,17 @@ public class DNFTransform : MonoBehaviour
 
     /// <summary>
     /// Transform component used to determine the position in the XZ planes.
-    /// Movement along the X-axis is determined by the transform's x value.
-    /// Movement along the Z-axis is determined by the transform's y value with multiplying a certain ratio.
     /// </summary>
     [Header("Transform objects for Character Transform")]
     private Transform posTransform = null;
 
     /// <summary>
     /// Transform component used to determine the position in the Y axis.
-    /// yPosTransform exists as a child object of the posTransform.
     /// </summary>
     private Transform yPosTransform = null;
     
     /// <summary>
     /// Transform component used to determine the scale value of the object.
-    /// scaleTransform exists as a child object of the yPosTransform.
     /// </summary>
     private Transform scaleTransform = null;
 
