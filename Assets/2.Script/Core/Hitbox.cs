@@ -12,29 +12,11 @@ public class Hitbox : MonoBehaviour
     /// </summary>
     private DNFTransform dnfTransform = null;
 
-    /// <summary>
-    /// The shape of the hitbox on the XZ plane.
-    /// The shape of the hitbox is either box-shaped or circle-shaped.
-    /// </summary>
-    [SerializeField] private EHitboxType hitboxType = EHitboxType.NONE;
-
-    /// <summary>
-    /// The component determining the size of the hitbox.
-    /// Each component of the size is a non-negative value.
-    /// </summary>
     [Header("Variables for the hitbox shape")]
-    [HideInInspector] public Vector3 Size = new Vector3(1f, 1f, 1f);
-    
-    /// <summary>
-    /// The component determining how far the hitbox is from the object's position.
-    /// </summary>
-    [HideInInspector] public Vector3 Offset = Vector3.zero;
-    
-    /// <summary>
-    /// The component determining the ratio of the center point of the hitbox.
-    /// Each component of the pivot is between 0 and 1.
-    /// </summary>
-    [HideInInspector] public Vector3 Pivot = Vector3.zero;
+    [SerializeField] private EHitboxType hitboxType = EHitboxType.NONE;
+    private Vector3 size = new Vector3(1f, 1f, 1f);
+    private Vector3 offset = Vector3.zero;
+    private Vector3 pivot = Vector3.zero;
 
     /// <summary>
     /// The maximum values for each component of the hitbox.
@@ -57,6 +39,53 @@ public class Hitbox : MonoBehaviour
     /// The shape of the hitbox is either box-shaped or circle-shaped.
     /// </summary>
     public EHitboxType HitboxType => hitboxType;
+
+    /// <summary>
+    /// The component determining the size of the hitbox.
+    /// Each component of the size is a non-negative value.
+    /// </summary>
+    public Vector3 Size
+    {
+        set
+        {
+            Vector3 input = value;
+
+            if (input.x < 0f) input.x = 0f;
+            if (input.y < 0f) input.y = 0f;
+            if (input.z < 0f) input.z = 0f;
+
+            size = input;
+        }
+        get => size;
+    }
+
+    /// <summary>
+    /// The component determining how far the hitbox is from the object's position.
+    /// </summary>
+    public Vector3 Offset
+    {
+        set { offset = value; }
+        get => offset;
+    }
+
+    /// <summary>
+    /// The component determining the ratio of the center point of the hitbox.
+    /// Each component of the pivot will be clamped between 0 and 1.
+    /// </summary>
+    public Vector3 Pivot
+    {
+        set
+        {
+            Vector3 input = value;
+
+            input.x = Mathf.Clamp01(input.x);
+            input.y = Mathf.Clamp01(input.y);
+            input.z = Mathf.Clamp01(input.z);
+
+            pivot = input;
+        }
+        get => pivot;
+    }
 
     #endregion Properties
 
@@ -93,10 +122,8 @@ public class Hitbox : MonoBehaviour
     #region AABB Collision
 
     /// <summary>
-    /// Check for collisions with the hitbox object passed as a parameter.
     /// Call the appropriate collision detection function based on the shapes of the two hitboxes.
     /// </summary>
-    /// <param name="other">The target hitbox for checking collision</param>
     /// <returns>true if a collision occurs</returns>
     public bool CheckCollision(Hitbox other)
     {
@@ -125,13 +152,11 @@ public class Hitbox : MonoBehaviour
     /// <returns>true if a collision occurs in XZ coordinate</returns>
     private bool CheckBB(Hitbox box1, Hitbox box2)
     {
-        // Cache the max and min position of each hitbox
         Vector3 fromMinHitboxPos = box1.minHitboxPos;
         Vector3 fromMaxHitboxPos = box1.maxHitboxPos;
         Vector3 toMinHitboxPos = box2.minHitboxPos;
         Vector3 toMaxHitboxPos = box2.maxHitboxPos;
 
-        // There is no collision if two boxes do not overlap
         if (fromMaxHitboxPos.x < toMinHitboxPos.x || fromMinHitboxPos.x > toMaxHitboxPos.x) return false;
         if (fromMaxHitboxPos.z < toMinHitboxPos.z || fromMinHitboxPos.z > toMaxHitboxPos.z) return false;
 
@@ -145,19 +170,16 @@ public class Hitbox : MonoBehaviour
     /// <returns>true if a collision occurs in XZ coordinate</returns>
     private bool CheckCC(Hitbox circle1, Hitbox circle2)
     {
-        // Cache the max and min position of each hitbox
         Vector3 fromMinHitboxPos = circle1.minHitboxPos;
         Vector3 fromMaxHitboxPos = circle1.maxHitboxPos;
         Vector3 toMinHitboxPos = circle2.minHitboxPos;
         Vector3 toMaxHitboxPos = circle2.maxHitboxPos;
 
-        // Calculate the elements of the circle
         Vector3 fromCenter = (fromMinHitboxPos + fromMaxHitboxPos) * 0.5f;
         float fromRadius = fromMaxHitboxPos.x - fromMinHitboxPos.x;
         Vector3 toCenter = (toMinHitboxPos + toMaxHitboxPos) * 0.5f;
         float toRadius = toMaxHitboxPos.x - toMinHitboxPos.x;
 
-        // There is no collision if the distance between the centers is greater than the sum of the radius of two circles
         if ((fromRadius + toRadius) * (fromRadius + toRadius) < (fromCenter - toCenter).sqrMagnitude) return false;
 
         return CheckYCollision(circle1, circle2);
@@ -170,26 +192,21 @@ public class Hitbox : MonoBehaviour
     /// <returns>true if a collision occurs in XZ coordinate</returns>
     private bool CheckBC(Hitbox box, Hitbox circle)
     {
-        // Cache the max and min position of each hitbox
         Vector3 boxMinHitboxPos = box.minHitboxPos;
         Vector3 boxMaxHitboxPos = box.maxHitboxPos;
         Vector3 circleMinHitboxPos = circle.minHitboxPos;
         Vector3 circleMaxHitboxPos = circle.maxHitboxPos;
 
-        // Calculate the elements of the box
         Vector3 boxCenter = (boxMinHitboxPos + boxMaxHitboxPos) * 0.5f;
         float width = boxMaxHitboxPos.x - boxMinHitboxPos.x;
         float height = boxMaxHitboxPos.z - boxMinHitboxPos.z;
 
-        // Calculate the elements of the circle 
         Vector3 circleCenter = (circleMinHitboxPos + circleMaxHitboxPos) * 0.5f;
         float radius = (circleMaxHitboxPos.x - circleMinHitboxPos.x) * 0.5f;
 
-        // Calculate in which space a circle is located with respect to box
         int rectNum = (circleCenter.x < boxMinHitboxPos.x ? 0 : (circleCenter.x > boxMaxHitboxPos.x ? 2 : 1))
             + 3 * (circleCenter.z < boxMinHitboxPos.z ? 0 : (circleCenter.z > boxMaxHitboxPos.z ? 2 : 1));
 
-        // Perform collision detection logic based on the space where the circle is located
         switch (rectNum)
         {
             case 1:
@@ -221,10 +238,8 @@ public class Hitbox : MonoBehaviour
     /// <returns>true if a collision occurs in Y coordinate</returns>
     private bool CheckYCollision(Hitbox hitbox1, Hitbox hitbox2)
     {
-        // No need to perform collision detection if either one does not have yPosTransform
         if (!hitbox1.dnfTransform.HasYObj || !hitbox2.dnfTransform.HasYObj) return true;
 
-        // There is no collision if the two ranges do not overlap
         if (hitbox1.maxHitboxPos.y < hitbox2.minHitboxPos.y || hitbox1.minHitboxPos.y > hitbox2.maxHitboxPos.y) return false;
 
         return true;
