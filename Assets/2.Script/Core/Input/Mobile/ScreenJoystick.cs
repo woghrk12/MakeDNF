@@ -33,7 +33,7 @@ public class ScreenJoystick : PlayerJoystick, IPointerDownHandler, IDragHandler,
 
     #region Override Methods
 
-    public override void SetDirection()
+    protected override void SetDirection()
     {
         moveDirection.x = inputDir.x > minValue ? 1f : (inputDir.x < -minValue ? -1f : 0f);
         moveDirection.z = inputDir.y > minValue ? 1f : (inputDir.y < -minValue ? -1f : 0f);

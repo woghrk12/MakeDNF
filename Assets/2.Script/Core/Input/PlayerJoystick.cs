@@ -25,7 +25,7 @@ public abstract class PlayerJoystick : MonoBehaviour
 
     #region Abstract Methods
 
-    public abstract void SetDirection();
+    protected abstract void SetDirection();
 
     #endregion Abstract Methods
 }
