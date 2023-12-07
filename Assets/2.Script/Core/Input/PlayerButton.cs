@@ -2,7 +2,8 @@ using UnityEngine;
 
 public abstract class PlayerButton : MonoBehaviour
 {
-    public enum EButtonState { IDLE, DOWN, PRESSED, UP }
+    public delegate void GetButtonDown();
+    public delegate void GetButtonUp();
 
     #region Variables
 
@@ -18,7 +19,9 @@ public abstract class PlayerButton : MonoBehaviour
     /// </summary>
     protected bool onPressed = false;
 
-    protected EButtonState buttonState = EButtonState.IDLE;
+    [Header("Delegates for button events")]
+    public GetButtonDown GetButtonDownDelegate = null;
+    public GetButtonUp GetButtonUpDelegate = null;
     
     #endregion Variables
 
@@ -29,8 +32,6 @@ public abstract class PlayerButton : MonoBehaviour
     /// </summary>
     public EKeyName KeyName => keyName;
 
-    public EButtonState ButtonState => buttonState;
-
     #endregion Properties
 
     #region Unity Events
@@ -39,12 +40,20 @@ public abstract class PlayerButton : MonoBehaviour
     {
         if (isPressed)
         {
-            buttonState = onPressed ? EButtonState.PRESSED : EButtonState.DOWN;
+            if (!onPressed)
+            {
+                GetButtonDownDelegate?.Invoke();
+            }
+
             onPressed = true;
         }
         else
         {
-            buttonState = onPressed ? EButtonState.UP : EButtonState.IDLE;
+            if (onPressed)
+            {
+                GetButtonUpDelegate?.Invoke();
+            }
+
             onPressed = false;
         }
     }

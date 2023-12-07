@@ -5,26 +5,21 @@ public class InputManager
 {
     #region Variables
 
-    private PlayerJoystick playerJoystick = null;
-    private Dictionary<EKeyName, PlayerButton> playerButtonDictionary = new();
-
-    #endregion Variables
-
-    #region Properties
-
     /// <summary>
     /// Joystick class handling user's directional input.
     /// The returned direction vector is based on the DNFTransform.
     /// </summary>
-    public PlayerJoystick PlayerJoystick => playerJoystick;
-    
+    private PlayerJoystick playerJoystick = null;
+
     /// <summary>
     /// The dictionary containing player buttons. 
     /// Key : the role of the button. (Base Attack, Jump, etc)
     /// </summary>
-    public Dictionary<EKeyName, PlayerButton> PlayerButtonDictionary => playerButtonDictionary;
+    private Dictionary<EKeyName, PlayerButton> playerButtonDictionary = new();
 
-    #endregion Properties
+    #endregion Variables
+
+    #region Methods
 
     public void Init()
     {
@@ -38,7 +33,7 @@ public class InputManager
 
         // Initialize the player joystick
         playerJoystick = inputSystem.GetChild(0).GetComponent<PlayerJoystick>();
-        
+
         // Initialize the player buttons
         int childCount = inputSystem.childCount;
         for (int i = 1; i < childCount; i++)
@@ -58,7 +53,20 @@ public class InputManager
                 throw new System.Exception($"Button is already exist. Previous : {playerButtonDictionary[button.KeyName].name} / New : {button.name}");
             }
 
-            playerButtonDictionary.Add(button.KeyName, button);   
+            playerButtonDictionary.Add(button.KeyName, button);
         }
     }
+
+    public void SetMovementDelegate(PlayerJoystick.MoveCharacter moveCharacter)
+    {
+        playerJoystick.MoveCharacterDelegate = moveCharacter;
+    }
+
+    public void SetButtonDelegate(EKeyName keyName, PlayerButton.GetButtonDown getButtonDown, PlayerButton.GetButtonUp getButtonUp)
+    {
+        playerButtonDictionary[keyName].GetButtonDownDelegate = getButtonDown;
+        playerButtonDictionary[keyName].GetButtonUpDelegate = getButtonUp;
+    }
+
+    #endregion Methods
 }

@@ -2,26 +2,30 @@ using UnityEngine;
 
 public abstract class PlayerJoystick : MonoBehaviour
 {
+    public delegate void MoveCharacter(Vector3 direction);
+
     #region Variables
-
-    protected Vector3 moveDirection = Vector3.zero;
-
-    #endregion Variables
-
-    #region Properties
 
     /// <summary>
     /// Direction vector in the DNFTransform.
     /// </summary>
-    public Vector3 MoveDirection => moveDirection;
+    protected Vector3 moveDirection = Vector3.zero;
 
-    #endregion Properties
+    [Header("Delegate for directional input")]
+    public MoveCharacter MoveCharacterDelegate = null;
+
+    #endregion Variables
 
     #region Unity Events
 
     private void Update()
     {
         SetDirection();
+    }
+
+    private void FixedUpdate()
+    {
+        MoveCharacterDelegate?.Invoke(moveDirection);
     }
 
     #endregion Unity Events
