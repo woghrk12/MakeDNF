@@ -12,9 +12,8 @@ public class ScreenJoystick : PlayerJoystick, IPointerDownHandler, IDragHandler,
     private float radius = 0f;
     private float invRadius = 0f;
 
-    [SerializeField] private float handleRange = 0f;
-    [SerializeField, Range(0, 1)] private float minValue = 0f;
-    [SerializeField, Range(0, 1)] private float maxValue = 0f;
+    [SerializeField, Range(0, 1)] private float minHandleRange = 0f;
+    [SerializeField, Range(0, 1)] private float maxHandleRange = 0f;
 
     #endregion Variables
 
@@ -35,8 +34,8 @@ public class ScreenJoystick : PlayerJoystick, IPointerDownHandler, IDragHandler,
 
     protected override void SetDirection()
     {
-        moveDirection.x = inputDir.x > minValue ? 1f : (inputDir.x < -minValue ? -1f : 0f);
-        moveDirection.z = inputDir.y > minValue ? 1f : (inputDir.y < -minValue ? -1f : 0f);
+        moveDirection.x = inputDir.x >= minHandleRange ? 1f : (inputDir.x <= -minHandleRange ? -1f : 0f);
+        moveDirection.z = inputDir.y >= minHandleRange ? 1f : (inputDir.y <= -minHandleRange ? -1f : 0f);
     }
 
     #endregion Override Methods
@@ -66,23 +65,28 @@ public class ScreenJoystick : PlayerJoystick, IPointerDownHandler, IDragHandler,
     private void ControlHandle(Vector2 eventPos)
     {
         inputDir = (eventPos - (Vector2)background.position) * invRadius;
-        HandleInput(inputDir.sqrMagnitude);
-        handle.anchoredPosition = radius * handleRange * inputDir;
+        inputDir = HandleInput(inputDir);
+        handle.anchoredPosition = radius * inputDir;
     }
 
-    private void HandleInput(float sqrMagnitude)
+    private Vector2 HandleInput(Vector2 inputDir)
     {
-        if (sqrMagnitude > minValue * minValue)
+        float sqrMagnitute = inputDir.sqrMagnitude;
+
+        if (sqrMagnitute > minHandleRange * minHandleRange)
         {
-            if (sqrMagnitude > maxValue * maxValue)
+            if (sqrMagnitute > maxHandleRange * maxHandleRange)
             {
-                inputDir = inputDir.normalized * maxValue;
+                inputDir = inputDir.normalized * maxHandleRange;
             }
         }
         else
         {
+            inputDir = inputDir.normalized * minHandleRange;
             moveDirection = Vector2.zero;
         }
+
+        return inputDir;
     }
 
     #endregion Methods
