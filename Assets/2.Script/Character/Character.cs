@@ -29,6 +29,8 @@ public class Character : MonoBehaviour
     private void Start()
     {
         GameManager.Input.SetMovementDelegate(characterMove.Move);
+
+        GameManager.Input.SetButtonDelegate(EKeyName.JUMP, characterMove.Jump);
     }
 
     #endregion Unity Events

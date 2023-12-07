@@ -9,7 +9,8 @@ public class CharacterMove : MonoBehaviour
     
     [SerializeField] private float xMoveSpeed = 0f;
     [SerializeField] private float zMoveSpeed = 0f;
-    
+    [SerializeField] private float jumpPower = 0f;
+
     #endregion Variables
 
     #region Methods
@@ -30,6 +31,17 @@ public class CharacterMove : MonoBehaviour
     }
 
     #endregion Move
+
+    #region Jump
+
+    public void Jump()
+    {
+        if (!dnfRigidbody.IsGround) return;
+
+        dnfRigidbody.AddForce(new Vector3(0f, jumpPower, 0f));
+    }
+
+    #endregion Jump
 
     #endregion Methods
 }

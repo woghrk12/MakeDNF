@@ -24,6 +24,15 @@ public class DNFRigidbody : MonoBehaviour
 
     #endregion Variables
 
+    #region Properties
+
+    /// <summary>
+    /// Return whether the object is currently on the ground or not.
+    /// </summary>
+    public bool IsGround => dnfTransform.Y <= 0f;
+
+    #endregion Properties
+
     #region Unity Events
 
     private void Awake()
