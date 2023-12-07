@@ -11,6 +11,7 @@ public class CharacterMove : MonoBehaviour
 
     private DNFRigidbody dnfRigidbody = null;
     
+    [Header("Scale variables for character movement")]
     [SerializeField] private float xMoveSpeed = 0f;
     [SerializeField] private float zMoveSpeed = 0f;
     [SerializeField] private float jumpPower = 0f;
@@ -26,6 +27,9 @@ public class CharacterMove : MonoBehaviour
 
     #region Properties
 
+    /// <summary>
+    /// The direction the character is facing. Return true if the character is facing left.
+    /// </summary>
     public bool IsLeft
     {
         set
@@ -40,6 +44,9 @@ public class CharacterMove : MonoBehaviour
 
     #region Methods
 
+    /// <summary>
+    /// Initialize the variables and components for character movement.
+    /// </summary>
     public void Init(DNFRigidbody dnfRigidbody)
     {
         animator = GetComponent<Animator>();
@@ -54,6 +61,11 @@ public class CharacterMove : MonoBehaviour
 
     #region Move
 
+    /// <summary>
+    /// Move the character in the given direction in the DNF coordinate system.
+    /// Perform character movement by modifying the x-value and z-value of the position of Pos Transform. 
+    /// </summary>
+    /// <param name="moveDir">The direction to move character</param>
     public void Move(Vector3 moveDir)
     {
         animator.SetBool(isWalkHash, moveDir != Vector3.zero);
@@ -73,6 +85,10 @@ public class CharacterMove : MonoBehaviour
 
     #region Jump
 
+    /// <summary>
+    /// Jump the character.
+    /// Perform character jump by modifying the y-value of the local position of Y Pos Transform.
+    /// </summary>
     public void Jump()
     {
         if (!dnfRigidbody.IsGround) return;
@@ -85,6 +101,9 @@ public class CharacterMove : MonoBehaviour
         StartCoroutine(CheckLanding());
     }
 
+    /// <summary>
+    /// Check if the character has landed on the ground.
+    /// </summary>
     private IEnumerator CheckLanding()
     {
         while (dnfRigidbody.Velocity.y > 0f)
