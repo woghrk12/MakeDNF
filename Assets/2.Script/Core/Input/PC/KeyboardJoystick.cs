@@ -10,7 +10,14 @@ public class KeyboardJoystick : PlayerJoystick
     [SerializeField] private KeyCode leftKeyCode = KeyCode.None;
     [SerializeField] private KeyCode rightKeyCode = KeyCode.None;
 
+    /// <summary>
+    /// The last input direction of horizontal movement.
+    /// </summary>
     private int lastPressedHorizontal = 0;
+    
+    /// <summary>
+    /// The last input direction of vertical movement.
+    /// </summary>
     private int lastPressedVertical = 0;
 
     #endregion Variables
