@@ -26,6 +26,7 @@ public class InputManager
         Transform inputSystem = GameManager.Resource.Instantiate(
 #if UNITY_EDITOR || UNITY_STANDALONE
             ResourcePath.KEYBOARD_INPUT_SYSTEM
+            //ResourcePath.SCREEN_INPUT_SYSTEM
 #else
             ResourcePath.SCREEN_INPUT_SYSTEM
 #endif
