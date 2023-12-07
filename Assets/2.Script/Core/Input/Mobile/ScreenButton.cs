@@ -11,9 +11,11 @@ public class ScreenButton : PlayerButton, IPointerDownHandler, IDragHandler, IPo
     private Image buttonImage = null;
     private RectTransform buttonTransform = null;
 
+    [Header("Positions for button rect")]
     private Vector2 minPos = Vector2.zero;
     private Vector2 maxPos = Vector2.zero;
 
+    [Header("Colors for button events")]
     private Color normalColor = new Color(1f, 1f, 1f, 1f);
     private Color pressedColor = new Color(0.8f, 0.8f, 0.8f, 1f);
 
@@ -39,13 +41,14 @@ public class ScreenButton : PlayerButton, IPointerDownHandler, IDragHandler, IPo
         isPressed = true;
         buttonImage.color = pressedColor;
     }
-
+    
     public void OnDrag(PointerEventData eventData)
     {
         if (!isPressed) return;
 
         Vector2 position = eventData.position;
 
+        // Out of X range of button rect
         if (position.x < minPos.x || position.x > maxPos.x)
         {
             isPressed = false;
@@ -53,6 +56,7 @@ public class ScreenButton : PlayerButton, IPointerDownHandler, IDragHandler, IPo
             return;
         }
 
+        // Out of Y range of button rect
         if (position.y < minPos.y || position.y > maxPos.y)
         {
             isPressed = false;
