@@ -62,10 +62,14 @@ public class InputManager
         playerJoystick.MoveCharacterDelegate = moveCharacter;
     }
 
-    public void SetButtonDelegate(EKeyName keyName, PlayerButton.GetButtonDown getButtonDown, PlayerButton.GetButtonUp getButtonUp)
+    public void SetButtonDelegate(EKeyName keyName, PlayerButton.GetButtonDown getButtonDown, PlayerButton.GetButtonUp getButtonUp = null)
     {
         playerButtonDictionary[keyName].GetButtonDownDelegate = getButtonDown;
-        playerButtonDictionary[keyName].GetButtonUpDelegate = getButtonUp;
+
+        if (getButtonUp != null)
+        { 
+            playerButtonDictionary[keyName].GetButtonUpDelegate = getButtonUp;
+        }
     }
 
     #endregion Methods
