@@ -28,6 +28,9 @@ public class Character : MonoBehaviour
 
     private void Start()
     {
+        // Debug
+        Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
+        
         GameManager.Input.SetMovementDelegate(characterMove.Move);
 
         GameManager.Input.SetButtonDelegate(EKeyName.JUMP, characterMove.Jump);
