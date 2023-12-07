@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class KeyboardJoystick : PlayerJoystick
 {
+    #region Variables
+
+    [Header("KeyCodes for directional input")]
     [SerializeField] private KeyCode upKeyCode = KeyCode.None;
     [SerializeField] private KeyCode downKeyCode = KeyCode.None;
     [SerializeField] private KeyCode leftKeyCode = KeyCode.None;
@@ -9,7 +12,15 @@ public class KeyboardJoystick : PlayerJoystick
 
     private int lastPressedHorizontal = 0;
     private int lastPressedVertical = 0;
-    
+
+    #endregion Variables
+
+    #region Override Methods
+
+    /// <summary>
+    /// Replace the user's directional input with the DNFTransform as the direction. 
+    /// Move in the direction of the last pressed keyboard input.
+    /// </summary>
     protected override void SetDirection()
     {
         bool isLeft = Input.GetKey(leftKeyCode);
@@ -17,6 +28,7 @@ public class KeyboardJoystick : PlayerJoystick
         bool isUp = Input.GetKey(upKeyCode);
         bool isDown = Input.GetKey(downKeyCode);
 
+        // Horizontal movement
         if (isLeft && isRight)
         {
             moveDirection.x = lastPressedHorizontal * -1;
@@ -37,6 +49,7 @@ public class KeyboardJoystick : PlayerJoystick
             lastPressedHorizontal = 0;
         }
 
+        // Vertical movement
         if (isUp && isDown)
         {
             moveDirection.z = lastPressedVertical * -1;
@@ -57,4 +70,6 @@ public class KeyboardJoystick : PlayerJoystick
             lastPressedVertical = 0;
         }
     }
+
+    #endregion Override Methods
 }
