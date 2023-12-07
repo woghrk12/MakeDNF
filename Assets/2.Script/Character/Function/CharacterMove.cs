@@ -3,19 +3,20 @@ using UnityEngine;
 [RequireComponent(typeof(DNFTransform))]
 public class CharacterMove : MonoBehaviour
 {
+    #region Variables
+
     private DNFTransform dnfTransform = null;
 
     [SerializeField] private float xMoveSpeed = 1f;
     [SerializeField] private float zMoveSpeed = 1f;
 
-    private void Awake()
-    {
-        dnfTransform = GetComponent<DNFTransform>();
-    }
+    #endregion Variables
 
-    private void Start()
+    #region Methods
+
+    public void Init(DNFTransform dnfTransform)
     {
-        GameManager.Input.SetMovementDelegate(Move);
+        this.dnfTransform = dnfTransform;
     }
 
     public void Move(Vector3 moveDir)
@@ -25,4 +26,6 @@ public class CharacterMove : MonoBehaviour
 
         dnfTransform.Position += moveDir;
     }
+
+    #endregion Methods
 }
