@@ -5,6 +5,7 @@ public class ScreenJoystick : PlayerJoystick, IPointerDownHandler, IDragHandler,
 {
     #region Variables
 
+    [Header("Rect Transform for calculating the directional input")]
     private RectTransform background = null;
     private RectTransform handle = null;
 
@@ -32,6 +33,10 @@ public class ScreenJoystick : PlayerJoystick, IPointerDownHandler, IDragHandler,
 
     #region Override Methods
 
+    /// <summary>
+    /// Replace the user's directional input with the DNFTransform as the direction. 
+    /// Move in the direction in which the joystick handler moved.
+    /// </summary>
     protected override void SetDirection()
     {
         moveDirection.x = inputDir.x >= minHandleRange ? 1f : (inputDir.x <= -minHandleRange ? -1f : 0f);
@@ -62,6 +67,10 @@ public class ScreenJoystick : PlayerJoystick, IPointerDownHandler, IDragHandler,
 
     #region Methods
 
+    /// <summary>
+    /// Move the joystick handle based on user input position
+    /// </summary>
+    /// <param name="eventPos">The touch point of the player input</param>
     private void ControlHandle(Vector2 eventPos)
     {
         inputDir = (eventPos - (Vector2)background.position) * invRadius;
@@ -69,18 +78,18 @@ public class ScreenJoystick : PlayerJoystick, IPointerDownHandler, IDragHandler,
         handle.anchoredPosition = radius * inputDir;
     }
 
+    /// <summary>
+    /// Clamp the player's input within the joystick range.
+    /// </summary>
     private Vector2 HandleInput(Vector2 inputDir)
     {
-        float sqrMagnitute = inputDir.sqrMagnitude;
+        float sqrMagnitude = inputDir.sqrMagnitude;
 
-        if (sqrMagnitute > minHandleRange * minHandleRange)
+        if (sqrMagnitude > minHandleRange * minHandleRange)
         {
-            if (sqrMagnitute > maxHandleRange * maxHandleRange)
-            {
-                inputDir = inputDir.normalized * maxHandleRange;
-            }
+            inputDir = inputDir.normalized * maxHandleRange;
         }
-        else
+        else if(sqrMagnitude < maxHandleRange * maxHandleRange)
         {
             inputDir = inputDir.normalized * minHandleRange;
             moveDirection = Vector2.zero;
