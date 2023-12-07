@@ -7,19 +7,10 @@ public class DNFRigidbody : MonoBehaviour
 
     private DNFTransform dnfTransform = null;
 
-    /// <summary>
-    /// The gravity applied in all DNFRigidbody components.
-    /// </summary>
     private static Vector3 gravity = new Vector3(0f, -9.81f, 0f);
 
-    /// <summary>
-    /// Linear velocity of the DNFRigidbody in units per second.
-    /// </summary>
     private Vector3 velocity = Vector3.zero;
 
-    /// <summary>
-    /// Coefficient of drag.
-    /// </summary>
     [SerializeField] private float drag = 0.2f;
 
     #endregion Variables
@@ -30,6 +21,11 @@ public class DNFRigidbody : MonoBehaviour
     /// Return whether the object is currently on the ground or not.
     /// </summary>
     public bool IsGround => dnfTransform.Y <= 0f;
+
+    /// <summary>
+    /// Linear velocity of the DNFRigidbody in units per second.
+    /// </summary>
+    public Vector3 Velocity => velocity;
 
     #endregion Properties
 
