@@ -7,6 +7,7 @@ public class CharacterMove : MonoBehaviour
     #region Variables
 
     private Animator animator = null;
+    private Transform characterTransform = null;
 
     private DNFRigidbody dnfRigidbody = null;
     
@@ -19,13 +20,30 @@ public class CharacterMove : MonoBehaviour
     private int doJumpHash = 0;
     private int isJumpHash = 0;
 
+    private bool isLeft = false;
+
     #endregion Variables
+
+    #region Properties
+
+    public bool IsLeft
+    {
+        set
+        {
+            isLeft = value;
+            characterTransform.localScale = new Vector3(isLeft ? -1f : 1f, 1f, 1f);
+        }
+        get => isLeft;
+    }
+
+    #endregion Properties
 
     #region Methods
 
     public void Init(DNFRigidbody dnfRigidbody)
     {
         animator = GetComponent<Animator>();
+        characterTransform = transform;
 
         isWalkHash = Animator.StringToHash(AnimatorKey.Character.IS_WALK);
         doJumpHash = Animator.StringToHash(AnimatorKey.Character.DO_JUMP);
@@ -42,6 +60,11 @@ public class CharacterMove : MonoBehaviour
 
         moveDir.x *= xMoveSpeed * Time.fixedDeltaTime;
         moveDir.z *= zMoveSpeed * Time.fixedDeltaTime;
+
+        if (moveDir.x != 0f)
+        {
+            IsLeft = moveDir.x < 0f;
+        }
 
         dnfRigidbody.MoveDirection(moveDir);
     }
