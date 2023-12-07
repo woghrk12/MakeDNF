@@ -1,31 +1,35 @@
 using UnityEngine;
 
-[RequireComponent(typeof(DNFTransform))]
+[RequireComponent(typeof(DNFRigidbody))]
 public class CharacterMove : MonoBehaviour
 {
     #region Variables
 
-    private DNFTransform dnfTransform = null;
-
-    [SerializeField] private float xMoveSpeed = 1f;
-    [SerializeField] private float zMoveSpeed = 1f;
-
+    private DNFRigidbody dnfRigidbody = null;
+    
+    [SerializeField] private float xMoveSpeed = 0f;
+    [SerializeField] private float zMoveSpeed = 0f;
+    
     #endregion Variables
 
     #region Methods
 
-    public void Init(DNFTransform dnfTransform)
+    public void Init(DNFRigidbody dnfRigidbody)
     {
-        this.dnfTransform = dnfTransform;
+        this.dnfRigidbody = dnfRigidbody;
     }
+
+    #region Move
 
     public void Move(Vector3 moveDir)
     {
         moveDir.x *= xMoveSpeed * Time.fixedDeltaTime;
         moveDir.z *= zMoveSpeed * Time.fixedDeltaTime;
 
-        dnfTransform.Position += moveDir;
+        dnfRigidbody.MoveDirection(moveDir);
     }
+
+    #endregion Move
 
     #endregion Methods
 }

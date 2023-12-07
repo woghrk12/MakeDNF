@@ -7,6 +7,7 @@ public class Character : MonoBehaviour
     #region Variables
 
     private DNFTransform dnfTransform = null;
+    private DNFRigidbody dnfRigidbody = null;
 
     [Header("Character components")]
     private CharacterMove characterMove = null;
@@ -18,10 +19,11 @@ public class Character : MonoBehaviour
     private void Awake()
     {
         dnfTransform = GetComponent<DNFTransform>();
+        dnfRigidbody = GetComponent<DNFRigidbody>();
 
         characterMove = GetComponent<CharacterMove>();
 
-        characterMove.Init(dnfTransform);
+        characterMove.Init(dnfRigidbody);
     }
 
     private void Start()

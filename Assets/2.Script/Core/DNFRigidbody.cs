@@ -67,6 +67,15 @@ public class DNFRigidbody : MonoBehaviour
     #region Methods
 
     /// <summary>
+    /// Move the DNFRigidbody in the given direction.
+    /// </summary>
+    /// <param name="moveDir">The direction to move the DNFRigidbody object</param>
+    public void MoveDirection(Vector3 moveDir)
+    {
+        dnfTransform.Position += moveDir;
+    }
+
+    /// <summary>
     /// Apply a force to a given force vector
     /// </summary>
     /// <param name="force">Components of the force in the DNFTransform</param>
