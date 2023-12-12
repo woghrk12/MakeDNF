@@ -11,10 +11,11 @@ public class Character : MonoBehaviour
 
     [Header("Character components")]
     private CharacterMove moveController = null;
-    private CharacterAttack acttackController = null; 
+    private CharacterAttack attackController = null;
 
     private bool canMove = true;
     private bool canJump = true;
+    private bool canAttack = true;
 
     #endregion Variables
 
@@ -24,9 +25,9 @@ public class Character : MonoBehaviour
     {
         dnfTransform = GetComponent<DNFTransform>();
         dnfRigidbody = GetComponent<DNFRigidbody>();
-        
+
         moveController = GetComponent<CharacterMove>();
-        acttackController = GetComponent<CharacterAttack>();
+        attackController = GetComponent<CharacterAttack>();
 
         moveController.Init(dnfRigidbody);
     }
@@ -39,6 +40,21 @@ public class Character : MonoBehaviour
         GameManager.Input.SetMovementDelegate(OnJoystickMoved);
 
         GameManager.Input.SetButtonDelegate(EKeyName.JUMP, OnJumpButtonPressed);
+
+        GameManager.Input.SetButtonDelegate(EKeyName.BASEATTACK, OnAttackButtonPressed, OnAttackButtonReleased);
+
+        GameManager.Input.SetButtonDelegate(EKeyName.SKILL1,
+            () => OnSkillButtonPressed(EKeyName.SKILL1),
+            () => OnSkillButtonReleased(EKeyName.SKILL1));
+        GameManager.Input.SetButtonDelegate(EKeyName.SKILL2,
+            () => OnSkillButtonPressed(EKeyName.SKILL2),
+            () => OnSkillButtonReleased(EKeyName.SKILL2));
+        GameManager.Input.SetButtonDelegate(EKeyName.SKILL3,
+            () => OnSkillButtonPressed(EKeyName.SKILL3),
+            () => OnSkillButtonReleased(EKeyName.SKILL3));
+        GameManager.Input.SetButtonDelegate(EKeyName.SKILL4,
+            () => OnSkillButtonPressed(EKeyName.SKILL4),
+            () => OnSkillButtonReleased(EKeyName.SKILL4));
     }
 
     #endregion Unity Events
@@ -59,6 +75,29 @@ public class Character : MonoBehaviour
         moveController.Jump();
     }
 
+    public void OnAttackButtonPressed()
+    {
+        if (!canAttack) return;
+
+        attackController.UseSkill(EKeyName.BASEATTACK);
+    }
+
+    public void OnAttackButtonReleased()
+    {
+        attackController.ReleaseSkill(EKeyName.BASEATTACK);
+    }
+
+    public void OnSkillButtonPressed(EKeyName keyName)
+    {
+        if (!canAttack) return;
+
+        attackController.UseSkill(keyName);
+    }
+
+    public void OnSkillButtonReleased(EKeyName keyName)
+    {
+        attackController.ReleaseSkill(keyName);
+    }
 
     #endregion Event Methods
 }
