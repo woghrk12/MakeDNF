@@ -12,6 +12,9 @@ public class Character : MonoBehaviour
     [Header("Character components")]
     private CharacterMove characterMove = null;
 
+    private bool canMove = true;
+    private bool canJump = true;
+
     #endregion Variables
 
     #region Unity Events
@@ -31,10 +34,28 @@ public class Character : MonoBehaviour
         // Debug
         Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
         
-        GameManager.Input.SetMovementDelegate(characterMove.Move);
+        GameManager.Input.SetMovementDelegate(Move);
 
-        GameManager.Input.SetButtonDelegate(EKeyName.JUMP, characterMove.Jump);
+        GameManager.Input.SetButtonDelegate(EKeyName.JUMP, Jump);
     }
 
     #endregion Unity Events
+
+    #region Methods
+
+    private void Move(Vector3 direction)
+    {
+        if (!canMove) return;
+
+        characterMove.Move(direction);
+    }
+
+    private void Jump()
+    {
+        if (!canJump) return;
+
+        characterMove.Jump();
+    }
+
+    #endregion Methods
 }
