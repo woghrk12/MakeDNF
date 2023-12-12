@@ -43,32 +43,22 @@ public class Character : MonoBehaviour
 
     #endregion Unity Events
 
-    #region Methods
-
-    #region Character Actions
-
-    private void Move(Vector3 direction) => moveController.Move(direction);
-
-    private void Jump() => moveController.Jump();
-    #endregion Character Actions
-
-    #region Events
+    #region Event Methods
 
     public void OnJoystickMoved(Vector3 direction)
     {
         if (!canMove) return;
 
-        Move(direction);
+        moveController.Move(direction);
     }
 
     public void OnJumpButtonPressed()
     {
         if (!canJump) return;
 
-        Jump();
+        moveController.Jump();
     }
 
-    #endregion Events
 
-    #endregion Methods
+    #endregion Event Methods
 }
