@@ -2,8 +2,8 @@ using UnityEngine;
 
 public abstract class PlayerButton : MonoBehaviour
 {
-    public delegate void GetButtonDown();
-    public delegate void GetButtonUp();
+    public delegate void ButtonDown();
+    public delegate void ButtonUp();
 
     #region Variables
 
@@ -20,8 +20,8 @@ public abstract class PlayerButton : MonoBehaviour
     protected bool onPressed = false;
 
     [Header("Delegates for button events")]
-    public GetButtonDown GetButtonDownDelegate = null;
-    public GetButtonUp GetButtonUpDelegate = null;
+    public ButtonDown buttonDownDelegate = null;
+    public ButtonUp buttonUpDelegate = null;
     
     #endregion Variables
 
@@ -42,7 +42,7 @@ public abstract class PlayerButton : MonoBehaviour
         {
             if (!onPressed)
             {
-                GetButtonDownDelegate?.Invoke();
+                buttonDownDelegate?.Invoke();
             }
 
             onPressed = true;
@@ -51,7 +51,7 @@ public abstract class PlayerButton : MonoBehaviour
         {
             if (onPressed)
             {
-                GetButtonUpDelegate?.Invoke();
+                buttonUpDelegate?.Invoke();
             }
 
             onPressed = false;

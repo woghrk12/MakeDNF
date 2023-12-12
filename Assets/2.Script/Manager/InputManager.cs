@@ -63,13 +63,13 @@ public class InputManager
         playerJoystick.MoveCharacterDelegate = moveCharacter;
     }
 
-    public void SetButtonDelegate(EKeyName keyName, PlayerButton.GetButtonDown getButtonDown, PlayerButton.GetButtonUp getButtonUp = null)
+    public void SetButtonDelegate(EKeyName keyName, PlayerButton.ButtonDown buttonDown, PlayerButton.ButtonUp buttonUp = null)
     {
-        playerButtonDictionary[keyName].GetButtonDownDelegate = getButtonDown;
+        playerButtonDictionary[keyName].buttonDownDelegate = buttonDown;
 
-        if (getButtonUp != null)
+        if (buttonUp != null)
         { 
-            playerButtonDictionary[keyName].GetButtonUpDelegate = getButtonUp;
+            playerButtonDictionary[keyName].buttonUpDelegate = buttonUp;
         }
     }
 
