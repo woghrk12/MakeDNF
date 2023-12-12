@@ -10,7 +10,8 @@ public class Character : MonoBehaviour
     private DNFRigidbody dnfRigidbody = null;
 
     [Header("Character components")]
-    private CharacterMove characterMove = null;
+    private CharacterMove moveController = null;
+    private CharacterAttack acttackController = null; 
 
     private bool canMove = true;
     private bool canJump = true;
@@ -23,39 +24,51 @@ public class Character : MonoBehaviour
     {
         dnfTransform = GetComponent<DNFTransform>();
         dnfRigidbody = GetComponent<DNFRigidbody>();
+        
+        moveController = GetComponent<CharacterMove>();
+        acttackController = GetComponent<CharacterAttack>();
 
-        characterMove = GetComponent<CharacterMove>();
-
-        characterMove.Init(dnfRigidbody);
+        moveController.Init(dnfRigidbody);
     }
 
     private void Start()
     {
         // Debug
         Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
-        
-        GameManager.Input.SetMovementDelegate(Move);
 
-        GameManager.Input.SetButtonDelegate(EKeyName.JUMP, Jump);
+        GameManager.Input.SetMovementDelegate(OnJoystickMoved);
+
+        GameManager.Input.SetButtonDelegate(EKeyName.JUMP, OnJumpButtonPressed);
     }
 
     #endregion Unity Events
 
     #region Methods
 
-    private void Move(Vector3 direction)
+    #region Character Actions
+
+    private void Move(Vector3 direction) => moveController.Move(direction);
+
+    private void Jump() => moveController.Jump();
+    #endregion Character Actions
+
+    #region Events
+
+    public void OnJoystickMoved(Vector3 direction)
     {
         if (!canMove) return;
 
-        characterMove.Move(direction);
+        Move(direction);
     }
 
-    private void Jump()
+    public void OnJumpButtonPressed()
     {
         if (!canJump) return;
 
-        characterMove.Jump();
+        Jump();
     }
+
+    #endregion Events
 
     #endregion Methods
 }
