@@ -14,9 +14,9 @@ public class Hitbox : MonoBehaviour
 
     [Header("Variables for the hitbox shape")]
     [SerializeField] private EHitboxType hitboxType = EHitboxType.NONE;
-    private Vector3 size = new Vector3(1f, 1f, 1f);
-    private Vector3 offset = Vector3.zero;
-    private Vector3 pivot = Vector3.zero;
+    [SerializeField, HideInInspector] private Vector3 size = new Vector3(1f, 1f, 1f);
+    [SerializeField, HideInInspector] private Vector3 offset = Vector3.zero;
+    [SerializeField, HideInInspector] private Vector3 pivot = Vector3.zero;
 
     /// <summary>
     /// The maximum values for each component of the hitbox.
