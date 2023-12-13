@@ -77,6 +77,8 @@ public class Character : MonoBehaviour
 
     public void OnAttackButtonPressed()
     {
+        attackController.OnSkillButtonPressed(EKeyName.BASEATTACK);
+        
         if (!canAttack) return;
 
         attackController.UseSkill(EKeyName.BASEATTACK);
@@ -84,11 +86,13 @@ public class Character : MonoBehaviour
 
     public void OnAttackButtonReleased()
     {
-        attackController.ReleaseSkill(EKeyName.BASEATTACK);
+        attackController.OnSkillButtonReleased(EKeyName.BASEATTACK);
     }
 
     public void OnSkillButtonPressed(EKeyName keyName)
     {
+        attackController.OnSkillButtonPressed(keyName);
+        
         if (!canAttack) return;
 
         attackController.UseSkill(keyName);
@@ -96,7 +100,7 @@ public class Character : MonoBehaviour
 
     public void OnSkillButtonReleased(EKeyName keyName)
     {
-        attackController.ReleaseSkill(keyName);
+        attackController.OnSkillButtonReleased(keyName);
     }
 
     #endregion Event Methods
