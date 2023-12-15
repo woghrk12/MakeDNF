@@ -8,6 +8,9 @@ public class CharacterAttack : MonoBehaviour
 
     private Dictionary<EKeyName, Skill> registeredSkillDictionary = new();
 
+    private Coroutine attackCo = null;
+    private Skill activeSkill = null;
+
     #endregion Variables
 
     #region Methods
@@ -36,11 +39,28 @@ public class CharacterAttack : MonoBehaviour
         }
     }
 
-    public IEnumerator UseSkill(EKeyName keyName)
+    public bool CheckCanAttack(EKeyName keyName)
     {
-        yield return registeredSkillDictionary[keyName].ActivateSkill();
+        if (activeSkill == null) return true;
+        if (activeSkill.CheckCanUseSkill()) return true;
+
+        return false;
     }
 
+    public void Attack(EKeyName keyName)
+    {
+        activeSkill = registeredSkillDictionary[keyName];
+        attackCo = StartCoroutine(UseSkill(activeSkill));
+    }
+
+    private IEnumerator UseSkill(Skill skill)
+    {
+        yield return skill.ActivateSkill();
+
+        attackCo = null;
+        activeSkill = null;
+    }
+    
     #region Events
 
     public void OnSkillButtonPressed(EKeyName keyName)

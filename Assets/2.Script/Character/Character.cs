@@ -80,8 +80,9 @@ public class Character : MonoBehaviour
         attackController.OnSkillButtonPressed(EKeyName.BASEATTACK);
         
         if (!canAttack) return;
+        if (!attackController.CheckCanAttack(EKeyName.BASEATTACK)) return;
 
-        attackController.UseSkill(EKeyName.BASEATTACK);
+        attackController.Attack(EKeyName.BASEATTACK);
     }
 
     public void OnAttackButtonReleased()
@@ -94,8 +95,9 @@ public class Character : MonoBehaviour
         attackController.OnSkillButtonPressed(keyName);
         
         if (!canAttack) return;
+        if (!attackController.CheckCanAttack(keyName)) return;
 
-        attackController.UseSkill(keyName);
+        attackController.Attack(keyName);
     }
 
     public void OnSkillButtonReleased(EKeyName keyName)
