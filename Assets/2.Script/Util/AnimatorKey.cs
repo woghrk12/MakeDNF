@@ -10,5 +10,10 @@ public class AnimatorKey
         public static readonly string IS_JUMP = "IsJump";
         public static readonly string IS_ATTACK = "IsAttack";
         public static readonly string END_ATTACK = "EndAttack";
+
+        public class FireHero
+        {
+            public static readonly string BASE_ATTACK = "BaseAttack";
+        }
     }
 }
