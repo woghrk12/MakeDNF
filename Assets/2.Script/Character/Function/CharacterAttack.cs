@@ -6,6 +6,12 @@ public class CharacterAttack : MonoBehaviour
 {
     #region Variables
 
+    private Animator animator = null;
+
+    private int isAttackHash = 0;
+
+    private DNFTransform dnfTransform = null;
+
     private Dictionary<EKeyName, Skill> registeredSkillDictionary = new();
 
     private Coroutine attackCo = null;
@@ -14,6 +20,15 @@ public class CharacterAttack : MonoBehaviour
     #endregion Variables
 
     #region Methods
+
+    public void Init(DNFTransform dnfTransform)
+    {
+        animator = GetComponent<Animator>();
+
+        isAttackHash = Animator.StringToHash(AnimatorKey.Character.IS_ATTACK);
+
+        this.dnfTransform = dnfTransform;
+    }
 
     public void RegisterSkill(EKeyName keyName, Skill skill)
     {
@@ -32,6 +47,8 @@ public class CharacterAttack : MonoBehaviour
                 {
                     registeredSkillDictionary.Add(keyName, skill);
                 }
+
+                skill.InitSkill(animator);
                 break;
 
             default:
@@ -42,7 +59,7 @@ public class CharacterAttack : MonoBehaviour
     public bool CheckCanAttack(EKeyName keyName)
     {
         if (activeSkill == null) return true;
-        if (activeSkill.CheckCanUseSkill()) return true;
+        if (registeredSkillDictionary[keyName].CheckCanUseSkill(activeSkill)) return true;
 
         return false;
     }
@@ -55,7 +72,11 @@ public class CharacterAttack : MonoBehaviour
 
     private IEnumerator UseSkill(Skill skill)
     {
+        animator.SetBool(isAttackHash, true);
+
         yield return skill.ActivateSkill();
+
+        animator.SetBool(isAttackHash, false);
 
         attackCo = null;
         activeSkill = null;

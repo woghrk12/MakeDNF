@@ -30,6 +30,7 @@ public class Character : MonoBehaviour
         attackController = GetComponent<CharacterAttack>();
 
         moveController.Init(dnfRigidbody);
+        attackController.Init(dnfTransform);
     }
 
     private void Start()
