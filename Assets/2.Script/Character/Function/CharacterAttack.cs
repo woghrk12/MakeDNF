@@ -11,6 +11,7 @@ public class CharacterAttack : MonoBehaviour
     private int isAttackHash = 0;
     private int endAttackHash = 0;
 
+    private Character character = null;
     private DNFTransform dnfTransform = null;
 
     private Dictionary<EKeyName, Skill> registeredSkillDictionary = new();
@@ -22,13 +23,14 @@ public class CharacterAttack : MonoBehaviour
 
     #region Methods
 
-    public void Init(DNFTransform dnfTransform)
+    public void Init(Character character, DNFTransform dnfTransform)
     {
         animator = GetComponent<Animator>();
 
         isAttackHash = Animator.StringToHash(AnimatorKey.Character.IS_ATTACK);
         endAttackHash = Animator.StringToHash(AnimatorKey.Character.END_ATTACK);
 
+        this.character = character;
         this.dnfTransform = dnfTransform;
     }
 
@@ -50,7 +52,7 @@ public class CharacterAttack : MonoBehaviour
                     registeredSkillDictionary.Add(keyName, skill);
                 }
 
-                skill.InitSkill(animator);
+                skill.InitSkill(character, animator);
                 break;
 
             default:

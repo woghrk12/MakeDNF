@@ -13,9 +13,9 @@ public class Character : MonoBehaviour
     private CharacterMove moveController = null;
     private CharacterAttack attackController = null;
 
-    private bool canMove = true;
-    private bool canJump = true;
-    private bool canAttack = true;
+    public bool CanMove = true;
+    public bool CanJump = true;
+    public bool CanAttack = true;
 
     #endregion Variables
 
@@ -30,7 +30,7 @@ public class Character : MonoBehaviour
         attackController = GetComponent<CharacterAttack>();
 
         moveController.Init(dnfRigidbody);
-        attackController.Init(dnfTransform);
+        attackController.Init(this, dnfTransform);
     }
 
     private void Start()
@@ -65,14 +65,14 @@ public class Character : MonoBehaviour
 
     public void OnJoystickMoved(Vector3 direction)
     {
-        if (!canMove) return;
+        if (!CanMove) return;
 
         moveController.Move(direction);
     }
 
     public void OnJumpButtonPressed()
     {
-        if (!canJump) return;
+        if (!CanJump) return;
 
         moveController.Jump();
     }
@@ -81,7 +81,7 @@ public class Character : MonoBehaviour
     {
         attackController.OnSkillButtonPressed(EKeyName.BASEATTACK);
         
-        if (!canAttack) return;
+        if (!CanAttack) return;
         if (!attackController.CheckCanAttack(EKeyName.BASEATTACK)) return;
 
         attackController.Attack(EKeyName.BASEATTACK);
@@ -96,7 +96,7 @@ public class Character : MonoBehaviour
     {
         attackController.OnSkillButtonPressed(keyName);
         
-        if (!canAttack) return;
+        if (!CanAttack) return;
         if (!attackController.CheckCanAttack(keyName)) return;
 
         attackController.Attack(keyName);

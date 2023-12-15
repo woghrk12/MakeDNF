@@ -8,9 +8,9 @@ public class BaseAttack_FireHero : Skill
     private bool isBlockKey = true;
     private bool isContinue = false;
 
-    public override void InitSkill(Animator animator)
+    public override void InitSkill(Character character, Animator animator)
     {
-        base.InitSkill(animator);
+        base.InitSkill(character, animator);
 
         skillHash = Animator.StringToHash(AnimatorKey.Character.FireHero.BASE_ATTACK);
     }
@@ -31,9 +31,12 @@ public class BaseAttack_FireHero : Skill
     {
         int curCombo = 0, maxCombo = 2;
 
+        character.CanMove = false;
+        character.CanJump = false;
+
         while (curCombo < maxCombo)
         {
-            characterAnimator.SetTrigger(skillHash);
+            animator.SetTrigger(skillHash);
 
             // Pre-delay
             yield return Utilities.WaitForSeconds(0.1f);
@@ -44,7 +47,7 @@ public class BaseAttack_FireHero : Skill
             // Instantiate the projectile
 
             // Post-delay
-            yield return new WaitUntil(() => characterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
 
             if (!isContinue)
             {
@@ -58,7 +61,7 @@ public class BaseAttack_FireHero : Skill
             curCombo++;
         }
 
-        characterAnimator.SetTrigger(skillHash);
+        animator.SetTrigger(skillHash);
 
         // Pre-delay
         yield return Utilities.WaitForSeconds(0.15f);
@@ -66,12 +69,18 @@ public class BaseAttack_FireHero : Skill
         // Instantiate the projectile
 
         // Post-delay
-        yield return new WaitUntil(() => characterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+        character.CanMove = true;
+        character.CanJump = true;
     }
 
     public override void Clear()
     {
         isBlockKey = true;
         isContinue = false;
+
+        character.CanMove = true;
+        character.CanJump = true;
     }
 }

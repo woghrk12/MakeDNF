@@ -16,7 +16,9 @@ public abstract class Skill : MonoBehaviour
 {
     #region Variables
 
-    protected Animator characterAnimator = null;
+    protected Character character = null;
+
+    protected Animator animator = null;
 
     [SerializeField] protected SkillStat skillStat;
 
@@ -33,9 +35,10 @@ public abstract class Skill : MonoBehaviour
 
     #region Methods
 
-    public virtual void InitSkill(Animator animator)
+    public virtual void InitSkill(Character character, Animator animator)
     {
-        characterAnimator = animator;
+        this.character = character;
+        this.animator = animator;
     }
 
     public virtual void OnPressed() { }
