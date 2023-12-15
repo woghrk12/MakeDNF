@@ -1,13 +1,15 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public struct SkillStat
+public class SkillStat
 {
-    public string Name;
-    public int NeedMana;
-    public string SkillDescription;
+    public string Name = string.Empty;
+    public int NeedMana = 0;
+    public string SkillDescription = string.Empty;
+    public List<Skill> cancelList = new();
 }
 
 public abstract class Skill : MonoBehaviour
@@ -23,6 +25,7 @@ public abstract class Skill : MonoBehaviour
     public string Name => skillStat.Name;
     public int NeedMana => skillStat.NeedMana;
     public string SkillDescription => skillStat.SkillDescription;
+    public List<Skill> CancelList => skillStat.cancelList;
 
     #endregion Properties
 
@@ -31,7 +34,7 @@ public abstract class Skill : MonoBehaviour
     public virtual void OnPressed() { }
     public virtual void OnReleased() { }
 
-    public virtual bool CheckCanUseSkill() { return true; }
+    public virtual bool CheckCanUseSkill(Skill activeSkill = null) { return true; }
 
     public abstract IEnumerator ActivateSkill();
 
