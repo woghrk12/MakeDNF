@@ -9,6 +9,7 @@ public class CharacterAttack : MonoBehaviour
     private Animator animator = null;
 
     private int isAttackHash = 0;
+    private int endAttackHash = 0;
 
     private DNFTransform dnfTransform = null;
 
@@ -26,6 +27,7 @@ public class CharacterAttack : MonoBehaviour
         animator = GetComponent<Animator>();
 
         isAttackHash = Animator.StringToHash(AnimatorKey.Character.IS_ATTACK);
+        endAttackHash = Animator.StringToHash(AnimatorKey.Character.END_ATTACK);
 
         this.dnfTransform = dnfTransform;
     }
@@ -58,10 +60,7 @@ public class CharacterAttack : MonoBehaviour
 
     public bool CheckCanAttack(EKeyName keyName)
     {
-        if (activeSkill == null) return true;
-        if (registeredSkillDictionary[keyName].CheckCanUseSkill(activeSkill)) return true;
-
-        return false;
+        return registeredSkillDictionary[keyName].CheckCanUseSkill(activeSkill);
     }
 
     public void Attack(EKeyName keyName)
@@ -77,6 +76,7 @@ public class CharacterAttack : MonoBehaviour
         yield return skill.ActivateSkill();
 
         animator.SetBool(isAttackHash, false);
+        animator.SetTrigger(endAttackHash);
 
         attackCo = null;
         activeSkill = null;

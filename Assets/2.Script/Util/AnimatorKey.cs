@@ -9,5 +9,6 @@ public class AnimatorKey
         public static readonly string DO_JUMP = "DoJump";
         public static readonly string IS_JUMP = "IsJump";
         public static readonly string IS_ATTACK = "IsAttack";
+        public static readonly string END_ATTACK = "EndAttack";
     }
 }
