@@ -7,8 +7,8 @@ public class CharacterMove : MonoBehaviour
     #region Variables
 
     private Animator animator = null;
-    private Transform characterTransform = null;
 
+    private DNFTransform dnfTransform = null;
     private DNFRigidbody dnfRigidbody = null;
     
     [Header("Scale variables for character movement")]
@@ -25,38 +25,21 @@ public class CharacterMove : MonoBehaviour
 
     #endregion Variables
 
-    #region Properties
-
-    /// <summary>
-    /// The direction the character is facing. Return true if the character is facing left.
-    /// </summary>
-    public bool IsLeft
-    {
-        set
-        {
-            isLeft = value;
-            characterTransform.localScale = new Vector3(isLeft ? -1f : 1f, 1f, 1f);
-        }
-        get => isLeft;
-    }
-
-    #endregion Properties
-
     #region Methods
 
     /// <summary>
     /// Initialize the variables and components for character movement.
     /// </summary>
-    public void Init(DNFRigidbody dnfRigidbody)
+    public void Init()
     {
         animator = GetComponent<Animator>();
-        characterTransform = transform;
 
         isWalkHash = Animator.StringToHash(AnimatorKey.Character.IS_WALK);
         doJumpHash = Animator.StringToHash(AnimatorKey.Character.DO_JUMP);
         isJumpHash = Animator.StringToHash(AnimatorKey.Character.IS_JUMP);
 
-        this.dnfRigidbody = dnfRigidbody;
+        dnfTransform = GetComponent<DNFTransform>();
+        dnfRigidbody = GetComponent<DNFRigidbody>();
     }
 
     #region Move
@@ -75,7 +58,7 @@ public class CharacterMove : MonoBehaviour
 
         if (moveDir.x != 0f)
         {
-            IsLeft = moveDir.x < 0f;
+            dnfTransform.IsLeft = moveDir.x < 0f;
         }
 
         dnfRigidbody.MoveDirection(moveDir);

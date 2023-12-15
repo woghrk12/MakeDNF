@@ -6,21 +6,12 @@ public class DNFTransform : MonoBehaviour
 {
     #region Variables
 
-    /// <summary>
-    /// Transform component used to determine the position in the XZ planes.
-    /// </summary>
     [Header("Transform objects for Character Transform")]
     private Transform posTransform = null;
-
-    /// <summary>
-    /// Transform component used to determine the position in the Y axis.
-    /// </summary>
     private Transform yPosTransform = null;
-    
-    /// <summary>
-    /// Transform component used to determine the scale value of the object.
-    /// </summary>
     private Transform scaleTransform = null;
+
+    private bool isLeft = false;
 
     #endregion Variables
 
@@ -95,6 +86,19 @@ public class DNFTransform : MonoBehaviour
     /// Return whether yPosTransform exists or not.
     /// </summary>
     public bool HasYObj => yPosTransform != null;
+
+    /// <summary>
+    /// The direction the object is facing. Return true if the object is facing left.
+    /// </summary>
+    public bool IsLeft
+    {
+        set
+        {
+            isLeft = value;
+            posTransform.localScale = new Vector3(isLeft ? -1f : 1f, 1f, 1f);
+        }
+        get => isLeft;
+    }
 
     /// <summary>
     /// Scale value of the object.
