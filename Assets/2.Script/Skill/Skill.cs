@@ -31,6 +31,8 @@ public abstract class Skill : MonoBehaviour
     public virtual void OnPressed() { }
     public virtual void OnReleased() { }
 
+    public virtual bool CheckCanUseSkill() { return true; }
+
     public abstract IEnumerator ActivateSkill();
 
     public abstract void Clear();
