@@ -75,7 +75,7 @@ public class CharacterAttack : MonoBehaviour
     {
         animator.SetBool(isAttackHash, true);
 
-        yield return skill.ActivateSkill();
+        yield return skill.Activate();
 
         animator.SetBool(isAttackHash, false);
         animator.SetTrigger(endAttackHash);

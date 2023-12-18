@@ -22,6 +22,9 @@ public abstract class Skill : MonoBehaviour
 
     [SerializeField] protected SkillStat skillStat;
 
+    protected List<SkillState> stateList = new();
+    protected SkillState activeState = null;
+
     #endregion Variables
 
     #region Properties
@@ -41,14 +44,27 @@ public abstract class Skill : MonoBehaviour
         this.animator = animator;
     }
 
-    public virtual void OnPressed() { }
-    public virtual void OnReleased() { }
-
     public abstract bool CheckCanUseSkill(Skill activeSkill = null);
-
-    public abstract IEnumerator ActivateSkill();
-
+    public abstract IEnumerator Activate();
+    public virtual void Cancel() { }
     public virtual void Clear() { }
+
+    #region Events
+
+    public void OnPressed()
+    {
+        if (activeState == null) return;
+
+        activeState.OnPressed();
+    }
+    public void OnReleased()
+    {
+        if (activeState == null) return;
+
+        activeState.OnReleased();
+    }
+
+    #endregion Events
 
     #endregion Methods
 }
