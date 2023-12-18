@@ -8,15 +8,29 @@ public abstract class Projectile : MonoBehaviour
 
     protected DNFTransform dnfTransform = null;
     protected Hitbox hitbox = null;
-    protected ParticleSystem projectileEffect = null;
+    
+    protected List<Hitbox> targetList = new();
 
     #endregion Variables
 
+    #region Unity Events
+
+    private void LateUpdate()
+    {
+        CalculateOnHit(targetList);
+    }
+
+    #endregion Unity Events
+
     #region Methods
 
-    public abstract IEnumerator Shot(Vector3 position, bool isLeft, float sizeEff = 1f);
+    public abstract void Init();
+    public abstract void Shot(Vector3 startPos, bool isLeft, float sizeEff = 1f);
+    public virtual void Cancel() { }
+    public virtual void Clear() { }
 
-    public abstract void Destroy();
+    protected abstract IEnumerator Activate(Vector3 startPos, bool isLeft, float sizeEff = 1f);
+    protected abstract void CalculateOnHit(List<Hitbox> targets);
 
     #endregion Methods
 }
