@@ -27,6 +27,10 @@ public partial class BaseAttack_FireHero
 
             stateHash = Animator.StringToHash(AnimatorKey.Character.FireHero.BASE_ATTACK);
 
+            projectile = GameManager.Resource.Instantiate("Prefab/Projectile/FireHero/BaseAttack/Fireball_2").GetComponent<Projectile>();
+            projectile.Init();
+            projectile.gameObject.SetActive(false);
+
             cachedWaitUntil = new(() => stateController.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
         }
 
@@ -47,6 +51,9 @@ public partial class BaseAttack_FireHero
             isBlockKey = false;
 
             // Instantiate the projectile
+            DNFTransform characterTransform = stateController.character.DNFTransform;
+            projectile.gameObject.SetActive(true);
+            projectile.Shot(characterTransform.Position, characterTransform.IsLeft);
 
             // Post-delay
             yield return cachedWaitUntil;
