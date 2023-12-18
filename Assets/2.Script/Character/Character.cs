@@ -19,6 +19,12 @@ public class Character : MonoBehaviour
 
     #endregion Variables
 
+    #region Properties
+
+    public DNFTransform DNFTransform => dnfTransform;
+
+    #endregion Properties
+
     #region Unity Events
 
     private void Awake()
