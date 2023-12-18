@@ -52,7 +52,7 @@ public class CharacterAttack : MonoBehaviour
                     registeredSkillDictionary.Add(keyName, skill);
                 }
 
-                skill.InitSkill(character, animator);
+                skill.Init(character, animator);
                 break;
 
             default:
