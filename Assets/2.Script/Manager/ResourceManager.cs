@@ -4,14 +4,14 @@ public class ResourceManager
 {
     #region Methods
 
-    public Object Load(string path)
+    public T Load<T>(string path) where T : Object
     {
-        return Resources.Load(path);
+        return Resources.Load<T>(path);
     }
 
     public GameObject Instantiate(string path, Transform parent = null)
     {
-        Object source = Load(path);
+        GameObject source = Load<GameObject>(path);
 
         if (source == null) return null;
 
