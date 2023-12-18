@@ -35,7 +35,6 @@ public partial class BaseAttack_FireHero : Skill
         character.CanJump = false;
 
         isContinue = false;
-
         activeState = stateList[(int)EState.FIRST];
         yield return activeState.Activate();
 
@@ -45,6 +44,7 @@ public partial class BaseAttack_FireHero : Skill
             yield break;
         }
 
+        isContinue = false;
         activeState = stateList[(int)EState.SECOND];
         yield return activeState.Activate();
 
@@ -54,6 +54,7 @@ public partial class BaseAttack_FireHero : Skill
             yield break;
         }
 
+        isContinue = false;
         activeState = stateList[(int)EState.THIRD];
         yield return activeState.Activate();
 
