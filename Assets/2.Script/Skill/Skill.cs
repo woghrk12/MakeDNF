@@ -38,7 +38,7 @@ public abstract class Skill : MonoBehaviour
 
     #region Methods
 
-    public virtual void InitSkill(Character character, Animator animator)
+    public virtual void Init(Character character, Animator animator)
     {
         this.character = character;
         this.animator = animator;

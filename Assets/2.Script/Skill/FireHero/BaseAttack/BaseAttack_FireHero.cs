@@ -15,9 +15,9 @@ public partial class BaseAttack_FireHero : Skill
 
     #region Override
 
-    public override void InitSkill(Character character, Animator animator)
+    public override void Init(Character character, Animator animator)
     {
-        base.InitSkill(character, animator);
+        base.Init(character, animator);
 
         stateList.Add(new First(this));
         stateList.Add(new Second(this));
