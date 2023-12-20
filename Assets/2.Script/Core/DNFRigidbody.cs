@@ -7,7 +7,7 @@ public class DNFRigidbody : MonoBehaviour
 
     private DNFTransform dnfTransform = null;
 
-    private static Vector3 gravity = new Vector3(0f, -9.81f, 0f);
+    private Vector3 gravity = new Vector3(0f, -9.81f, 0f);
 
     private Vector3 velocity = Vector3.zero;
 
