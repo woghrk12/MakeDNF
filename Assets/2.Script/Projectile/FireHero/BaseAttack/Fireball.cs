@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fireball : Projectile
+public class Fireball : Projectile, IAttackable
 {
     #region Variables
 
@@ -14,6 +14,26 @@ public class Fireball : Projectile
 
     #endregion Variables
 
+    #region IAttackable
+
+    public Hitbox AttackHitbox { set; get; }
+
+    public bool CalculateOnHit(List<IDamagable> targets)
+    {
+        foreach (IDamagable target in targets)
+        {
+            if (AttackHitbox.CheckCollision(target.DamageHitbox))
+            {
+                target.OnDamage();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    #endregion IAttackabe
+
     #region Methods
 
     #region Unity Events
@@ -22,6 +42,7 @@ public class Fireball : Projectile
     {
         base.Awake();
 
+        AttackHitbox = GetComponent<Hitbox>();
         dnfRigidbody = GetComponent<DNFRigidbody>();
     }
 
@@ -39,8 +60,6 @@ public class Fireball : Projectile
 
     protected override IEnumerator Activate(Vector3 startPos, bool isLeft, float sizeEff = 1f)
     {
-        // Set target List
-
         // Set projectile transform
         dnfTransform.Position = startPos;
         dnfTransform.IsLeft = isLeft;
@@ -56,14 +75,16 @@ public class Fireball : Projectile
 
             timer += Time.fixedDeltaTime;
             yield return Utilities.WaitForFixedUpdate;
+
+            if (CalculateOnHit(GameManager.Room.Monsters))
+            {
+                // Spawn hit effect
+
+                break;
+            }
         }
 
         Clear();
-    }
-
-    protected override void CalculateOnHit(List<Hitbox> targets)
-    {
-        
     }
 
     #endregion Override

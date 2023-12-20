@@ -1,6 +1,19 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum EHitboxType { NONE = -1, BOX, CIRCLE }
+
+public interface IAttackable
+{
+    public Hitbox AttackHitbox { set; get; }
+    public bool CalculateOnHit(List<IDamagable> targets);
+}
+
+public interface IDamagable
+{
+    public Hitbox DamageHitbox { set; get; }
+    public void OnDamage();
+}
 
 [RequireComponent(typeof(DNFTransform))]
 public class Hitbox : MonoBehaviour

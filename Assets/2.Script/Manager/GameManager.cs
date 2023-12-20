@@ -13,6 +13,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     [Header("Content Manager")]
     private static ObjectPoolManager objectPoolManager = null;
 
+    // Debug
+    [SerializeField] private Room room = null;
+
     #endregion Variables
 
     #region Properties
@@ -21,6 +24,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     public static ResourceManager Resource => resourceManager;
 
     public static ObjectPoolManager ObjectPool => objectPoolManager;
+
+    // Debug
+    public static Room Room => Instance.room;
 
     #endregion Properties
 
