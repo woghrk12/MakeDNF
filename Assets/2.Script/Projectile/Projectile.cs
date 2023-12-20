@@ -15,6 +15,12 @@ public abstract class Projectile : MonoBehaviour
 
     #region Unity Events
 
+    protected virtual void Awake()
+    {
+        dnfTransform = GetComponent<DNFTransform>();
+        hitbox = GetComponent<Hitbox>();
+    }
+
     private void LateUpdate()
     {
         CalculateOnHit(targetList);
@@ -24,7 +30,6 @@ public abstract class Projectile : MonoBehaviour
 
     #region Methods
 
-    public abstract void Init();
     public abstract void Shot(Vector3 startPos, bool isLeft, float sizeEff = 1f);
     public virtual void Cancel() { }
     public virtual void Clear() { }

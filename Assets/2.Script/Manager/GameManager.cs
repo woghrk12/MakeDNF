@@ -10,12 +10,17 @@ public class GameManager : SingletonBehaviour<GameManager>
     private static InputManager inputManager = new();
     private static ResourceManager resourceManager = new();
 
+    [Header("Content Manager")]
+    private static ObjectPoolManager objectPoolManager = null;
+
     #endregion Variables
 
     #region Properties
 
     public static InputManager Input => inputManager;
     public static ResourceManager Resource => resourceManager;
+
+    public static ObjectPoolManager ObjectPool => objectPoolManager;
 
     #endregion Properties
 
@@ -25,7 +30,11 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         base.Awake();
 
+        objectPoolManager = FindObjectOfType<ObjectPoolManager>();
+
         inputManager.Init();
+
+        objectPoolManager.Init();
     }
 
     #endregion Unity Events

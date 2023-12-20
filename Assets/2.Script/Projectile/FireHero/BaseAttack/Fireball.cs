@@ -16,22 +16,25 @@ public class Fireball : Projectile
 
     #region Methods
 
-    #region Override 
+    #region Unity Events
 
-    public override void Init()
+    protected override void Awake()
     {
-        dnfTransform = GetComponent<DNFTransform>();
-        dnfRigidbody = GetComponent<DNFRigidbody>();
+        base.Awake();
 
-        hitbox = GetComponent<Hitbox>();
+        dnfRigidbody = GetComponent<DNFRigidbody>();
     }
+
+    #endregion Unity Events
+
+    #region Override 
 
     public override void Shot(Vector3 startPos, bool isLeft, float sizeEff = 1)
         => StartCoroutine(Activate(startPos, isLeft, sizeEff));
 
     public override void Clear()
     {
-        gameObject.SetActive(false);
+        GameManager.ObjectPool.ReturnToPool(gameObject);
     }
 
     protected override IEnumerator Activate(Vector3 startPos, bool isLeft, float sizeEff = 1f)
