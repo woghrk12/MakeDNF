@@ -13,7 +13,8 @@ public partial class BaseAttack_FireHero
 
         private bool isBlockKey = true;
 
-        private WaitUntil cachedWaitUntil = null;
+        private float preDelay = 0f;
+        private float postDelay = 0f;
 
         #endregion Variables
 
@@ -25,7 +26,8 @@ public partial class BaseAttack_FireHero
 
             stateHash = Animator.StringToHash(AnimatorKey.Character.FireHero.BASE_ATTACK);
 
-            cachedWaitUntil = new(() => stateController.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+            preDelay = Time.deltaTime * 2f * 4f;
+            postDelay = Time.deltaTime * 4f * 4f;
         }
 
         #endregion Constructor
@@ -40,7 +42,7 @@ public partial class BaseAttack_FireHero
             stateController.animator.SetTrigger(stateHash);
 
             // Pre-delay
-            yield return Utilities.WaitForSeconds(0.1f);
+            yield return Utilities.WaitForSeconds(preDelay);
 
             isBlockKey = false;
 
@@ -49,7 +51,7 @@ public partial class BaseAttack_FireHero
             GameManager.ObjectPool.SpawnFromPool("Fireball_2").GetComponent<Projectile>().Shot(characterTransform.Position, characterTransform.IsLeft);
 
             // Post-delay
-            yield return cachedWaitUntil;
+            yield return Utilities.WaitForSeconds(postDelay);
         }
 
         public override void OnPressed()

@@ -11,7 +11,8 @@ public partial class BaseAttack_FireHero
 
         private int stateHash = 0;
 
-        private WaitUntil cachedWaitUntil = null;
+        private float preDelay = 0f;
+        private float postDelay = 0f;
 
         #endregion Variables
 
@@ -23,7 +24,8 @@ public partial class BaseAttack_FireHero
 
             stateHash = Animator.StringToHash(AnimatorKey.Character.FireHero.BASE_ATTACK);
 
-            cachedWaitUntil = new(() => stateController.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+            preDelay = Time.deltaTime * 2f * 4f;
+            postDelay = Time.deltaTime * 5f * 4f;
         }
 
         #endregion Constructor
@@ -37,14 +39,14 @@ public partial class BaseAttack_FireHero
             stateController.animator.SetTrigger(stateHash);
 
             // Pre-delay
-            yield return Utilities.WaitForSeconds(0.1f);
+            yield return Utilities.WaitForSeconds(preDelay);
 
             // Instantiate the projectile
             DNFTransform characterTransform = stateController.character.DNFTransform;
             GameManager.ObjectPool.SpawnFromPool("Fireball_1").GetComponent<Projectile>().Shot(characterTransform.Position, characterTransform.IsLeft);
 
             // Post-delay
-            yield return cachedWaitUntil;
+            yield return Utilities.WaitForSeconds(postDelay);
         }
 
         #endregion Override 
