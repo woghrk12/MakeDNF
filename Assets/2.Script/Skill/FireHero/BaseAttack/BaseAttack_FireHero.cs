@@ -61,23 +61,6 @@ public partial class BaseAttack_FireHero : Skill
         Clear();
     }
 
-    public override void Cancel()
-    {
-        if (activeState == null) return;
-
-        activeState.Cancel();
-        activeState = null;
-    }
-
-    public override void Clear()
-    {
-        activeState.Clear();
-        activeState = null;
-
-        character.CanMove = true;
-        character.CanJump = true;
-    }
-
     #endregion Override
 
     #endregion Methods

@@ -46,8 +46,23 @@ public abstract class Skill : MonoBehaviour
 
     public abstract bool CheckCanUseSkill(Skill activeSkill = null);
     public abstract IEnumerator Activate();
-    public virtual void Cancel() { }
-    public virtual void Clear() { }
+
+    public virtual void Cancel() 
+    {
+        if (activeState == null) return;
+
+        activeState.Cancel();
+        activeState = null;
+    }
+
+    public virtual void Clear() 
+    {
+        activeState.Clear();
+        activeState = null;
+
+        character.CanMove = true;
+        character.CanJump = true;
+    }
 
     #region Events
 
