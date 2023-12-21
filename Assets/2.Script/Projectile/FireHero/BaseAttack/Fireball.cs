@@ -51,14 +51,6 @@ public class Fireball : Projectile, IAttackable
     #region Override 
 
     public override void Shot(Vector3 startPos, bool isLeft, float sizeEff = 1)
-        => StartCoroutine(Activate(startPos, isLeft, sizeEff));
-
-    public override void Clear()
-    {
-        GameManager.ObjectPool.ReturnToPool(gameObject);
-    }
-
-    protected override IEnumerator Activate(Vector3 startPos, bool isLeft, float sizeEff = 1f)
     {
         // Set projectile transform
         dnfTransform.Position = startPos;
@@ -68,13 +60,29 @@ public class Fireball : Projectile, IAttackable
         // Set projectile direction
         moveDirection = Time.fixedDeltaTime * speed * (isLeft ? Vector3.left : Vector3.right);
 
+        gameObject.SetActive(true);
+
+        StartCoroutine(Activate(startPos, isLeft, sizeEff));
+    }
+
+    public override void Clear()
+    {
+        GameManager.ObjectPool.ReturnToPool(gameObject);
+        gameObject.SetActive(false);
+    }
+
+    protected override IEnumerator Activate(Vector3 startPos, bool isLeft, float sizeEff = 1f)
+    {
         float timer = 0f;
         while (timer < duration)
         {
             dnfRigidbody.MoveDirection(moveDirection);
-
-            timer += Time.fixedDeltaTime;
+            
+            AttackHitbox.CalculateHitbox();
+            
             yield return Utilities.WaitForFixedUpdate;
+            
+            timer += Time.fixedDeltaTime;
 
             if (CalculateOnHit(GameManager.Room.Monsters))
             {

@@ -51,14 +51,12 @@ public class ObjectPoolManager : MonoBehaviour
         }
 
         GameObject gameObject = poolDictionary[tag].Dequeue();
-        gameObject.SetActive(true);
 
         return gameObject;
     }
 
     public void ReturnToPool(GameObject gameObject)
     {
-        gameObject.SetActive(false);
         poolDictionary[gameObject.name].Enqueue(gameObject);
     }
 

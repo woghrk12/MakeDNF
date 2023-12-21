@@ -109,11 +109,6 @@ public class Hitbox : MonoBehaviour
         dnfTransform = GetComponent<DNFTransform>();
     }
 
-    private void Update()
-    {
-        CalculateHitbox();
-    }
-
     #endregion Unity Events
 
     #region Methods
@@ -121,7 +116,7 @@ public class Hitbox : MonoBehaviour
     /// <summary>
     /// Calculate the hitbox by using the value according to DNF transform.
     /// </summary>
-    private void CalculateHitbox()
+    public void CalculateHitbox()
     {
         Vector3 position = dnfTransform.Position;
         float localScale = dnfTransform.LocalScale;
