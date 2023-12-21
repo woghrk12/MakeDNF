@@ -43,7 +43,7 @@ public partial class BaseAttack_FireHero
 
             // Instantiate the projectile
             DNFTransform characterTransform = stateController.character.DNFTransform;
-            GameManager.ObjectPool.SpawnFromPool("Fireball_1").GetComponent<Projectile>().Shot(characterTransform.Position, characterTransform.IsLeft);
+            GameManager.ObjectPool.SpawnFromPool("Fireball_1_FireHero").GetComponent<Projectile>().Shot(characterTransform.Position, characterTransform.IsLeft);
 
             // Post-delay
             yield return Utilities.WaitForSeconds(postDelay);
