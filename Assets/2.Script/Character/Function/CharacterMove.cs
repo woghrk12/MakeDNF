@@ -74,8 +74,6 @@ public class CharacterMove : MonoBehaviour
     /// </summary>
     public void Jump()
     {
-        if (!dnfRigidbody.IsGround) return;
-
         animator.SetTrigger(doJumpHash);
         animator.SetBool(isJumpHash, true);
 

@@ -81,6 +81,7 @@ public class Character : MonoBehaviour
     public void OnJumpButtonPressed()
     {
         if (!CanJump) return;
+        if (!dnfRigidbody.IsGround) return;
 
         moveController.Jump();
     }
