@@ -5,10 +5,10 @@ public class KeyboardJoystick : PlayerJoystick
     #region Variables
 
     [Header("KeyCodes for directional input")]
-    [SerializeField] private KeyCode upKeyCode = KeyCode.None;
-    [SerializeField] private KeyCode downKeyCode = KeyCode.None;
-    [SerializeField] private KeyCode leftKeyCode = KeyCode.None;
-    [SerializeField] private KeyCode rightKeyCode = KeyCode.None;
+    private KeyCode upKeyCode = KeyCode.UpArrow;
+    private KeyCode downKeyCode = KeyCode.DownArrow;
+    private KeyCode leftKeyCode = KeyCode.LeftArrow;
+    private KeyCode rightKeyCode = KeyCode.RightArrow;
 
     /// <summary>
     /// The last input direction of horizontal movement.
