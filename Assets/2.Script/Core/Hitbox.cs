@@ -121,10 +121,30 @@ public class Hitbox : MonoBehaviour
         Vector3 position = dnfTransform.Position;
         float localScale = dnfTransform.LocalScale;
 
-        position += Offset;
+        Vector3 minHitboxPos = Offset - new Vector3(Size.x * Pivot.x * localScale, Size.y * Pivot.y * localScale, Size.z * Pivot.z * localScale);
+        Vector3 maxHitboxPos = Offset + new Vector3(Size.x * (1f - Pivot.x) * localScale, Size.y * (1f - Pivot.y) * localScale, Size.z * (1f - Pivot.z) * localScale);
 
-        minHitboxPos = position - new Vector3(Size.x * Pivot.x * localScale, Size.y * Pivot.y * localScale, Size.z * Pivot.z * localScale);
-        maxHitboxPos = position + new Vector3(Size.x * (1f - Pivot.x) * localScale, Size.y * (1f - Pivot.y) * localScale, Size.z * (1f - Pivot.z) * localScale);
+        if (dnfTransform.IsLeft)
+        {
+            this.minHitboxPos = position + new Vector3(-maxHitboxPos.x, minHitboxPos.y, -maxHitboxPos.z);
+            this.maxHitboxPos = position + new Vector3(-minHitboxPos.x, maxHitboxPos.y, -minHitboxPos.z);
+        }
+        else
+        {
+            this.minHitboxPos = position + minHitboxPos;
+            this.maxHitboxPos = position + maxHitboxPos;
+        }
+        /*
+        if (dnfTransform.IsLeft)
+        {
+            this.minHitboxPos = position - maxHitboxPos;
+            this.maxHitboxPos = position + minHitboxPos;
+        }
+        else
+        {
+            this.minHitboxPos = position - minHitboxPos;
+            this.maxHitboxPos = position + maxHitboxPos;
+        }*/
     }
 
     #region AABB Collision
