@@ -5,6 +5,8 @@ public class DNFRigidbody : MonoBehaviour
 {
     #region Variables
 
+    [SerializeField] private float gravityScale = 1f;
+
     private DNFTransform dnfTransform = null;
 
     private Vector3 gravity = new Vector3(0f, -9.81f, 0f);
@@ -55,7 +57,7 @@ public class DNFRigidbody : MonoBehaviour
         velocity.z = xzVelocity.z;
 
         // Calculate the velocity of Y axis
-        velocity += gravity;
+        velocity += gravity * gravityScale;
 
         if (velocity.y < 0f && dnfTransform.Y <= 0f)
         {
