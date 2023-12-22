@@ -45,6 +45,7 @@ public class Character : MonoBehaviour
         Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
         attackController.RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<BaseAttack_FireHero>());
         attackController.RegisterSkill(EKeyName.SKILL1, FindObjectOfType<Meteor_FireHero>());
+        attackController.RegisterSkill(EKeyName.SKILL2, FindObjectOfType<ScatterFlame_FireHero>());
 
         GameManager.Input.SetMovementDelegate(OnJoystickMoved);
 
