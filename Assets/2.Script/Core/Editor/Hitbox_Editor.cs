@@ -52,6 +52,8 @@ public class Hitbox_Editor : Editor
 
     private void OnSceneGUI()
     {
+        if (Application.isPlaying) return;
+
         if (hitbox == null) return;
 
         if (hitbox.HitboxType == EHitboxType.NONE) return;
@@ -60,12 +62,6 @@ public class Hitbox_Editor : Editor
         localScale = scaleTransform.localScale.x;
 
         DrawHitbox();
-
-        if (Application.isPlaying)
-        {
-            editMode = EHitboxEditMode.NONE;
-            return;
-        }
 
         Event curEvent = Event.current;
         if (curEvent.type == EventType.KeyDown)
