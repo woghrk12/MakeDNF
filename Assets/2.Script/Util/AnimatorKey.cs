@@ -14,6 +14,7 @@ public class AnimatorKey
         public class FireHero
         {
             public static readonly string BASE_ATTACK = "BaseAttack";
+            public static readonly string METEOR = "Meteor";
         }
     }
 }
