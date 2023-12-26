@@ -44,7 +44,7 @@ public partial class ScatterFlame_FireHero
 
             // Instantiate the projectile
             DNFTransform characterTransform = stateController.character.DNFTransform;
-            GameManager.ObjectPool.SpawnFromPool("Side_Flame_FireHero").GetComponent<Projectile>().Shot(characterTransform.Position, characterTransform.IsLeft);
+            GameManager.ObjectPool.SpawnFromPool("Side_Flame_FireHero").GetComponent<Projectile>().Shot(characterTransform);
 
             // Post-delay 
             yield return Utilities.WaitForSeconds(postDelay);

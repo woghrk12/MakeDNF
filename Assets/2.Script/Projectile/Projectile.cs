@@ -23,11 +23,11 @@ public abstract class Projectile : MonoBehaviour
 
     #region Methods
 
-    public abstract void Shot(Vector3 startPos, bool isLeft, float sizeEff = 1f);
+    public abstract void Shot(DNFTransform dnfTransform, float sizeEff = 1f);
     public virtual void Cancel() { }
     public virtual void Clear() { }
 
-    protected abstract IEnumerator Activate(Vector3 startPos, bool isLeft, float sizeEff = 1f);
+    protected abstract IEnumerator Activate(DNFTransform dnfTransform, float sizeEff = 1f);
 
     #endregion Methods
 }

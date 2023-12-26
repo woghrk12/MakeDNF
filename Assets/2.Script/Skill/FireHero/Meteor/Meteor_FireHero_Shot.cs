@@ -44,7 +44,7 @@ public partial class Meteor_FireHero
 
             // Instantiate the projectile
             DNFTransform characterTransform = stateController.character.DNFTransform;
-            GameManager.ObjectPool.SpawnFromPool("Meteor_FireHero").GetComponent<Projectile>().Shot(characterTransform.Position, characterTransform.IsLeft, stateController.sizeEff);
+            GameManager.ObjectPool.SpawnFromPool("Meteor_FireHero").GetComponent<Projectile>().Shot(characterTransform, stateController.sizeEff);
 
             // Post-delay
             yield return Utilities.WaitForSeconds(postDelay);

@@ -55,22 +55,22 @@ public class Meteor : Projectile, IAttackable
 
     #region Override    
 
-    public override void Shot(Vector3 startPos, bool isLeft, float sizeEff = 1)
+    public override void Shot(DNFTransform dnfTransform, float sizeEff = 1)
     {
         // Set projectile transform
-        dnfTransform.Position = startPos + new Vector3(0f, 6f, 0f);
-        dnfTransform.IsLeft = isLeft;
+        dnfTransform.Position = dnfTransform.Position + new Vector3(0f, 6f, 0f);
+        dnfTransform.IsLeft = dnfTransform.IsLeft;
         dnfTransform.LocalScale = sizeEff;
 
         // Set projectile direction
-        moveDirection = Time.fixedDeltaTime * speed * ((isLeft ? Vector3.left : Vector3.right) + Vector3.down).normalized;
+        moveDirection = Time.fixedDeltaTime * speed * ((dnfTransform.IsLeft ? Vector3.left : Vector3.right) + Vector3.down).normalized;
 
         gameObject.SetActive(true);
 
-        StartCoroutine(Activate(startPos, isLeft, sizeEff));
+        StartCoroutine(Activate(dnfTransform, sizeEff));
     }
 
-    protected override IEnumerator Activate(Vector3 startPos, bool isLeft, float sizeEff = 1)
+    protected override IEnumerator Activate(DNFTransform dnfTransform, float sizeEff = 1)
     {
         alreadyHitObjects.Clear();
 
@@ -85,7 +85,7 @@ public class Meteor : Projectile, IAttackable
             CalculateOnHit(GameManager.Room.Monsters);
         }
 
-        GameManager.ObjectPool.SpawnFromPool("Ground_Explosion_FireHero").GetComponent<Projectile>().Shot(dnfTransform.Position, dnfTransform.IsLeft, sizeEff);
+        GameManager.ObjectPool.SpawnFromPool("Ground_Explosion_FireHero").GetComponent<Projectile>().Shot(dnfTransform, sizeEff);
 
         Clear();
     }

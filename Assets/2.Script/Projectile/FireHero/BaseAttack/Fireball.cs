@@ -50,19 +50,19 @@ public class Fireball : Projectile, IAttackable
 
     #region Override 
 
-    public override void Shot(Vector3 startPos, bool isLeft, float sizeEff = 1)
+    public override void Shot(DNFTransform dnfTransform, float sizeEff = 1)
     {
         // Set projectile transform
-        dnfTransform.Position = startPos;
-        dnfTransform.IsLeft = isLeft;
+        dnfTransform.Position = dnfTransform.Position;
+        dnfTransform.IsLeft = dnfTransform.IsLeft;
         dnfTransform.LocalScale = sizeEff;
 
         // Set projectile direction
-        moveDirection = Time.fixedDeltaTime * speed * (isLeft ? Vector3.left : Vector3.right);
+        moveDirection = Time.fixedDeltaTime * speed * (dnfTransform.IsLeft ? Vector3.left : Vector3.right);
 
         gameObject.SetActive(true);
 
-        StartCoroutine(Activate(startPos, isLeft, sizeEff));
+        StartCoroutine(Activate(dnfTransform, sizeEff));
     }
 
     public override void Clear()
@@ -71,7 +71,7 @@ public class Fireball : Projectile, IAttackable
         gameObject.SetActive(false);
     }
 
-    protected override IEnumerator Activate(Vector3 startPos, bool isLeft, float sizeEff = 1f)
+    protected override IEnumerator Activate(DNFTransform dnfTransform, float sizeEff = 1f)
     {
         float timer = 0f;
         while (timer < duration)
