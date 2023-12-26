@@ -10,6 +10,9 @@ public partial class Meteor_FireHero
 
         private Meteor_FireHero stateController = null;
 
+        private Animator characterAnimator = null;
+        private DNFTransform characterTransform = null;
+
         private int stateHash = 0;
 
         private float preDelay = 0f;
@@ -19,9 +22,12 @@ public partial class Meteor_FireHero
 
         #region Constructor
 
-        public Shot(Skill skill) : base(skill)
+        public Shot(Skill stateController, Character character) : base(stateController, character)
         {
-            stateController = skill as Meteor_FireHero;
+            this.stateController = stateController as Meteor_FireHero;
+
+            characterAnimator = character.Animator;
+            characterTransform = character.DNFTransform;
 
             stateHash = Animator.StringToHash(AnimatorKey.Character.FireHero.METEOR);
 
@@ -37,13 +43,12 @@ public partial class Meteor_FireHero
 
         public override IEnumerator Activate()
         {
-            stateController.animator.SetTrigger(stateHash);
+            characterAnimator.SetTrigger(stateHash);
 
             // Pre-delay
             yield return Utilities.WaitForSeconds(preDelay);
 
             // Instantiate the projectile
-            DNFTransform characterTransform = stateController.character.DNFTransform;
             GameManager.ObjectPool.SpawnFromPool("Meteor_FireHero").GetComponent<Projectile>().Shot(characterTransform, stateController.sizeEff);
 
             // Post-delay

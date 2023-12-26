@@ -10,6 +10,8 @@ public partial class Meteor_FireHero
 
         private Meteor_FireHero stateController = null;
 
+        private Animator characterAnimator = null;
+
         private int stateHash = 0;
 
         private float preDelay = 0f;
@@ -21,9 +23,11 @@ public partial class Meteor_FireHero
 
         #region Constructor
 
-        public Charging(Skill skill) : base(skill)
+        public Charging(Skill stateController, Character character) : base(stateController, character)
         {
-            stateController = skill as Meteor_FireHero;
+            this.stateController = stateController as Meteor_FireHero;
+
+            characterAnimator = character.Animator;
 
             stateHash = Animator.StringToHash(AnimatorKey.Character.FireHero.METEOR);
 
@@ -38,7 +42,7 @@ public partial class Meteor_FireHero
 
         public override IEnumerator Activate()
         {
-            stateController.animator.SetTrigger(stateHash);
+            characterAnimator.SetTrigger(stateHash);
 
             isCharging = true;
             countCharging = 0;

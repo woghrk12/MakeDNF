@@ -8,6 +8,8 @@ public partial class Meteor_FireHero : Skill
 
     #region Variables
 
+    private Character character = null;
+
     private float sizeEff = 1f;
 
     #endregion Variables
@@ -18,9 +20,9 @@ public partial class Meteor_FireHero : Skill
 
     public override void Init(Character character)
     {
-        base.Init(character);
+        this.character = character;
 
-        stateList.Add(new Charging(this));
+        stateList.Add(new Charging(this, character));
         stateList.Add(new Shot(this));
     }
 
