@@ -23,7 +23,7 @@ public partial class Meteor_FireHero : Skill
         this.character = character;
 
         stateList.Add(new Charging(this, character));
-        stateList.Add(new Shot(this));
+        stateList.Add(new Shot(this, character));
     }
 
     public override bool CheckCanUseSkill(Skill activeSkill = null)
