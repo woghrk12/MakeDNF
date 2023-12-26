@@ -4,7 +4,7 @@ public abstract class SkillState
 {
     #region Constructor
 
-    public SkillState(Skill stateController) { }
+    public SkillState(Skill stateController, Character character) { }
 
     #endregion Constructor
 

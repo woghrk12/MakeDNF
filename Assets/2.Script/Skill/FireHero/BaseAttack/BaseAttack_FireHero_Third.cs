@@ -7,7 +7,8 @@ public partial class BaseAttack_FireHero
     {
         #region Variables
 
-        private BaseAttack_FireHero stateController = null;
+        private Animator characterAnimator = null;
+        private DNFTransform characterTransform = null;
 
         private int stateHash = 0;
 
@@ -18,9 +19,10 @@ public partial class BaseAttack_FireHero
 
         #region Constructor
 
-        public Third(Skill skill) : base(skill)
+        public Third(Skill stateController, Character character) : base(stateController, character)
         {
-            stateController = skill as BaseAttack_FireHero;
+            characterAnimator = character.Animator;
+            characterTransform = character.DNFTransform;
 
             stateHash = Animator.StringToHash(AnimatorKey.Character.FireHero.BASE_ATTACK);
 
@@ -36,13 +38,12 @@ public partial class BaseAttack_FireHero
 
         public override IEnumerator Activate()
         {
-            stateController.animator.SetTrigger(stateHash);
+            characterAnimator.SetTrigger(stateHash);
 
             // Pre-delay
             yield return Utilities.WaitForSeconds(preDelay);
 
             // Instantiate the projectile
-            DNFTransform characterTransform = stateController.character.DNFTransform;
             GameManager.ObjectPool.SpawnFromPool("Fireball_1_FireHero").GetComponent<Projectile>().Shot(characterTransform);
 
             // Post-delay

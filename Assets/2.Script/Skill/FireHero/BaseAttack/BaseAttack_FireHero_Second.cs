@@ -9,6 +9,9 @@ public partial class BaseAttack_FireHero
 
         private BaseAttack_FireHero stateController = null;
 
+        private Animator characterAnimator = null;
+        private DNFTransform characterTransform = null;
+
         private int stateHash = 0;
 
         private bool isBlockKey = true;
@@ -20,9 +23,12 @@ public partial class BaseAttack_FireHero
 
         #region Constructor
 
-        public Second(Skill skill) : base(skill)
+        public Second(Skill stateController, Character character) : base(stateController, character)
         {
-            stateController = skill as BaseAttack_FireHero;
+            this.stateController = stateController as BaseAttack_FireHero;
+
+            characterAnimator = character.Animator;
+            characterTransform = character.DNFTransform;
 
             stateHash = Animator.StringToHash(AnimatorKey.Character.FireHero.BASE_ATTACK);
 
@@ -39,7 +45,7 @@ public partial class BaseAttack_FireHero
         public override IEnumerator Activate()
         {
             isBlockKey = true;
-            stateController.animator.SetTrigger(stateHash);
+            characterAnimator.SetTrigger(stateHash);
 
             // Pre-delay
             yield return Utilities.WaitForSeconds(preDelay);
@@ -47,7 +53,6 @@ public partial class BaseAttack_FireHero
             isBlockKey = false;
 
             // Instantiate the projectile
-            DNFTransform characterTransform = stateController.character.DNFTransform;
             GameManager.ObjectPool.SpawnFromPool("Fireball_2_FireHero").GetComponent<Projectile>().Shot(characterTransform);
 
             // Post-delay

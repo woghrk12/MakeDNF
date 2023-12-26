@@ -7,6 +7,8 @@ public partial class BaseAttack_FireHero : Skill
 
     #region Variables
 
+    private Character character = null;
+
     private bool isContinue = false;
 
     #endregion Variables
@@ -17,11 +19,11 @@ public partial class BaseAttack_FireHero : Skill
 
     public override void Init(Character character)
     {
-        base.Init(character);
+        this.character = character;
 
-        stateList.Add(new First(this));
-        stateList.Add(new Second(this));
-        stateList.Add(new Third(this));
+        stateList.Add(new First(this, character));
+        stateList.Add(new Second(this, character));
+        stateList.Add(new Third(this, character));
     }
 
     public override bool CheckCanUseSkill(Skill activeSkill = null)
