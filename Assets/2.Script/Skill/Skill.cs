@@ -18,7 +18,7 @@ public abstract class Skill : MonoBehaviour
 
     protected Character character = null;
 
-    protected Animator animator = null;
+    protected Animator characterAnimator = null;
 
     [SerializeField] protected SkillStat skillStat;
 
@@ -38,10 +38,10 @@ public abstract class Skill : MonoBehaviour
 
     #region Methods
 
-    public virtual void Init(Character character, Animator animator)
+    public virtual void Init(Character character)
     {
         this.character = character;
-        this.animator = animator;
+        characterAnimator = character.Animator;
     }
 
     public abstract bool CheckCanUseSkill(Skill activeSkill = null);

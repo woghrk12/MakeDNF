@@ -6,6 +6,8 @@ public class Character : MonoBehaviour
 {
     #region Variables
 
+    private Animator animator = null;
+
     private DNFTransform dnfTransform = null;
     private DNFRigidbody dnfRigidbody = null;
 
@@ -21,7 +23,10 @@ public class Character : MonoBehaviour
 
     #region Properties
 
+    public Animator Animator => animator;
+
     public DNFTransform DNFTransform => dnfTransform;
+    public DNFRigidbody DNFRigidbody => dnfRigidbody;
 
     #endregion Properties
 
@@ -29,14 +34,16 @@ public class Character : MonoBehaviour
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
+
         dnfTransform = GetComponent<DNFTransform>();
         dnfRigidbody = GetComponent<DNFRigidbody>();
 
         moveController = GetComponent<CharacterMove>();
         attackController = GetComponent<CharacterAttack>();
 
-        moveController.Init();
-        attackController.Init(this, dnfTransform);
+        moveController.Init(this);
+        attackController.Init(this);
     }
 
     private void Start()

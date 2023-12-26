@@ -6,13 +6,12 @@ public class CharacterAttack : MonoBehaviour
 {
     #region Variables
 
-    private Animator animator = null;
+    private Character character = null;
+
+    private Animator characterAnimator = null;
 
     private int isAttackHash = 0;
     private int endAttackHash = 0;
-
-    private Character character = null;
-    private DNFTransform dnfTransform = null;
 
     private Dictionary<EKeyName, Skill> registeredSkillDictionary = new();
 
@@ -23,15 +22,13 @@ public class CharacterAttack : MonoBehaviour
 
     #region Methods
 
-    public void Init(Character character, DNFTransform dnfTransform)
+    public void Init(Character character)
     {
-        animator = GetComponent<Animator>();
+        this.character = character;
+        characterAnimator = character.Animator;
 
         isAttackHash = Animator.StringToHash(AnimatorKey.Character.IS_ATTACK);
         endAttackHash = Animator.StringToHash(AnimatorKey.Character.END_ATTACK);
-
-        this.character = character;
-        this.dnfTransform = dnfTransform;
     }
 
     public void RegisterSkill(EKeyName keyName, Skill skill)
@@ -52,7 +49,7 @@ public class CharacterAttack : MonoBehaviour
                     registeredSkillDictionary.Add(keyName, skill);
                 }
 
-                skill.Init(character, animator);
+                skill.Init(character);
                 break;
 
             default:
@@ -73,12 +70,12 @@ public class CharacterAttack : MonoBehaviour
 
     private IEnumerator UseSkill(Skill skill)
     {
-        animator.SetBool(isAttackHash, true);
+        characterAnimator.SetBool(isAttackHash, true);
 
         yield return skill.Activate();
 
-        animator.SetBool(isAttackHash, false);
-        animator.SetTrigger(endAttackHash);
+        characterAnimator.SetBool(isAttackHash, false);
+        characterAnimator.SetTrigger(endAttackHash);
 
         attackCo = null;
         activeSkill = null;
