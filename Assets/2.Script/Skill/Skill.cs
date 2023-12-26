@@ -16,10 +16,6 @@ public abstract class Skill : MonoBehaviour
 {
     #region Variables
 
-    protected Character character = null;
-
-    protected Animator characterAnimator = null;
-
     [SerializeField] protected SkillStat skillStat;
 
     protected List<SkillState> stateList = new();
@@ -38,46 +34,18 @@ public abstract class Skill : MonoBehaviour
 
     #region Methods
 
-    public virtual void Init(Character character)
-    {
-        this.character = character;
-        characterAnimator = character.Animator;
-    }
-
+    public abstract void Init(Character character);
     public abstract bool CheckCanUseSkill(Skill activeSkill = null);
     public abstract IEnumerator Activate();
 
-    public virtual void Cancel() 
-    {
-        if (activeState == null) return;
+    public virtual void Cancel() { }
 
-        activeState.Cancel();
-        activeState = null;
-    }
-
-    public virtual void Clear() 
-    {
-        activeState.Clear();
-        activeState = null;
-
-        character.CanMove = true;
-        character.CanJump = true;
-    }
+    public virtual void Clear() { }
 
     #region Events
 
-    public void OnPressed()
-    {
-        if (activeState == null) return;
-
-        activeState.OnPressed();
-    }
-    public void OnReleased()
-    {
-        if (activeState == null) return;
-
-        activeState.OnReleased();
-    }
+    public virtual void OnPressed() { }
+    public virtual void OnReleased() { }
 
     #endregion Events
 
