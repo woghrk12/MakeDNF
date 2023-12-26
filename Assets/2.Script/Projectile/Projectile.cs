@@ -6,28 +6,17 @@ public abstract class Projectile : MonoBehaviour
 {
     #region Variables
 
-    protected DNFTransform dnfTransform = null;
-    
     protected List<Hitbox> targetList = new();
 
     #endregion Variables
 
-    #region Unity Events
-
-    protected virtual void Awake()
-    {
-        dnfTransform = GetComponent<DNFTransform>();
-    }
-
-    #endregion Unity Events
-
     #region Methods
 
-    public abstract void Shot(DNFTransform dnfTransform, float sizeEff = 1f);
+    public abstract void Shot(DNFTransform characterTransform, float sizeEff = 1f);
     public virtual void Cancel() { }
     public virtual void Clear() { }
 
-    protected abstract IEnumerator Activate(DNFTransform dnfTransform, float sizeEff = 1f);
+    protected abstract IEnumerator Activate();
 
     #endregion Methods
 }

@@ -6,6 +6,8 @@ public class GroundExplosion : Projectile, IAttackable
 {
     #region Variables
 
+    private DNFTransform dnfTransform = null;
+
     private List<IDamagable> alreadyHitObjects = new();
 
     #endregion Variables
@@ -36,9 +38,9 @@ public class GroundExplosion : Projectile, IAttackable
 
     #region Unity Events
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
+        dnfTransform = GetComponent<DNFTransform>();
 
         AttackHitbox = GetComponent<Hitbox>();
     }
@@ -49,19 +51,19 @@ public class GroundExplosion : Projectile, IAttackable
 
     #region Override 
 
-    public override void Shot(DNFTransform dnfTransform, float sizeEff = 1)
+    public override void Shot(DNFTransform characterTransform, float sizeEff = 1f)
     {
         // Set projectile transform
-        dnfTransform.Position = dnfTransform.Position;
-        dnfTransform.IsLeft = dnfTransform.IsLeft;
+        dnfTransform.Position = characterTransform.Position;
+        dnfTransform.IsLeft = characterTransform.IsLeft;
         dnfTransform.LocalScale = sizeEff;
 
         gameObject.SetActive(true);
 
-        StartCoroutine(Activate(dnfTransform, sizeEff));
+        StartCoroutine(Activate());
     }
 
-    protected override IEnumerator Activate(DNFTransform dnfTransform, float sizeEff = 1)
+    protected override IEnumerator Activate()
     {
         alreadyHitObjects.Clear();
 

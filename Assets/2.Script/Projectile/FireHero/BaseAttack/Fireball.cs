@@ -6,6 +6,7 @@ public class Fireball : Projectile, IAttackable
 {
     #region Variables
 
+    private DNFTransform dnfTransform = null;
     private DNFRigidbody dnfRigidbody = null;
 
     [SerializeField] private float duration = 0f;
@@ -38,23 +39,23 @@ public class Fireball : Projectile, IAttackable
 
     #region Unity Events
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-
-        AttackHitbox = GetComponent<Hitbox>();
+        dnfTransform = GetComponent<DNFTransform>();
         dnfRigidbody = GetComponent<DNFRigidbody>();
+        
+        AttackHitbox = GetComponent<Hitbox>();
     }
 
     #endregion Unity Events
 
     #region Override 
 
-    public override void Shot(DNFTransform dnfTransform, float sizeEff = 1)
+    public override void Shot(DNFTransform characterTransform, float sizeEff = 1f)
     {
-        // Set projectile transform
-        dnfTransform.Position = dnfTransform.Position;
-        dnfTransform.IsLeft = dnfTransform.IsLeft;
+        // Set projectile transform 
+        dnfTransform.Position = characterTransform.Position;
+        dnfTransform.IsLeft = characterTransform.IsLeft;
         dnfTransform.LocalScale = sizeEff;
 
         // Set projectile direction
@@ -62,7 +63,7 @@ public class Fireball : Projectile, IAttackable
 
         gameObject.SetActive(true);
 
-        StartCoroutine(Activate(dnfTransform, sizeEff));
+        StartCoroutine(Activate());
     }
 
     public override void Clear()
@@ -71,7 +72,7 @@ public class Fireball : Projectile, IAttackable
         gameObject.SetActive(false);
     }
 
-    protected override IEnumerator Activate(DNFTransform dnfTransform, float sizeEff = 1f)
+    protected override IEnumerator Activate()
     {
         float timer = 0f;
         while (timer < duration)

@@ -6,10 +6,12 @@ public class Meteor : Projectile, IAttackable
 {
     #region Variables
 
+    private DNFTransform dnfTransform = null;
     private DNFRigidbody dnfRigidbody = null;
 
     [SerializeField] private float speed = 0f;
     private Vector3 moveDirection = Vector3.zero;
+    private float sizeEff = 1f;
 
     private List<IDamagable> alreadyHitObjects = new();
 
@@ -41,12 +43,12 @@ public class Meteor : Projectile, IAttackable
 
     #region Unity Events
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
+        dnfTransform = GetComponent<DNFTransform>();
+        dnfRigidbody = GetComponent<DNFRigidbody>();
 
         AttackHitbox = GetComponent<Hitbox>();
-        dnfRigidbody = GetComponent<DNFRigidbody>();
     }
 
     #endregion Unity Events
@@ -55,11 +57,13 @@ public class Meteor : Projectile, IAttackable
 
     #region Override    
 
-    public override void Shot(DNFTransform dnfTransform, float sizeEff = 1)
+    public override void Shot(DNFTransform characterTransform, float sizeEff = 1f)
     {
+        this.sizeEff = sizeEff;
+
         // Set projectile transform
-        dnfTransform.Position = dnfTransform.Position + new Vector3(0f, 6f, 0f);
-        dnfTransform.IsLeft = dnfTransform.IsLeft;
+        dnfTransform.Position = characterTransform.Position + new Vector3(0f, 6f, 0f);
+        dnfTransform.IsLeft = characterTransform.IsLeft;
         dnfTransform.LocalScale = sizeEff;
 
         // Set projectile direction
@@ -67,10 +71,10 @@ public class Meteor : Projectile, IAttackable
 
         gameObject.SetActive(true);
 
-        StartCoroutine(Activate(dnfTransform, sizeEff));
+        StartCoroutine(Activate());
     }
 
-    protected override IEnumerator Activate(DNFTransform dnfTransform, float sizeEff = 1)
+    protected override IEnumerator Activate()
     {
         alreadyHitObjects.Clear();
 
