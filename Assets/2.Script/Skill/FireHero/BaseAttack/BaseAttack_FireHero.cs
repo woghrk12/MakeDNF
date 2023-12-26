@@ -63,6 +63,19 @@ public partial class BaseAttack_FireHero : Skill
         Clear();
     }
 
+    public override void OnPressed()
+    {
+        if (activeState == null) return;
+
+        activeState.OnPressed();
+    }
+
+    public override void Clear()
+    {
+        character.CanMove = true;
+        character.CanJump = true;
+    }
+
     #endregion Override
 
     #endregion Methods
