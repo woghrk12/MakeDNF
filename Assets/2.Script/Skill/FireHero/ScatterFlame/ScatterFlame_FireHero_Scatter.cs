@@ -8,7 +8,8 @@ public partial class ScatterFlame_FireHero
     {
         #region Variables
 
-        private ScatterFlame_FireHero stateController = null;
+        private Animator characterAnimator = null;
+        private DNFTransform characterTransform = null;
 
         private int stateHash = 0;
 
@@ -19,9 +20,10 @@ public partial class ScatterFlame_FireHero
 
         #region Constructor
 
-        public Scatter(Skill skill) : base(skill)
+        public Scatter(Skill stateController, Character character) : base(stateController, character)
         {
-            stateController = skill as ScatterFlame_FireHero;
+            characterAnimator = character.Animator;
+            characterTransform = character.DNFTransform;
 
             stateHash = Animator.StringToHash(AnimatorKey.Character.FireHero.SCATTER_FLAME);
 
@@ -37,13 +39,12 @@ public partial class ScatterFlame_FireHero
 
         public override IEnumerator Activate()
         {
-            stateController.animator.SetTrigger(stateHash);
+            characterAnimator.SetTrigger(stateHash);
 
             // Pre-delay
             yield return Utilities.WaitForSeconds(preDelay);
 
             // Instantiate the projectile
-            DNFTransform characterTransform = stateController.character.DNFTransform;
             GameManager.ObjectPool.SpawnFromPool("Side_Flame_FireHero").GetComponent<Projectile>().Shot(characterTransform);
 
             // Post-delay 

@@ -6,15 +6,21 @@ public partial class ScatterFlame_FireHero : Skill
 {
     private enum EState { NONE = -1, SCATTER }
 
+    #region Variables
+
+    private Character character = null;
+
+    #endregion Variables
+
     #region Methods
 
     #region Override 
 
     public override void Init(Character character)
     {
-        base.Init(character);
+        this.character = character;
 
-        stateList.Add(new Scatter(this));
+        stateList.Add(new Scatter(this, character));
     }
 
     public override bool CheckCanUseSkill(Skill activeSkill = null)
