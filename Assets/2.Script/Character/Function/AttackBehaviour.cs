@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterAttack : MonoBehaviour
+public class AttackBehaviour : MonoBehaviour
 {
     #region Variables
 
@@ -80,8 +80,14 @@ public class CharacterAttack : MonoBehaviour
         attackCo = null;
         activeSkill = null;
     }
-    
+
     #region Events
+
+    public void OnUpdate() { }
+
+    public void OnFixedUpdate() { }
+    public void OnLateUpdate() { }
+
 
     public void OnSkillButtonPressed(EKeyName keyName)
     {

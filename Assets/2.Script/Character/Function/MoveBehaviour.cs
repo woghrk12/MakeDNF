@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class CharacterMove : MonoBehaviour
+public class MoveBehaviour : MonoBehaviour
 {
     #region Variables
 
