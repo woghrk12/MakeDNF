@@ -1,58 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class Character : BehaviourController
 {
     #region Variables
-
-    private Animator animator = null;
-
-    private DNFTransform dnfTransform = null;
-    private DNFRigidbody dnfRigidbody = null;
-
-    [Header("Character components")]
-    private CharacterMove moveController = null;
-    private CharacterAttack attackController = null;
-
-    public bool CanMove = true;
-    public bool CanJump = true;
-    public bool CanAttack = true;
+    
+    [Header("Character behaviours")]
+    private AttackBehaviour attackBehaviour = null;
 
     #endregion Variables
 
-    #region Properties
-
-    public Animator Animator => animator;
-
-    public DNFTransform DNFTransform => dnfTransform;
-    public DNFRigidbody DNFRigidbody => dnfRigidbody;
-
-    #endregion Properties
-
     #region Unity Events
 
-    private void Awake()
+    protected override void Awake()
     {
-        animator = GetComponent<Animator>();
+        base.Awake();
 
-        dnfTransform = GetComponent<DNFTransform>();
-        dnfRigidbody = GetComponent<DNFRigidbody>();
+        attackBehaviour = GetComponent<AttackBehaviour>();
 
-        moveController = GetComponent<CharacterMove>();
-        attackController = GetComponent<CharacterAttack>();
-
-        moveController.Init(this);
-        attackController.Init(this);
+        behaviourDictionary.Add(BehaviourCodeList.attackBehaviourCode, attackBehaviour);
     }
 
     private void Start()
     {
         // Debug
         Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
-        attackController.RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<BaseAttack_FireHero>());
-        attackController.RegisterSkill(EKeyName.SKILL1, FindObjectOfType<Meteor_FireHero>());
-        attackController.RegisterSkill(EKeyName.SKILL2, FindObjectOfType<ScatterFlame_FireHero>());
+        attackBehaviour.RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<BaseAttack_FireHero>());
+        attackBehaviour.RegisterSkill(EKeyName.SKILL1, FindObjectOfType<Meteor_FireHero>());
+        attackBehaviour.RegisterSkill(EKeyName.SKILL2, FindObjectOfType<ScatterFlame_FireHero>());
 
         GameManager.Input.SetMovementDelegate(OnJoystickMoved);
 
@@ -82,45 +56,42 @@ public class Character : MonoBehaviour
     {
         if (!CanMove) return;
 
-        moveController.Move(direction);
+        moveBehaviour.Move(direction);
     }
 
     public void OnJumpButtonPressed()
     {
         if (!CanJump) return;
-        if (!dnfRigidbody.IsGround) return;
 
-        moveController.Jump();
+        moveBehaviour.Jump();
     }
 
     public void OnAttackButtonPressed()
     {
-        attackController.OnSkillButtonPressed(EKeyName.BASEATTACK);
+        attackBehaviour.OnSkillButtonPressed(EKeyName.BASEATTACK);
         
-        if (!CanAttack) return;
-        if (!attackController.CheckCanAttack(EKeyName.BASEATTACK)) return;
+        if (!attackBehaviour.CheckCanAttack(EKeyName.BASEATTACK)) return;
 
-        attackController.Attack(EKeyName.BASEATTACK);
+        attackBehaviour.Attack(EKeyName.BASEATTACK);
     }
 
     public void OnAttackButtonReleased()
     {
-        attackController.OnSkillButtonReleased(EKeyName.BASEATTACK);
+        attackBehaviour.OnSkillButtonReleased(EKeyName.BASEATTACK);
     }
 
     public void OnSkillButtonPressed(EKeyName keyName)
     {
-        attackController.OnSkillButtonPressed(keyName);
+        attackBehaviour.OnSkillButtonPressed(keyName);
         
-        if (!CanAttack) return;
-        if (!attackController.CheckCanAttack(keyName)) return;
+        if (!attackBehaviour.CheckCanAttack(keyName)) return;
 
-        attackController.Attack(keyName);
+        attackBehaviour.Attack(keyName);
     }
 
     public void OnSkillButtonReleased(EKeyName keyName)
     {
-        attackController.OnSkillButtonReleased(keyName);
+        attackBehaviour.OnSkillButtonReleased(keyName);
     }
 
     #endregion Event Methods

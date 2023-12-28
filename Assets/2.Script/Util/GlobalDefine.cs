@@ -12,4 +12,10 @@ public class ResourcePath
     public static readonly string SCREEN_INPUT_SYSTEM = "Input/Screen Input System";
 }
 
+public class BehaviourCodeList
+{
+    public static readonly int idleBehaviourCode = typeof(IdleBehaviour).GetHashCode();
+    public static readonly int attackBehaviourCode = typeof(AttackBehaviour).GetHashCode();
+}
+
 public enum EKeyName { NONE = -1, BASEATTACK, JUMP, SKILL1, SKILL2, SKILL3, SKILL4, INVENTORY, SKILL, STATUS }

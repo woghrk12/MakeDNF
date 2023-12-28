@@ -2,34 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackBehaviour : MonoBehaviour
+public class AttackBehaviour : GenericBehaviour
 {
     #region Variables
 
-    private Character character = null;
-
-    private Animator characterAnimator = null;
+    private Dictionary<EKeyName, Skill> registeredSkillDictionary = new();
 
     private int isAttackHash = 0;
     private int endAttackHash = 0;
 
-    private Dictionary<EKeyName, Skill> registeredSkillDictionary = new();
-
-    private Coroutine attackCo = null;
-    private Skill activeSkill = null;
+    private Skill curSkill = null;
 
     #endregion Variables
 
-    #region Methods
+    #region Unity Events
 
-    public void Init(Character character)
+    protected override void Awake()
     {
-        this.character = character;
-        characterAnimator = character.Animator;
+        base.Awake();
 
         isAttackHash = Animator.StringToHash(AnimatorKey.Character.IS_ATTACK);
         endAttackHash = Animator.StringToHash(AnimatorKey.Character.END_ATTACK);
     }
+
+    #endregion Unity Events
+
+    #region Methods
 
     public void RegisterSkill(EKeyName keyName, Skill skill)
     {
@@ -49,7 +47,7 @@ public class AttackBehaviour : MonoBehaviour
                     registeredSkillDictionary.Add(keyName, skill);
                 }
 
-                skill.Init(character);
+                skill.Init(controller, this);
                 break;
 
             default:
@@ -59,35 +57,60 @@ public class AttackBehaviour : MonoBehaviour
 
     public bool CheckCanAttack(EKeyName keyName)
     {
-        return registeredSkillDictionary[keyName].CheckCanUseSkill(activeSkill);
+        return registeredSkillDictionary[keyName].CheckCanUseSkill(curSkill);
     }
 
     public void Attack(EKeyName keyName)
     {
-        activeSkill = registeredSkillDictionary[keyName];
-        attackCo = StartCoroutine(UseSkill(activeSkill));
+        curSkill = registeredSkillDictionary[keyName];
+
+        controller.SetBehaviour(behaviourCode);
     }
 
-    private IEnumerator UseSkill(Skill skill)
+    #region Override
+
+    public override void OnStart()
     {
-        characterAnimator.SetBool(isAttackHash, true);
+        controller.Animator.SetBool(isAttackHash, true);
 
-        yield return skill.Activate();
-
-        characterAnimator.SetBool(isAttackHash, false);
-        characterAnimator.SetTrigger(endAttackHash);
-
-        attackCo = null;
-        activeSkill = null;
+        curSkill.OnStart();
     }
+
+    public override void OnUpdate()
+    {
+        curSkill.OnUpdate();
+    }
+
+    public override void OnFixedUpdate()
+    {
+        curSkill.OnFixedUpdate();
+    }
+
+    public override void OnLateUpdate()
+    {
+        curSkill.OnLateUpdate();
+    }
+
+    public override void OnComplete()
+    {
+        controller.Animator.SetBool(isAttackHash, false);
+        controller.Animator.SetTrigger(endAttackHash);
+
+        curSkill = null;
+
+        controller.SetBehaviour(BehaviourCodeList.idleBehaviourCode);
+    }
+
+    public override void OnCancel()
+    {
+        controller.Animator.SetBool(isAttackHash, false);
+
+        curSkill = null;
+    }
+
+    #endregion Override
 
     #region Events
-
-    public void OnUpdate() { }
-
-    public void OnFixedUpdate() { }
-    public void OnLateUpdate() { }
-
 
     public void OnSkillButtonPressed(EKeyName keyName)
     {

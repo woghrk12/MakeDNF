@@ -1,15 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class MoveBehaviour : MonoBehaviour
+public class MoveBehaviour : GenericBehaviour
 {
     #region Variables
 
-    private Animator characterAnimator = null;
-
-    private DNFTransform characterTransform = null;
-    private DNFRigidbody characterRigidbody = null;
-    
     [Header("Scale variables for character movement")]
     [SerializeField] private float xMoveSpeed = 0f;
     [SerializeField] private float zMoveSpeed = 0f;
@@ -22,22 +17,20 @@ public class MoveBehaviour : MonoBehaviour
 
     #endregion Variables
 
-    #region Methods
+    #region Unity Events
 
-    /// <summary>
-    /// Initialize the variables and components for character movement.
-    /// </summary>
-    public void Init(Character character)
+    protected override void Awake()
     {
-        characterAnimator = character.Animator;
-
-        characterTransform = character.DNFTransform;
-        characterRigidbody = character.DNFRigidbody;
+        base.Awake();
 
         isWalkHash = Animator.StringToHash(AnimatorKey.Character.IS_WALK);
         doJumpHash = Animator.StringToHash(AnimatorKey.Character.DO_JUMP);
         isJumpHash = Animator.StringToHash(AnimatorKey.Character.IS_JUMP);
     }
+
+    #endregion Unity Events
+
+    #region Methods
 
     /// <summary>
     /// Move the character in the given direction in the DNF coordinate system.
@@ -46,17 +39,17 @@ public class MoveBehaviour : MonoBehaviour
     /// <param name="moveDir">The direction to move character</param>
     public void Move(Vector3 moveDir)
     {
-        characterAnimator.SetBool(isWalkHash, moveDir != Vector3.zero);
+        controller.Animator.SetBool(isWalkHash, moveDir != Vector3.zero);
 
         moveDir.x *= xMoveSpeed * Time.fixedDeltaTime;
         moveDir.z *= zMoveSpeed * Time.fixedDeltaTime;
 
         if (moveDir.x != 0f)
         {
-            characterTransform.IsLeft = moveDir.x < 0f;
+            controller.DNFTransform.IsLeft = moveDir.x < 0f;
         }
 
-        characterRigidbody.MoveDirection(moveDir);
+        controller.DNFRigidbody.MoveDirection(moveDir);
     }
 
     /// <summary>
@@ -65,10 +58,10 @@ public class MoveBehaviour : MonoBehaviour
     /// </summary>
     public void Jump()
     {
-        characterAnimator.SetTrigger(doJumpHash);
-        characterAnimator.SetBool(isJumpHash, true);
+        controller.Animator.SetTrigger(doJumpHash);
+        controller.Animator.SetBool(isJumpHash, true);
 
-        characterRigidbody.AddForce(new Vector3(0f, jumpPower, 0f));
+        controller.DNFRigidbody.AddForce(new Vector3(0f, jumpPower, 0f));
 
         StartCoroutine(CheckLanding());
     }
@@ -78,17 +71,17 @@ public class MoveBehaviour : MonoBehaviour
     /// </summary>
     private IEnumerator CheckLanding()
     {
-        while (characterRigidbody.Velocity.y > 0f)
+        while (controller.DNFRigidbody.Velocity.y > 0f)
         {
             yield return Utilities.WaitForFixedUpdate;
         }
 
-        while (!characterRigidbody.IsGround)
+        while (!controller.DNFRigidbody.IsGround)
         {
             yield return Utilities.WaitForFixedUpdate;
         }
 
-        characterAnimator.SetBool(isJumpHash, false);
+        controller.Animator.SetBool(isJumpHash, false);
     }
 
     #endregion Methods
