@@ -8,27 +8,20 @@ public partial class ScatterFlame_FireHero
     {
         #region Variables
 
-        private Animator characterAnimator = null;
-        private DNFTransform characterTransform = null;
-
-        private int stateHash = 0;
-
-        private float preDelay = 0f;
-        private float postDelay = 0f;
+        private ScatterFlame_FireHero stateController = null;
 
         #endregion Variables
 
         #region Constructor
 
-        public Scatter(Skill stateController, Character character) : base(stateController, character)
+        public Scatter(BehaviourController character, Skill stateController) : base(character, stateController)
         {
-            characterAnimator = character.Animator;
-            characterTransform = character.DNFTransform;
+            this.stateController = stateController as ScatterFlame_FireHero;
 
             stateHash = Animator.StringToHash(AnimatorKey.Character.FireHero.SCATTER_FLAME);
 
             preDelay = Time.deltaTime * 4f * 4f;
-            postDelay = Time.deltaTime * 4f * 4f;
+            postDelay = Time.deltaTime * 1f * 4f;
         }
 
         #endregion Constructor
@@ -37,18 +30,47 @@ public partial class ScatterFlame_FireHero
 
         #region Override
 
-        public override IEnumerator Activate()
+        public override void OnStart()
         {
-            characterAnimator.SetTrigger(stateHash);
+            timer = 0f;
+            isPreDelay = true;
+            isPostDelay = false;
 
-            // Pre-delay
-            yield return Utilities.WaitForSeconds(preDelay);
+            character.Animator.SetTrigger(stateHash);
+        }
 
-            // Instantiate the projectile
-            GameManager.ObjectPool.SpawnFromPool("Side_Flame_FireHero").GetComponent<Projectile>().Shot(characterTransform);
+        public override void OnUpdate()
+        {
+            timer += Time.deltaTime;
 
-            // Post-delay 
-            yield return Utilities.WaitForSeconds(postDelay);
+            if (isPreDelay)
+            {
+                if (timer < preDelay) return;
+
+                // Instantiate the projectile
+                GameManager.ObjectPool.SpawnFromPool("Side_Flame_FireHero").GetComponent<Projectile>().Shot(character.DNFTransform);
+
+                isPreDelay = false;
+                timer = 0f;
+            }
+            else if (isPostDelay)
+            {
+                if (timer < postDelay) return;
+
+                OnComplete();
+            }
+            else
+            {
+                if (character.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f) return;
+
+                isPostDelay = true;
+                timer = 0f;
+            }
+        }
+
+        public override void OnComplete()
+        {
+            stateController.OnComplete();
         }
 
         #endregion Override

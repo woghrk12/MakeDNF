@@ -18,8 +18,11 @@ public abstract class Skill : MonoBehaviour
 
     [SerializeField] protected SkillStat skillStat;
 
+    protected BehaviourController character = null;
+    protected AttackBehaviour attackController = null;
+
     protected List<SkillState> stateList = new();
-    protected SkillState activeState = null;
+    protected SkillState curState = null;
 
     #endregion Variables
 
@@ -34,18 +37,69 @@ public abstract class Skill : MonoBehaviour
 
     #region Methods
 
-    public abstract void Init(Character character);
-    public abstract bool CheckCanUseSkill(Skill activeSkill = null);
-    public abstract IEnumerator Activate();
+    public virtual void Init(BehaviourController character, AttackBehaviour attackController)
+    {
+        this.character = character;
+        this.attackController = attackController;
+    }
 
-    public virtual void Cancel() { }
+    public virtual bool CheckCanUseSkill(Skill activeSkill = null)
+    {
+        return true;
+    }
 
-    public virtual void Clear() { }
+    public void SetState(int index)
+    {
+        if (index < 0 || index >= stateList.Count)
+        {
+            throw new Exception($"Out of range. GameObject : {gameObject.name}, Input index : {index}");
+        }
+
+        curState.OnCancel();
+        curState = stateList[index];
+        curState.OnStart();
+    }
 
     #region Events
 
-    public virtual void OnPressed() { }
-    public virtual void OnReleased() { }
+    public virtual void OnStart() { }
+    public virtual void OnComplete() { }
+    public virtual void OnCancel() { }
+
+    public void OnUpdate() 
+    {
+        if (curState == null) return;
+
+        curState.OnUpdate();
+    }
+
+    public void OnFixedUpdate() 
+    {
+        if (curState == null) return;
+
+        curState.OnFixedUpdate();
+    }
+
+    public void OnLateUpdate() 
+    {
+        if (curState == null) return;
+
+        curState.OnLateUpdate();
+    }
+    
+    public void OnPressed() 
+    {
+        if (curState == null) return;
+
+        curState.OnPressed();
+    }
+
+    public void OnReleased() 
+    {
+        if (curState == null) return;
+
+        curState.OnReleased();
+    }
 
     #endregion Events
 

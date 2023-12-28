@@ -10,28 +10,20 @@ public partial class Meteor_FireHero
 
         private Meteor_FireHero stateController = null;
 
-        private Animator characterAnimator = null;
-
-        private int stateHash = 0;
-
-        private float preDelay = 0f;
-
         private bool isCharging = true;
+        private float chargingTime = 0.2f;
         private int countCharging = 0;
+        private int maxCountCharging = 5;
 
         #endregion Variables
 
         #region Constructor
 
-        public Charging(Skill stateController, Character character) : base(stateController, character)
+        public Charging(BehaviourController character, Skill stateController) : base(character, stateController)
         {
             this.stateController = stateController as Meteor_FireHero;
 
-            characterAnimator = character.Animator;
-
             stateHash = Animator.StringToHash(AnimatorKey.Character.FireHero.METEOR);
-
-            preDelay = Time.deltaTime * 4f * 4f;
         }
 
         #endregion Constructor
@@ -40,23 +32,33 @@ public partial class Meteor_FireHero
 
         #region Override
 
-        public override IEnumerator Activate()
+        public override void OnStart()
         {
-            characterAnimator.SetTrigger(stateHash);
+            timer = 0f;
 
             isCharging = true;
             countCharging = 0;
 
-            // Pre-delay
-            yield return Utilities.WaitForSeconds(preDelay);
+            character.Animator.SetTrigger(stateHash);
+        }
 
-            // Charging
-            while (isCharging && countCharging < 5)
+        public override void OnUpdate()
+        {
+            timer += Time.deltaTime;
+
+            if (character.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f) return;
+
+            if (isCharging && countCharging < maxCountCharging)
             {
-                yield return Utilities.WaitForSeconds(0.2f);
+                if (timer < chargingTime) return;
 
                 stateController.sizeEff += 0.2f;
                 countCharging++;
+                timer = 0f;
+            }
+            else
+            {
+                stateController.SetState((int)EState.SHOT);
             }
         }
 

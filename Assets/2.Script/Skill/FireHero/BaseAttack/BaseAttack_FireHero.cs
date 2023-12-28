@@ -5,25 +5,17 @@ public partial class BaseAttack_FireHero : Skill
 {
     private enum EState { NONE = -1, FIRST, SECOND, THIRD }
 
-    #region Variables
-
-    private Character character = null;
-
-    private bool isContinue = false;
-
-    #endregion Variables
-
     #region Methods
 
     #region Override
 
-    public override void Init(Character character)
+    public override void Init(BehaviourController character, AttackBehaviour attackController)
     {
-        this.character = character;
+        base.Init(character, attackController);
 
-        stateList.Add(new First(this, character));
-        stateList.Add(new Second(this, character));
-        stateList.Add(new Third(this, character));
+        stateList.Add(new First(character, this));
+        stateList.Add(new Second(character, this));
+        stateList.Add(new Third(character, this));
     }
 
     public override bool CheckCanUseSkill(Skill activeSkill = null)
@@ -31,49 +23,24 @@ public partial class BaseAttack_FireHero : Skill
         return activeSkill == null;
     }
 
-    public override IEnumerator Activate()
+    public override void OnStart()
     {
         character.CanMove = false;
         character.CanJump = false;
 
-        isContinue = false;
-        activeState = stateList[(int)EState.FIRST];
-        yield return activeState.Activate();
+        curState = stateList[(int)EState.FIRST];
 
-        if (!isContinue)
-        {
-            Clear();
-            yield break;
-        }
-
-        isContinue = false;
-        activeState = stateList[(int)EState.SECOND];
-        yield return activeState.Activate();
-
-        if (!isContinue)
-        {
-            Clear();
-            yield break;
-        }
-
-        isContinue = false;
-        activeState = stateList[(int)EState.THIRD];
-        yield return activeState.Activate();
-
-        Clear();
+        curState.OnStart();
     }
 
-    public override void OnPressed()
+    public override void OnComplete()
     {
-        if (activeState == null) return;
+        curState = null;
 
-        activeState.OnPressed();
-    }
-
-    public override void Clear()
-    {
         character.CanMove = true;
         character.CanJump = true;
+
+        attackController.OnComplete();
     }
 
     #endregion Override

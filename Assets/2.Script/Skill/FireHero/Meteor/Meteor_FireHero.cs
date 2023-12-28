@@ -8,8 +8,6 @@ public partial class Meteor_FireHero : Skill
 
     #region Variables
 
-    private Character character = null;
-
     private float sizeEff = 1f;
 
     #endregion Variables
@@ -18,12 +16,12 @@ public partial class Meteor_FireHero : Skill
 
     #region Override
 
-    public override void Init(Character character)
+    public override void Init(BehaviourController character, AttackBehaviour attackController)
     {
-        this.character = character;
+        base.Init(character, attackController);
 
-        stateList.Add(new Charging(this, character));
-        stateList.Add(new Shot(this, character));
+        stateList.Add(new Charging(character, this));
+        stateList.Add(new Shot(character, this));
     }
 
     public override bool CheckCanUseSkill(Skill activeSkill = null)
@@ -31,33 +29,26 @@ public partial class Meteor_FireHero : Skill
         return activeSkill == null;
     }
 
-    public override IEnumerator Activate()
+    public override void OnStart()
     {
         character.CanMove = false;
         character.CanJump = false;
 
         sizeEff = 1f;
 
-        activeState = stateList[(int)EState.CHARGING];
-        yield return activeState.Activate();
+        curState = stateList[(int)EState.CHARGING];
 
-        activeState = stateList[(int)EState.SHOT];
-        yield return activeState.Activate();
-
-        Clear();
+        curState.OnStart();
     }
 
-    public override void OnReleased()
+    public override void OnComplete()
     {
-        if (activeState == null) return;
+        curState = null;
 
-        activeState.OnReleased();
-    }
-
-    public override void Clear()
-    {
         character.CanMove = true;
         character.CanJump = true;
+
+        attackController.OnComplete();
     }
 
     #endregion Override

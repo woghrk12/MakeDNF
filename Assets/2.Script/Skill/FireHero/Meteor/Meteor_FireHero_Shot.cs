@@ -10,29 +10,18 @@ public partial class Meteor_FireHero
 
         private Meteor_FireHero stateController = null;
 
-        private Animator characterAnimator = null;
-        private DNFTransform characterTransform = null;
-
-        private int stateHash = 0;
-
-        private float preDelay = 0f;
-        private float postDelay = 0f;
-
         #endregion Variables
 
         #region Constructor
 
-        public Shot(Skill stateController, Character character) : base(stateController, character)
+        public Shot(BehaviourController character, Skill stateController) : base(character, stateController)
         {
             this.stateController = stateController as Meteor_FireHero;
-
-            characterAnimator = character.Animator;
-            characterTransform = character.DNFTransform;
 
             stateHash = Animator.StringToHash(AnimatorKey.Character.FireHero.METEOR);
 
             preDelay = Time.deltaTime * 4f * 4f;
-            postDelay = Time.deltaTime * 3f * 3f;
+            postDelay = Time.deltaTime * 1f * 4f;
         }
 
         #endregion Constructor
@@ -41,18 +30,47 @@ public partial class Meteor_FireHero
 
         #region Override 
 
-        public override IEnumerator Activate()
+        public override void OnStart()
         {
-            characterAnimator.SetTrigger(stateHash);
+            timer = 0f;
+            isPreDelay = true;
+            isPostDelay = false;
 
-            // Pre-delay
-            yield return Utilities.WaitForSeconds(preDelay);
+            character.Animator.SetTrigger(stateHash);
+        }
 
-            // Instantiate the projectile
-            GameManager.ObjectPool.SpawnFromPool("Meteor_FireHero").GetComponent<Projectile>().Shot(characterTransform, stateController.sizeEff);
+        public override void OnUpdate()
+        {
+            timer += Time.deltaTime;
 
-            // Post-delay
-            yield return Utilities.WaitForSeconds(postDelay);
+            if (isPreDelay)
+            {
+                if (timer < preDelay) return;
+
+                // Instantiate the projectile
+                GameManager.ObjectPool.SpawnFromPool("Meteor_FireHero").GetComponent<Projectile>().Shot(character.DNFTransform, stateController.sizeEff);
+
+                isPreDelay = false;
+                timer = 0f;
+            }
+            else if (isPostDelay)
+            {
+                if (timer < postDelay) return;
+
+                OnComplete();
+            }
+            else
+            {
+                if (character.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f) return;
+
+                isPostDelay = true;
+                timer = 0f;
+            }
+        }
+
+        public override void OnComplete()
+        {
+            stateController.OnComplete();
         }
 
         #endregion Override

@@ -6,21 +6,15 @@ public partial class ScatterFlame_FireHero : Skill
 {
     private enum EState { NONE = -1, SCATTER }
 
-    #region Variables
-
-    private Character character = null;
-
-    #endregion Variables
-
     #region Methods
 
     #region Override 
 
-    public override void Init(Character character)
+    public override void Init(BehaviourController character, AttackBehaviour attackController)
     {
-        this.character = character;
+        base.Init(character, attackController);
 
-        stateList.Add(new Scatter(this, character));
+        stateList.Add(new Scatter(character, this)); 
     }
 
     public override bool CheckCanUseSkill(Skill activeSkill = null)
@@ -28,21 +22,24 @@ public partial class ScatterFlame_FireHero : Skill
         return activeSkill == null;
     }
 
-    public override IEnumerator Activate()
+    public override void OnStart()
     {
         character.CanMove = false;
         character.CanJump = false;
 
-        activeState = stateList[(int)EState.SCATTER];
-        yield return activeState.Activate();
+        curState = stateList[(int)EState.SCATTER];
 
-        Clear();
+        curState.OnStart();
     }
 
-    public override void Clear()
+    public override void OnComplete()
     {
+        curState = null;
+
         character.CanMove = true;
         character.CanJump = true;
+
+        attackController.OnComplete();
     }
 
     #endregion Override
