@@ -62,6 +62,11 @@ public partial class Meteor_FireHero
             }
         }
 
+        public override void OnCancel()
+        {
+            character.Animator.SetTrigger(cancelHash);
+        }
+
         public override void OnReleased()
         {
             isCharging = false;

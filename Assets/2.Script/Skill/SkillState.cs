@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEngine;
 
 public abstract class SkillState
 {
@@ -7,6 +8,7 @@ public abstract class SkillState
     protected BehaviourController character = null;
 
     protected int stateHash = 0;
+    protected int cancelHash = 0;
 
     protected float timer = 0f;
 
@@ -23,6 +25,8 @@ public abstract class SkillState
     public SkillState(BehaviourController character, Skill stateController) 
     {
         this.character = character;
+
+        cancelHash = Animator.StringToHash(AnimatorKey.Character.END_ATTACK);
     }
 
     #endregion Constructor

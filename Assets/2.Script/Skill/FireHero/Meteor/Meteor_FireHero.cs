@@ -26,7 +26,7 @@ public partial class Meteor_FireHero : Skill
 
     public override bool CheckCanUseSkill(Skill activeSkill = null)
     {
-        return activeSkill == null;
+        return activeSkill == null || CancelList.Contains(activeSkill);
     }
 
     public override void OnStart()

@@ -85,6 +85,11 @@ public partial class BaseAttack_FireHero
             stateController.OnComplete();
         }
 
+        public override void OnCancel()
+        {
+            character.Animator.SetTrigger(cancelHash);
+        }
+
         public override void OnPressed()
         {
             if (isBlockKey) return;

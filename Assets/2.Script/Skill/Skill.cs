@@ -55,7 +55,6 @@ public abstract class Skill : MonoBehaviour
             throw new Exception($"Out of range. GameObject : {gameObject.name}, Input index : {index}");
         }
 
-        curState.OnCancel();
         curState = stateList[index];
         curState.OnStart();
     }
@@ -64,7 +63,12 @@ public abstract class Skill : MonoBehaviour
 
     public virtual void OnStart() { }
     public virtual void OnComplete() { }
-    public virtual void OnCancel() { }
+    public virtual void OnCancel() 
+    {
+        curState.OnCancel();
+
+        curState = null;
+    }
 
     public void OnUpdate() 
     {

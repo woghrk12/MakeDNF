@@ -62,6 +62,8 @@ public class AttackBehaviour : GenericBehaviour
 
     public void Attack(EKeyName keyName)
     {
+        curSkill?.OnCancel();
+
         curSkill = registeredSkillDictionary[keyName];
 
         controller.SetBehaviour(behaviourCode);

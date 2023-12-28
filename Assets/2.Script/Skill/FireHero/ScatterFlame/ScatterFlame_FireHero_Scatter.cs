@@ -73,6 +73,11 @@ public partial class ScatterFlame_FireHero
             stateController.OnComplete();
         }
 
+        public override void OnCancel()
+        {
+            character.Animator.SetTrigger(cancelHash);
+        }
+
         #endregion Override
 
         #endregion Methods

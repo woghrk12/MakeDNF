@@ -69,8 +69,12 @@ public partial class BaseAttack_FireHero
 
         public override void OnComplete()
         {
-
             stateController.OnComplete();
+        }
+
+        public override void OnCancel()
+        {
+            character.Animator.SetTrigger(cancelHash);
         }
 
         #endregion Override 
