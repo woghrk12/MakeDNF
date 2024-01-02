@@ -12,6 +12,7 @@ public class FilePath
 
     public static readonly string GameDataScriptFolderPath = "Assets/2.Script/GameData/";
     public static readonly string EffectDataPath = "Assets/Resources/GameData/EffectData.asset";
+    public static readonly string OBJECT_POOL_DATA_PATH = "Assets/Resources/GameData/ObjectPoolData.asset";
 }
 
 public class ResourcePath
