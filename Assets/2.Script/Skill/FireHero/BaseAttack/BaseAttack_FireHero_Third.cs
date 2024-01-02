@@ -47,7 +47,7 @@ public partial class BaseAttack_FireHero
                 if (timer < preDelay) return;
 
                 // Instantiate the projectile
-                GameManager.ObjectPool.SpawnFromPool("Fireball_1_FireHero").GetComponent<Projectile>().Shot(character.DNFTransform);
+                GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Fireball_1_FireHero).GetComponent<Projectile>().Shot(character.DNFTransform);
 
                 isPreDelay = false;
                 timer = 0f;

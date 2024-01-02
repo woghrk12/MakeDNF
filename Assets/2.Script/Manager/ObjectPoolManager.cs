@@ -2,26 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class ObjectPool
-{
-    [HideInInspector] public string tag = string.Empty;
-    public GameObject prefab = null;
-    public int size = 0;
-
-    public void Init()
-    {
-        tag = prefab.name;
-    }
-}
-
 public class ObjectPoolManager : MonoBehaviour
 {
     #region Variables
 
-    [SerializeField] private ObjectPool[] objectPools = null;
-
-    private Dictionary<string, Queue<GameObject>> poolDictionary = new();
+    private Dictionary<EObjectPoolList, GameObject> poolDatabase = new();
+    private Dictionary<EObjectPoolList, Queue<GameObject>> poolDictionary = new();
 
     #endregion Variables
 
@@ -29,46 +15,45 @@ public class ObjectPoolManager : MonoBehaviour
 
     public void Init()
     {
-        foreach (ObjectPool objectPool in objectPools)
+        ObjectPoolClip[] database = GameManager.Resource.ObjectPoolData.GetAllData();
+
+        foreach (ObjectPoolClip poolClip in database)
         {
-            objectPool.Init();
-
-            poolDictionary.Add(objectPool.tag, new());
-
-            for (int i = 0; i < objectPool.size; i++)
-            {
-                CreateNewObject(objectPool.tag, objectPool.prefab);
-            }
+            poolDatabase.Add((EObjectPoolList)poolClip.ID, poolClip.ObjectPrefab);
+            poolDictionary.Add((EObjectPoolList)poolClip.ID, new());
         }
     }
 
-    public GameObject SpawnFromPool(string tag)
+    public GameObject SpawnFromPool(EObjectPoolList poolIndex)
     {
-        if (poolDictionary[tag].Count <= 0)
+        if (poolDictionary[poolIndex].Count <= 0)
         {
-            ObjectPool objectPool = Array.Find(objectPools, x => x.tag == tag);
-            CreateNewObject(tag, objectPool.prefab);
+            CreateNewObject(poolIndex);
         }
 
-        GameObject gameObject = poolDictionary[tag].Dequeue();
+        GameObject gameObject = poolDictionary[poolIndex].Dequeue();
 
         return gameObject;
     }
 
-    public void ReturnToPool(GameObject gameObject)
+    public void ReturnToPool(EObjectPoolList poolIndex, GameObject gameObject)
     {
-        poolDictionary[gameObject.name].Enqueue(gameObject);
+        poolDictionary[poolIndex].Enqueue(gameObject);
     }
 
-    private void CreateNewObject(string tag, GameObject prefabObject)
-    {
-        GameObject gameObject = Instantiate(prefabObject, transform);
+    #region Helper 
 
-        gameObject.name = tag;
-        poolDictionary[tag].Enqueue(gameObject);
+    private void CreateNewObject(EObjectPoolList poolIndex)
+    {
+        GameObject gameObject = Instantiate(poolDatabase[poolIndex], transform);
+
+        gameObject.name = poolIndex.ToString();
+        poolDictionary[poolIndex].Enqueue(gameObject);
 
         gameObject.SetActive(false);
     }
+
+    #endregion Helper
 
     #endregion Methods
 }

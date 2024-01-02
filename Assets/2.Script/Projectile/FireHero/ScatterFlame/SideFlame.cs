@@ -95,7 +95,7 @@ public class SideFlame : Projectile, IAttackable
 
     public override void Clear()
     {
-        GameManager.ObjectPool.ReturnToPool(gameObject);
+        GameManager.ObjectPool.ReturnToPool(EObjectPoolList.Side_Flame_FireHero, gameObject);
         gameObject.SetActive(false);
     }
 

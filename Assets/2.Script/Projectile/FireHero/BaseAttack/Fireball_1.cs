@@ -2,18 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Meteor : Projectile, IAttackable
+public class Fireball_1 : Projectile, IAttackable
 {
     #region Variables
 
     private DNFTransform dnfTransform = null;
     private DNFRigidbody dnfRigidbody = null;
 
+    [SerializeField] private float duration = 0f;
     [SerializeField] private float speed = 0f;
     private Vector3 moveDirection = Vector3.zero;
-    private float sizeEff = 1f;
-
-    private List<IDamagable> alreadyHitObjects = new();
 
     #endregion Variables
 
@@ -23,23 +21,21 @@ public class Meteor : Projectile, IAttackable
 
     public bool CalculateOnHit(List<IDamagable> targets)
     {
-        int count = 0;
-
         foreach (IDamagable target in targets)
         {
-            if (alreadyHitObjects.Contains(target)) continue;
-            if (!AttackHitbox.CheckCollision(target.DamageHitbox)) continue;
-            
-            target.OnDamage();
-            
-            alreadyHitObjects.Add(target);
-            count++;
+            if (AttackHitbox.CheckCollision(target.DamageHitbox))
+            {
+                target.OnDamage();
+                return true;
+            }
         }
 
-        return count > 0;
+        return false;
     }
 
-    #endregion IAttackable
+    #endregion IAttackabe
+
+    #region Methods
 
     #region Unity Events
 
@@ -47,57 +43,57 @@ public class Meteor : Projectile, IAttackable
     {
         dnfTransform = GetComponent<DNFTransform>();
         dnfRigidbody = GetComponent<DNFRigidbody>();
-
+        
         AttackHitbox = GetComponent<Hitbox>();
     }
 
     #endregion Unity Events
 
-    #region Methods
-
-    #region Override    
+    #region Override 
 
     public override void Shot(DNFTransform characterTransform, float sizeEff = 1f)
     {
-        this.sizeEff = sizeEff;
-
-        // Set projectile transform
-        dnfTransform.Position = characterTransform.Position + new Vector3(0f, 6f, 0f);
+        // Set projectile transform 
+        dnfTransform.Position = characterTransform.Position;
         dnfTransform.IsLeft = characterTransform.IsLeft;
         dnfTransform.LocalScale = sizeEff;
 
         // Set projectile direction
-        moveDirection = Time.fixedDeltaTime * speed * ((dnfTransform.IsLeft ? Vector3.left : Vector3.right) + Vector3.down).normalized;
+        moveDirection = Time.fixedDeltaTime * speed * (dnfTransform.IsLeft ? Vector3.left : Vector3.right);
 
         gameObject.SetActive(true);
 
         StartCoroutine(Activate());
     }
 
-    protected override IEnumerator Activate()
-    {
-        alreadyHitObjects.Clear();
-
-        while (!dnfRigidbody.IsGround)
-        {
-            dnfRigidbody.MoveDirection(moveDirection);
-
-            AttackHitbox.CalculateHitbox();
-
-            yield return Utilities.WaitForFixedUpdate;
-
-            CalculateOnHit(GameManager.Room.Monsters);
-        }
-
-        GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Ground_Explosion_FireHero).GetComponent<Projectile>().Shot(dnfTransform, sizeEff);
-
-        Clear();
-    }
-
     public override void Clear()
     {
-        GameManager.ObjectPool.ReturnToPool(EObjectPoolList.Meteor_FireHero, gameObject);
+        GameManager.ObjectPool.ReturnToPool(EObjectPoolList.Fireball_1_FireHero, gameObject);
         gameObject.SetActive(false);
+    }
+
+    protected override IEnumerator Activate()
+    {
+        float timer = 0f;
+        while (timer < duration)
+        {
+            dnfRigidbody.MoveDirection(moveDirection);
+            
+            AttackHitbox.CalculateHitbox();
+            
+            yield return Utilities.WaitForFixedUpdate;
+            
+            timer += Time.fixedDeltaTime;
+
+            if (CalculateOnHit(GameManager.Room.Monsters))
+            {
+                // Spawn hit effect
+
+                break;
+            }
+        }
+
+        Clear();
     }
 
     #endregion Override

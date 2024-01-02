@@ -61,6 +61,11 @@ public abstract class BaseData<T> : ScriptableObject where T : BaseClip
         return database[index];
     }
 
+    public T[] GetAllData()
+    {
+        return database;
+    }
+
     public string[] GetNameList(bool isShowID, string filterWord = "")
     {
         if (database == null) return new string[0];

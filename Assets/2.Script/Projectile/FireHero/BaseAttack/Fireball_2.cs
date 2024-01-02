@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fireball : Projectile, IAttackable
+public class Fireball_2 : Projectile, IAttackable
 {
     #region Variables
 
@@ -68,7 +68,7 @@ public class Fireball : Projectile, IAttackable
 
     public override void Clear()
     {
-        GameManager.ObjectPool.ReturnToPool(gameObject);
+        GameManager.ObjectPool.ReturnToPool(EObjectPoolList.Fireball_1_FireHero, gameObject);
         gameObject.SetActive(false);
     }
 

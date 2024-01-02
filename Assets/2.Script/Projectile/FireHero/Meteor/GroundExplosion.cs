@@ -85,7 +85,7 @@ public class GroundExplosion : Projectile, IAttackable
 
     public override void Clear()
     {
-        GameManager.ObjectPool.ReturnToPool(gameObject);
+        GameManager.ObjectPool.ReturnToPool(EObjectPoolList.Ground_Explosion_FireHero, gameObject);
         gameObject.SetActive(false);
     }
 
