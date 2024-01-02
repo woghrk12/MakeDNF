@@ -68,7 +68,7 @@ public class Fireball_2 : Projectile, IAttackable
 
     public override void Clear()
     {
-        GameManager.ObjectPool.ReturnToPool(EObjectPoolList.Fireball_1_FireHero, gameObject);
+        GameManager.ObjectPool.ReturnToPool(EObjectPoolList.Fireball_2_FireHero, gameObject);
         gameObject.SetActive(false);
     }
 
