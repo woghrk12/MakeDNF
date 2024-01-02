@@ -5,6 +5,7 @@ using UnityEngine;
 /// The clip class of Object Pool.
 /// The class has attribute data such as object prefab, name, and path.
 /// </summary>
+[Serializable]
 public class ObjectPoolClip : BaseClip
 {
     #region Variables
