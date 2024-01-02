@@ -6,6 +6,14 @@ public class GlobalDefine
     public static readonly float InvConvRate = (float)xRate / yRate;
 }
 
+public class FilePath
+{
+    public static readonly string EnumTemplateFilePath = "Assets/Resources/Template/EnumTemplate.txt";
+
+    public static readonly string GameDataScriptFolderPath = "Assets/2.Script/GameData/";
+    public static readonly string EffectDataPath = "Assets/Resources/GameData/EffectData.asset";
+}
+
 public class ResourcePath
 {
     public static readonly string KEYBOARD_INPUT_SYSTEM = "Input/Keyboard Input System";
