@@ -58,7 +58,8 @@ public class ObjectPoolData : BaseData<ObjectPoolClip>
         ObjectPoolClip newClip = new();
         newClip.ID = DataCount;
         newClip.Name = newData.Name;
-        newClip.Path = newData.Path;
+        newClip.ResourcesPath = newData.ResourcesPath;
+        newClip.FullPath = newData.FullPath;
         newClip.ObjectPrefab = newData.ObjectPrefab;
 
         database = ArrayHelper.Add(newClip, database);
@@ -75,7 +76,9 @@ public class ObjectPoolData : BaseData<ObjectPoolClip>
 
         ObjectPoolClip copiedClip = new();
         copiedClip.ID = DataCount;
-        copiedClip.Path = database[dataIndex].Path;
+        copiedClip.Name = database[dataIndex].Name;
+        copiedClip.ResourcesPath = database[dataIndex].ResourcesPath;
+        copiedClip.FullPath = database[dataIndex].FullPath;
         copiedClip.ObjectPrefab = database[dataIndex].ObjectPrefab;
 
         database = ArrayHelper.Add(copiedClip, database);

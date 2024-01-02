@@ -246,8 +246,12 @@ public class ObjectPoolTool : EditorWindow
                     if (objectPrefab != newPrefab)
                     {
                         selectedClip.ObjectPrefab = newPrefab;
+                        selectedClip.ResourcesPath = EditorHelper.GetPath(newPrefab, false) + newPrefab.name;
+                        selectedClip.FullPath = EditorHelper.GetPath(newPrefab, true);
                         isClipDirty = true;
                     }
+
+                    EditorGUILayout.LabelField("Full Path", selectedClip.FullPath);
                 }
             }
             EditorGUILayout.EndScrollView();

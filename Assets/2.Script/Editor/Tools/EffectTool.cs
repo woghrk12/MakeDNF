@@ -1,7 +1,6 @@
 using UnityEditor;
 using UnityEngine;
 
-
 public class EffectTool : EditorWindow
 {
     #region Variables 
@@ -247,8 +246,12 @@ public class EffectTool : EditorWindow
                     if (effectPrefab != newPrefab)
                     {
                         selectedClip.EffectPrefab = newPrefab;
+                        selectedClip.ResourcesPath = EditorHelper.GetPath(newPrefab, false) + newPrefab.name;
+                        selectedClip.FullPath = EditorHelper.GetPath(newPrefab, true);
                         isClipDirty = true;
                     }
+
+                    EditorGUILayout.LabelField("Full Path", selectedClip.FullPath);
                 }
             }
             EditorGUILayout.EndScrollView();

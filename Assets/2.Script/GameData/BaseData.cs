@@ -15,7 +15,8 @@ public abstract class BaseClip
 
     public int ID = -1;
     public string Name = string.Empty;
-    public string Path = string.Empty;
+    public string ResourcesPath = string.Empty;
+    public string FullPath = string.Empty;
 
     #endregion Variables
 }
@@ -29,7 +30,7 @@ public abstract class BaseData<T> : ScriptableObject where T : BaseClip
 {
     #region Variables
 
-    [SerializeField] protected T[] database = new T[0];
+    protected T[] database = new T[0];
 
     #endregion Variables
 

@@ -18,8 +18,15 @@ public class EditorHelper
 
     #region Methods
 
-    public static string GetPath(UnityObject clip)
+    public static string GetPath(UnityObject clip, bool isFullPath)
     {
+        string path = AssetDatabase.GetAssetPath(clip);
+
+        if (isFullPath)
+        {
+            return path;
+        }
+
         string[] pathNode = AssetDatabase.GetAssetPath(clip).Split('/');
         string retString = string.Empty;
         bool isFindResourcesFolder = false;
