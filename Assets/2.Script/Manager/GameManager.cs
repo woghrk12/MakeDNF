@@ -39,6 +39,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         objectPoolManager = FindObjectOfType<ObjectPoolManager>();
 
         inputManager.Init();
+        resourceManager.Init();
 
         objectPoolManager.Init();
     }

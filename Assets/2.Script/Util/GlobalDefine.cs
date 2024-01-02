@@ -19,6 +19,9 @@ public class ResourcePath
 {
     public static readonly string KEYBOARD_INPUT_SYSTEM = "Input/Keyboard Input System";
     public static readonly string SCREEN_INPUT_SYSTEM = "Input/Screen Input System";
+
+    public static readonly string EFFECT_DATA = "GameData/EffectData";
+    public static readonly string OBJECT_POOL_DATA = "GameData/ObjectPoolData";
 }
 
 public class BehaviourCodeList
