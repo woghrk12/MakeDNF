@@ -12,6 +12,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     [Header("Content Manager")]
     private static ObjectPoolManager objectPoolManager = null;
+    private static EffectManager effectManager = null;
 
     // Debug
     [SerializeField] private Room room = null;
@@ -24,6 +25,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public static ResourceManager Resource => resourceManager;
 
     public static ObjectPoolManager ObjectPool => objectPoolManager;
+    public static EffectManager Effect => effectManager;
 
     // Debug
     public static Room Room => Instance.room;
@@ -37,11 +39,13 @@ public class GameManager : SingletonBehaviour<GameManager>
         base.Awake();
 
         objectPoolManager = FindObjectOfType<ObjectPoolManager>();
+        effectManager = FindObjectOfType<EffectManager>();
 
         inputManager.Init();
         resourceManager.Init();
 
         objectPoolManager.Init();
+        effectManager.Init();
     }
 
     #endregion Unity Events
