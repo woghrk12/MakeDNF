@@ -27,6 +27,7 @@ public class Character : BehaviourController
         attackBehaviour.RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<BaseAttack_FireHero>());
         attackBehaviour.RegisterSkill(EKeyName.SKILL1, FindObjectOfType<Meteor_FireHero>());
         attackBehaviour.RegisterSkill(EKeyName.SKILL2, FindObjectOfType<ScatterFlame_FireHero>());
+        attackBehaviour.RegisterSkill(EKeyName.SKILL3, FindObjectOfType<Dash_FireHero>());
 
         GameManager.Input.SetMovementDelegate(OnJoystickMoved);
 

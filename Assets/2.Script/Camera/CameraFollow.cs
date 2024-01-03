@@ -9,7 +9,7 @@ public class CameraFollow : MonoBehaviour
     private Transform cameraTransform = null;
     private Transform target = null;
 
-    [SerializeField] private Vector3 offset = Vector3.zero;
+    [SerializeField] private Vector2 offset = Vector2.zero;
 
     #endregion Variables
 
@@ -38,8 +38,8 @@ public class CameraFollow : MonoBehaviour
 
     private void Follow(Transform target)
     {
-        Vector3 cameraPos = target.position + offset;
-        cameraTransform.position = new Vector3(cameraPos.x, cameraPos.y, cameraTransform.position.z);
+        Vector3 targetPos = new Vector3(target.position.x + offset.x, target.position.y + offset.y, cameraTransform.position.z);
+        cameraTransform.position = Vector3.Lerp(cameraTransform.position, targetPos, Time.deltaTime * 8f);
     }
 
     #endregion Methods
