@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// The base class of clip sources.
 /// The class has attribute data such as clip ID, name, and path.
-/// Need to add [Serializable] attribute when inheriting the BaseClip class to create a new class.
+/// Need to add [Serializable] attribute when inheriting the BaseClip class for editing in the unity editor.
 /// </summary>
 [Serializable]
 public abstract class BaseClip
@@ -30,7 +30,7 @@ public abstract class BaseData<T> : ScriptableObject where T : BaseClip
 {
     #region Variables
 
-    protected T[] database = new T[0];
+    [SerializeField] protected T[] database = new T[0];
 
     #endregion Variables
 
