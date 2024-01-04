@@ -17,6 +17,7 @@ public class AnimatorKey
             public static readonly string METEOR = "Meteor";
             public static readonly string SCATTER_FLAME = "ScatterFlame";
             public static readonly string DASH = "Dash";
+            public static readonly string FLAME_STRIKE = "FlameStrike";
         }
     }
 }

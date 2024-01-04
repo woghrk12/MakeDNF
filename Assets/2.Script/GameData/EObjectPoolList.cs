@@ -7,5 +7,6 @@ public enum EObjectPoolList
     Ground_Explosion_FireHero = 2,
     Meteor_FireHero = 3,
     Side_Flame_FireHero = 4,
+    Flame_Strike_FireHero = 5,
 
 }
