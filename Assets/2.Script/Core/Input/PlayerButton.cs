@@ -20,8 +20,8 @@ public abstract class PlayerButton : MonoBehaviour
     protected bool onPressed = false;
 
     [Header("Delegates for button events")]
-    public ButtonDown buttonDownDelegate = null;
-    public ButtonUp buttonUpDelegate = null;
+    public ButtonDown ButtonDownDelegate = null;
+    public ButtonUp ButtonUpDelegate = null;
     
     #endregion Variables
 
@@ -42,7 +42,7 @@ public abstract class PlayerButton : MonoBehaviour
         {
             if (!onPressed)
             {
-                buttonDownDelegate?.Invoke();
+                ButtonDownDelegate?.Invoke();
             }
 
             onPressed = true;
@@ -51,7 +51,7 @@ public abstract class PlayerButton : MonoBehaviour
         {
             if (onPressed)
             {
-                buttonUpDelegate?.Invoke();
+                ButtonUpDelegate?.Invoke();
             }
 
             onPressed = false;

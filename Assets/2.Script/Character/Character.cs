@@ -29,24 +29,21 @@ public class Character : BehaviourController
         attackBehaviour.RegisterSkill(EKeyName.SKILL2, FindObjectOfType<ScatterFlame_FireHero>());
         attackBehaviour.RegisterSkill(EKeyName.SKILL3, FindObjectOfType<Dash_FireHero>());
 
-        GameManager.Input.SetMovementDelegate(OnJoystickMoved);
+        GameManager.Input.AddMovementDelegate(OnJoystickMoved);
 
-        GameManager.Input.SetButtonDelegate(EKeyName.JUMP, OnJumpButtonPressed);
+        GameManager.Input.AddButtonDownDelegate(EKeyName.JUMP, OnJumpButtonPressed);
 
-        GameManager.Input.SetButtonDelegate(EKeyName.BASEATTACK, OnAttackButtonPressed, OnAttackButtonReleased);
+        GameManager.Input.AddButtonDownDelegate(EKeyName.BASEATTACK, OnAttackButtonPressed);
+        GameManager.Input.AddButtonUpDelegate(EKeyName.BASEATTACK, OnAttackButtonReleased);
 
-        GameManager.Input.SetButtonDelegate(EKeyName.SKILL1,
-            () => OnSkillButtonPressed(EKeyName.SKILL1),
-            () => OnSkillButtonReleased(EKeyName.SKILL1));
-        GameManager.Input.SetButtonDelegate(EKeyName.SKILL2,
-            () => OnSkillButtonPressed(EKeyName.SKILL2),
-            () => OnSkillButtonReleased(EKeyName.SKILL2));
-        GameManager.Input.SetButtonDelegate(EKeyName.SKILL3,
-            () => OnSkillButtonPressed(EKeyName.SKILL3),
-            () => OnSkillButtonReleased(EKeyName.SKILL3));
-        GameManager.Input.SetButtonDelegate(EKeyName.SKILL4,
-            () => OnSkillButtonPressed(EKeyName.SKILL4),
-            () => OnSkillButtonReleased(EKeyName.SKILL4));
+        GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL1, () => OnSkillButtonPressed(EKeyName.SKILL1));
+        GameManager.Input.AddButtonUpDelegate(EKeyName.SKILL1, () => OnSkillButtonReleased(EKeyName.SKILL1));
+        GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL2, () => OnSkillButtonPressed(EKeyName.SKILL2));
+        GameManager.Input.AddButtonUpDelegate(EKeyName.SKILL2, () => OnSkillButtonReleased(EKeyName.SKILL2));
+        GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL3, () => OnSkillButtonPressed(EKeyName.SKILL3));
+        GameManager.Input.AddButtonUpDelegate(EKeyName.SKILL3, () => OnSkillButtonReleased(EKeyName.SKILL3));
+        GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL4, () => OnSkillButtonPressed(EKeyName.SKILL4));
+        GameManager.Input.AddButtonUpDelegate(EKeyName.SKILL4, () => OnSkillButtonReleased(EKeyName.SKILL4));
     }
 
     #endregion Unity Events

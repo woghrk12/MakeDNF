@@ -58,19 +58,34 @@ public class InputManager
         }
     }
 
-    public void SetMovementDelegate(PlayerJoystick.MoveCharacter moveCharacter)
+    public void AddMovementDelegate(PlayerJoystick.InputDirection movementDelegate)
     {
-        playerJoystick.MoveCharacterDelegate = moveCharacter;
+        playerJoystick.InputDirectionDelegate += movementDelegate;
     }
 
-    public void SetButtonDelegate(EKeyName keyName, PlayerButton.ButtonDown buttonDown, PlayerButton.ButtonUp buttonUp = null)
+    public void RemoveMovementDelegate(PlayerJoystick.InputDirection movementDelegate)
     {
-        playerButtonDictionary[keyName].buttonDownDelegate = buttonDown;
+        playerJoystick.InputDirectionDelegate -= movementDelegate;
+    }
 
-        if (buttonUp != null)
-        { 
-            playerButtonDictionary[keyName].buttonUpDelegate = buttonUp;
-        }
+    public void AddButtonDownDelegate(EKeyName keyName, PlayerButton.ButtonDown buttonDownDelegate)
+    {
+        playerButtonDictionary[keyName].ButtonDownDelegate += buttonDownDelegate;
+    }
+
+    public void RemoveButtonDownDelegate(EKeyName keyName, PlayerButton.ButtonDown buttonDownDelegate)
+    {
+        playerButtonDictionary[keyName].ButtonDownDelegate -= buttonDownDelegate;
+    }
+
+    public void AddButtonUpDelegate(EKeyName keyName, PlayerButton.ButtonUp buttonUpDelegate)
+    {
+        playerButtonDictionary[keyName].ButtonUpDelegate += buttonUpDelegate;
+    }
+
+    public void RemoveButtonUpDelegate(EKeyName keyName, PlayerButton.ButtonUp buttonUpDelegate)
+    {
+        playerButtonDictionary[keyName].ButtonUpDelegate -= buttonUpDelegate;
     }
 
     #endregion Methods

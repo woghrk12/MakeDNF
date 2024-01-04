@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class PlayerJoystick : MonoBehaviour
 {
-    public delegate void MoveCharacter(Vector3 direction);
+    public delegate void InputDirection(Vector3 direction);
 
     #region Variables
 
@@ -12,7 +12,7 @@ public abstract class PlayerJoystick : MonoBehaviour
     protected Vector3 moveDirection = Vector3.zero;
 
     [Header("Delegate for directional input")]
-    public MoveCharacter MoveCharacterDelegate = null;
+    public InputDirection InputDirectionDelegate = null;
 
     #endregion Variables
 
@@ -25,7 +25,7 @@ public abstract class PlayerJoystick : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MoveCharacterDelegate?.Invoke(moveDirection);
+        InputDirectionDelegate?.Invoke(moveDirection);
     }
 
     #endregion Unity Events
