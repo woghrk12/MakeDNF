@@ -38,11 +38,13 @@ public class DNFTransform : MonoBehaviour
     {
         set
         {
+            if (!HasYObj) return;
+
             Vector3 pos = yPosTransform.localPosition;
             pos.y = value;
             yPosTransform.localPosition = pos;
         }
-        get => yPosTransform.localPosition.y;
+        get => HasYObj ? yPosTransform.localPosition.y : 0f;
     }
 
     /// <summary>
@@ -86,6 +88,11 @@ public class DNFTransform : MonoBehaviour
     public bool HasYObj => yPosTransform != null;
 
     /// <summary>
+    /// Return whether scaleTransform exists or not.
+    /// </summary>
+    public bool HasScaleObj => scaleTransform != null;
+
+    /// <summary>
     /// The direction the object is facing. Return true if the object is facing left.
     /// </summary>
     public bool IsLeft
@@ -106,9 +113,11 @@ public class DNFTransform : MonoBehaviour
     {
         set
         {
+            if (!HasScaleObj) return;
+
             scaleTransform.localScale = new Vector3(value, value, 1f);
         }
-        get => scaleTransform.localScale.x;
+        get => HasScaleObj ? scaleTransform.localScale.x : 1f;
     }
 
     #endregion Properties
@@ -118,8 +127,16 @@ public class DNFTransform : MonoBehaviour
     private void Awake()
     {
         posTransform = transform;
-        yPosTransform = posTransform.GetChild(0);
-        scaleTransform = yPosTransform.GetChild(0);
+
+        if (posTransform.childCount > 0)
+        { 
+            yPosTransform = posTransform.GetChild(0);
+        }
+
+        if (yPosTransform != null)
+        { 
+            scaleTransform = yPosTransform.GetChild(0);
+        }
     }
 
     #endregion Unity Events
