@@ -17,7 +17,7 @@ public class Character : BehaviourController
 
         attackBehaviour = GetComponent<AttackBehaviour>();
 
-        behaviourDictionary.Add(BehaviourCodeList.attackBehaviourCode, attackBehaviour);
+        behaviourDictionary.Add(BehaviourCodeList.ATTACK_BEHAVIOUR_CODE, attackBehaviour);
     }
 
     private void Start()

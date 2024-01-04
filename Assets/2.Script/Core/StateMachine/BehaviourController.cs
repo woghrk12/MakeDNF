@@ -5,17 +5,22 @@ public abstract class BehaviourController : MonoBehaviour
 {
     #region Variables
 
+    [Header("Variables for controller's behaviour")]
     protected Dictionary<int, GenericBehaviour> behaviourDictionary = new();
     protected GenericBehaviour curBehaviour = null;
 
+    [Header("Unity components")]
     protected Animator animator = null;
 
+    [Header("DNF components")]
     protected DNFTransform dnfTransform = null;
     protected DNFRigidbody dnfRigidbody = null;
 
+    [Header("Basic behaviour of the controller")]
     protected IdleBehaviour idleBehaviour = null;
     protected MoveBehaviour moveBehaviour = null;
 
+    [Header("State flag variables")]
     private bool canMove = true;
     private bool canJump = true;
 
@@ -23,17 +28,33 @@ public abstract class BehaviourController : MonoBehaviour
 
     #region Properties
 
+    /// <summary>
+    /// Animator component of the controller.
+    /// </summary>
     public Animator Animator => animator;
 
+    /// <summary>
+    /// DNF Transform component of the controller.
+    /// </summary>
     public DNFTransform DNFTransform => dnfTransform;
+
+    /// <summary>
+    /// DNF Rigidbody component of the controller.
+    /// </summary>
     public DNFRigidbody DNFRigidbody => dnfRigidbody;
 
+    /// <summary>
+    /// A flag variable that determines whether the controller is allowed to move.
+    /// </summary>
     public virtual bool CanMove
     {
         set { canMove = value; }
         get => canMove;
     }
 
+    /// <summary>
+    /// A flag variable that determines whether the controller is allowed to jump.
+    /// </summary>
     public virtual bool CanJump
     {
         set { canJump = value; }
@@ -54,7 +75,7 @@ public abstract class BehaviourController : MonoBehaviour
         idleBehaviour = GetComponent<IdleBehaviour>();
         moveBehaviour = GetComponent<MoveBehaviour>();
 
-        behaviourDictionary.Add(BehaviourCodeList.idleBehaviourCode, idleBehaviour);
+        behaviourDictionary.Add(BehaviourCodeList.IDLE_BEHAVIOUR_CODE, idleBehaviour);
 
         curBehaviour = idleBehaviour;
     }
@@ -78,6 +99,10 @@ public abstract class BehaviourController : MonoBehaviour
 
     #region Methods
 
+    /// <summary>
+    /// Set the current behaviour of the controller to the received behaviour code.
+    /// </summary>
+    /// <param name="behaviourCode">The hash code of the behaviour to set</param>
     public void SetBehaviour(int behaviourCode)
     {
         if (!behaviourDictionary.ContainsKey(behaviourCode))

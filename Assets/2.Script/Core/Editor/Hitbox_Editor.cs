@@ -58,7 +58,7 @@ public class Hitbox_Editor : Editor
 
         if (hitbox.HitboxType == EHitboxType.NONE) return;
 
-        position = new Vector3(posTransform.position.x, yPosTransform.localPosition.y, posTransform.position.y * GlobalDefine.InvConvRate);
+        position = new Vector3(posTransform.position.x, yPosTransform.localPosition.y, posTransform.position.y * GlobalDefine.INV_CONV_RATE);
         localScale = scaleTransform.localScale.x;
 
         DrawHitbox();
@@ -157,13 +157,13 @@ public class Hitbox_Editor : Editor
         if (hitbox.HitboxType == EHitboxType.BOX)
         {
             // Show the box-shaped hitbox by using x, z axis of DNF transform
-            Handles.DrawWireCube(new Vector3(center.x, center.z * GlobalDefine.ConvRate, 0f), new Vector3(wireSize.x, wireSize.z * GlobalDefine.ConvRate, 0f));
+            Handles.DrawWireCube(new Vector3(center.x, center.z * GlobalDefine.CONV_RATE, 0f), new Vector3(wireSize.x, wireSize.z * GlobalDefine.CONV_RATE, 0f));
         }
         else if (hitbox.HitboxType == EHitboxType.CIRCLE)
         {
             // Show the circle-shaped hitbox by using x, z axis of DNF transform
-            float angle = Mathf.Acos(GlobalDefine.ConvRate) * Mathf.Rad2Deg;
-            Handles.DrawWireArc(new Vector3(center.x, center.z * GlobalDefine.ConvRate, 0f),
+            float angle = Mathf.Acos(GlobalDefine.CONV_RATE) * Mathf.Rad2Deg;
+            Handles.DrawWireArc(new Vector3(center.x, center.z * GlobalDefine.CONV_RATE, 0f),
                 Quaternion.AngleAxis(angle, Vector3.right) * Vector3.forward,
                 Vector3.right,
                 360f,
@@ -176,7 +176,7 @@ public class Hitbox_Editor : Editor
 
         Handles.color = Color.green;
         // Show the box-shaped hitbox by using x, y axis of DNF transform
-        Handles.DrawWireCube(new Vector3(center.x, center.z * GlobalDefine.ConvRate + center.y, 0f), new Vector3(wireSize.x, wireSize.y, 0f));
+        Handles.DrawWireCube(new Vector3(center.x, center.z * GlobalDefine.CONV_RATE + center.y, 0f), new Vector3(wireSize.x, wireSize.y, 0f));
 
         #endregion XY Coordinates
     }
@@ -195,14 +195,14 @@ public class Hitbox_Editor : Editor
         Handles.color = Color.red;
         if (pivot.x <= 0.5f)
         {
-            Vector3 xHandlerPos = Handles.Slider(new Vector3(maxHitboxPos.x, minHitboxPos.z * GlobalDefine.ConvRate, 0f), Vector3.right);
+            Vector3 xHandlerPos = Handles.Slider(new Vector3(maxHitboxPos.x, minHitboxPos.z * GlobalDefine.CONV_RATE, 0f), Vector3.right);
             size.x = (xHandlerPos.x - position.x - offset.x) / ((1 - pivot.x) * localScale);
 
             if (size.x < 0f) size.x = 0f;
         }
         else
         {
-            Vector3 xHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, minHitboxPos.z * GlobalDefine.ConvRate, 0f), -Vector3.right);
+            Vector3 xHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, minHitboxPos.z * GlobalDefine.CONV_RATE, 0f), -Vector3.right);
             size.x = (position.x + offset.x - xHandlerPos.x) / (pivot.x * localScale);
 
             if (size.x < 0f) size.x = 0f;
@@ -213,15 +213,15 @@ public class Hitbox_Editor : Editor
             Handles.color = Color.blue;
             if (pivot.z <= 0.5f)
             {
-                Vector3 zHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, maxHitboxPos.z * GlobalDefine.ConvRate, 0f), Vector3.up);
-                size.z = (zHandlerPos.y * GlobalDefine.InvConvRate - position.z - offset.z) / ((1 - pivot.z) * localScale);
+                Vector3 zHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, maxHitboxPos.z * GlobalDefine.CONV_RATE, 0f), Vector3.up);
+                size.z = (zHandlerPos.y * GlobalDefine.INV_CONV_RATE - position.z - offset.z) / ((1 - pivot.z) * localScale);
 
                 if (size.z < 0f) size.z = 0f;
             }
             else
             {
-                Vector3 zHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, minHitboxPos.z * GlobalDefine.ConvRate, 0f), -Vector3.up);
-                size.z = (position.z + offset.z - zHandlerPos.z * GlobalDefine.InvConvRate) / (pivot.z * localScale);
+                Vector3 zHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, minHitboxPos.z * GlobalDefine.CONV_RATE, 0f), -Vector3.up);
+                size.z = (position.z + offset.z - zHandlerPos.z * GlobalDefine.INV_CONV_RATE) / (pivot.z * localScale);
 
                 if (size.z < 0f) size.z = 0f;
             }
@@ -231,15 +231,15 @@ public class Hitbox_Editor : Editor
             Handles.color = Color.green;
             if (pivot.y <= 0.5f)
             {
-                Vector3 yHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, maxHitboxPos.y + position.z * GlobalDefine.ConvRate, 0f), Vector3.up);
-                size.y = ((yHandlerPos.y - position.z * GlobalDefine.ConvRate) - position.y - offset.y) / ((1 - pivot.y) * localScale);
+                Vector3 yHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, maxHitboxPos.y + position.z * GlobalDefine.CONV_RATE, 0f), Vector3.up);
+                size.y = ((yHandlerPos.y - position.z * GlobalDefine.CONV_RATE) - position.y - offset.y) / ((1 - pivot.y) * localScale);
 
                 if (size.y < 0f) size.y = 0f;
             }
             else
             {
-                Vector3 yHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, minHitboxPos.y + position.z * GlobalDefine.ConvRate, 0f), -Vector3.up);
-                size.y = (position.y + offset.y - (yHandlerPos.y - position.z * GlobalDefine.ConvRate)) / (pivot.y * localScale);
+                Vector3 yHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, minHitboxPos.y + position.z * GlobalDefine.CONV_RATE, 0f), -Vector3.up);
+                size.y = (position.y + offset.y - (yHandlerPos.y - position.z * GlobalDefine.CONV_RATE)) / (pivot.y * localScale);
 
                 if (size.y < 0f) size.y = 0f;
             }
@@ -255,20 +255,20 @@ public class Hitbox_Editor : Editor
         Vector3 changedPos = position + offset;
 
         Handles.color = Color.red;
-        changedPos = Handles.Slider(new Vector3(changedPos.x, changedPos.y + changedPos.z * GlobalDefine.ConvRate, 0f), Vector3.right);
+        changedPos = Handles.Slider(new Vector3(changedPos.x, changedPos.y + changedPos.z * GlobalDefine.CONV_RATE, 0f), Vector3.right);
         offset.x = changedPos.x - position.x;
 
         if (coordMode == ECoordinateMode.XZ)
         {
             Handles.color = Color.blue;
-            changedPos = Handles.Slider(new Vector3(changedPos.x, changedPos.y + changedPos.z * GlobalDefine.ConvRate, 0f), Vector3.up);
-            offset.z = (changedPos.y - position.y) * GlobalDefine.InvConvRate - position.z;
+            changedPos = Handles.Slider(new Vector3(changedPos.x, changedPos.y + changedPos.z * GlobalDefine.CONV_RATE, 0f), Vector3.up);
+            offset.z = (changedPos.y - position.y) * GlobalDefine.INV_CONV_RATE - position.z;
         }
         else
         {
             Handles.color = Color.green;
-            changedPos = Handles.Slider(new Vector3(changedPos.x, changedPos.y + changedPos.z * GlobalDefine.ConvRate, 0f), Vector3.up);
-            offset.y = changedPos.y - position.z * GlobalDefine.ConvRate - position.y;
+            changedPos = Handles.Slider(new Vector3(changedPos.x, changedPos.y + changedPos.z * GlobalDefine.CONV_RATE, 0f), Vector3.up);
+            offset.y = changedPos.y - position.z * GlobalDefine.CONV_RATE - position.y;
         }
     }
 
@@ -283,7 +283,7 @@ public class Hitbox_Editor : Editor
         Vector3 maxHitboxPos = position + offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
 
         Handles.color = Color.red;
-        Vector3 xHandlerPos = Handles.Slider(new Vector3(Mathf.Lerp(minHitboxPos.x, maxHitboxPos.x, pivot.x), minHitboxPos.y + minHitboxPos.z * GlobalDefine.ConvRate, 0f), Vector3.right);
+        Vector3 xHandlerPos = Handles.Slider(new Vector3(Mathf.Lerp(minHitboxPos.x, maxHitboxPos.x, pivot.x), minHitboxPos.y + minHitboxPos.z * GlobalDefine.CONV_RATE, 0f), Vector3.right);
         pivot.x = (xHandlerPos.x - minHitboxPos.x) / (maxHitboxPos.x - minHitboxPos.x);
 
         if (pivot.x < 0f) pivot.x = 0f;
@@ -292,8 +292,8 @@ public class Hitbox_Editor : Editor
         if (coordMode == ECoordinateMode.XZ)
         {
             Handles.color = Color.blue;
-            Vector3 zHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, Mathf.Lerp(minHitboxPos.z, maxHitboxPos.z, pivot.z) * GlobalDefine.ConvRate, 0f), Vector3.up);
-            pivot.z = (zHandlerPos.y * GlobalDefine.InvConvRate - minHitboxPos.z) / (maxHitboxPos.z - minHitboxPos.z);
+            Vector3 zHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, Mathf.Lerp(minHitboxPos.z, maxHitboxPos.z, pivot.z) * GlobalDefine.CONV_RATE, 0f), Vector3.up);
+            pivot.z = (zHandlerPos.y * GlobalDefine.INV_CONV_RATE - minHitboxPos.z) / (maxHitboxPos.z - minHitboxPos.z);
 
             if (pivot.z < 0f) pivot.z = 0f;
             if (pivot.z > 1f) pivot.z = 1f;
@@ -301,8 +301,8 @@ public class Hitbox_Editor : Editor
         else
         {
             Handles.color = Color.green;
-            Vector3 yHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, Mathf.Lerp(minHitboxPos.y, maxHitboxPos.y, pivot.y) + minHitboxPos.z * GlobalDefine.ConvRate, 0f), Vector3.up);
-            pivot.y = (yHandlerPos.y - minHitboxPos.z * GlobalDefine.ConvRate - minHitboxPos.y) / (maxHitboxPos.y - minHitboxPos.y);
+            Vector3 yHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, Mathf.Lerp(minHitboxPos.y, maxHitboxPos.y, pivot.y) + minHitboxPos.z * GlobalDefine.CONV_RATE, 0f), Vector3.up);
+            pivot.y = (yHandlerPos.y - minHitboxPos.z * GlobalDefine.CONV_RATE - minHitboxPos.y) / (maxHitboxPos.y - minHitboxPos.y);
 
             if (pivot.y < 0f) pivot.y = 0f;
             if (pivot.y > 1f) pivot.y = 1f;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Dash_FireHero : Skill
@@ -13,6 +11,8 @@ public partial class Dash_FireHero : Skill
     #endregion Variables
 
     #region Methods
+
+    #region Override
 
     public override void Init(BehaviourController character, AttackBehaviour attackController)
     {
@@ -45,6 +45,8 @@ public partial class Dash_FireHero : Skill
 
         attackController.OnComplete();
     }
+
+    #endregion Override
 
     #endregion Methods
 }

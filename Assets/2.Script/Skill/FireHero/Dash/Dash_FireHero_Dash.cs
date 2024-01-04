@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Dash_FireHero
@@ -30,6 +28,8 @@ public partial class Dash_FireHero
 
         #region Methods
 
+        #region Override
+
         public override void OnStart()
         {
             dashDirection = new Vector3(character.DNFTransform.IsLeft ? -1f : 1f, 0f, 0f);
@@ -49,8 +49,8 @@ public partial class Dash_FireHero
             {
                 if (timer >= preDelay)
                 {
-                    InstanceVFX instanceVFX = GameManager.Effect.SpawnEffect(EEffectList.Dash_FireHero).GetComponent<InstanceVFX>();
-                    instanceVFX.SetEffect(character.DNFTransform);
+                    InstanceVFX instanceVFX = GameManager.Effect.SpawnFromPool(EEffectList.Dash_FireHero).GetComponent<InstanceVFX>();
+                    instanceVFX.Init(character.DNFTransform);
                     instanceVFX.gameObject.SetActive(true);
                     
                     isPreDelay = false;
@@ -73,18 +73,6 @@ public partial class Dash_FireHero
             }
         }
 
-        public override void OnFixedUpdate()
-        {
-            if (isPreDelay)
-            {
-                Debug.Log("predelay");
-            }
-            else if (isPostDelay)
-            {
-                Debug.Log("postdelay");
-            }
-        }
-
         public override void OnComplete()
         {
             stateController.OnComplete();
@@ -94,6 +82,8 @@ public partial class Dash_FireHero
         {
             character.Animator.SetTrigger(cancelHash);
         }
+
+        #endregion Override
 
         #endregion Methods
     }

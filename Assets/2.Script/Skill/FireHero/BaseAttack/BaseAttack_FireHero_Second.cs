@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public partial class BaseAttack_FireHero
@@ -91,7 +90,7 @@ public partial class BaseAttack_FireHero
             character.Animator.SetTrigger(cancelHash);
         }
 
-        public override void OnPressed()
+        public override void OnSkillButtonPressed()
         {
             if (isBlockKey) return;
 

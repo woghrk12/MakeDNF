@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Meteor_FireHero
@@ -67,7 +65,7 @@ public partial class Meteor_FireHero
             character.Animator.SetTrigger(cancelHash);
         }
 
-        public override void OnReleased()
+        public override void OnSkillButtonReleased()
         {
             isCharging = false;
         }

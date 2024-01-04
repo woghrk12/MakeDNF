@@ -1,12 +1,15 @@
-using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// The SkillState class represents the various states of a skill within a Skill class.
+/// </summary>
 public abstract class SkillState
 {
     #region Variables
 
     protected BehaviourController character = null;
 
+    [Header("Animation key hash")]
     protected int stateHash = 0;
     protected int cancelHash = 0;
 
@@ -40,8 +43,8 @@ public abstract class SkillState
     public virtual void OnComplete() { }
     public virtual void OnCancel() { }
 
-    public virtual void OnPressed() { }
-    public virtual void OnReleased() { }
+    public virtual void OnSkillButtonPressed() { }
+    public virtual void OnSkillButtonReleased() { }
 
     #endregion Methods
 }

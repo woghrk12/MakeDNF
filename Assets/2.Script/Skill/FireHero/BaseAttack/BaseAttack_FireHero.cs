@@ -1,6 +1,3 @@
-using System.Collections;
-using UnityEngine;
-
 public partial class BaseAttack_FireHero : Skill
 {
     private enum EState { NONE = -1, FIRST, SECOND, THIRD }

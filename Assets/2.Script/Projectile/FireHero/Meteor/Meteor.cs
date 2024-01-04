@@ -17,7 +17,7 @@ public class Meteor : Projectile, IAttackable
 
     #endregion Variables
 
-    #region IAttackable
+    #region IAttackable Implementation
 
     public Hitbox AttackHitbox { set; get; }
 
@@ -39,7 +39,7 @@ public class Meteor : Projectile, IAttackable
         return count > 0;
     }
 
-    #endregion IAttackable
+    #endregion IAttackable Implementation
 
     #region Unity Events
 
@@ -57,13 +57,13 @@ public class Meteor : Projectile, IAttackable
 
     #region Override    
 
-    public override void Shot(DNFTransform characterTransform, float sizeEff = 1f)
+    public override void Shot(DNFTransform subjectTransform, float sizeEff = 1f)
     {
         this.sizeEff = sizeEff;
 
         // Set projectile transform
-        dnfTransform.Position = characterTransform.Position + new Vector3(0f, 6f, 0f);
-        dnfTransform.IsLeft = characterTransform.IsLeft;
+        dnfTransform.Position = subjectTransform.Position + new Vector3(0f, 6f, 0f);
+        dnfTransform.IsLeft = subjectTransform.IsLeft;
         dnfTransform.LocalScale = sizeEff;
 
         // Set projectile direction

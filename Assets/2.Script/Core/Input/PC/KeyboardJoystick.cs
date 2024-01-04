@@ -22,7 +22,9 @@ public class KeyboardJoystick : PlayerJoystick
 
     #endregion Variables
 
-    #region Override Methods
+    #region Methods
+
+    #region Override
 
     /// <summary>
     /// Replace the user's directional input with the DNFTransform as the direction. 
@@ -78,5 +80,7 @@ public class KeyboardJoystick : PlayerJoystick
         }
     }
 
-    #endregion Override Methods
+    #endregion Override
+
+    #endregion Methods
 }

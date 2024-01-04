@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +7,7 @@ public class AttackBehaviour : GenericBehaviour
 
     private Dictionary<EKeyName, Skill> registeredSkillDictionary = new();
 
+    [Header("Animation key hash")]
     private int isAttackHash = 0;
     private int endAttackHash = 0;
 
@@ -29,6 +29,13 @@ public class AttackBehaviour : GenericBehaviour
 
     #region Methods
 
+    /// <summary>
+    /// Register the skill to a given key, allowing the skill to be used when the key is pressed.
+    /// The skill can only be registered to the skill key.
+    /// An error is triggered if any other key is provided such as jump key.
+    /// </summary>
+    /// <param name="keyName">The key to register the skill</param>
+    /// <param name="skill">The skill to register to the key</param>
     public void RegisterSkill(EKeyName keyName, Skill skill)
     {
         switch (keyName)
@@ -55,11 +62,21 @@ public class AttackBehaviour : GenericBehaviour
         }
     }
 
+    /// <summary>
+    /// Return whether the skill registered to the given key can be used.
+    /// </summary>
+    /// <param name="keyName">The skill key to check</param>
+    /// <returns>True if the skill registered to the key can be used</returns>
     public bool CheckCanAttack(EKeyName keyName)
     {
         return registeredSkillDictionary[keyName].CheckCanUseSkill(curSkill);
     }
 
+    /// <summary>
+    /// Use the skill registered to the given key to initiate an attack.
+    /// If there is a currently active skill, cancel the skill.
+    /// </summary>
+    /// <param name="keyName">The skill key to attack</param>
     public void Attack(EKeyName keyName)
     {
         curSkill?.OnCancel();
@@ -100,7 +117,7 @@ public class AttackBehaviour : GenericBehaviour
 
         curSkill = null;
 
-        controller.SetBehaviour(BehaviourCodeList.idleBehaviourCode);
+        controller.SetBehaviour(BehaviourCodeList.IDLE_BEHAVIOUR_CODE);
     }
 
     public override void OnCancel()
@@ -118,14 +135,14 @@ public class AttackBehaviour : GenericBehaviour
     {
         if (!registeredSkillDictionary.ContainsKey(keyName)) return;
         
-        registeredSkillDictionary[keyName].OnPressed();
+        registeredSkillDictionary[keyName].OnSkillButtonPressed();
     }
 
     public void OnSkillButtonReleased(EKeyName keyName)
     {
         if (!registeredSkillDictionary.ContainsKey(keyName)) return;
 
-        registeredSkillDictionary[keyName].OnReleased();
+        registeredSkillDictionary[keyName].OnSkillButtonReleased();
     }
 
     #endregion Events

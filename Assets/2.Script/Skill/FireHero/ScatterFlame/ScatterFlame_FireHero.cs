@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public partial class ScatterFlame_FireHero : Skill
 {
     private enum EState { NONE = -1, SCATTER }

@@ -31,7 +31,9 @@ public class ScreenJoystick : PlayerJoystick, IPointerDownHandler, IDragHandler,
 
     #endregion Unity Events
 
-    #region Override Methods
+    #region Methods
+
+    #region Override
 
     /// <summary>
     /// Replace the user's directional input with the DNFTransform as the direction. 
@@ -43,29 +45,9 @@ public class ScreenJoystick : PlayerJoystick, IPointerDownHandler, IDragHandler,
         moveDirection.z = inputDir.y >= minHandleRange ? 1f : (inputDir.y <= -minHandleRange ? -1f : 0f);
     }
 
-    #endregion Override Methods
+    #endregion Override
 
-    #region Interface Methods
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        ControlHandle(eventData.position);
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        ControlHandle(eventData.position);
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        inputDir = Vector3.zero;
-        handle.anchoredPosition = Vector2.zero;
-    }
-
-    #endregion Interface Methods
-
-    #region Methods
+    #region Helper
 
     /// <summary>
     /// Move the joystick handle based on user input position
@@ -89,7 +71,7 @@ public class ScreenJoystick : PlayerJoystick, IPointerDownHandler, IDragHandler,
         {
             inputDir = inputDir.normalized * maxHandleRange;
         }
-        else if(sqrMagnitude < maxHandleRange * maxHandleRange)
+        else if (sqrMagnitude < maxHandleRange * maxHandleRange)
         {
             inputDir = inputDir.normalized * minHandleRange;
             moveDirection = Vector2.zero;
@@ -98,5 +80,27 @@ public class ScreenJoystick : PlayerJoystick, IPointerDownHandler, IDragHandler,
         return inputDir;
     }
 
+    #endregion Helper
+
     #endregion Methods
+
+    #region Interface Implements
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        ControlHandle(eventData.position);
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        ControlHandle(eventData.position);
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        inputDir = Vector3.zero;
+        handle.anchoredPosition = Vector2.zero;
+    }
+
+    #endregion Interface Implements
 }

@@ -5,13 +5,29 @@ public enum EHitboxType { NONE = -1, BOX, CIRCLE }
 
 public interface IAttackable
 {
+    /// <summary>
+    /// Hitbox component for representing the attack range.
+    /// </summary>
     public Hitbox AttackHitbox { set; get; }
+    
+    /// <summary>
+    /// Check if the targets' hitbox is within the attack range.
+    /// </summary>
+    /// <param name="targets">The list of objects that can be hit</param>
+    /// <returns>True if there is at least one target that has been hit</returns>
     public bool CalculateOnHit(List<IDamagable> targets);
 }
 
 public interface IDamagable
 {
+    /// <summary>
+    /// Hitbox component used to check whether the object has been hit.
+    /// </summary>
     public Hitbox DamageHitbox { set; get; }
+    
+    /// <summary>
+    /// The event method called when the object is hit.
+    /// </summary>
     public void OnDamage();
 }
 
@@ -273,7 +289,9 @@ public class Hitbox : MonoBehaviour
         return true;
     }
 
-    #region Helper Methods
+    #endregion AABB Collision
+
+    #region Helper
 
     /// <summary>
     /// Check if the point is inside the circle.
@@ -292,9 +310,7 @@ public class Hitbox : MonoBehaviour
         return (center - point).sqrMagnitude < radius * radius;
     }
 
-    #endregion Helper Methods
-
-    #endregion AABB Collision
+    #endregion Helper
 
     #endregion Methods
 }

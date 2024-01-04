@@ -68,11 +68,11 @@ public class EffectTool : EditorWindow
             effectData.ClearData();
         }
 
-        EffectData savedData = AssetDatabase.LoadAssetAtPath<EffectData>(FilePath.EffectDataPath);
+        EffectData savedData = AssetDatabase.LoadAssetAtPath<EffectData>(FilePath.EFFECT_DATA_PATH);
         if (savedData == null)
         {
             savedData = CreateInstance<EffectData>();
-            AssetDatabase.CreateAsset(savedData, FilePath.EffectDataPath);
+            AssetDatabase.CreateAsset(savedData, FilePath.EFFECT_DATA_PATH);
             AssetDatabase.Refresh();
         }
         else
@@ -93,7 +93,7 @@ public class EffectTool : EditorWindow
 
     private static void SaveData()
     {
-        EffectData savedData = AssetDatabase.LoadAssetAtPath<EffectData>(FilePath.EffectDataPath);
+        EffectData savedData = AssetDatabase.LoadAssetAtPath<EffectData>(FilePath.EFFECT_DATA_PATH);
         savedData.ClearData();
 
         if (isClipDirty)

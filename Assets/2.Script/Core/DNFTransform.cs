@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DNFTransform : MonoBehaviour
@@ -57,10 +55,10 @@ public class DNFTransform : MonoBehaviour
         set
         {
             Vector3 pos = posTransform.position;
-            pos.y = value * GlobalDefine.ConvRate;
+            pos.y = value * GlobalDefine.CONV_RATE;
             posTransform.position = pos;
         }
-        get => posTransform.position.y * GlobalDefine.InvConvRate;
+        get => posTransform.position.y * GlobalDefine.INV_CONV_RATE;
     }
 
     /// <summary>

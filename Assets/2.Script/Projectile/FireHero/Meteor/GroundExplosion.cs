@@ -12,7 +12,7 @@ public class GroundExplosion : Projectile, IAttackable
 
     #endregion Variables
 
-    #region IAttackable
+    #region IAttackable Implementation
 
     public Hitbox AttackHitbox { set; get; }
 
@@ -34,7 +34,7 @@ public class GroundExplosion : Projectile, IAttackable
         return count > 0;
     }
 
-    #endregion IAttackable
+    #endregion IAttackable Implementation
 
     #region Unity Events
 
@@ -51,11 +51,11 @@ public class GroundExplosion : Projectile, IAttackable
 
     #region Override 
 
-    public override void Shot(DNFTransform characterTransform, float sizeEff = 1f)
+    public override void Shot(DNFTransform subjectTransform, float sizeEff = 1f)
     {
         // Set projectile transform
-        dnfTransform.Position = characterTransform.Position;
-        dnfTransform.IsLeft = characterTransform.IsLeft;
+        dnfTransform.Position = subjectTransform.Position;
+        dnfTransform.IsLeft = subjectTransform.IsLeft;
         dnfTransform.LocalScale = sizeEff;
 
         gameObject.SetActive(true);

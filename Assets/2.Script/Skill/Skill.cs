@@ -1,15 +1,32 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The class contains information about a skill, such as its name and mana cost.
+/// </summary>
 [Serializable]
 public class SkillStat
 {
+    /// <summary>
+    /// The name of the skill.
+    /// </summary>
     public string Name = string.Empty;
+
+    /// <summary>
+    /// The amount of mana required to use the skill.
+    /// </summary>
     public int NeedMana = 0;
+
+    /// <summary>
+    /// The description of the skill.
+    /// </summary>
     public string SkillDescription = string.Empty;
-    public List<Skill> cancelList = new();
+
+    /// <summary>
+    /// The list of the skills that can be canceld while in use.
+    /// </summary>
+    public List<Skill> CancelList = new();
 }
 
 public abstract class Skill : MonoBehaviour
@@ -28,10 +45,25 @@ public abstract class Skill : MonoBehaviour
 
     #region Properties
 
+    /// <summary>
+    /// The name of the skill.
+    /// </summary>
     public string Name => skillStat.Name;
+
+    /// <summary>
+    /// The amount of mana required to use the skill.
+    /// </summary>
     public int NeedMana => skillStat.NeedMana;
+
+    /// <summary>
+    /// The description of the skill.
+    /// </summary>
     public string SkillDescription => skillStat.SkillDescription;
-    public List<Skill> CancelList => skillStat.cancelList;
+
+    /// <summary>
+    /// The list of the skills that can be canceld while in use.
+    /// </summary>
+    public List<Skill> CancelList => skillStat.CancelList;
 
     #endregion Properties
 
@@ -91,18 +123,18 @@ public abstract class Skill : MonoBehaviour
         curState.OnLateUpdate();
     }
     
-    public void OnPressed() 
+    public void OnSkillButtonPressed() 
     {
         if (curState == null) return;
 
-        curState.OnPressed();
+        curState.OnSkillButtonPressed();
     }
 
-    public void OnReleased() 
+    public void OnSkillButtonReleased() 
     {
         if (curState == null) return;
 
-        curState.OnReleased();
+        curState.OnSkillButtonReleased();
     }
 
     #endregion Events

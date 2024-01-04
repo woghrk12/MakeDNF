@@ -13,9 +13,24 @@ public abstract class BaseClip
 {
     #region Variables
 
+    /// <summary>
+    /// The ID value of the clip.
+    /// </summary>
     public int ID = -1;
+
+    /// <summary>
+    /// The name value of the clip.
+    /// </summary>
     public string Name = string.Empty;
+    
+    /// <summary>
+    /// The path value from the Resources folder.
+    /// </summary>
     public string ResourcesPath = string.Empty;
+    
+    /// <summary>
+    /// The full path value from the Assets folder.
+    /// </summary>
     public string FullPath = string.Empty;
 
     #endregion Variables
@@ -36,6 +51,9 @@ public abstract class BaseData<T> : ScriptableObject where T : BaseClip
 
     #region Properties
 
+    /// <summary>
+    /// The total number of the data.
+    /// </summary>
     public int DataCount => database == null ? 0 : database.Length;
 
     #endregion Properties
@@ -83,11 +101,15 @@ public abstract class BaseData<T> : ScriptableObject where T : BaseClip
         return retList;
     }
 
+    #region Abstract
+
     public abstract T AddData(string newName);
     public abstract T AddData(T newData);
     public abstract T CopyData(int index);
     public abstract void RemoveData(int index);
     public abstract void ClearData();
+
+    #endregion Abstract
 
     #endregion Methods
 }

@@ -13,6 +13,9 @@ public class ObjectPoolManager : MonoBehaviour
 
     #region Methods
 
+    /// <summary>
+    /// Initialize the object pool database by getting the object pool data from the asset.
+    /// </summary>
     public void Init()
     {
         ObjectPoolClip[] database = GameManager.Resource.ObjectPoolData.GetAllData();
@@ -24,6 +27,11 @@ public class ObjectPoolManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawn the instantiated object from the object pool at the given index.
+    /// </summary>
+    /// <param name="poolIndex">The index of the object to be spawned</param>
+    /// <returns>The prefab object</returns>
     public GameObject SpawnFromPool(EObjectPoolList poolIndex)
     {
         if (poolDictionary[poolIndex].Count <= 0)
@@ -36,6 +44,11 @@ public class ObjectPoolManager : MonoBehaviour
         return gameObject;
     }
 
+    /// <summary>
+    /// Return the instantiated object to the pool at the given index.
+    /// </summary>
+    /// <param name="poolIndex">The index of the object pool to return the object to</param>
+    /// <param name="gameObject">The game object to be returned</param>
     public void ReturnToPool(EObjectPoolList poolIndex, GameObject gameObject)
     {
         poolDictionary[poolIndex].Enqueue(gameObject);
@@ -43,6 +56,10 @@ public class ObjectPoolManager : MonoBehaviour
 
     #region Helper 
 
+    /// <summary>
+    /// Create a new object and store it in the queue.
+    /// </summary>
+    /// <param name="poolIndex">The index of the pool to create an object from</param>
     private void CreateNewObject(EObjectPoolList poolIndex)
     {
         GameObject gameObject = Instantiate(poolDatabase[poolIndex], transform);

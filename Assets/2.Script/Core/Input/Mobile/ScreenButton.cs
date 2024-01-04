@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -34,14 +32,20 @@ public class ScreenButton : PlayerButton, IPointerDownHandler, IDragHandler, IPo
 
     #endregion Unity Events
 
-    #region Interface Methods
+    #region Interface Implements
+
+    #region IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
         isPressed = true;
         buttonImage.color = pressedColor;
     }
-    
+
+    #endregion IPointerDownHandler
+
+    #region IDragHandler
+
     public void OnDrag(PointerEventData eventData)
     {
         if (!isPressed) return;
@@ -65,12 +69,17 @@ public class ScreenButton : PlayerButton, IPointerDownHandler, IDragHandler, IPo
         }
     }
 
+    #endregion IDragHandler
+
+    #region IPointerUpHandler
+
     public void OnPointerUp(PointerEventData eventData)
     {
         isPressed = false;
         buttonImage.color = normalColor;
     }
 
+    #endregion IPointerUpHandler
 
-    #endregion Interface Methods
+    #endregion Interface Implements
 }

@@ -65,17 +65,17 @@ public class EditorHelper
             builder.AppendLine("    " + name + " = " + index + ",");
         }
 
-        string enumTemplate = File.ReadAllText(FilePath.EnumTemplateFilePath);
+        string enumTemplate = File.ReadAllText(FilePath.ENUM_TEMPLATE_FILE_PATH);
 
         enumTemplate = enumTemplate.Replace("$ENUM$", enumName);
         enumTemplate = enumTemplate.Replace("$DATA$", builder.ToString());
 
-        if (!Directory.Exists(FilePath.GameDataScriptFolderPath))
+        if (!Directory.Exists(FilePath.GAME_DATA_SCRIPT_FOLDER_PATH))
         {
-            Directory.CreateDirectory(FilePath.GameDataScriptFolderPath);
+            Directory.CreateDirectory(FilePath.GAME_DATA_SCRIPT_FOLDER_PATH);
         }
 
-        string enumFileFullPath = FilePath.GameDataScriptFolderPath + enumName + ".cs";
+        string enumFileFullPath = FilePath.GAME_DATA_SCRIPT_FOLDER_PATH + enumName + ".cs";
 
         if (File.Exists(enumFileFullPath))
         {

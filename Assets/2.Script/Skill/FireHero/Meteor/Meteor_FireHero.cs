@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public partial class Meteor_FireHero : Skill
 {
     private enum EState { NONE = -1, CHARGING, SHOT }

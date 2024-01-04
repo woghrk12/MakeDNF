@@ -582,8 +582,7 @@ MonoBehaviour:
     Name: 
     NeedMana: 0
     SkillDescription: 
-    cancelList:
-    - {fileID: 767393573}
+    CancelList: []
 --- !u!4 &743849776
 Transform:
   m_ObjectHideFlags: 0
@@ -647,7 +646,7 @@ MonoBehaviour:
     Name: 
     NeedMana: 0
     SkillDescription: 
-    cancelList: []
+    CancelList: []
 --- !u!1 &839168971
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,7 +916,7 @@ MonoBehaviour:
     Name: 
     NeedMana: 0
     SkillDescription: 
-    cancelList: []
+    CancelList: []
   dashRange: 3
 --- !u!4 &1306709477
 Transform:
@@ -1044,7 +1043,7 @@ MonoBehaviour:
     Name: 
     NeedMana: 10
     SkillDescription: 
-    cancelList:
+    CancelList:
     - {fileID: 767393573}
 --- !u!4 &1389935734
 Transform:

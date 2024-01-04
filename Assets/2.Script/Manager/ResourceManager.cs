@@ -4,6 +4,7 @@ public class ResourceManager
 {
     #region Variables
 
+    [Header("Database Variables")]
     private EffectData effectData = null;
     private ObjectPoolData objectPoolData = null;
 
@@ -24,7 +25,7 @@ public class ResourceManager
 
         if (effectData == null)
         {
-            throw new System.Exception($"The path to the effect data is incorrect, or the data is not set. \nInput path : {FilePath.EffectDataPath}");
+            throw new System.Exception($"The path to the effect data is incorrect, or the data is not set. \nInput path : {FilePath.EFFECT_DATA_PATH}");
         }
 
         objectPoolData = Load<ObjectPoolData>(ResourcePath.OBJECT_POOL_DATA);

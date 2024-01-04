@@ -30,12 +30,16 @@ public abstract class PlayerJoystick : MonoBehaviour
 
     #endregion Unity Events
 
-    #region Abstract Methods
+    #region Methods
+
+    #region Abstract
 
     /// <summary>
     /// Replace the user's directional input with the DNFTransform as the direction. 
     /// </summary>
     protected abstract void SetDirection();
 
-    #endregion Abstract Methods
+    #endregion Abstract
+
+    #endregion Methods
 }

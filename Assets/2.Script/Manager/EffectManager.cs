@@ -13,6 +13,9 @@ public class EffectManager : MonoBehaviour
 
     #region Methods
 
+    /// <summary>
+    /// Initialize the effect database by getting the effect data from the asset.
+    /// </summary>
     public void Init()
     {
         EffectClip[] database = GameManager.Resource.EffectData.GetAllData();
@@ -24,7 +27,12 @@ public class EffectManager : MonoBehaviour
         }
     }
 
-    public GameObject SpawnEffect(EEffectList effectIndex)
+    /// <summary>
+    /// Spawn the effect object from the effect pool at the given index.
+    /// </summary>
+    /// <param name="effectIndex">The index of the effect to be spawned</param>
+    /// <returns>The effect object</returns>
+    public GameObject SpawnFromPool(EEffectList effectIndex)
     {
         if (effectDictionary[effectIndex].Count <= 0)
         {
@@ -36,13 +44,22 @@ public class EffectManager : MonoBehaviour
         return gameObject;
     }
 
-    public void ReturnEffect(EEffectList effectIndex, GameObject gameObject)
+    /// <summary>
+    /// Return the effect object to the pool at the given index.
+    /// </summary>
+    /// <param name="effectIndex">The index of the effect to be returned</param>
+    /// <param name="gameObject">The game object of the effect to be returned</param>
+    public void ReturnToPool(EEffectList effectIndex, GameObject gameObject)
     {
         effectDictionary[effectIndex].Enqueue(gameObject);
     }
 
     #region Helper
 
+    /// <summary>
+    /// Create a new effect object and store it in the queue.
+    /// </summary>
+    /// <param name="effectIndex">The index of the effect to be created</param>
     private void CreateNewObject(EEffectList effectIndex)
     {
         GameObject gameObject = Instantiate(effectDatabase[effectIndex], transform);
