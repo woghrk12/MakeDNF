@@ -1,32 +1,29 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(Hitbox))]
-public class Hitbox_Editor : Editor
+public class HitboxEditor : Editor
 {
     public enum ECoordinateMode { XZ, XY }
     public enum EHitboxEditMode { NONE = -1, SIZE, OFFSET, PIVOT }
 
     #region Variables
 
-    [Header("The variable of target component")]
-    private Hitbox hitbox = null;
+    [Header("Debug Mode")]
+    private List<Hitbox> hitboxList = new();
+
+    [Header("Edit Mode")]
+    private Hitbox targetHitbox = null;
 
     [Header("The variables for switching the edit mode")]
     private ECoordinateMode coordMode = ECoordinateMode.XZ;
     private EHitboxEditMode editMode = EHitboxEditMode.NONE;
 
-    [Header("Transform variables for calculating the hitbox position")]
-    private Transform posTransform = null;
-    private Transform yPosTransform = null;
-    private Transform scaleTransform = null;
-
     [Header("The variables for temporary info of the hitbox")]
-    private Vector3 position = Vector3.zero;
     private Vector3 size = Vector3.zero;
     private Vector3 offset = Vector3.zero;
     private Vector3 pivot = Vector3.zero;
-    private float localScale = 0f;
 
     #endregion Variables
 
@@ -34,60 +31,87 @@ public class Hitbox_Editor : Editor
 
     private void OnEnable()
     {
-        hitbox = target as Hitbox;
+        Hitbox[] hitboxes = FindObjectsOfType<Hitbox>(true);
 
-        size = hitbox.Size;
-        offset = hitbox.Offset;
-        pivot = hitbox.Pivot;
-
-        posTransform = hitbox.transform;
-        yPosTransform = posTransform.GetChild(0);
-        scaleTransform = yPosTransform.GetChild(0);
-
-        if (hitbox.HitboxType == EHitboxType.NONE)
+        foreach (Hitbox hitbox in hitboxes)
         {
-            Debug.LogWarning($"The hitbox type is not set. Hitbox object : {hitbox.gameObject.name}");
+            if (hitboxList.Contains(hitbox)) continue;
+
+            hitboxList.Add(hitbox);
+        }
+
+        targetHitbox = target as Hitbox;
+
+        size = targetHitbox.Size;
+        offset = targetHitbox.Offset;
+        pivot = targetHitbox.Pivot;
+
+        if (targetHitbox.HitboxType == EHitboxType.NONE)
+        {
+            Debug.LogWarning($"The hitbox type is not set. Hitbox object : {targetHitbox.gameObject.name}");
         }
     }
 
     private void OnSceneGUI()
     {
-        if (Application.isPlaying) return;
-
-        if (hitbox == null) return;
-
-        if (hitbox.HitboxType == EHitboxType.NONE) return;
-
-        position = new Vector3(posTransform.position.x, yPosTransform.localPosition.y, posTransform.position.y * GlobalDefine.INV_CONV_RATE);
-        localScale = scaleTransform.localScale.x;
-
-        DrawHitbox();
-
-        Event curEvent = Event.current;
-        if (curEvent.type == EventType.KeyDown)
+        if (Application.isPlaying)
         {
-            if (curEvent.keyCode == KeyCode.F1) editMode = EHitboxEditMode.NONE;
-            if (curEvent.keyCode == KeyCode.F2) editMode = EHitboxEditMode.SIZE;
-            if (curEvent.keyCode == KeyCode.F3) editMode = EHitboxEditMode.OFFSET;
-            if (curEvent.keyCode == KeyCode.F4) editMode = EHitboxEditMode.PIVOT;
+            foreach (Hitbox hitbox in hitboxList)
+            {
+                if (!hitbox.gameObject.activeSelf) continue;
 
-            if (curEvent.keyCode == KeyCode.LeftControl)
-                coordMode = coordMode == ECoordinateMode.XZ ? ECoordinateMode.XY : ECoordinateMode.XZ;
+                Transform posTransform = hitbox.transform;
+                Transform yPosTransform = posTransform.childCount > 0 ? posTransform.GetChild(0) : null;
+                Transform scaleTransform = yPosTransform != null && yPosTransform.childCount > 0 ? yPosTransform.GetChild(0) : null;
+
+                Vector3 position = new Vector3(posTransform.position.x, yPosTransform != null ? yPosTransform.localPosition.y : 0f, posTransform.position.y * GlobalDefine.INV_CONV_RATE);
+                Vector3 size = hitbox.Size;
+                Vector3 offset = hitbox.Offset;
+                Vector3 pivot = hitbox.Pivot;
+                float localScale = scaleTransform != null ? scaleTransform.localScale.x : 1f;
+
+                DrawHitbox(hitbox.HitboxType, position, offset, size, pivot, localScale);
+            }
         }
-
-        switch (editMode)
+        else
         {
-            case EHitboxEditMode.SIZE:
-                DrawSizeHandler();
-                break;
+            Event curEvent = Event.current;
+            if (curEvent.type == EventType.KeyDown)
+            {
+                if (curEvent.keyCode == KeyCode.F1) editMode = EHitboxEditMode.NONE;
+                if (curEvent.keyCode == KeyCode.F2) editMode = EHitboxEditMode.SIZE;
+                if (curEvent.keyCode == KeyCode.F3) editMode = EHitboxEditMode.OFFSET;
+                if (curEvent.keyCode == KeyCode.F4) editMode = EHitboxEditMode.PIVOT;
 
-            case EHitboxEditMode.OFFSET:
-                DrawOffsetHandler();
-                break;
+                if (curEvent.keyCode == KeyCode.LeftControl)
+                    coordMode = coordMode == ECoordinateMode.XZ ? ECoordinateMode.XY : ECoordinateMode.XZ;
+            }
 
-            case EHitboxEditMode.PIVOT:
-                DrawPivotHandler();
-                break;
+            Transform posTransform = targetHitbox.transform;
+            Transform yPosTransform = posTransform.childCount > 0 ? posTransform.GetChild(0) : null;
+            Transform scaleTransform = yPosTransform != null && yPosTransform.childCount > 0 ? yPosTransform.GetChild(0) : null;
+
+            Vector3 position = new Vector3(posTransform.position.x, yPosTransform != null ? yPosTransform.localPosition.y : 0f, posTransform.position.y * GlobalDefine.INV_CONV_RATE);
+            float localScale = scaleTransform != null ? scaleTransform.localScale.x : 1f;
+
+            if (targetHitbox.HitboxType == EHitboxType.NONE) return;
+
+            DrawHitbox(targetHitbox.HitboxType, position, offset, size, pivot, localScale);
+
+            switch (editMode)
+            {
+                case EHitboxEditMode.SIZE:
+                    DrawSizeHandler(targetHitbox.HitboxType, position, offset, ref size, pivot, localScale);
+                    break;
+
+                case EHitboxEditMode.OFFSET:
+                    DrawOffsetHandler(targetHitbox.HitboxType, position, ref offset, size, pivot, localScale);
+                    break;
+
+                case EHitboxEditMode.PIVOT:
+                    DrawPivotHandler(targetHitbox.HitboxType, position, offset, size, ref pivot, localScale);
+                    break;
+            }
         }
     }
 
@@ -98,7 +122,6 @@ public class Hitbox_Editor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-
         EditorGUILayout.Space();
         EditorGUILayout.Space();
 
@@ -107,9 +130,9 @@ public class Hitbox_Editor : Editor
             EditorGUILayout.LabelField("Hitbox Setting");
             EditorGUILayout.BeginVertical("box");
             {
-                hitbox.Size = EditorGUILayout.Vector3Field("Hitbox Size", hitbox.Size);
-                hitbox.Offset = EditorGUILayout.Vector3Field("Hitbox Offset", hitbox.Offset);
-                hitbox.Pivot = EditorGUILayout.Vector3Field("Hitbox Pivot", hitbox.Pivot);
+                targetHitbox.Size = EditorGUILayout.Vector3Field("Hitbox Size", targetHitbox.Size);
+                targetHitbox.Offset = EditorGUILayout.Vector3Field("Hitbox Offset", targetHitbox.Offset);
+                targetHitbox.Pivot = EditorGUILayout.Vector3Field("Hitbox Pivot", targetHitbox.Pivot);
             }
             EditorGUILayout.EndVertical();
         }
@@ -122,14 +145,26 @@ public class Hitbox_Editor : Editor
                 offset = EditorGUILayout.Vector3Field("Hitbox Offset", offset);
                 pivot = EditorGUILayout.Vector3Field("Hitbox Pivot", pivot);
 
-                if (GUILayout.Button("Save"))
+                EditorGUILayout.BeginHorizontal();
                 {
-                    hitbox.Size = size;
-                    hitbox.Offset = offset;
-                    hitbox.Pivot = pivot;
+                    if (GUILayout.Button("Reload"))
+                    {
+                        size = targetHitbox.Size;
+                        offset = targetHitbox.Offset;
+                        pivot = targetHitbox.Pivot;
 
-                    Debug.Log("Hitbox info is saved!");
+                        Debug.Log("Hitbox info is reloaded!");
+                    }
+                    if (GUILayout.Button("Save"))
+                    {
+                        targetHitbox.Size = size;
+                        targetHitbox.Offset = offset;
+                        targetHitbox.Pivot = pivot;
+
+                        Debug.Log("Hitbox info is saved!");
+                    }
                 }
+                EditorGUILayout.EndHorizontal();
             }
             EditorGUILayout.EndVertical();
         }
@@ -144,22 +179,22 @@ public class Hitbox_Editor : Editor
     /// The collider of XZ coordinates will appear red, and the collider of XY coordinates will appear green.
     /// The shape of the collider of XZ coordinates is a circle, it only depends on the X-coordinate.
     /// </summary>
-    private void DrawHitbox()
+    private void DrawHitbox(EHitboxType hitboxType, Vector3 position, Vector3 offset, Vector3 size, Vector3 pivot, float localScale)
     {
+        if (hitboxType == EHitboxType.NONE) return;
+
         Vector3 minHitboxPos = position + offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
         Vector3 maxHitboxPos = position + offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
         Vector3 center = (minHitboxPos + maxHitboxPos) * 0.5f;
         Vector3 wireSize = maxHitboxPos - minHitboxPos;
 
-        #region XZ Coordinates
-
         Handles.color = Color.red;
-        if (hitbox.HitboxType == EHitboxType.BOX)
+        if (targetHitbox.HitboxType == EHitboxType.BOX)
         {
             // Show the box-shaped hitbox by using x, z axis of DNF transform
             Handles.DrawWireCube(new Vector3(center.x, center.z * GlobalDefine.CONV_RATE, 0f), new Vector3(wireSize.x, wireSize.z * GlobalDefine.CONV_RATE, 0f));
         }
-        else if (hitbox.HitboxType == EHitboxType.CIRCLE)
+        else if (targetHitbox.HitboxType == EHitboxType.CIRCLE)
         {
             // Show the circle-shaped hitbox by using x, z axis of DNF transform
             float angle = Mathf.Acos(GlobalDefine.CONV_RATE) * Mathf.Rad2Deg;
@@ -170,15 +205,9 @@ public class Hitbox_Editor : Editor
                 wireSize.x * 0.5f);
         }
 
-        #endregion XZ Coordinates
-
-        #region XY Coordinates
-
         Handles.color = Color.green;
         // Show the box-shaped hitbox by using x, y axis of DNF transform
         Handles.DrawWireCube(new Vector3(center.x, center.z * GlobalDefine.CONV_RATE + center.y, 0f), new Vector3(wireSize.x, wireSize.y, 0f));
-
-        #endregion XY Coordinates
     }
 
     /// <summary>
@@ -187,7 +216,7 @@ public class Hitbox_Editor : Editor
     /// The criterion for the arrow changing direction is 0.5f.
     /// The minimum value for the size is 0f.
     /// </summary>
-    private void DrawSizeHandler()
+    private void DrawSizeHandler(EHitboxType hitboxType, Vector3 position, Vector3 offset, ref Vector3 size, Vector3 pivot, float localScale)
     {
         Vector3 minHitboxPos = position + offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
         Vector3 maxHitboxPos = position + offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
@@ -250,7 +279,7 @@ public class Hitbox_Editor : Editor
     /// Draw the controllers of the hitbox offset.
     /// Determine how far apart the position of the object is from the position of the hitbox.
     /// </summary>
-    private void DrawOffsetHandler()
+    private void DrawOffsetHandler(EHitboxType hitboxType, Vector3 position, ref Vector3 offset, Vector3 size, Vector3 pivot, float localScale)
     {
         Vector3 changedPos = position + offset;
 
@@ -277,7 +306,7 @@ public class Hitbox_Editor : Editor
     /// Scale the hitbox with the pivot as the reference.
     /// The value of pivot is between 0f and 1f.
     /// </summary>
-    private void DrawPivotHandler()
+    private void DrawPivotHandler(EHitboxType hitboxType, Vector3 position, Vector3 offset, Vector3 size, ref Vector3 pivot, float localScale)
     {
         Vector3 minHitboxPos = position + offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
         Vector3 maxHitboxPos = position + offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
