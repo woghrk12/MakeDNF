@@ -127,16 +127,8 @@ public class DNFTransform : MonoBehaviour
     private void Awake()
     {
         posTransform = transform;
-
-        if (posTransform.childCount > 0)
-        { 
-            yPosTransform = posTransform.GetChild(0);
-        }
-
-        if (yPosTransform != null)
-        { 
-            scaleTransform = yPosTransform.GetChild(0);
-        }
+        yPosTransform = posTransform.childCount > 0 ? posTransform.GetChild(0) : null;
+        scaleTransform = yPosTransform != null && yPosTransform.childCount > 0 ? yPosTransform.GetChild(0) : null;
     }
 
     #endregion Unity Events
