@@ -379,6 +379,16 @@ public class HitboxController : MonoBehaviour
     #region Methods
 
     /// <summary>
+    /// Calculate the active hitbox range.
+    /// </summary>
+    public void CalculateHitbox()
+    {
+        if (activeHitbox == null) return;
+
+        activeHitbox.CalculateHitbox();
+    }
+
+    /// <summary>
     /// Check whether the collision occur.
     /// </summary>
     /// <param name="other">The other hitbox controller for collision checks</param>
