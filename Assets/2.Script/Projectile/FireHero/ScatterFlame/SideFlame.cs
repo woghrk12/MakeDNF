@@ -18,7 +18,7 @@ public class SideFlame : Projectile, IAttackable
 
     #region IAttackable Implementation
 
-    public Hitbox AttackHitbox { set; get; }
+    public HitboxController AttackHitboxController { set; get; }
 
     public bool CalculateOnHit(List<IDamagable> targets)
     {
@@ -27,7 +27,7 @@ public class SideFlame : Projectile, IAttackable
         foreach (IDamagable target in targets)
         {
             if (alreadyHitObjects.Contains(target)) continue;
-            if (!AttackHitbox.CheckCollision(target.DamageHitbox)) continue;
+            if (!AttackHitboxController.CheckCollision(target.DamageHitboxController)) continue;
 
             target.OnDamage();
 
@@ -46,7 +46,7 @@ public class SideFlame : Projectile, IAttackable
     {
         dnfTransform = GetComponent<DNFTransform>();
 
-        AttackHitbox = GetComponent<Hitbox>();
+        AttackHitboxController = GetComponent<HitboxController>();
 
         preDelay = Time.fixedDeltaTime * 1f * 4f;
         duration = Time.fixedDeltaTime * 12f * 4f;
@@ -74,7 +74,7 @@ public class SideFlame : Projectile, IAttackable
     protected override IEnumerator Activate()
     {
         alreadyHitObjects.Clear();
-        AttackHitbox.CalculateHitbox();
+        AttackHitboxController.CalculateHitbox();
 
         yield return Utilities.WaitForSeconds(preDelay);
 

@@ -19,7 +19,7 @@ public class Meteor : Projectile, IAttackable
 
     #region IAttackable Implementation
 
-    public Hitbox AttackHitbox { set; get; }
+    public HitboxController AttackHitboxController { set; get; }
 
     public bool CalculateOnHit(List<IDamagable> targets)
     {
@@ -28,7 +28,7 @@ public class Meteor : Projectile, IAttackable
         foreach (IDamagable target in targets)
         {
             if (alreadyHitObjects.Contains(target)) continue;
-            if (!AttackHitbox.CheckCollision(target.DamageHitbox)) continue;
+            if (!AttackHitboxController.CheckCollision(target.DamageHitboxController)) continue;
             
             target.OnDamage();
             
@@ -48,7 +48,7 @@ public class Meteor : Projectile, IAttackable
         dnfTransform = GetComponent<DNFTransform>();
         dnfRigidbody = GetComponent<DNFRigidbody>();
 
-        AttackHitbox = GetComponent<Hitbox>();
+        AttackHitboxController = GetComponent<HitboxController>();
     }
 
     #endregion Unity Events
@@ -82,7 +82,7 @@ public class Meteor : Projectile, IAttackable
         {
             dnfRigidbody.MoveDirection(moveDirection);
 
-            AttackHitbox.CalculateHitbox();
+            AttackHitboxController.CalculateHitbox();
 
             yield return Utilities.WaitForFixedUpdate;
 

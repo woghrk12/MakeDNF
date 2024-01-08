@@ -17,13 +17,13 @@ public class Fireball_2 : Projectile, IAttackable
 
     #region IAttackable Implementation
 
-    public Hitbox AttackHitbox { set; get; }
+    public HitboxController AttackHitboxController { set; get; }
 
     public bool CalculateOnHit(List<IDamagable> targets)
     {
         foreach (IDamagable target in targets)
         {
-            if (AttackHitbox.CheckCollision(target.DamageHitbox))
+            if (AttackHitboxController.CheckCollision(target.DamageHitboxController))
             {
                 target.OnDamage();
                 return true;
@@ -42,7 +42,7 @@ public class Fireball_2 : Projectile, IAttackable
         dnfTransform = GetComponent<DNFTransform>();
         dnfRigidbody = GetComponent<DNFRigidbody>();
         
-        AttackHitbox = GetComponent<Hitbox>();
+        AttackHitboxController = GetComponent<HitboxController>();
     }
 
     #endregion Unity Events
@@ -79,7 +79,7 @@ public class Fireball_2 : Projectile, IAttackable
         {
             dnfRigidbody.MoveDirection(moveDirection);
             
-            AttackHitbox.CalculateHitbox();
+            AttackHitboxController.CalculateHitbox();
             
             yield return Utilities.WaitForFixedUpdate;
             

@@ -14,7 +14,7 @@ public class GroundExplosion : Projectile, IAttackable
 
     #region IAttackable Implementation
 
-    public Hitbox AttackHitbox { set; get; }
+    public HitboxController AttackHitboxController { set; get; }
 
     public bool CalculateOnHit(List<IDamagable> targets)
     {
@@ -23,7 +23,7 @@ public class GroundExplosion : Projectile, IAttackable
         foreach (IDamagable target in targets)
         {
             if (alreadyHitObjects.Contains(target)) continue;
-            if (!AttackHitbox.CheckCollision(target.DamageHitbox)) continue;
+            if (!AttackHitboxController.CheckCollision(target.DamageHitboxController)) continue;
 
             target.OnDamage();
 
@@ -42,7 +42,7 @@ public class GroundExplosion : Projectile, IAttackable
     {
         dnfTransform = GetComponent<DNFTransform>();
 
-        AttackHitbox = GetComponent<Hitbox>();
+        AttackHitboxController = GetComponent<HitboxController>();
     }
 
     #endregion Unity Events
@@ -71,7 +71,7 @@ public class GroundExplosion : Projectile, IAttackable
 
         while (timer < 1f)
         {
-            AttackHitbox.CalculateHitbox();
+            AttackHitboxController.CalculateHitbox();
 
             yield return Utilities.WaitForFixedUpdate;
 
