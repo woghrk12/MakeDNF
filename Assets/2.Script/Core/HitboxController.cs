@@ -40,12 +40,12 @@ public class Hitbox
     /// <summary>
     /// DNF transform component used to calculate the hitbox.
     /// </summary>
-    [NonSerialized] private DNFTransform dnfTransform = null;
+    private DNFTransform dnfTransform = null;
 
-    private EHitboxType hitboxType = EHitboxType.BOX;
-    private Vector3 size = new Vector3(1f, 1f, 1f);
-    private Vector3 offset = Vector3.zero;
-    private Vector3 pivot = Vector3.zero;
+    [SerializeField] private EHitboxType hitboxType = EHitboxType.BOX;
+    [SerializeField] private Vector3 size = Vector3.zero;
+    [SerializeField] private Vector3 offset = Vector3.zero;
+    [SerializeField] private Vector3 pivot = Vector3.zero;
 
     /// <summary>
     /// The maximum values for each component of the hitbox.
