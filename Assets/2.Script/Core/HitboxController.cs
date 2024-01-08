@@ -350,7 +350,7 @@ public class HitboxController : MonoBehaviour
 #if UNITY_EDITOR
 
     /// <summary>
-    /// 
+    /// The array of the hitboxes for editing and debugging.
     /// </summary>
     public Hitbox[] Hitboxes
     {
@@ -362,7 +362,7 @@ public class HitboxController : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// The currently active hitbox component.
     /// </summary>
     public Hitbox ActiveHitbox => activeHitbox;
 
