@@ -1,14 +1,15 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EHitboxType { NONE = -1, BOX, CIRCLE }
+public enum EHitboxType { BOX, CIRCLE }
 
 public interface IAttackable
 {
     /// <summary>
-    /// Hitbox component for representing the attack range.
+    /// Hitbox controller component for representing the attack range.
     /// </summary>
-    public Hitbox AttackHitbox { set; get; }
+    public HitboxController AttackHitboxController{ set; get; }
     
     /// <summary>
     /// Check if the targets' hitbox is within the attack range.
@@ -21,9 +22,9 @@ public interface IAttackable
 public interface IDamagable
 {
     /// <summary>
-    /// Hitbox component used to check whether the object has been hit.
+    /// Hitbox controller component used to check whether the object has been hit.
     /// </summary>
-    public Hitbox DamageHitbox { set; get; }
+    public HitboxController DamageHitboxController { set; get; }
     
     /// <summary>
     /// The event method called when the object is hit.
@@ -31,35 +32,36 @@ public interface IDamagable
     public void OnDamage();
 }
 
-[RequireComponent(typeof(DNFTransform))]
-public class Hitbox : MonoBehaviour
+[Serializable]
+public class Hitbox
 {
     #region Variables
 
     /// <summary>
     /// DNF transform component used to calculate the hitbox.
     /// </summary>
-    private DNFTransform dnfTransform = null;
+    [NonSerialized] private DNFTransform dnfTransform = null;
 
-    [Header("Variables for the hitbox shape")]
-    [SerializeField] private EHitboxType hitboxType = EHitboxType.NONE;
-    [SerializeField, HideInInspector] private Vector3 size = new Vector3(1f, 1f, 1f);
-    [SerializeField, HideInInspector] private Vector3 offset = Vector3.zero;
-    [SerializeField, HideInInspector] private Vector3 pivot = Vector3.zero;
+    private EHitboxType hitboxType = EHitboxType.BOX;
+    private Vector3 size = new Vector3(1f, 1f, 1f);
+    private Vector3 offset = Vector3.zero;
+    private Vector3 pivot = Vector3.zero;
 
     /// <summary>
     /// The maximum values for each component of the hitbox.
     /// If the hitbox shape is a circle, the z-value has no effect.
     /// </summary>
     private Vector3 maxHitboxPos = Vector3.zero;
-    
+
     /// <summary>
     /// The minimum values for each component of the hitbox.
     /// If the hitbox shape is a circle, the z-value has no effect.
     /// </summary>
     private Vector3 minHitboxPos = Vector3.zero;
 
-    #endregion Variable
+    #endregion Variables
+
+#if UNITY_EDITOR
 
     #region Properties
 
@@ -67,7 +69,14 @@ public class Hitbox : MonoBehaviour
     /// The shape of the hitbox on the XZ plane.
     /// The shape of the hitbox is either box-shaped or circle-shaped.
     /// </summary>
-    public EHitboxType HitboxType => hitboxType;
+    public EHitboxType HitboxType
+    {
+        set 
+        {
+            hitboxType = value; 
+        }
+        get => hitboxType;
+    }
 
     /// <summary>
     /// The component determining the size of the hitbox.
@@ -118,16 +127,17 @@ public class Hitbox : MonoBehaviour
 
     #endregion Properties
 
-    #region Unity Events
-
-    private void Awake()
-    {
-        dnfTransform = GetComponent<DNFTransform>();
-    }
-
-    #endregion Unity Events
+#endif
 
     #region Methods
+
+    /// <summary>
+    /// Initialize the hitbox.
+    /// </summary>
+    public void Init(DNFTransform dnfTransform)
+    {
+        this.dnfTransform = dnfTransform;
+    }
 
     /// <summary>
     /// Calculate the hitbox by using the value according to DNF transform.
@@ -150,20 +160,7 @@ public class Hitbox : MonoBehaviour
             this.minHitboxPos = position + minHitboxPos;
             this.maxHitboxPos = position + maxHitboxPos;
         }
-        /*
-        if (dnfTransform.IsLeft)
-        {
-            this.minHitboxPos = position - maxHitboxPos;
-            this.maxHitboxPos = position + minHitboxPos;
-        }
-        else
-        {
-            this.minHitboxPos = position - minHitboxPos;
-            this.maxHitboxPos = position + maxHitboxPos;
-        }*/
     }
-
-    #region AABB Collision
 
     /// <summary>
     /// Call the appropriate collision detection function based on the shapes of the two hitboxes.
@@ -177,16 +174,22 @@ public class Hitbox : MonoBehaviour
             {
                 return CheckBB(this, other);
             }
-
-            return CheckBC(this, other);
+            else
+            {
+                return CheckBC(this, other);
+            }
         }
-
-        if (other.hitboxType == EHitboxType.CIRCLE)
+        else
         {
-            return CheckCC(this, other);
+            if (other.hitboxType == EHitboxType.BOX)
+            {
+                return CheckBC(other, this);
+            }
+            else
+            {
+                return CheckCC(this, other);
+            }
         }
-
-        return CheckBC(other, this);
     }
 
     /// <summary>
@@ -289,8 +292,6 @@ public class Hitbox : MonoBehaviour
         return true;
     }
 
-    #endregion AABB Collision
-
     #region Helper
 
     /// <summary>
@@ -311,6 +312,83 @@ public class Hitbox : MonoBehaviour
     }
 
     #endregion Helper
+
+    #endregion Methods
+}
+
+[RequireComponent(typeof(DNFTransform))]
+public class HitboxController : MonoBehaviour
+{
+    #region Variables
+
+    [SerializeField, HideInInspector] private Hitbox[] hitboxes = new Hitbox[0];
+    private Hitbox activeHitbox = null;
+    private int hitboxIndex = 0;
+
+    #endregion Variables
+
+    #region Properties
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int HitboxIndex
+    {
+        set
+        {
+            if (value < 0 || value >= hitboxes.Length)
+            {
+                throw new Exception($"Out of range. GameObject : {gameObject.name}. Input index : {value}");
+            }
+
+            hitboxIndex = value;
+            activeHitbox = hitboxes[hitboxIndex];
+        }
+    }
+
+#if UNITY_EDITOR
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Hitbox[] Hitboxes => hitboxes;
+
+#endif
+
+    #endregion Properties
+
+    #region Unity Events
+
+    private void Awake()
+    {
+        if (hitboxes.Length <= 0)
+        {
+            throw new Exception($"There is no hitbox. GameObject : {gameObject.name}");
+        }
+
+        DNFTransform dnfTransform = GetComponent<DNFTransform>();
+
+        foreach (Hitbox hitbox in hitboxes)
+        {
+            hitbox.Init(dnfTransform);
+        }
+    }
+
+    #endregion Unity Events
+
+    #region Methods
+
+    /// <summary>
+    /// Check whether the collision occur.
+    /// </summary>
+    /// <param name="other">The other hitbox controller for collision checks</param>
+    /// <returns>True if both controller's active hitbox is not null and a collision has occurred</returns>
+    public bool CheckCollision(HitboxController other)
+    {
+        return activeHitbox != null 
+            && other.activeHitbox != null
+            && activeHitbox.CheckCollision(other.activeHitbox);
+    }
 
     #endregion Methods
 }
