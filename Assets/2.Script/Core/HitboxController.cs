@@ -344,6 +344,7 @@ public class HitboxController : MonoBehaviour
             hitboxIndex = value;
             activeHitbox = hitboxes[hitboxIndex];
         }
+        get => hitboxIndex;
     }
 
 #if UNITY_EDITOR
@@ -351,7 +352,19 @@ public class HitboxController : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public Hitbox[] Hitboxes => hitboxes;
+    public Hitbox[] Hitboxes
+    {
+        set 
+        {
+            hitboxes = value; 
+        }
+        get => hitboxes;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Hitbox ActiveHitbox => activeHitbox;
 
 #endif
 
