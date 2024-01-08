@@ -323,7 +323,6 @@ public class HitboxController : MonoBehaviour
 
     [SerializeField, HideInInspector] private Hitbox[] hitboxes = new Hitbox[0];
     private Hitbox activeHitbox = null;
-    private int hitboxIndex = 0;
 
     #endregion Variables
 
@@ -341,10 +340,8 @@ public class HitboxController : MonoBehaviour
                 throw new Exception($"Out of range. GameObject : {gameObject.name}. Input index : {value}");
             }
 
-            hitboxIndex = value;
-            activeHitbox = hitboxes[hitboxIndex];
+            activeHitbox = hitboxes[value];
         }
-        get => hitboxIndex;
     }
 
 #if UNITY_EDITOR
