@@ -382,6 +382,8 @@ public class HitboxController : MonoBehaviour
         {
             hitbox.Init(dnfTransform);
         }
+
+        HitboxIndex = 0;
     }
 
     #endregion Unity Events

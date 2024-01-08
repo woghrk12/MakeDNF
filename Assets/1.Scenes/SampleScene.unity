@@ -183,10 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add4c21ad3853494895ead04007e7029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitboxType: 0
-  size: {x: 1, y: 1, z: 1}
-  offset: {x: 0, y: 0, z: 0}
-  pivot: {x: 0.5, y: 0, z: 0.5}
+  hitboxes: []
 --- !u!114 &178524053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1252,7 +1249,6 @@ GameObject:
   - component: {fileID: 1676023502}
   - component: {fileID: 1676023497}
   - component: {fileID: 1676023501}
-  - component: {fileID: 1676023499}
   - component: {fileID: 1676023504}
   - component: {fileID: 1676023498}
   - component: {fileID: 1676023503}
@@ -1307,22 +1303,6 @@ MonoBehaviour:
   xMoveSpeed: 5
   zMoveSpeed: 5
   jumpPower: 8
---- !u!114 &1676023499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1676023495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: add4c21ad3853494895ead04007e7029, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitboxType: 0
-  size: {x: 0.5, y: 0.8, z: 0.5}
-  offset: {x: 0, y: 0, z: 0}
-  pivot: {x: 0.5, y: 0, z: 0.5}
 --- !u!114 &1676023500
 MonoBehaviour:
   m_ObjectHideFlags: 0
