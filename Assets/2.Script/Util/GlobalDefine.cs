@@ -4,6 +4,8 @@ public class GlobalDefine
     private static readonly int Y_RATE = 9;
     public static readonly float CONV_RATE = (float)Y_RATE / X_RATE;
     public static readonly float INV_CONV_RATE = (float)X_RATE / Y_RATE;
+
+    public static readonly float EPSILON = 0.0001f;
 }
 
 public class FilePath
