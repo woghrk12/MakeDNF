@@ -20,4 +20,9 @@ public class AnimatorKey
             public static readonly string FLAME_STRIKE = "FlameStrike";
         }
     }
+
+    public class Projectile
+    {
+        public static readonly string SHOT = "Shot";
+    }
 }

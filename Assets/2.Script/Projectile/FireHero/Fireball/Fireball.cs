@@ -1,12 +1,16 @@
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public partial class FlameStrike : Projectile, IAttackable
+public partial class Fireball : Projectile, IAttackable
 {
     public enum EState { NONE = -1, SHOT }
 
     #region Variables
 
-    private List<IDamagable> alreadyHitObjects = new();
+    [SerializeField] private float range = 0f;
+    [SerializeField] private float speed = 0f;
+    private Vector3 moveDirection = Vector3.zero;
 
     #endregion Variables
 
@@ -16,23 +20,19 @@ public partial class FlameStrike : Projectile, IAttackable
 
     public bool CalculateOnHit(List<IDamagable> targets)
     {
-        int count = 0;
-
         foreach (IDamagable target in targets)
         {
-            if (alreadyHitObjects.Contains(target)) continue;
-            if (!AttackHitboxController.CheckCollision(target.DamageHitboxController)) continue;
-
-            target.OnDamage();
-
-            alreadyHitObjects.Add(target);
-            count++;
+            if (AttackHitboxController.CheckCollision(target.DamageHitboxController))
+            {
+                target.OnDamage();
+                return true;
+            }
         }
 
-        return count > 0;
+        return false;
     }
 
-    #endregion IAttackable Implementation
+    #endregion IAttackabe Implementation
 
     #region Unity Events
 
@@ -49,12 +49,17 @@ public partial class FlameStrike : Projectile, IAttackable
 
     #region Methods
 
-    #region Override
+    #region Override 
 
-    public override void Activate(DNFTransform subjectTransform, float sizeEff = 1)
+    public override void Activate(DNFTransform subjectTransform, float sizeEff = 1f)
     {
-        // Set projectile transform
+        // Set projectile transform 
         dnfTransform.Position = subjectTransform.Position;
+        dnfTransform.IsLeft = subjectTransform.IsLeft;
+        dnfTransform.LocalScale = sizeEff;
+
+        // Set projectile direction
+        moveDirection = dnfTransform.IsLeft ? Vector3.left : Vector3.right;
 
         curState = stateList[(int)EState.SHOT];
         curState.OnStart();

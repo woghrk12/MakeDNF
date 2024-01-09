@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundExplosion : Projectile, IAttackable
+public partial class SideFlame : Projectile, IAttackable
 {
-    #region Variables
+    public enum EState { NONE = -1, SHOT }
 
-    private DNFTransform dnfTransform = null;
+    #region Variables
 
     private List<IDamagable> alreadyHitObjects = new();
 
@@ -38,55 +38,31 @@ public class GroundExplosion : Projectile, IAttackable
 
     #region Unity Events
 
-    private void Awake()
+    protected override void Awake()
     {
-        dnfTransform = GetComponent<DNFTransform>();
+        base.Awake();
 
         AttackHitboxController = GetComponent<HitboxController>();
+
+        stateList.Add(new Shot(this));
     }
 
     #endregion Unity Events
 
     #region Methods
 
-    #region Override 
+    #region Override
 
-    public override void Shot(DNFTransform subjectTransform, float sizeEff = 1f)
+    public override void Activate(DNFTransform subjectTransform, float sizeEff = 1f)
     {
-        // Set projectile transform
+        // Set projectile transform 
         dnfTransform.Position = subjectTransform.Position;
         dnfTransform.IsLeft = subjectTransform.IsLeft;
         dnfTransform.LocalScale = sizeEff;
 
+        SetState((int)EState.SHOT);
+
         gameObject.SetActive(true);
-
-        StartCoroutine(Activate());
-    }
-
-    protected override IEnumerator Activate()
-    {
-        alreadyHitObjects.Clear();
-
-        float timer = 0f;
-
-        while (timer < 1f)
-        {
-            AttackHitboxController.CalculateHitbox();
-
-            yield return Utilities.WaitForFixedUpdate;
-
-            timer += Time.fixedDeltaTime;
-
-            CalculateOnHit(GameManager.Room.Monsters);
-        }
-
-        Clear();
-    }
-
-    public override void Clear()
-    {
-        GameManager.ObjectPool.ReturnToPool(EObjectPoolList.Ground_Explosion_FireHero, gameObject);
-        gameObject.SetActive(false);
     }
 
     #endregion Override

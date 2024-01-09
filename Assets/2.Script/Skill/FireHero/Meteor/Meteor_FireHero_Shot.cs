@@ -46,7 +46,7 @@ public partial class Meteor_FireHero
                 if (timer < preDelay) return;
 
                 // Instantiate the projectile
-                GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Meteor_FireHero).GetComponent<Projectile>().Shot(character.DNFTransform, stateController.sizeEff);
+                GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Meteor_FireHero).GetComponent<Projectile>().Activate(character.DNFTransform, stateController.sizeEff);
 
                 isPreDelay = false;
                 timer = 0f;

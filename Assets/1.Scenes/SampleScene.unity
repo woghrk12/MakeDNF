@@ -183,7 +183,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add4c21ad3853494895ead04007e7029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitboxes: []
+  hitboxes:
+  - hitboxType: 0
+    size: {x: 1, y: 1, z: 1}
+    offset: {x: 0, y: 0, z: 0}
+    pivot: {x: 0.5, y: 0, z: 0.5}
 --- !u!114 &178524053
 MonoBehaviour:
   m_ObjectHideFlags: 0

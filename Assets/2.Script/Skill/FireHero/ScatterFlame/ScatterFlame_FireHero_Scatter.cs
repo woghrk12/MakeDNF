@@ -46,7 +46,7 @@ public partial class ScatterFlame_FireHero
                 if (timer < preDelay) return;
 
                 // Instantiate the projectile
-                GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Side_Flame_FireHero).GetComponent<Projectile>().Shot(character.DNFTransform);
+                GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Side_Flame_FireHero).GetComponent<Projectile>().Activate(character.DNFTransform);
 
                 isPreDelay = false;
                 timer = 0f;

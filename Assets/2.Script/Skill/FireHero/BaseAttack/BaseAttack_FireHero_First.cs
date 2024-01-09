@@ -52,7 +52,7 @@ public partial class BaseAttack_FireHero
                 if (timer < preDelay) return;
 
                 // Instantiate the projectile
-                GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Fireball_2_FireHero).GetComponent<Projectile>().Shot(character.DNFTransform);
+                GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Fireball_2_FireHero).GetComponent<Projectile>().Activate(character.DNFTransform);
 
                 isBlockKey = false;
 

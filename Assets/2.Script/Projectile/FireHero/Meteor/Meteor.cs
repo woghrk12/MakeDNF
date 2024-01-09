@@ -2,16 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Meteor : Projectile, IAttackable
+public partial class Meteor : Projectile, IAttackable
 {
-    #region Variables
+    public enum EState { NONE = -1, SHOT, EXPLOSION }
 
-    private DNFTransform dnfTransform = null;
-    private DNFRigidbody dnfRigidbody = null;
+    #region Variables
 
     [SerializeField] private float speed = 0f;
     private Vector3 moveDirection = Vector3.zero;
-    private float sizeEff = 1f;
 
     private List<IDamagable> alreadyHitObjects = new();
 
@@ -43,12 +41,14 @@ public class Meteor : Projectile, IAttackable
 
     #region Unity Events
 
-    private void Awake()
+    protected override void Awake()
     {
-        dnfTransform = GetComponent<DNFTransform>();
-        dnfRigidbody = GetComponent<DNFRigidbody>();
+        base.Awake();
 
         AttackHitboxController = GetComponent<HitboxController>();
+
+        stateList.Add(new Shot(this));
+        stateList.Add(new Explosion(this));
     }
 
     #endregion Unity Events
@@ -57,47 +57,20 @@ public class Meteor : Projectile, IAttackable
 
     #region Override    
 
-    public override void Shot(DNFTransform subjectTransform, float sizeEff = 1f)
+    public override void Activate(DNFTransform subjectTransform, float sizeEff = 1f)
     {
-        this.sizeEff = sizeEff;
-
         // Set projectile transform
         dnfTransform.Position = subjectTransform.Position + new Vector3(0f, 6f, 0f);
         dnfTransform.IsLeft = subjectTransform.IsLeft;
         dnfTransform.LocalScale = sizeEff;
 
         // Set projectile direction
-        moveDirection = Time.fixedDeltaTime * speed * ((dnfTransform.IsLeft ? Vector3.left : Vector3.right) + Vector3.down).normalized;
+        moveDirection = ((dnfTransform.IsLeft ? Vector3.left : Vector3.right) + Vector3.down).normalized;
+
+        curState = stateList[(int)EState.SHOT];
+        curState.OnStart();
 
         gameObject.SetActive(true);
-
-        StartCoroutine(Activate());
-    }
-
-    protected override IEnumerator Activate()
-    {
-        alreadyHitObjects.Clear();
-
-        while (!dnfRigidbody.IsGround)
-        {
-            dnfRigidbody.MoveDirection(moveDirection);
-
-            AttackHitboxController.CalculateHitbox();
-
-            yield return Utilities.WaitForFixedUpdate;
-
-            CalculateOnHit(GameManager.Room.Monsters);
-        }
-
-        GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Ground_Explosion_FireHero).GetComponent<Projectile>().Shot(dnfTransform, sizeEff);
-
-        Clear();
-    }
-
-    public override void Clear()
-    {
-        GameManager.ObjectPool.ReturnToPool(EObjectPoolList.Meteor_FireHero, gameObject);
-        gameObject.SetActive(false);
     }
 
     #endregion Override

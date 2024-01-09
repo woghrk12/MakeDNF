@@ -46,7 +46,7 @@ public partial class FlameStrike_FireHero
                 if (timer < preDelay) return;
 
                 // Instantiate the projectile
-                GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Flame_Strike_FireHero).GetComponent<Projectile>().Shot(stateController.aimTransform);
+                GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Flame_Strike_FireHero).GetComponent<Projectile>().Activate(stateController.aimTransform);
                 isPreDelay = false;
                 timer = 0f;
             }
