@@ -42,6 +42,8 @@ public partial class SideFlame : Projectile, IAttackable
     {
         base.Awake();
 
+        objectPoolIndex = EObjectPoolList.Side_Flame_FireHero;
+
         AttackHitboxController = GetComponent<HitboxController>();
 
         stateList.Add(new Shot(this));

@@ -5,7 +5,7 @@ public abstract class Projectile : MonoBehaviour
 {
     #region Variables
     
-    [SerializeField] private EObjectPoolList objectPoolIndex = EObjectPoolList.NONE;
+    protected EObjectPoolList objectPoolIndex = EObjectPoolList.NONE;
 
     protected Animator animator = null;
 

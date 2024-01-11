@@ -40,6 +40,8 @@ public partial class FlameStrike : Projectile, IAttackable
     {
         base.Awake();
 
+        objectPoolIndex = EObjectPoolList.Flame_Strike_FireHero;
+
         AttackHitboxController = GetComponent<HitboxController>();
 
         stateList.Add(new Shot(this));

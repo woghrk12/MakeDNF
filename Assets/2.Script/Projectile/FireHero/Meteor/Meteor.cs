@@ -45,6 +45,8 @@ public partial class Meteor : Projectile, IAttackable
     {
         base.Awake();
 
+        objectPoolIndex = EObjectPoolList.Meteor_FireHero;
+
         AttackHitboxController = GetComponent<HitboxController>();
 
         stateList.Add(new Shot(this));

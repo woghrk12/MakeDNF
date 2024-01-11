@@ -39,6 +39,8 @@ public partial class Fireball_1 : Projectile, IAttackable
     {
         base.Awake();
 
+        objectPoolIndex = EObjectPoolList.Fireball_1_FireHero;
+
         AttackHitboxController = GetComponent<HitboxController>();
 
         stateList.Add(new Shot(this));
