@@ -10,6 +10,12 @@ public partial class FlameStrike : Projectile, IAttackable
 
     #endregion Variables
 
+    #region Properties
+
+    protected override EObjectPoolList ObjectPoolIndex => EObjectPoolList.Flame_Strike_FireHero;
+
+    #endregion Properties
+
     #region IAttackable Implementation
 
     public HitboxController AttackHitboxController { set; get; }
@@ -39,8 +45,6 @@ public partial class FlameStrike : Projectile, IAttackable
     protected override void Awake()
     {
         base.Awake();
-
-        objectPoolIndex = EObjectPoolList.Flame_Strike_FireHero;
 
         AttackHitboxController = GetComponent<HitboxController>();
 

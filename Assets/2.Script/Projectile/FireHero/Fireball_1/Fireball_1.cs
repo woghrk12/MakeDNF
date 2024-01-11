@@ -13,6 +13,12 @@ public partial class Fireball_1 : Projectile, IAttackable
 
     #endregion Variables
 
+    #region Properties
+
+    protected override EObjectPoolList ObjectPoolIndex => EObjectPoolList.Fireball_1_FireHero;
+
+    #endregion Properties
+
     #region IAttackable Implementation
 
     public HitboxController AttackHitboxController { set; get; }
@@ -38,8 +44,6 @@ public partial class Fireball_1 : Projectile, IAttackable
     protected override void Awake()
     {
         base.Awake();
-
-        objectPoolIndex = EObjectPoolList.Fireball_1_FireHero;
 
         AttackHitboxController = GetComponent<HitboxController>();
 

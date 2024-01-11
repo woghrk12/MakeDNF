@@ -5,8 +5,6 @@ public abstract class Projectile : MonoBehaviour
 {
     #region Variables
     
-    protected EObjectPoolList objectPoolIndex = EObjectPoolList.NONE;
-
     protected Animator animator = null;
 
     protected DNFTransform dnfTransform = null;
@@ -21,6 +19,15 @@ public abstract class Projectile : MonoBehaviour
     protected ProjectileState curState = null;
 
     #endregion Variables
+
+    #region Properties
+
+    /// <summary>
+    /// The index of the object pool to return the gameObject.
+    /// </summary>
+    protected abstract EObjectPoolList ObjectPoolIndex { get; }
+
+    #endregion Properties
 
     #region Unity Events
 
@@ -82,7 +89,7 @@ public abstract class Projectile : MonoBehaviour
     {
         curState = null;
 
-        GameManager.ObjectPool.ReturnToPool(objectPoolIndex, gameObject);
+        GameManager.ObjectPool.ReturnToPool(ObjectPoolIndex, gameObject);
         gameObject.SetActive(false);
     }
 
