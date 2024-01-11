@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Fireball : Projectile, IAttackable
+public partial class Fireball_1 : Projectile, IAttackable
 {
     public enum EState { NONE = -1, SHOT }
 

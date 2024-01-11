@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public partial class Fireball
+public partial class Fireball_2
 {
     public class Shot : ProjectileState
     {
         #region Variables
 
-        private Fireball stateController = null;
+        private Fireball_2 stateController = null;
 
         private float range = 0f;
         private float speed = 0f;
@@ -20,7 +20,7 @@ public partial class Fireball
 
         public Shot(Projectile stateController) : base(stateController)
         {
-            this.stateController = stateController as Fireball;
+            this.stateController = stateController as Fireball_2;
         }
 
         #endregion Constructor
