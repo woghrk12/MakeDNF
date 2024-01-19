@@ -12,7 +12,7 @@ public partial class ScatterFlame_FireHero
 
         #region Constructor
 
-        public Scatter(BehaviourController character, Skill stateController) : base(character, stateController)
+        public Scatter(Character character, Skill stateController) : base(character, stateController)
         {
             this.stateController = stateController as ScatterFlame_FireHero;
 

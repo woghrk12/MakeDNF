@@ -14,7 +14,7 @@ public partial class Dash_FireHero
 
         #region Constructor
 
-        public Dash(BehaviourController character, Skill stateController) : base(character, stateController)
+        public Dash(Character character, Skill stateController) : base(character, stateController)
         {
             this.stateController = stateController as Dash_FireHero;
 

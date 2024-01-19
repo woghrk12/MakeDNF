@@ -16,7 +16,7 @@ public partial class BaseAttack_FireHero
 
         #region Constructor
 
-        public Second(BehaviourController character, Skill stateController) : base(character, stateController)
+        public Second(Character character, Skill stateController) : base(character, stateController)
         {
             this.stateController = stateController as BaseAttack_FireHero;
 

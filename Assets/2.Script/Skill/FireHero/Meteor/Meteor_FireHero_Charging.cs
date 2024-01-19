@@ -17,7 +17,7 @@ public partial class Meteor_FireHero
 
         #region Constructor
 
-        public Charging(BehaviourController character, Skill stateController) : base(character, stateController)
+        public Charging(Character character, Skill stateController) : base(character, stateController)
         {
             this.stateController = stateController as Meteor_FireHero;
 

@@ -7,7 +7,7 @@ public abstract class SkillState
 {
     #region Variables
 
-    protected BehaviourController character = null;
+    protected Character character = null;
 
     [Header("Animation key hash")]
     protected int stateHash = 0;
@@ -25,7 +25,7 @@ public abstract class SkillState
 
     #region Constructor
 
-    public SkillState(BehaviourController character, Skill stateController) 
+    public SkillState(Character character, Skill stateController) 
     {
         this.character = character;
 

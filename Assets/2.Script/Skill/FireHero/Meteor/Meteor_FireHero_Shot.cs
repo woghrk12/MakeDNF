@@ -12,7 +12,7 @@ public partial class Meteor_FireHero
 
         #region Constructor
 
-        public Shot(BehaviourController character, Skill stateController) : base(character, stateController)
+        public Shot(Character character, Skill stateController) : base(character, stateController)
         {
             this.stateController = stateController as Meteor_FireHero;
 

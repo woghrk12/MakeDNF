@@ -12,7 +12,7 @@ public partial class BaseAttack_FireHero
 
         #region Constructor
 
-        public Third(BehaviourController character, Skill stateController) : base(character, stateController)
+        public Third(Character character, Skill stateController) : base(character, stateController)
         {
             this.stateController = stateController as BaseAttack_FireHero;
 
