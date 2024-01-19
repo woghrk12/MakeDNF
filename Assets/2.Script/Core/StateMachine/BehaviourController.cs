@@ -58,7 +58,7 @@ public abstract class BehaviourController : MonoBehaviour
     public virtual bool CanJump
     {
         set { canJump = value; }
-        get => canJump && !dnfRigidbody.IsGround;
+        get => canJump && dnfRigidbody.IsGround;
     }
 
     #endregion Properties

@@ -30,6 +30,7 @@ public class ResourcePath
 public class BehaviourCodeList
 {
     public static readonly int IDLE_BEHAVIOUR_CODE = typeof(IdleBehaviour).GetHashCode();
+    public static readonly int JUMP_BEHAVIOUR_CODE = typeof(JumpBehaviour).GetHashCode();
     public static readonly int ATTACK_BEHAVIOUR_CODE = typeof(AttackBehaviour).GetHashCode();
 }
 

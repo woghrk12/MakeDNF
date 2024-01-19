@@ -8,12 +8,9 @@ public class MoveBehaviour : GenericBehaviour
     [Header("Scale variables for character movement")]
     [SerializeField] private float xMoveSpeed = 0f;
     [SerializeField] private float zMoveSpeed = 0f;
-    [SerializeField] private float jumpPower = 0f;
 
     [Header("Hash for animation key")]
     private int isWalkHash = 0;
-    private int doJumpHash = 0;
-    private int isJumpHash = 0;
 
     #endregion Variables
 
@@ -24,8 +21,6 @@ public class MoveBehaviour : GenericBehaviour
         base.Awake();
 
         isWalkHash = Animator.StringToHash(AnimatorKey.Character.IS_WALK);
-        doJumpHash = Animator.StringToHash(AnimatorKey.Character.DO_JUMP);
-        isJumpHash = Animator.StringToHash(AnimatorKey.Character.IS_JUMP);
     }
 
     #endregion Unity Events
@@ -50,38 +45,6 @@ public class MoveBehaviour : GenericBehaviour
         }
 
         controller.DNFRigidbody.MoveDirection(moveDir);
-    }
-
-    /// <summary>
-    /// Jump the character.
-    /// Perform character jump by modifying the y-value of the local position of Y Pos Transform.
-    /// </summary>
-    public void Jump()
-    {
-        controller.Animator.SetTrigger(doJumpHash);
-        controller.Animator.SetBool(isJumpHash, true);
-
-        controller.DNFRigidbody.AddForce(new Vector3(0f, jumpPower, 0f));
-
-        StartCoroutine(CheckLanding());
-    }
-
-    /// <summary>
-    /// Check if the character has landed on the ground.
-    /// </summary>
-    private IEnumerator CheckLanding()
-    {
-        while (controller.DNFRigidbody.Velocity.y > 0f)
-        {
-            yield return Utilities.WaitForFixedUpdate;
-        }
-
-        while (!controller.DNFRigidbody.IsGround)
-        {
-            yield return Utilities.WaitForFixedUpdate;
-        }
-
-        controller.Animator.SetBool(isJumpHash, false);
     }
 
     #endregion Methods

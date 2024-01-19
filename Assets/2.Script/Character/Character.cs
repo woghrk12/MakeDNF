@@ -3,8 +3,9 @@ using UnityEngine;
 public class Character : BehaviourController
 {
     #region Variables
-    
+
     [Header("Character behaviours")]
+    private JumpBehaviour jumpBehaviour = null;
     private AttackBehaviour attackBehaviour = null;
 
     #endregion Variables
@@ -15,8 +16,10 @@ public class Character : BehaviourController
     {
         base.Awake();
 
+        jumpBehaviour = GetComponent<JumpBehaviour>();
         attackBehaviour = GetComponent<AttackBehaviour>();
 
+        behaviourDictionary.Add(BehaviourCodeList.JUMP_BEHAVIOUR_CODE, jumpBehaviour);
         behaviourDictionary.Add(BehaviourCodeList.ATTACK_BEHAVIOUR_CODE, attackBehaviour);
     }
 
@@ -62,7 +65,7 @@ public class Character : BehaviourController
     {
         if (!CanJump) return;
 
-        moveBehaviour.Jump();
+        jumpBehaviour.Jump();
     }
 
     public void OnAttackButtonPressed()
