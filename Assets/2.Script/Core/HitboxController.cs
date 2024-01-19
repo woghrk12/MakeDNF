@@ -329,7 +329,7 @@ public class HitboxController : MonoBehaviour
     #region Properties
 
     /// <summary>
-    /// 
+    /// The index variable of the hitbox component.
     /// </summary>
     public int HitboxIndex
     {
