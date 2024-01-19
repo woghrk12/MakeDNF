@@ -6,7 +6,7 @@ public partial class BaseAttack_FireHero : Skill
 
     #region Override
 
-    public override void Init(BehaviourController character, AttackBehaviour attackController)
+    public override void Init(Character character, AttackBehaviour attackController)
     {
         base.Init(character, attackController);
 

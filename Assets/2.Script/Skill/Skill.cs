@@ -35,7 +35,7 @@ public abstract class Skill : MonoBehaviour
 
     [SerializeField] protected SkillStat skillStat;
 
-    protected BehaviourController character = null;
+    protected Character character = null;
     protected AttackBehaviour attackController = null;
 
     protected List<SkillState> stateList = new();
@@ -69,7 +69,7 @@ public abstract class Skill : MonoBehaviour
 
     #region Methods
 
-    public virtual void Init(BehaviourController character, AttackBehaviour attackController)
+    public virtual void Init(Character character, AttackBehaviour attackController)
     {
         this.character = character;
         this.attackController = attackController;
