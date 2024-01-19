@@ -367,16 +367,19 @@ public class HitboxController : MonoBehaviour
 
     #endregion Properties
 
-    #region Unity Events
+    #region Methods
 
-    private void Awake()
+    /// <summary>
+    /// Initialize the hitbox controller component.
+    /// Use the given DNFTransform component to calculate the shape of the hitboxes.
+    /// </summary>
+    /// <param name="dnfTransform">DNFTransform component to be used when calculating the shape of hitboxes</param>
+    public void Init(DNFTransform dnfTransform)
     {
         if (hitboxes.Length <= 0)
         {
             throw new Exception($"There is no hitbox. GameObject : {gameObject.name}");
         }
-
-        DNFTransform dnfTransform = GetComponent<DNFTransform>();
 
         foreach (Hitbox hitbox in hitboxes)
         {
@@ -385,10 +388,6 @@ public class HitboxController : MonoBehaviour
 
         HitboxIndex = 0;
     }
-
-    #endregion Unity Events
-
-    #region Methods
 
     /// <summary>
     /// Calculate the active hitbox range.
