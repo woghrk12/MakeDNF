@@ -22,7 +22,6 @@ public abstract class SkillState
 
     [Header("Animation key hash")]
     protected int skillHash = 0;
-    protected int continueHash = 0;
     protected int cancelHash = 0;
 
     [Header("Variables to control the skill phase")]
@@ -40,7 +39,6 @@ public abstract class SkillState
     {
         this.character = character;
 
-        continueHash = Animator.StringToHash(AnimatorKey.Character.IS_CONTINUE_ATTACK);
         cancelHash = Animator.StringToHash(AnimatorKey.Character.END_ATTACK);
     }
 
