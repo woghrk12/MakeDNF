@@ -38,6 +38,8 @@ public abstract class Skill : MonoBehaviour
     protected Character character = null;
     protected AttackBehaviour attackController = null;
 
+    protected int skillHash = 0;
+
     protected List<SkillState> stateList = new();
     protected SkillState curState = null;
 
