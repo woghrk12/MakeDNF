@@ -33,7 +33,7 @@ public partial class Meteor
 
             stateController.alreadyHitObjects.Clear();
 
-            stateController.AttackHitboxController.HitboxIndex = (int)EState.EXPLOSION;
+            stateController.AttackHitboxController.EnableHitbox((int)EState.EXPLOSION);
         }
 
         public override void OnUpdate()

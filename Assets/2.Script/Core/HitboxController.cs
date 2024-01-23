@@ -326,25 +326,9 @@ public class HitboxController : MonoBehaviour
 
     #endregion Variables
 
-    #region Properties
-
-    /// <summary>
-    /// The index variable of the hitbox component.
-    /// </summary>
-    public int HitboxIndex
-    {
-        set
-        {
-            if (value < 0 || value >= hitboxes.Length)
-            {
-                throw new Exception($"Out of range. GameObject : {gameObject.name}. Input index : {value}");
-            }
-
-            activeHitbox = hitboxes[value];
-        }
-    }
-
 #if UNITY_EDITOR
+
+    #region Properties
 
     /// <summary>
     /// The array of the hitboxes for editing and debugging.
@@ -363,9 +347,20 @@ public class HitboxController : MonoBehaviour
     /// </summary>
     public Hitbox ActiveHitbox => activeHitbox;
 
+    #endregion Properties
+
 #endif
 
-    #endregion Properties
+    #region Unity Events
+
+    private void FixedUpdate()
+    {
+        if (activeHitbox == null) return;
+
+        activeHitbox.CalculateHitbox();
+    }
+
+    #endregion Unity Events
 
     #region Methods
 
@@ -385,8 +380,30 @@ public class HitboxController : MonoBehaviour
         {
             hitbox.Init(dnfTransform);
         }
+    }
 
-        HitboxIndex = 0;
+    /// <summary>
+    /// Enable the hitbox corresponding to the received index.
+    /// </summary>
+    /// <param name="index">The index of the hitbox to be activated</param>
+    public void EnableHitbox(int index)
+    {
+        if (index < 0 || index >= hitboxes.Length)
+        {
+            throw new Exception($"Out of range. GameObject : {gameObject.name}. Input index : {index}");
+        }
+
+        activeHitbox = hitboxes[index];
+    }
+
+    /// <summary>
+    /// Disable the active hitbox.
+    /// </summary>
+    public void DisableHitbox()
+    {
+        if (activeHitbox == null) return;
+
+        activeHitbox = null;
     }
 
     /// <summary>

@@ -30,8 +30,8 @@ public partial class Meteor
             moveDirection = stateController.moveDirection;
             
             stateController.alreadyHitObjects.Clear();
-            
-            stateController.AttackHitboxController.HitboxIndex = (int)EState.SHOT;
+
+            stateController.AttackHitboxController.EnableHitbox((int)EState.SHOT);
         }
 
         public override void OnFixedUpdate()
