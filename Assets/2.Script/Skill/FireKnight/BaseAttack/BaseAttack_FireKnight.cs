@@ -8,7 +8,7 @@ public partial class BaseAttack_FireKnight : Skill, IAttackable
     #region Variables
 
     private List<IDamagable> alreadyHitObjects = new();
-    [SerializeField] private UnityEngine.UI.Text text;
+    
     #endregion Variables
 
     #region IAttackable Implementation

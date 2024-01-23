@@ -46,8 +46,6 @@ public partial class BaseAttack_FireKnight
         {
             AnimatorStateInfo animatorStateInfo = character.Animator.GetCurrentAnimatorStateInfo(0);
 
-            stateController.text.text = "First " + phase.ToString();
-
             switch (phase)
             {
                 case EStatePhase.PREDELAY:
