@@ -10,6 +10,7 @@ public class AnimatorKey
         public static readonly string IS_JUMP_UP = "IsJumpUp";
         public static readonly string IS_JUMP_DOWN = "IsJumpDown";
         public static readonly string IS_ATTACK = "IsAttack";
+        public static readonly string IS_CONTINUE_ATTACK = "IsContinueAttack";
         public static readonly string END_ATTACK = "EndAttack";
 
         public static readonly string BASE_ATTACK = "BaseAttack";

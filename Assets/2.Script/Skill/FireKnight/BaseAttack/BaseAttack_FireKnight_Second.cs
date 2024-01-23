@@ -31,7 +31,7 @@ public partial class BaseAttack_FireKnight
         public override void OnStart()
         {
             isContinue = false;
-            isBlockKey = false;
+            isBlockKey = true;
 
             phase = EStatePhase.PREDELAY;
 
@@ -41,13 +41,16 @@ public partial class BaseAttack_FireKnight
         public override void OnUpdate()
         {
             AnimatorStateInfo animatorStateInfo = character.Animator.GetCurrentAnimatorStateInfo(0);
-
+            
             switch (phase)
             {
                 case EStatePhase.PREDELAY:
                     if (!animatorStateInfo.IsName("BaseAttack_2")) return;
 
                     stateController.AttackHitboxController.EnableHitbox((int)EState.SECOND);
+
+                    isBlockKey = false;
+                    character.Animator.SetBool(continueHash, false);
 
                     phase = EStatePhase.HITBOXACTIVE;
 
@@ -58,15 +61,16 @@ public partial class BaseAttack_FireKnight
 
                     stateController.AttackHitboxController.DisableHitbox();
 
-                    isBlockKey = true;
-
                     phase = EStatePhase.MOTIONINPROGRESS;
 
                     break;
 
                 case EStatePhase.MOTIONINPROGRESS:
-                    if (animatorStateInfo.IsName("BaseAttack_2_End")) return;
+                    if (!animatorStateInfo.IsName("BaseAttack_2_End")) return;
                     if (animatorStateInfo.normalizedTime < 1f) return;
+
+                    isBlockKey = true;
+                    character.Animator.SetTrigger(skillHash);
 
                     if (isContinue)
                     {
@@ -101,13 +105,17 @@ public partial class BaseAttack_FireKnight
 
         public override void OnComplete()
         {
+            character.Animator.SetBool(continueHash, false);
+
             stateController.OnComplete();
         }
 
         public override void OnCancel()
         {
-            character.Animator.SetTrigger(cancelHash);
             character.Animator.ResetTrigger(skillHash);
+            character.Animator.SetBool(continueHash, false);
+
+            character.Animator.SetTrigger(cancelHash);
         }
 
         public override void OnSkillButtonPressed()
@@ -115,7 +123,7 @@ public partial class BaseAttack_FireKnight
             if (isBlockKey) return;
 
             isContinue = true;
-            character.Animator.SetTrigger(skillHash);
+            character.Animator.SetBool(continueHash, true);
         }
 
         #endregion Override
