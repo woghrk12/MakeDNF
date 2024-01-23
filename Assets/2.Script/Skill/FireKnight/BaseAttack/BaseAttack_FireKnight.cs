@@ -17,7 +17,16 @@ public partial class BaseAttack_FireKnight : Skill, IAttackable
 
     public bool CalculateOnHit(List<IDamagable> targets)
     {
-        return true;
+        foreach (IDamagable target in targets)
+        {
+            if (AttackHitboxController.CheckCollision(target.DamageHitboxController))
+            {
+                target.OnDamage();
+                return true;
+            }
+        }
+
+        return false;
     }
 
     #endregion IAttackable Implementation
