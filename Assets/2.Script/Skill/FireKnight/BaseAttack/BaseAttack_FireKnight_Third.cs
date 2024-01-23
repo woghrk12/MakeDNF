@@ -16,7 +16,7 @@ public partial class BaseAttack_FireKnight
         {
             this.stateController = stateController as BaseAttack_FireKnight;
 
-            preDelay = 3f / 8f;
+            preDelay = 2f / 8f;
             postDelay = 1f;
         }
 
@@ -43,7 +43,7 @@ public partial class BaseAttack_FireKnight
                     if (!animatorStateInfo.IsName("BaseAttack_3")) return;
                     if (animatorStateInfo.normalizedTime < preDelay) return;
 
-                    // TODO : Instantiate the projectile object
+                    stateController.AttackHitboxController.EnableHitbox((int)EState.THIRD);
 
                     phase = EStatePhase.POSTDELAY;
 
@@ -52,9 +52,21 @@ public partial class BaseAttack_FireKnight
                 case EStatePhase.POSTDELAY:
                     if (animatorStateInfo.normalizedTime < postDelay) return;
 
+                    stateController.AttackHitboxController.DisableHitbox();
+
                     OnComplete();
                     
                     break;
+            }
+        }
+
+        public override void OnLateUpdate()
+        {
+            if (!stateController.AttackHitboxController.IsHitboxActivated) return;
+
+            if (stateController.CalculateOnHit(GameManager.Room.Monsters))
+            { 
+                // TODO : Spawn hit effects
             }
         }
 

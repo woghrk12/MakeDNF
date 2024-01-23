@@ -91,7 +91,7 @@ public partial class BaseAttack_FireKnight
 
         public override void OnLateUpdate()
         {
-            if (phase != EStatePhase.HITBOXACTIVE) return;
+            if (!stateController.AttackHitboxController.IsHitboxActivated) return;
 
             if (stateController.CalculateOnHit(GameManager.Room.Monsters))
             {

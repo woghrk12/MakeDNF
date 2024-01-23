@@ -328,9 +328,15 @@ public class HitboxController : MonoBehaviour
 
     #endregion Variables
 
-#if UNITY_EDITOR
-
     #region Properties
+
+    /// <summary>
+    /// Determine whether the current hitbox is activated.
+    /// Return true if the hitbox currently activated, and false otherwise.
+    /// </summary>
+    public bool IsHitboxActivated => activeHitbox != null;
+
+#if UNITY_EDITOR
 
     /// <summary>
     /// The array of the hitboxes for editing and debugging.
@@ -349,9 +355,10 @@ public class HitboxController : MonoBehaviour
     /// </summary>
     public Hitbox ActiveHitbox => activeHitbox;
 
+#endif
+
     #endregion Properties
 
-#endif
 
     #region Unity Events
 
