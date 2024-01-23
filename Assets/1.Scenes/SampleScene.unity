@@ -353,13 +353,9 @@ MonoBehaviour:
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
   - hitboxType: 0
-    size: {x: 1, y: 1, z: 1}
+    size: {x: 2.9686427, y: 2.3306568, z: 1.5833015}
     offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0.5, y: 0, z: 0.5}
-  - hitboxType: 0
-    size: {x: 1, y: 1, z: 1}
-    offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0.5, y: 0, z: 0.5}
+    pivot: {x: 0, y: 0, z: 0.5}
 --- !u!114 &271300691
 MonoBehaviour:
   m_ObjectHideFlags: 0
