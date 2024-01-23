@@ -37,9 +37,6 @@ public class Hitbox
 {
     #region Variables
 
-    /// <summary>
-    /// DNF transform component used to calculate the hitbox.
-    /// </summary>
     private DNFTransform dnfTransform = null;
 
     [SerializeField] private EHitboxType hitboxType = EHitboxType.BOX;
@@ -64,6 +61,11 @@ public class Hitbox
 #if UNITY_EDITOR
 
     #region Properties
+
+    /// <summary>
+    /// DNF transform component used to calculate the hitbox.
+    /// </summary>
+    public DNFTransform DNFTransform => dnfTransform;
 
     /// <summary>
     /// The shape of the hitbox on the XZ plane.

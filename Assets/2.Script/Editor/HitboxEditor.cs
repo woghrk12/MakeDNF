@@ -74,7 +74,7 @@ public class HitboxEditor : Editor
 
                 Hitbox activeHitbox = controller.ActiveHitbox;
 
-                Transform posTransform = controller.transform;
+                Transform posTransform = activeHitbox.DNFTransform.transform;
                 Transform yPosTransform = posTransform.childCount > 0 ? posTransform.GetChild(0) : null;
                 Transform scaleTransform = yPosTransform != null && yPosTransform.childCount > 0 ? yPosTransform.GetChild(0) : null;
 
