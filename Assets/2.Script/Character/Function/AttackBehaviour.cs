@@ -123,6 +123,7 @@ public class AttackBehaviour : GenericBehaviour
     public override void OnCancel()
     {
         controller.Animator.SetBool(isAttackHash, false);
+        controller.Animator.SetTrigger(endAttackHash);
 
         curSkill = null;
     }

@@ -1,6 +1,26 @@
-public partial class BaseAttack_FireHero : Skill
+using System.Collections.Generic;
+using UnityEngine;
+
+public partial class BaseAttack_FireKnight : Skill, IAttackable
 {
     private enum EState { NONE = -1, FIRST, SECOND, THIRD }
+
+    #region Variables
+
+    private List<IDamagable> alreadyHitObjects = new();
+    [SerializeField] private UnityEngine.UI.Text text;
+    #endregion Variables
+
+    #region IAttackable Implementation
+
+    public HitboxController AttackHitboxController { set; get; }
+
+    public bool CalculateOnHit(List<IDamagable> targets)
+    {
+        return true;
+    }
+
+    #endregion IAttackable Implementation
 
     #region Methods
 
@@ -10,6 +30,11 @@ public partial class BaseAttack_FireHero : Skill
     {
         base.Init(character, attackController);
 
+        AttackHitboxController = GetComponent<HitboxController>();
+        AttackHitboxController.Init(character.DNFTransform);
+
+        skillHash = Animator.StringToHash(AnimatorKey.Character.BASE_ATTACK);
+        
         stateList.Add(new First(character, this));
         stateList.Add(new Second(character, this));
         stateList.Add(new Third(character, this));
@@ -17,7 +42,7 @@ public partial class BaseAttack_FireHero : Skill
 
     public override bool CheckCanUseSkill(Skill activeSkill = null)
     {
-        return activeSkill == null;
+        return activeSkill == null; 
     }
 
     public override void OnStart()
@@ -25,8 +50,9 @@ public partial class BaseAttack_FireHero : Skill
         character.CanMove = false;
         character.CanJump = false;
 
-        curState = stateList[(int)EState.FIRST];
+        character.Animator.SetTrigger(skillHash);
 
+        curState = stateList[(int)EState.FIRST];
         curState.OnStart();
     }
 

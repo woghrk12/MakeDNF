@@ -12,14 +12,7 @@ public class AnimatorKey
         public static readonly string IS_ATTACK = "IsAttack";
         public static readonly string END_ATTACK = "EndAttack";
 
-        public class FireHero
-        {
-            public static readonly string BASE_ATTACK = "BaseAttack";
-            public static readonly string METEOR = "Meteor";
-            public static readonly string SCATTER_FLAME = "ScatterFlame";
-            public static readonly string DASH = "Dash";
-            public static readonly string FLAME_STRIKE = "FlameStrike";
-        }
+        public static readonly string BASE_ATTACK = "BaseAttack";
     }
 
     public class Projectile

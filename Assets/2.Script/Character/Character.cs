@@ -27,11 +27,7 @@ public class Character : BehaviourController
     {
         // Debug
         Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
-        attackBehaviour.RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<BaseAttack_FireHero>());
-        attackBehaviour.RegisterSkill(EKeyName.SKILL1, FindObjectOfType<Meteor_FireHero>());
-        attackBehaviour.RegisterSkill(EKeyName.SKILL2, FindObjectOfType<ScatterFlame_FireHero>());
-        attackBehaviour.RegisterSkill(EKeyName.SKILL3, FindObjectOfType<Dash_FireHero>());
-        attackBehaviour.RegisterSkill(EKeyName.SKILL4, FindObjectOfType<FlameStrike_FireHero>());
+        attackBehaviour.RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<BaseAttack_FireKnight>());
 
         GameManager.Input.AddMovementDelegate(OnJoystickMoved);
 
