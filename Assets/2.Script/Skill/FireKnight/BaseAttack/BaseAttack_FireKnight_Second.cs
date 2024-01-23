@@ -20,10 +20,6 @@ public partial class BaseAttack_FireKnight
             this.stateController = stateController as BaseAttack_FireKnight;
 
             skillHash = Animator.StringToHash(AnimatorKey.Character.BASE_ATTACK);
-
-            preDelay = 1f / 7f;
-            duration = 4f / 7f;
-            postDelay = 1f;
         }
 
         #endregion Constructor
@@ -50,7 +46,6 @@ public partial class BaseAttack_FireKnight
             {
                 case EStatePhase.PREDELAY:
                     if (!animatorStateInfo.IsName("BaseAttack_2")) return;
-                    if (animatorStateInfo.normalizedTime < preDelay) return;
 
                     stateController.AttackHitboxController.EnableHitbox((int)EState.SECOND);
 
@@ -59,7 +54,7 @@ public partial class BaseAttack_FireKnight
                     break;
 
                 case EStatePhase.HITBOXACTIVE:
-                    if(animatorStateInfo.normalizedTime < duration) return;
+                    if(animatorStateInfo.IsName("BaseAttack_2")) return;
 
                     stateController.AttackHitboxController.DisableHitbox();
 
@@ -70,7 +65,8 @@ public partial class BaseAttack_FireKnight
                     break;
 
                 case EStatePhase.MOTIONINPROGRESS:
-                    if (animatorStateInfo.IsName("BaseAttack_2") && animatorStateInfo.normalizedTime < 1f) return;
+                    if (animatorStateInfo.IsName("BaseAttack_2_End")) return;
+                    if (animatorStateInfo.normalizedTime < 1f) return;
 
                     if (isContinue)
                     {
@@ -84,7 +80,7 @@ public partial class BaseAttack_FireKnight
                     break;
 
                 case EStatePhase.POSTDELAY:
-                    if (!animatorStateInfo.IsName("BaseAttack_2_End")) return;
+                    if (!animatorStateInfo.IsName("BaseAttack_2_PostDelay")) return;
                     if (animatorStateInfo.normalizedTime < postDelay) return;
 
                     OnComplete();
