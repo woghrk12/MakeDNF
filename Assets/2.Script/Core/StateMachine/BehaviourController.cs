@@ -80,17 +80,17 @@ public abstract class BehaviourController : MonoBehaviour
         curBehaviour = idleBehaviour;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         curBehaviour.OnUpdate();
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         curBehaviour.OnFixedUpdate();
     }
 
-    private void LateUpdate()
+    protected virtual void LateUpdate()
     {
         curBehaviour.OnLateUpdate();
     }
