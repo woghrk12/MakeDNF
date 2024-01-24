@@ -6,7 +6,7 @@ public class AnimatorKey
         public static readonly string ATTACK_SPEED = "AttackSpeed";
 
         public static readonly string IS_WALK = "IsWalk";
-        public static readonly string DO_JUMP = "DoJump";
+        public static readonly string IS_JUMP = "IsJump";
         public static readonly string IS_JUMP_UP = "IsJumpUp";
         public static readonly string IS_JUMP_DOWN = "IsJumpDown";
         public static readonly string IS_ATTACK = "IsAttack";

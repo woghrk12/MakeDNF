@@ -2,29 +2,28 @@ using UnityEngine;
 
 public class JumpBehaviour : GenericBehaviour
 {
+    private enum EPhase { NONE = -1, PREDELAY, JUMPUP, JUMPDOWN, POSTDELAY }
+
     #region Variables
 
     [Header("Scale variables for character jump")]
     [SerializeField] private float jumpPower = 0f;
 
-
     [Header("State variables")]
-    private bool isPreDelay = false;
-    private bool isJumpUp = false;
-    private bool isJumpDown = false;
-    private bool isPostDelay = false;
-
-    [Header("Time variables for delay")]
-    private float timer = 0f;
-    private float preDelay = 0f;
-    private float postDelay = 0f;
+    private EPhase phase = EPhase.NONE;
 
     [Header("Hash for animation key")]
-    private int doJumpHash = 0;
+    private int isJumpHash = 0;
     private int isJumpUpHash = 0;
     private int isJumpDownHash = 0;
 
     #endregion Variables
+
+    #region Properties
+
+    public bool IsJump => phase == EPhase.JUMPUP || phase == EPhase.JUMPDOWN;
+
+    #endregion Properties
 
     #region Unity Events
 
@@ -32,10 +31,7 @@ public class JumpBehaviour : GenericBehaviour
     {
         base.Awake();
 
-        preDelay = Time.deltaTime * 3f * 5f;
-        postDelay = Time.deltaTime * 4f * 5f;
-
-        doJumpHash = Animator.StringToHash(AnimatorKey.Character.DO_JUMP);
+        isJumpHash = Animator.StringToHash(AnimatorKey.Character.IS_JUMP);
         isJumpUpHash = Animator.StringToHash(AnimatorKey.Character.IS_JUMP_UP);
         isJumpDownHash = Animator.StringToHash(AnimatorKey.Character.IS_JUMP_DOWN);
     }
@@ -50,91 +46,82 @@ public class JumpBehaviour : GenericBehaviour
     /// </summary>
     public void Jump()
     {
-        controller.SetBehaviour(behaviourCode);
+        OnStart();
     }
 
     #region Override
 
     public override void OnStart()
     {
-        // Initialize the variables
-        timer = 0f;
-        isPreDelay = true;
-        isJumpUp = false;
-        isJumpDown = false;
-        isPostDelay = false;
+        phase = EPhase.PREDELAY;
 
         controller.CanMove = false;
 
-        controller.Animator.SetTrigger(doJumpHash);
+        controller.Animator.SetBool(isJumpHash, true);
     }
 
     public override void OnFixedUpdate()
     {
-        timer += Time.fixedDeltaTime;
+        if (phase == EPhase.NONE) return;
 
-        if (isPreDelay)
+        AnimatorStateInfo animatorStateInfo = controller.Animator.GetCurrentAnimatorStateInfo(0);
+
+        switch (phase)
         {
-            if (timer < preDelay) return;
+            case EPhase.PREDELAY:
+                if (!animatorStateInfo.IsName("JumpUpReady")) return;
+                if (animatorStateInfo.normalizedTime < 1f) return;
 
-            isJumpUp = true;
-            
-            controller.Animator.SetBool(isJumpUpHash, true);
-            
-            controller.DNFRigidbody.AddForce(new Vector3(0f, jumpPower, 0f));
+                controller.Animator.SetBool(isJumpUpHash, true);
+                
+                controller.DNFRigidbody.AddForce(new Vector3(0f, jumpPower, 0f));
 
-            controller.CanMove = true;
+                controller.CanMove = true;
 
-            isPreDelay = false;
-            timer = 0f;
-        }
-        else if (isPostDelay)
-        {
-            if (timer < postDelay) return;
-            
-            OnComplete();
-        }
-        else
-        {
-            if (isJumpUp)
-            {
+                phase = EPhase.JUMPUP;
+
+                break;
+
+            case EPhase.JUMPUP:
                 if (controller.DNFRigidbody.Velocity.y > 0f) return;
 
                 controller.Animator.SetBool(isJumpUpHash, false);
                 controller.Animator.SetBool(isJumpDownHash, true);
 
-                isJumpUp = false;
-                isJumpDown = true;
-            }
-            else if (isJumpDown)
-            {
+                phase = EPhase.JUMPDOWN;
+
+                break;
+
+            case EPhase.JUMPDOWN:
                 if (!controller.DNFRigidbody.IsGround) return;
 
                 controller.Animator.SetBool(isJumpDownHash, false);
 
                 controller.CanMove = false;
 
-                isPostDelay = true;
-                timer = 0f;
-            }
+                phase = EPhase.POSTDELAY;
+
+                break;
+
+            case EPhase.POSTDELAY:
+                if (!animatorStateInfo.IsName("JumpDownComplete")) return;
+                if (animatorStateInfo.normalizedTime < 1f) return;
+
+                OnComplete();
+
+                break;
         }
     }
 
     public override void OnComplete()
     {
-        timer = 0f;
-        isPreDelay = false;
-        isJumpUp = false;
-        isJumpDown = false;
-        isPostDelay = false;
+        phase = EPhase.NONE;
 
-        controller.Animator.ResetTrigger(doJumpHash);
+        controller.Animator.SetBool(isJumpHash, false);
         controller.Animator.SetBool(isJumpUpHash, false);
         controller.Animator.SetBool(isJumpDownHash, false);
 
         controller.CanMove = true;
-
-        controller.SetBehaviour(BehaviourCodeList.IDLE_BEHAVIOUR_CODE);
     }
 
     #endregion Override

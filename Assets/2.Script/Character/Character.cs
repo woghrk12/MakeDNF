@@ -8,7 +8,25 @@ public class Character : BehaviourController
     private JumpBehaviour jumpBehaviour = null;
     private AttackBehaviour attackBehaviour = null;
 
+    [Header("State Variables")]
+    private bool canJump = true;
+
     #endregion Variables
+
+    #region Properties
+
+    /// <summary>
+    /// A flag variable that determines whether the controller is allowed to jump.
+    /// </summary>
+    public virtual bool CanJump
+    {
+        set { canJump = value; }
+        get => canJump && dnfRigidbody.IsGround;
+    }
+
+    public virtual bool IsJump => jumpBehaviour.IsJump;
+
+    #endregion Properties
 
     #region Unity Events
 
@@ -19,7 +37,6 @@ public class Character : BehaviourController
         jumpBehaviour = GetComponent<JumpBehaviour>();
         attackBehaviour = GetComponent<AttackBehaviour>();
 
-        behaviourDictionary.Add(BehaviourCodeList.JUMP_BEHAVIOUR_CODE, jumpBehaviour);
         behaviourDictionary.Add(BehaviourCodeList.ATTACK_BEHAVIOUR_CODE, attackBehaviour);
     }
 
@@ -44,6 +61,13 @@ public class Character : BehaviourController
         GameManager.Input.AddButtonUpDelegate(EKeyName.SKILL3, () => OnSkillButtonReleased(EKeyName.SKILL3));
         GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL4, () => OnSkillButtonPressed(EKeyName.SKILL4));
         GameManager.Input.AddButtonUpDelegate(EKeyName.SKILL4, () => OnSkillButtonReleased(EKeyName.SKILL4));
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        jumpBehaviour.OnFixedUpdate();
     }
 
     #endregion Unity Events

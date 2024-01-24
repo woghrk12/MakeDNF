@@ -22,7 +22,6 @@ public abstract class BehaviourController : MonoBehaviour
 
     [Header("State flag variables")]
     private bool canMove = true;
-    private bool canJump = true;
 
     #endregion Variables
 
@@ -50,15 +49,6 @@ public abstract class BehaviourController : MonoBehaviour
     {
         set { canMove = value; }
         get => canMove;
-    }
-
-    /// <summary>
-    /// A flag variable that determines whether the controller is allowed to jump.
-    /// </summary>
-    public virtual bool CanJump
-    {
-        set { canJump = value; }
-        get => canJump && dnfRigidbody.IsGround;
     }
 
     #endregion Properties
