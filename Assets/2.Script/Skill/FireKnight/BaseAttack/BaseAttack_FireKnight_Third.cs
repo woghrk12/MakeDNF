@@ -77,6 +77,11 @@ public partial class BaseAttack_FireKnight
 
         public override void OnCancel()
         {
+            if (stateController.AttackHitboxController.IsHitboxActivated)
+            {
+                stateController.AttackHitboxController.DisableHitbox();
+            }
+
             character.Animator.SetTrigger(cancelHash);
         }
 

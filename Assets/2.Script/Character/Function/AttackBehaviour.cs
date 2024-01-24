@@ -125,7 +125,11 @@ public class AttackBehaviour : GenericBehaviour
         controller.Animator.SetBool(isAttackHash, false);
         controller.Animator.SetTrigger(endAttackHash);
 
-        curSkill = null;
+        if (curSkill != null)
+        {
+            curSkill.OnCancel();
+            curSkill = null;
+        }
     }
 
     #endregion Override
