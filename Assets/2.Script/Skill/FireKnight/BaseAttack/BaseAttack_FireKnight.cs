@@ -3,7 +3,7 @@ using UnityEngine;
 
 public partial class BaseAttack_FireKnight : Skill, IAttackable
 {
-    private enum EState { NONE = -1, FIRST, SECOND, THIRD }
+    private enum EState { NONE = -1, FIRST, SECOND, THIRD, JUMP }
 
     #region Variables
 
@@ -47,18 +47,19 @@ public partial class BaseAttack_FireKnight : Skill, IAttackable
         stateList.Add(new First(character, this));
         stateList.Add(new Second(character, this));
         stateList.Add(new Third(character, this));
+        stateList.Add(new Jump(character, this));
     }
 
     public override bool CheckCanUseSkill(Skill activeSkill = null)
     {
-        return activeSkill == null; 
+        return character.IsJump ? !character.DNFRigidbody.IsGround && activeSkill == null : activeSkill == null;
     }
 
     public override void OnStart()
     {
         character.Animator.SetTrigger(skillHash);
 
-        curState = stateList[(int)EState.FIRST];
+        curState = stateList[character.IsJump ? (int)EState.JUMP : (int)EState.FIRST];
         curState.OnStart();
     }
 

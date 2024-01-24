@@ -21,7 +21,7 @@ public class JumpBehaviour : GenericBehaviour
 
     #region Properties
 
-    public bool IsJump => phase == EPhase.JUMPUP || phase == EPhase.JUMPDOWN;
+    public bool IsJump => phase != EPhase.NONE;
 
     #endregion Properties
 
