@@ -34,6 +34,9 @@ public partial class BaseAttack_FireKnight
 
         public override void OnStart()
         {
+            character.CanMove = false;
+            character.CanJump = false;
+
             isContinue = false;
             isBlockKey = true;
 
@@ -110,6 +113,9 @@ public partial class BaseAttack_FireKnight
         public override void OnComplete()
         {
             character.Animator.SetBool(continueHash, false);
+
+            character.CanMove = true;
+            character.CanJump = true;
 
             stateController.OnComplete();
         }

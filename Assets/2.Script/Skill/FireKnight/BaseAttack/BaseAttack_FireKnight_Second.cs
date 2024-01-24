@@ -107,6 +107,9 @@ public partial class BaseAttack_FireKnight
         {
             character.Animator.SetBool(continueHash, false);
 
+            character.CanMove = true;
+            character.CanJump = true;
+
             stateController.OnComplete();
         }
 

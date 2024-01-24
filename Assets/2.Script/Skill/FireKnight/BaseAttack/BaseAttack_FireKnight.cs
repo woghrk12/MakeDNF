@@ -56,9 +56,6 @@ public partial class BaseAttack_FireKnight : Skill, IAttackable
 
     public override void OnStart()
     {
-        character.CanMove = false;
-        character.CanJump = false;
-
         character.Animator.SetTrigger(skillHash);
 
         curState = stateList[(int)EState.FIRST];
@@ -68,9 +65,6 @@ public partial class BaseAttack_FireKnight : Skill, IAttackable
     public override void OnComplete()
     {
         curState = null;
-
-        character.CanMove = true;
-        character.CanJump = true;
 
         attackController.OnComplete();
     }

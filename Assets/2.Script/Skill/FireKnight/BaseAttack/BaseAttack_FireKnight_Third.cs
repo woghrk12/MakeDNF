@@ -72,6 +72,9 @@ public partial class BaseAttack_FireKnight
 
         public override void OnComplete()
         {
+            character.CanMove = true;
+            character.CanJump = true;
+
             stateController.OnComplete();
         }
 
