@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public abstract class GenericBehaviour : MonoBehaviour
+public abstract class GenericBehaviour<T> : MonoBehaviour where T : BehaviourController
 {
     #region Variables
 
-    protected BehaviourController controller = null;
+    protected T controller = null;
 
     protected int behaviourCode = 0;
 
@@ -23,8 +23,6 @@ public abstract class GenericBehaviour : MonoBehaviour
 
     protected virtual void Awake()
     {
-        controller = GetComponent<BehaviourController>();
-
         behaviourCode = GetType().GetHashCode();
     }
 

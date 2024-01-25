@@ -1,4 +1,4 @@
-public class IdleBehaviour : GenericBehaviour
+public class IdleBehaviour : GenericBehaviour<Character>
 {
 
 }

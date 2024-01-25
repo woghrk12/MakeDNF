@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MoveBehaviour : GenericBehaviour
+public class MoveBehaviour : GenericBehaviour<Character>
 {
     #region Variables
 
@@ -33,6 +33,8 @@ public class MoveBehaviour : GenericBehaviour
     protected override void Awake()
     {
         base.Awake();
+
+        controller = GetComponent<Character>();
 
         isWalkHash = Animator.StringToHash(AnimatorKey.Character.IS_WALK);
     }

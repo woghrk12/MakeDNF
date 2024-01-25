@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackBehaviour : GenericBehaviour
+public class AttackBehaviour : GenericBehaviour<Character>
 {
     #region Variables
 
@@ -29,6 +29,8 @@ public class AttackBehaviour : GenericBehaviour
     protected override void Awake()
     {
         base.Awake();
+
+        controller = GetComponent<Character>();
 
         isAttackHash = Animator.StringToHash(AnimatorKey.Character.IS_ATTACK);
         endAttackHash = Animator.StringToHash(AnimatorKey.Character.END_ATTACK);

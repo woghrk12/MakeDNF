@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class JumpBehaviour : GenericBehaviour
+public class JumpBehaviour : GenericBehaviour<Character>
 {
     private enum EPhase { NONE = -1, PREDELAY, JUMPUP, JUMPDOWN, POSTDELAY }
 
@@ -38,6 +38,8 @@ public class JumpBehaviour : GenericBehaviour
     protected override void Awake()
     {
         base.Awake();
+
+        controller = GetComponent<Character>();
 
         isJumpHash = Animator.StringToHash(AnimatorKey.Character.IS_JUMP);
         isJumpUpHash = Animator.StringToHash(AnimatorKey.Character.IS_JUMP_UP);

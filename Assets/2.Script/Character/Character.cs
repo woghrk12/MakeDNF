@@ -1,16 +1,36 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : BehaviourController
 {
     #region Variables
 
+    [Header("Variables for controller's behaviour")]
+    private Dictionary<int, GenericBehaviour<Character>> behaviourDictionary = new();
+    private GenericBehaviour<Character> curBehaviour = null;
+
+    [Header("Unity components")]
+    private Animator animator = null;
+
+    [Header("DNF components")]
+    private DNFTransform dnfTransform = null;
+    private DNFRigidbody dnfRigidbody = null;
+
     [Header("Character behaviours")]
+    private IdleBehaviour idleBehaviour = null;
+    private MoveBehaviour moveBehaviour = null;
     private JumpBehaviour jumpBehaviour = null;
     private AttackBehaviour attackBehaviour = null;
 
     #endregion Variables
 
     #region Properties
+
+    public Animator Animator => animator;
+
+    public DNFTransform DNFTransform => dnfTransform;
+
+    public DNFRigidbody DNFRigidbody => dnfRigidbody;
 
     /// <summary>
     /// A flag variable indicating whether the character is allowed to move.
@@ -57,17 +77,25 @@ public class Character : BehaviourController
 
     #region Unity Events
 
-    protected override void Awake()
+    protected virtual void Awake()
     {
-        base.Awake();
+        animator = GetComponent<Animator>();
 
+        dnfTransform = GetComponent<DNFTransform>();
+        dnfRigidbody = GetComponent<DNFRigidbody>();
+
+        idleBehaviour = GetComponent<IdleBehaviour>();
+        moveBehaviour = GetComponent<MoveBehaviour>();
         jumpBehaviour = GetComponent<JumpBehaviour>();
         attackBehaviour = GetComponent<AttackBehaviour>();
 
+        behaviourDictionary.Add(BehaviourCodeList.IDLE_BEHAVIOUR_CODE, idleBehaviour);
         behaviourDictionary.Add(BehaviourCodeList.ATTACK_BEHAVIOUR_CODE, attackBehaviour);
+
+        curBehaviour = idleBehaviour;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         // Debug
         Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
@@ -90,16 +118,47 @@ public class Character : BehaviourController
         GameManager.Input.AddButtonUpDelegate(EKeyName.SKILL4, () => OnSkillButtonReleased(EKeyName.SKILL4));
     }
 
-    protected override void FixedUpdate()
+    protected virtual void Update()
     {
-        base.FixedUpdate();
+        curBehaviour.OnUpdate();
+    }
 
+    protected virtual void FixedUpdate()
+    {
         jumpBehaviour.OnFixedUpdate();
+
+        curBehaviour.OnFixedUpdate();
+    }
+
+    protected virtual void LateUpdate()
+    {
+        curBehaviour.OnLateUpdate();
     }
 
     #endregion Unity Events
 
-    #region Event Methods
+    #region Methods
+
+    #region Override
+
+    /// <summary>
+    /// Set the current behaviour of the character to the received behaviour code.
+    /// </summary>
+    /// <param name="behaviourCode">The hash code of the behaviour to set</param>
+    public override void SetBehaviour(int behaviourCode)
+    {
+        if (!behaviourDictionary.ContainsKey(behaviourCode))
+        {
+            throw new System.Exception($"There is no behaviour matching the given code. Input : {behaviourCode}");
+        }
+
+        curBehaviour = behaviourDictionary[behaviourCode];
+        curBehaviour.OnStart();
+    }
+
+    #endregion Override
+
+    #region Event
 
     public void OnJoystickMoved(Vector3 direction)
     {
@@ -145,5 +204,7 @@ public class Character : BehaviourController
         attackBehaviour.OnSkillButtonReleased(keyName);
     }
 
-    #endregion Event Methods
+    #endregion Event 
+
+    #endregion Methods
 }
