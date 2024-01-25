@@ -14,6 +14,20 @@ public class MoveBehaviour : GenericBehaviour
 
     #endregion Variables
 
+    #region Properties
+
+    /// <summary>
+    /// A flag variable indicating whether the controller is allowed to move.
+    /// </summary>
+    public bool CanMove { set; get; }
+
+    /// <summary>
+    /// A flag variable indicating whether the controller is allowed to change the look direction.
+    /// </summary>
+    public bool CanLookBack { set; get; }
+
+    #endregion Properties
+
     #region Unity Events
 
     protected override void Awake()
@@ -39,7 +53,7 @@ public class MoveBehaviour : GenericBehaviour
         moveDir.x *= xMoveSpeed * Time.fixedDeltaTime;
         moveDir.z *= zMoveSpeed * Time.fixedDeltaTime;
 
-        if (moveDir.x != 0f)
+        if (CanLookBack && moveDir.x != 0f)
         {
             controller.DNFTransform.IsLeft = moveDir.x < 0f;
         }

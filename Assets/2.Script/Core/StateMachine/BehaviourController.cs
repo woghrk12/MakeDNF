@@ -20,9 +20,6 @@ public abstract class BehaviourController : MonoBehaviour
     protected IdleBehaviour idleBehaviour = null;
     protected MoveBehaviour moveBehaviour = null;
 
-    [Header("State flag variables")]
-    private bool canMove = true;
-
     #endregion Variables
 
     #region Properties
@@ -41,15 +38,6 @@ public abstract class BehaviourController : MonoBehaviour
     /// DNF Rigidbody component of the controller.
     /// </summary>
     public DNFRigidbody DNFRigidbody => dnfRigidbody;
-
-    /// <summary>
-    /// A flag variable that determines whether the controller is allowed to move.
-    /// </summary>
-    public virtual bool CanMove
-    {
-        set { canMove = value; }
-        get => canMove;
-    }
 
     #endregion Properties
 

@@ -15,6 +15,15 @@ public class AttackBehaviour : GenericBehaviour
 
     #endregion Variables
 
+    #region Properties
+
+    /// <summary>
+    /// A flag variable indicating whether the controller is allowed to attack.
+    /// </summary>
+    public bool CanAttack { set; get; }
+
+    #endregion Properties
+
     #region Unity Events
 
     protected override void Awake()

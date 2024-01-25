@@ -21,6 +21,14 @@ public class JumpBehaviour : GenericBehaviour
 
     #region Properties
 
+    /// <summary>
+    /// A flag variable indicating whether the controller is allowed to jump.
+    /// </summary>
+    public bool CanJump { set; get; }
+
+    /// <summary>
+    /// A flag variable indicating whether the controller is in a jumping state.
+    /// </summary>
     public bool IsJump => phase != EPhase.NONE;
 
     #endregion Properties

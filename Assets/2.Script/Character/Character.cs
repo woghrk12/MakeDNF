@@ -8,23 +8,50 @@ public class Character : BehaviourController
     private JumpBehaviour jumpBehaviour = null;
     private AttackBehaviour attackBehaviour = null;
 
-    [Header("State Variables")]
-    private bool canJump = true;
-
     #endregion Variables
 
     #region Properties
 
     /// <summary>
-    /// A flag variable that determines whether the controller is allowed to jump.
+    /// A flag variable indicating whether the character is allowed to move.
+    /// </summary>
+    public virtual bool CanMove
+    {
+        set { moveBehaviour.CanMove = value; }
+        get => moveBehaviour.CanMove;
+    }
+
+    /// <summary>
+    /// A flag variable indicating whether the character is allowed to change the looking direction.
+    /// </summary>
+    public virtual bool CanLookBack 
+    {
+        set { moveBehaviour.CanLookBack = value; }
+        get => moveBehaviour.CanLookBack; 
+    }
+
+    /// <summary>
+    /// A flag variable indicating whether the character is allowed to jump.
     /// </summary>
     public virtual bool CanJump
     {
-        set { canJump = value; }
-        get => canJump && dnfRigidbody.IsGround;
+        set { jumpBehaviour.CanJump = value; }
+        get => jumpBehaviour.CanJump && dnfRigidbody.IsGround;
     }
 
+    /// <summary>
+    /// A flag variable indicating whether the character is in a jumping state.
+    /// </summary>
     public virtual bool IsJump => jumpBehaviour.IsJump;
+
+    /// <summary>
+    /// A flag variable indicating whether the character is allowed to attack.
+    /// </summary>
+    public virtual bool CanAttack
+    { 
+        set { attackBehaviour.CanAttack = value; }
+        get => attackBehaviour.CanAttack;
+    }
 
     #endregion Properties
 
@@ -91,7 +118,8 @@ public class Character : BehaviourController
     public void OnAttackButtonPressed()
     {
         attackBehaviour.OnSkillButtonPressed(EKeyName.BASEATTACK);
-        
+
+        if (!CanAttack) return;
         if (!attackBehaviour.CheckCanAttack(EKeyName.BASEATTACK)) return;
 
         attackBehaviour.Attack(EKeyName.BASEATTACK);
@@ -105,7 +133,8 @@ public class Character : BehaviourController
     public void OnSkillButtonPressed(EKeyName keyName)
     {
         attackBehaviour.OnSkillButtonPressed(keyName);
-        
+
+        if (!CanAttack) return;
         if (!attackBehaviour.CheckCanAttack(keyName)) return;
 
         attackBehaviour.Attack(keyName);
