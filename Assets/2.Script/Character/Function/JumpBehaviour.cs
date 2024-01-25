@@ -132,6 +132,7 @@ public class JumpBehaviour : GenericBehaviour<Character>
         controller.Animator.SetBool(isJumpDownHash, false);
 
         controller.CanMove = true;
+        controller.CanLookBack = true;
     }
 
     #endregion Override

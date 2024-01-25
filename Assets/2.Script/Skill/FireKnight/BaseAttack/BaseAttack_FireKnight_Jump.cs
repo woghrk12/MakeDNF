@@ -31,6 +31,8 @@ public partial class BaseAttack_FireKnight
             phase = EStatePhase.PREDELAY;
 
             stateController.alreadyHitObjects.Clear();
+
+            character.CanLookBack = false;
         }
 
         public override void OnUpdate()
