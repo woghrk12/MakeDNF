@@ -116,6 +116,11 @@ public class Character : BehaviourController
         GameManager.Input.AddButtonUpDelegate(EKeyName.SKILL3, () => OnSkillButtonReleased(EKeyName.SKILL3));
         GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL4, () => OnSkillButtonPressed(EKeyName.SKILL4));
         GameManager.Input.AddButtonUpDelegate(EKeyName.SKILL4, () => OnSkillButtonReleased(EKeyName.SKILL4));
+
+        CanMove = true;
+        CanLookBack = true;
+        CanJump = true;
+        CanAttack = true;
     }
 
     protected virtual void Update()
