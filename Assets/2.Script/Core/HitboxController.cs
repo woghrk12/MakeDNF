@@ -399,7 +399,7 @@ public class HitboxController : MonoBehaviour
     /// </summary>
     public void DisableHitbox()
     {
-        if (activeHitbox == null) return;
+        if (!IsHitboxActivated) return;
 
         activeHitbox = null;
     }
@@ -409,7 +409,7 @@ public class HitboxController : MonoBehaviour
     /// </summary>
     public void CalculateHitbox()
     {
-        if (activeHitbox == null) return;
+        if (!IsHitboxActivated) return;
 
         activeHitbox.CalculateHitbox();
     }
