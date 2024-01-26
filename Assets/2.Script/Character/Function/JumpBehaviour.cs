@@ -63,6 +63,8 @@ public class JumpBehaviour : GenericBehaviour<Character>
 
     public override void OnStart()
     {
+        CanJump = false;
+
         phase = EPhase.PREDELAY;
 
         controller.CanMove = false;
@@ -133,6 +135,8 @@ public class JumpBehaviour : GenericBehaviour<Character>
 
         controller.CanMove = true;
         controller.CanLookBack = true;
+
+        CanJump = true;
     }
 
     #endregion Override
