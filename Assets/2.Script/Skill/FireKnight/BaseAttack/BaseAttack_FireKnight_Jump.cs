@@ -52,6 +52,8 @@ public partial class BaseAttack_FireKnight
                     break;
 
                 case EStatePhase.HITBOXACTIVE:
+                    stateController.AttackHitboxController.CalculateHitbox();
+
                     if (animatorStateInfo.normalizedTime < duration) return;
 
                     stateController.AttackHitboxController.DisableHitbox();

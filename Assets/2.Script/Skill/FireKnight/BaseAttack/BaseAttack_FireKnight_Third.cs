@@ -50,6 +50,8 @@ public partial class BaseAttack_FireKnight
                     break;
 
                 case EStatePhase.POSTDELAY:
+                    stateController.AttackHitboxController.CalculateHitbox();
+
                     if (animatorStateInfo.normalizedTime < postDelay) return;
 
                     stateController.AttackHitboxController.DisableHitbox();

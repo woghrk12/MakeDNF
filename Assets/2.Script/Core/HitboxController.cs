@@ -359,18 +359,6 @@ public class HitboxController : MonoBehaviour
 
     #endregion Properties
 
-
-    #region Unity Events
-
-    private void FixedUpdate()
-    {
-        if (activeHitbox == null) return;
-
-        activeHitbox.CalculateHitbox();
-    }
-
-    #endregion Unity Events
-
     #region Methods
 
     /// <summary>

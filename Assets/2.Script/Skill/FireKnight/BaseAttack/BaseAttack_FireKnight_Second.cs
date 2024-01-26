@@ -58,6 +58,7 @@ public partial class BaseAttack_FireKnight
 
                 case EStatePhase.HITBOXACTIVE:
                     if(animatorStateInfo.IsName("BaseAttack_2")) return;
+                    stateController.AttackHitboxController.CalculateHitbox();
 
                     stateController.AttackHitboxController.DisableHitbox();
 
