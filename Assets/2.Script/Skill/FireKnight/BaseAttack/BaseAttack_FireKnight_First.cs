@@ -21,8 +21,8 @@ public partial class BaseAttack_FireKnight
 
             skillHash = Animator.StringToHash(AnimatorKey.Character.BASE_ATTACK);
 
-            preDelay = 3f / 8f;
-            duration = 7f / 8f;
+            preDelay = 4f / 8f;
+            duration = 6f / 8f;
             postDelay = 1f;
         }
 
@@ -43,6 +43,8 @@ public partial class BaseAttack_FireKnight
             phase = EStatePhase.PREDELAY;
 
             stateController.alreadyHitObjects.Clear();
+
+            attackSpeed = character.Animator.GetFloat(attackSpeedHash);
         }
 
         public override void OnUpdate()
@@ -72,6 +74,19 @@ public partial class BaseAttack_FireKnight
                     stateController.AttackHitboxController.DisableHitbox();
 
                     phase = EStatePhase.MOTIONINPROGRESS;
+
+                    break;
+
+                case EStatePhase.STOPMOTION:
+                    if (stiffnessTimer < stiffnessTime)
+                    {
+                        stiffnessTimer += Time.deltaTime;
+                        return;
+                    }
+
+                    character.Animator.SetFloat(attackSpeedHash, attackSpeed);
+
+                    phase = EStatePhase.HITBOXACTIVE;
 
                     break;
 
@@ -108,12 +123,20 @@ public partial class BaseAttack_FireKnight
 
             if (stateController.CalculateOnHit(GameManager.Room.Monsters))
             {
+                // Stiffness effect
+                character.Animator.SetFloat(attackSpeedHash, 0f);
+                stiffnessTimer = 0f;
+                phase = EStatePhase.STOPMOTION;
+
                 // TODO : Spawn hit effects
             }
         }
 
         public override void OnComplete()
         {
+            phase = EStatePhase.NONE;
+
+            character.Animator.SetFloat(attackSpeedHash, attackSpeed);
             character.Animator.SetBool(continueHash, false);
 
             character.CanMove = true;
@@ -124,6 +147,8 @@ public partial class BaseAttack_FireKnight
 
         public override void OnCancel()
         {
+            phase = EStatePhase.NONE;
+
             if (stateController.AttackHitboxController.IsHitboxActivated)
             {
                 stateController.AttackHitboxController.DisableHitbox();
@@ -131,6 +156,7 @@ public partial class BaseAttack_FireKnight
 
             character.Animator.ResetTrigger(skillHash);
             character.Animator.SetBool(continueHash, false);
+            character.Animator.SetFloat(attackSpeedHash, attackSpeed);
 
             character.Animator.SetTrigger(cancelHash);
         }

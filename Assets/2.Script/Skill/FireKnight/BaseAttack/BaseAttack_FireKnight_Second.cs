@@ -20,6 +20,8 @@ public partial class BaseAttack_FireKnight
             this.stateController = stateController as BaseAttack_FireKnight;
 
             skillHash = Animator.StringToHash(AnimatorKey.Character.BASE_ATTACK);
+
+            preDelay = 1f / 3f;
         }
 
         #endregion Constructor
@@ -36,6 +38,8 @@ public partial class BaseAttack_FireKnight
             phase = EStatePhase.PREDELAY;
 
             stateController.alreadyHitObjects.Clear();
+
+            attackSpeed = character.Animator.GetFloat(attackSpeedHash);
         }
 
         public override void OnUpdate()
@@ -46,10 +50,12 @@ public partial class BaseAttack_FireKnight
             {
                 case EStatePhase.PREDELAY:
                     if (!animatorStateInfo.IsName("BaseAttack_2")) return;
+                    if (animatorStateInfo.normalizedTime < preDelay) return;
 
                     stateController.AttackHitboxController.EnableHitbox((int)EState.SECOND);
 
                     isBlockKey = false;
+
                     character.Animator.SetBool(continueHash, false);
 
                     phase = EStatePhase.HITBOXACTIVE;
@@ -57,10 +63,14 @@ public partial class BaseAttack_FireKnight
                     break;
 
                 case EStatePhase.HITBOXACTIVE:
-                    if(animatorStateInfo.IsName("BaseAttack_2")) return;
                     stateController.AttackHitboxController.CalculateHitbox();
 
+                    if (!animatorStateInfo.IsName("BaseAttack_2")) return;
+                    if(animatorStateInfo.normalizedTime < 1f) return;
+
                     stateController.AttackHitboxController.DisableHitbox();
+
+                    character.Animator.SetTrigger(skillHash);
 
                     phase = EStatePhase.MOTIONINPROGRESS;
 
@@ -71,6 +81,7 @@ public partial class BaseAttack_FireKnight
                     if (animatorStateInfo.normalizedTime < 1f) return;
 
                     isBlockKey = true;
+
                     character.Animator.SetTrigger(skillHash);
 
                     if (isContinue)
@@ -81,6 +92,19 @@ public partial class BaseAttack_FireKnight
                     {
                         phase = EStatePhase.POSTDELAY;
                     }
+
+                    break;
+
+                case EStatePhase.STOPMOTION:
+                    if (stiffnessTimer < stiffnessTime)
+                    {
+                        stiffnessTimer += Time.deltaTime;
+                        return;
+                    }
+
+                    character.Animator.SetFloat(attackSpeedHash, attackSpeed);
+
+                    phase = EStatePhase.HITBOXACTIVE;
 
                     break;
 
@@ -100,13 +124,21 @@ public partial class BaseAttack_FireKnight
 
             if (stateController.CalculateOnHit(GameManager.Room.Monsters))
             {
+                // Stiffness effect
+                character.Animator.SetFloat(attackSpeedHash, 0f);
+                stiffnessTimer = 0f;
+                phase = EStatePhase.STOPMOTION;
+
                 // TODO : Spawn hit effects
             }
         }
 
         public override void OnComplete()
         {
+            phase = EStatePhase.NONE;
+
             character.Animator.SetBool(continueHash, false);
+            character.Animator.SetFloat(attackSpeedHash, attackSpeed);
 
             character.CanMove = true;
             character.CanJump = true;
@@ -123,6 +155,7 @@ public partial class BaseAttack_FireKnight
 
             character.Animator.ResetTrigger(skillHash);
             character.Animator.SetBool(continueHash, false);
+            character.Animator.SetFloat(attackSpeedHash, attackSpeed);
 
             character.Animator.SetTrigger(cancelHash);
         }

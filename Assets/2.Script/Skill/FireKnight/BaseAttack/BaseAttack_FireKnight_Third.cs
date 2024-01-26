@@ -77,6 +77,8 @@ public partial class BaseAttack_FireKnight
             character.CanMove = true;
             character.CanJump = true;
 
+            character.Animator.SetBool(continueHash, false);
+
             stateController.OnComplete();
         }
 
@@ -88,6 +90,7 @@ public partial class BaseAttack_FireKnight
             }
 
             character.Animator.SetTrigger(cancelHash);
+            character.Animator.SetBool(continueHash, false);
         }
 
         #endregion Override
