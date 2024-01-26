@@ -318,7 +318,6 @@ public class Hitbox
     #endregion Methods
 }
 
-[RequireComponent(typeof(DNFTransform))]
 public class HitboxController : MonoBehaviour
 {
     #region Variables
