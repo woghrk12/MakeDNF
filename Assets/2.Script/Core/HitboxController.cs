@@ -391,6 +391,7 @@ public class HitboxController : MonoBehaviour
         }
 
         activeHitbox = hitboxes[index];
+        activeHitbox.CalculateHitbox();
     }
 
     /// <summary>
