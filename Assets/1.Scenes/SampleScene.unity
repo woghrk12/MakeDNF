@@ -293,7 +293,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 271300688}
-  - component: {fileID: 271300691}
   - component: {fileID: 271300690}
   - component: {fileID: 271300689}
   m_Layer: 0
@@ -364,18 +363,6 @@ MonoBehaviour:
     size: {x: 3.6963139, y: 1.6971457, z: 1.4738766}
     offset: {x: 0, y: 0.3998335, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
---- !u!114 &271300691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 271300687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3853bc98249b3004aa7c2adb01d0933c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &391076266
 GameObject:
   m_ObjectHideFlags: 0

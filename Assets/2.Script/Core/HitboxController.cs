@@ -149,8 +149,8 @@ public class Hitbox
         Vector3 position = dnfTransform.Position;
         float localScale = dnfTransform.LocalScale;
 
-        Vector3 minHitboxPos = Offset - new Vector3(Size.x * Pivot.x * localScale, Size.y * Pivot.y * localScale, Size.z * Pivot.z * localScale);
-        Vector3 maxHitboxPos = Offset + new Vector3(Size.x * (1f - Pivot.x) * localScale, Size.y * (1f - Pivot.y) * localScale, Size.z * (1f - Pivot.z) * localScale);
+        Vector3 minHitboxPos = Offset - localScale * new Vector3(Size.x * Pivot.x, Size.y * Pivot.y, Size.z * Pivot.z);
+        Vector3 maxHitboxPos = Offset + localScale * new Vector3(Size.x * (1f - Pivot.x), Size.y * (1f - Pivot.y), Size.z * (1f - Pivot.z));
 
         if (dnfTransform.IsLeft)
         {
