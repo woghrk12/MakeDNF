@@ -84,7 +84,7 @@ public class HitboxEditor : Editor
                 Vector3 pivot = activeHitbox.Pivot;
                 float localScale = scaleTransform != null ? scaleTransform.localScale.x : 1f;
 
-                DrawHitbox(activeHitbox.HitboxType, position, offset, size, pivot, localScale);
+                DrawHitbox(activeHitbox.HitboxType, position, offset, size, pivot, localScale, activeHitbox.DNFTransform.IsLeft);
             }
         }
         // Edit the selected hitbox when not in play mode
@@ -365,10 +365,24 @@ public class HitboxEditor : Editor
     /// The collider of XZ coordinates will appear red, and the collider of XY coordinates will appear green.
     /// The shape of the collider of XZ coordinates is a circle, it only depends on the X-coordinate.
     /// </summary>
-    private void DrawHitbox(EHitboxType hitboxType, Vector3 position, Vector3 offset, Vector3 size, Vector3 pivot, float localScale)
+    private void DrawHitbox(EHitboxType hitboxType, Vector3 position, Vector3 offset, Vector3 size, Vector3 pivot, float localScale, bool isLeft = false)
     {
-        Vector3 minHitboxPos = position + offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
-        Vector3 maxHitboxPos = position + offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
+        Vector3 minHitboxRange = offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
+        Vector3 maxHitboxRange = offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
+        Vector3 minHitboxPos = position;
+        Vector3 maxHitboxPos = position;
+
+        if (isLeft)
+        {
+            minHitboxPos += new Vector3(-maxHitboxRange.x, minHitboxRange.y, -maxHitboxRange.z);
+            maxHitboxPos += new Vector3(-minHitboxRange.x, maxHitboxRange.y, -minHitboxRange.z);
+        }
+        else
+        {
+            minHitboxPos += minHitboxRange;
+            maxHitboxPos += maxHitboxRange;
+        }
+
         Vector3 center = (minHitboxPos + maxHitboxPos) * 0.5f;
         Vector3 wireSize = maxHitboxPos - minHitboxPos;
 
