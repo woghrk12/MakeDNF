@@ -5,13 +5,13 @@ using UnityEngine;
 public abstract class ProjectileState
 {
     /// <summary>
-    /// The phase of the skill state.
+    /// The phase of the projectile state.
     /// <para>
-    /// PREDELAY : Delay before hitbox activation or projectile creation.
+    /// PREDELAY : Delay before hitbox activation.
     /// HITBOXACTIVE : Phase during hitbox activation.
-    /// STOPMOTION : Phase for stiffness effect if any object has been hit by the skill.
-    /// MOTIONINPROGRESS : Phase after hitbox deactivation or projectile creation.
-    /// POSTDELAY : Delay after the skill motion animation ends.
+    /// STOPMOTION : Phase for stiffness effect if any object has been hit by the projectile.
+    /// MOTIONINPROGRESS : Phase after hitbox deactivation.
+    /// POSTDELAY : Delay after the projectile motion animation ends.
     /// </para>
     /// </summary>
     protected enum EStatePhase { NONE = -1, PREDELAY, HITBOXACTIVE, STOPMOTION, MOTIONINPROGRESS, POSTDELAY }
