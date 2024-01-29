@@ -72,26 +72,7 @@ public partial class BaseAttack_FireKnight
 
                     character.Animator.SetTrigger(skillHash);
 
-                    phase = EStatePhase.MOTIONINPROGRESS;
-
-                    break;
-
-                case EStatePhase.MOTIONINPROGRESS:
-                    if (!animatorStateInfo.IsName("BaseAttack_2_End")) return;
-                    if (animatorStateInfo.normalizedTime < 1f) return;
-
-                    isBlockKey = true;
-
-                    character.Animator.SetTrigger(skillHash);
-
-                    if (isContinue)
-                    {
-                        stateController.SetState((int)EState.THIRD);
-                    }
-                    else
-                    {
-                        phase = EStatePhase.POSTDELAY;
-                    }
+                    phase = EStatePhase.POSTDELAY;
 
                     break;
 
@@ -109,10 +90,18 @@ public partial class BaseAttack_FireKnight
                     break;
 
                 case EStatePhase.POSTDELAY:
-                    if (!animatorStateInfo.IsName("BaseAttack_2_PostDelay")) return;
-                    if (animatorStateInfo.normalizedTime < postDelay) return;
+                    if (!animatorStateInfo.IsName("BaseAttack_2_End")) return;
+                    if (animatorStateInfo.normalizedTime < 1f) return;
 
-                    OnComplete();
+                    if (isContinue)
+                    {
+                        character.Animator.SetTrigger(skillHash);
+                        stateController.SetState((int)EState.THIRD);
+                    }
+                    else
+                    {
+                        OnComplete();
+                    }
 
                     break;
             }
