@@ -16,6 +16,16 @@ public abstract class ProjectileState
     /// </summary>
     protected enum EStatePhase { NONE = -1, PREDELAY, HITBOXACTIVE, STOPMOTION, MOTIONINPROGRESS, POSTDELAY }
 
+    #region Variables
+
+    [Header("Variables to control the skill phase")]
+    protected EStatePhase phase = EStatePhase.NONE;
+    protected float preDelay = 0f;
+    protected float duration = 0f;
+    protected float postDelay = 0f;
+
+    #endregion Variables
+
     #region Constructor
 
     public ProjectileState(Projectile stateController) { }
