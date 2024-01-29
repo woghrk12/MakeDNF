@@ -55,7 +55,6 @@ public partial class BaseAttack_FireKnight
             {
                 case EStatePhase.PREDELAY:
                     if (!animatorStateInfo.IsName("BaseAttack_1")) return;
-                    if (animatorStateInfo.normalizedTime < preDelay) return;
 
                     stateController.AttackHitboxController.EnableHitbox((int)EState.FIRST);
 
