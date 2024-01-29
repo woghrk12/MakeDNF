@@ -40,6 +40,7 @@ public class ObjectPoolManager : MonoBehaviour
         }
 
         GameObject gameObject = poolDictionary[poolIndex].Dequeue();
+        gameObject.SetActive(true);
 
         return gameObject;
     }
@@ -51,6 +52,8 @@ public class ObjectPoolManager : MonoBehaviour
     /// <param name="gameObject">The game object to be returned</param>
     public void ReturnToPool(EObjectPoolList poolIndex, GameObject gameObject)
     {
+        gameObject.SetActive(false);
+
         poolDictionary[poolIndex].Enqueue(gameObject);
     }
 

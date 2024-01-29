@@ -90,7 +90,6 @@ public abstract class Projectile : MonoBehaviour
         curState = null;
 
         GameManager.ObjectPool.ReturnToPool(ObjectPoolIndex, gameObject);
-        gameObject.SetActive(false);
     }
 
     #endregion Methods
