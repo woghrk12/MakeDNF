@@ -51,19 +51,19 @@ public partial class SlashCombo_FireKnight
                     switch (curCombo % 4)
                     {
                         case 0:
-                            GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Slash_3_FireKnight).SetActive(true);
+                            GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Slash_3_FireKnight).GetComponent<Projectile>().Activate(character.DNFTransform);
                             break;
 
                         case 1:
-                            GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Slash_1_FireKnight).SetActive(true);
+                            GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Slash_1_FireKnight).GetComponent<Projectile>().Activate(character.DNFTransform);
                             break;
 
                         case 2:
-                            GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Slash_5_FireKnight).SetActive(true);
+                            GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Slash_5_FireKnight).GetComponent<Projectile>().Activate(character.DNFTransform);
                             break;
 
                         case 3:
-                            GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Slash_4_FireKnight).SetActive(true);
+                            GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Slash_4_FireKnight).GetComponent<Projectile>().Activate(character.DNFTransform);
                             break;
                     }
 

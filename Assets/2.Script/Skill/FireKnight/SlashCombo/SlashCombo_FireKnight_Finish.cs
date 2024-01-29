@@ -42,7 +42,7 @@ public partial class SlashCombo_FireKnight
                     if (!animatorStateInfo.IsName("SlashCombo_Finish")) return;
                     if (animatorStateInfo.normalizedTime < preDelay) return;
 
-                    GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Slash_2_FireKnight).SetActive(true);
+                    GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Slash_2_FireKnight).GetComponent<Projectile>().Activate(character.DNFTransform);
 
                     phase = EStatePhase.MOTIONINPROGRESS;
 
