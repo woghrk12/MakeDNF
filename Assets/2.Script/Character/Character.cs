@@ -100,6 +100,7 @@ public class Character : BehaviourController
         // Debug
         Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
         attackBehaviour.RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<BaseAttack_FireKnight>());
+        attackBehaviour.RegisterSkill(EKeyName.SKILL1, FindObjectOfType<SlashCombo_FireKnight>());
 
         GameManager.Input.AddMovementDelegate(OnJoystickMoved);
 

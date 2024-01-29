@@ -2,10 +2,10 @@ public enum EObjectPoolList
 {
 	NONE = -1,
 	
-    Fireball_1_FireHero = 0,
-    Fireball_2_FireHero = 1,
-    Meteor_FireHero = 2,
-    Side_Flame_FireHero = 3,
-    Flame_Strike_FireHero = 4,
+    Slash_1_FireKnight = 0,
+    Slash_2_FireKnight = 1,
+    Slash_3_FireKnight = 2,
+    Slash_4_FireKnight = 3,
+    Slash_5_FireKnight = 4,
 
 }

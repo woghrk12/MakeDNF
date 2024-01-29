@@ -14,6 +14,11 @@ public class AnimatorKey
         public static readonly string END_ATTACK = "EndAttack";
 
         public static readonly string BASE_ATTACK = "BaseAttack";
+
+        public class FireKnight
+        {
+            public static readonly string SLASH_COMBO = "SlashCombo";
+        }
     }
 
     public class Projectile
