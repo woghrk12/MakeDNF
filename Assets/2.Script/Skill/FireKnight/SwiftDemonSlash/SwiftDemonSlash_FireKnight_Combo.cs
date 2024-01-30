@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class SlashCombo_FireKnight
+public partial class SwiftDemonSlash_FireKnight
 {
     public class Combo : SkillState
     {
         #region Variables
 
-        private SlashCombo_FireKnight stateController = null;
+        private SwiftDemonSlash_FireKnight stateController = null;
 
         private int curCombo = 0;
 
@@ -16,7 +16,7 @@ public partial class SlashCombo_FireKnight
 
         #region Constructor
 
-        public Combo(Character character, SlashCombo_FireKnight stateController) : base(character, stateController)
+        public Combo(Character character, SwiftDemonSlash_FireKnight stateController) : base(character, stateController)
         {
             this.stateController = stateController;
 
