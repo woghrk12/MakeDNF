@@ -40,6 +40,7 @@ public class EffectManager : MonoBehaviour
         }
 
         GameObject gameObject = effectDictionary[effectIndex].Dequeue();
+        gameObject.SetActive(true);
 
         return gameObject;
     }
@@ -51,6 +52,8 @@ public class EffectManager : MonoBehaviour
     /// <param name="gameObject">The game object of the effect to be returned</param>
     public void ReturnToPool(EEffectList effectIndex, GameObject gameObject)
     {
+        gameObject.SetActive(false);
+
         effectDictionary[effectIndex].Enqueue(gameObject);
     }
 
