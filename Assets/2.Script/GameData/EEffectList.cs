@@ -2,6 +2,6 @@ public enum EEffectList
 {
 	NONE = -1,
 	
-    Dash_FireHero = 0,
+    Crescent_Slash = 0,
 
 }

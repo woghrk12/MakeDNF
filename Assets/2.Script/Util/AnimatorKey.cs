@@ -18,11 +18,13 @@ public class AnimatorKey
         public class FireKnight
         {
             public static readonly string SLASH_COMBO = "SlashCombo";
+            public static readonly string CRESCENT = "Crescent";
         }
     }
 
     public class Projectile
     {
         public static readonly string SHOT = "Shot";
+        public static readonly string MOTION_SPEED = "MotionSpeed";
     }
 }
