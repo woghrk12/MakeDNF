@@ -154,8 +154,8 @@ public class Hitbox
 
         if (dnfTransform.IsLeft)
         {
-            this.minHitboxPos = position + new Vector3(-maxHitboxPos.x, minHitboxPos.y, -maxHitboxPos.z);
-            this.maxHitboxPos = position + new Vector3(-minHitboxPos.x, maxHitboxPos.y, -minHitboxPos.z);
+            this.minHitboxPos = position + new Vector3(-maxHitboxPos.x, minHitboxPos.y, minHitboxPos.z);
+            this.maxHitboxPos = position + new Vector3(-minHitboxPos.x, maxHitboxPos.y, maxHitboxPos.z);
         }
         else
         {

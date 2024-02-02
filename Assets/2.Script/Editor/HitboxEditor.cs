@@ -374,8 +374,8 @@ public class HitboxEditor : Editor
 
         if (isLeft)
         {
-            minHitboxPos += new Vector3(-maxHitboxRange.x, minHitboxRange.y, -maxHitboxRange.z);
-            maxHitboxPos += new Vector3(-minHitboxRange.x, maxHitboxRange.y, -minHitboxRange.z);
+            minHitboxPos += new Vector3(-maxHitboxRange.x, minHitboxRange.y, minHitboxRange.z);
+            maxHitboxPos += new Vector3(-minHitboxRange.x, maxHitboxRange.y, maxHitboxRange.z);
         }
         else
         {
