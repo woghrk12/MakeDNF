@@ -17,7 +17,7 @@ public partial class BaseAttack_FireKnight
             this.stateController = stateController as BaseAttack_FireKnight;
 
             preDelay = 2f / 8f;
-            postDelay = 1f;
+            duration = 7f / 8f;
         }
 
         #endregion Constructor
@@ -31,6 +31,8 @@ public partial class BaseAttack_FireKnight
             phase = EStatePhase.PREDELAY;
 
             stateController.alreadyHitObjects.Clear();
+
+            attackSpeed = character.Animator.GetFloat(attackSpeedHash);
         }
 
         public override void OnUpdate()
@@ -45,16 +47,36 @@ public partial class BaseAttack_FireKnight
 
                     stateController.AttackHitboxController.EnableHitbox((int)EState.THIRD);
 
+                    phase = EStatePhase.HITBOXACTIVE;
+
+                    break;
+
+                case EStatePhase.HITBOXACTIVE:
+                    stateController.AttackHitboxController.CalculateHitbox();
+
+                    if (animatorStateInfo.normalizedTime < duration) return;
+
+                    stateController.AttackHitboxController.DisableHitbox();
+
                     phase = EStatePhase.POSTDELAY;
 
                     break;
 
+                case EStatePhase.STOPMOTION:
+                    if (stiffnessTimer < stiffnessTime)
+                    {
+                        stiffnessTimer += Time.deltaTime;
+                        return;
+                    }
+
+                    character.Animator.SetFloat(attackSpeedHash, attackSpeed);
+
+                    phase = EStatePhase.HITBOXACTIVE;
+
+                    break;
+
                 case EStatePhase.POSTDELAY:
-                    stateController.AttackHitboxController.CalculateHitbox();
-
                     if (animatorStateInfo.normalizedTime < postDelay) return;
-
-                    stateController.AttackHitboxController.DisableHitbox();
 
                     OnComplete();
                     
@@ -67,7 +89,12 @@ public partial class BaseAttack_FireKnight
             if (!stateController.AttackHitboxController.IsHitboxActivated) return;
 
             if (stateController.CalculateOnHit(GameManager.Room.Monsters))
-            { 
+            {
+                // Stiffness effect
+                character.Animator.SetFloat(attackSpeedHash, 0f);
+                stiffnessTimer = 0f;
+                phase = EStatePhase.STOPMOTION;
+
                 // TODO : Spawn hit effects
             }
         }
