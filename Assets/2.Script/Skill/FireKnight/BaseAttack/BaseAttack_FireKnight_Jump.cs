@@ -73,6 +73,8 @@ public partial class BaseAttack_FireKnight
                         return;
                     }
 
+                    character.DNFRigidbody.enabled = true;
+                    character.CanMove = true;
                     character.Animator.SetFloat(attackSpeedHash, attackSpeed);
 
                     phase = EStatePhase.HITBOXACTIVE;
@@ -102,6 +104,8 @@ public partial class BaseAttack_FireKnight
             if (stateController.CalculateOnHit(GameManager.Room.Monsters))
             {
                 // Stiffness effect
+                character.DNFRigidbody.enabled = false;
+                character.CanMove = false;
                 character.Animator.SetFloat(attackSpeedHash, 0f);
                 stiffnessTimer = 0f;
                 phase = EStatePhase.STOPMOTION;
