@@ -60,6 +60,8 @@ public partial class Slash_3_FireKnight : Projectile, IAttackable
 
     public override void Activate(DNFTransform subjectTransform, float sizeEff = 1)
     {
+        spawnerTransform = subjectTransform;
+
         // Set projectile transform
         dnfTransform.Position = subjectTransform.Position;
         dnfTransform.IsLeft = subjectTransform.IsLeft;
