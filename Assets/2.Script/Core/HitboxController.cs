@@ -29,7 +29,7 @@ public interface IDamagable
     /// <summary>
     /// The event method called when the object is hit.
     /// </summary>
-    public void OnDamage();
+    public void OnDamage(DNFTransform attacker, List<int> damages, float knockBackPower);
 }
 
 [Serializable]
