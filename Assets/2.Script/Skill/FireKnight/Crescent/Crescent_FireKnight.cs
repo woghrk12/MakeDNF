@@ -11,6 +11,12 @@ public partial class Crescent_FireKnight : Skill, IAttackable
 
     #endregion Variables
 
+    #region Properties 
+
+    public override int SkillCode => typeof(Crescent_FireKnight).GetHashCode();
+
+    #endregion Properties
+
     #region IAttackable Implementation
 
     public HitboxController AttackHitboxController { set; get; }

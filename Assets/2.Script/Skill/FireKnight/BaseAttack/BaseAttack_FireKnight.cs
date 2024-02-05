@@ -8,8 +8,14 @@ public partial class BaseAttack_FireKnight : Skill, IAttackable
     #region Variables
 
     private List<IDamagable> alreadyHitObjects = new();
-    
+
     #endregion Variables
+
+    #region Properties
+
+    public override int SkillCode => typeof(BaseAttack_FireKnight).GetHashCode();
+
+    #endregion Properties
 
     #region IAttackable Implementation
 

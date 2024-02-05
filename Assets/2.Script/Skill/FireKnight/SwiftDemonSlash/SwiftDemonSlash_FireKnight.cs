@@ -10,6 +10,12 @@ public partial class SwiftDemonSlash_FireKnight : Skill
 
     #endregion Variables
 
+    #region Properties
+
+    public override int SkillCode => typeof(SwiftDemonSlash_FireKnight).GetHashCode();
+
+    #endregion Properties
+
     #region Methods
 
     #region Override

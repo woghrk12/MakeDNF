@@ -48,6 +48,11 @@ public abstract class Skill : MonoBehaviour
     #region Properties
 
     /// <summary>
+    /// The hash code of the skill.
+    /// </summary>
+    public abstract int SkillCode { get; }
+
+    /// <summary>
     /// The name of the skill.
     /// </summary>
     public string Name => skillStat.Name;
