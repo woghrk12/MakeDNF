@@ -30,7 +30,7 @@ public partial class Slash_4_FireKnight : Projectile, IAttackable
             if (alreadyHitObjects.Contains(target)) continue;
             if (AttackHitboxController.CheckCollision(target.DamageHitboxController))
             {
-                target.OnDamage(spawnerTransform, null, 0f);
+                target.OnDamage(spawnerTransform, null, 0f, Vector3.zero);
                 alreadyHitObjects.Add(target);
                 count++;
             }
