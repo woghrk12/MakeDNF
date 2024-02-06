@@ -53,7 +53,6 @@ public class HitBehaviour : GenericBehaviour<Character>
 
         controller.CanMove = false;
         controller.CanJump = false;
-        controller.CanAttack = false;
 
         controller.Animator.SetTrigger(doHitHash);
         controller.Animator.SetBool(isHitHash, true);
@@ -95,7 +94,6 @@ public class HitBehaviour : GenericBehaviour<Character>
     {
         controller.CanMove = true;
         controller.CanJump = true;
-        controller.CanAttack = true;
 
         controller.Animator.SetBool(isHitHash, false);
         controller.Animator.SetFloat(normalSpeedHash, 1f);

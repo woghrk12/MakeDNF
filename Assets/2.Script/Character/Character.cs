@@ -124,6 +124,7 @@ public class Character : BehaviourController, IDamagable
         attackBehaviour.RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<BaseAttack_FireKnight>());
         attackBehaviour.RegisterSkill(EKeyName.SKILL1, FindObjectOfType<SwiftDemonSlash_FireKnight>());
         attackBehaviour.RegisterSkill(EKeyName.SKILL2, FindObjectOfType<Crescent_FireKnight>());
+        attackBehaviour.RegisterSkill(EKeyName.SKILL3, FindObjectOfType<Dodge_FireKnight>());
 
         GameManager.Input.AddMovementDelegate(OnJoystickMoved);
 
