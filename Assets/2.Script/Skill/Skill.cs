@@ -70,7 +70,7 @@ public abstract class Skill : MonoBehaviour
     /// <summary>
     /// The list of the skills that can be canceld while in use.
     /// </summary>
-    public List<Skill> CancelList => skillStat.CancelList;
+    public List<int> CancelList = new();
 
     #endregion Properties
 
@@ -80,6 +80,11 @@ public abstract class Skill : MonoBehaviour
     {
         this.character = character;
         this.attackController = attackController;
+
+        foreach (Skill skill in skillStat.CancelList)
+        {
+            CancelList.Add(skill.SkillCode);
+        }
     }
 
     public virtual bool CheckCanUseSkill(Skill activeSkill = null)
