@@ -18,6 +18,8 @@ public partial class SwiftDemonSlash_FireKnight
         {
             this.stateController = stateController;
 
+            skillHash = Animator.StringToHash(AnimatorKey.Character.FireKnight.SLASH_COMBO);
+
             preDelay = 11f / 18f;
         }
 
