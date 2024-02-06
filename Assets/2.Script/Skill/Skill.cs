@@ -87,7 +87,7 @@ public abstract class Skill : MonoBehaviour
         }
     }
 
-    public virtual bool CheckCanUseSkill(Skill activeSkill = null)
+    public virtual bool CheckCanUseSkill(Skill activeSkill)
     {
         return true;
     }

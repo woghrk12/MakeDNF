@@ -30,9 +30,17 @@ public partial class SwiftDemonSlash_FireKnight : Skill
         stateList.Add(new Finish(character, this));
     }
 
-    public override bool CheckCanUseSkill(Skill activeSkill = null)
+    public override bool CheckCanUseSkill(Skill activeSkill)
     {
-        return character.CanAttack && !character.IsJump && (activeSkill == null || CancelList.Contains(activeSkill));
+        if (!character.CanAttack) return false;
+
+        if (character.IsJump) return false;
+
+        if (character.CurBehaviourCode == BehaviourCodeList.HIT_BEHAVIOUR_CODE) return false;
+
+        if (activeSkill != null && !CancelList.Contains(activeSkill.SkillCode)) return false;
+
+        return true;
     }
 
     public override void OnStart()

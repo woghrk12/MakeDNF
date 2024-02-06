@@ -60,9 +60,15 @@ public partial class BaseAttack_FireKnight : Skill, IAttackable
         stateList.Add(new Jump(character, this));
     }
 
-    public override bool CheckCanUseSkill(Skill activeSkill = null)
+    public override bool CheckCanUseSkill(Skill activeSkill)
     {
-        return character.IsJump ? !character.DNFRigidbody.IsGround && activeSkill == null : activeSkill == null;
+        if (!character.CanAttack) return false;
+
+        if (character.IsJump && character.DNFRigidbody.IsGround) return false;
+
+        if (character.CurBehaviourCode != BehaviourCodeList.IDLE_BEHAVIOUR_CODE) return false;
+
+        return true;
     }
 
     public override void OnStart()

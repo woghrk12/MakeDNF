@@ -34,6 +34,8 @@ public class Character : BehaviourController, IDamagable
 
     public DNFRigidbody DNFRigidbody => dnfRigidbody;
 
+    public int CurBehaviourCode => curBehaviour.BehaviourCode;
+
     /// <summary>
     /// A flag variable indicating whether the character is allowed to move.
     /// </summary>
