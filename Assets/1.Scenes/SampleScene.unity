@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 178524051}
   - component: {fileID: 178524053}
   - component: {fileID: 178524052}
+  - component: {fileID: 178524054}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -275,6 +276,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3853bc98249b3004aa7c2adb01d0933c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &178524054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178524049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 152d2249234dca74eb69c9157e4e0f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityScale: 1
+  drag: 0.2
 --- !u!1 &185508065
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,10 +581,12 @@ GameObject:
   - component: {fileID: 470650998}
   - component: {fileID: 470650997}
   - component: {fileID: 470650996}
+  - component: {fileID: 470651002}
   - component: {fileID: 470650995}
   - component: {fileID: 470650994}
   - component: {fileID: 470651000}
   - component: {fileID: 470650993}
+  - component: {fileID: 470651001}
   - component: {fileID: 470650992}
   m_Layer: 0
   m_Name: FireKnight
@@ -590,6 +607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d78066816551342a01f86864664bf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attacker: {fileID: 178524053}
 --- !u!114 &470650993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,6 +722,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpPower: 8
+--- !u!114 &470651001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470650991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5424cb1d17b58d14da4234a89c8bbe68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &470651002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470650991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add4c21ad3853494895ead04007e7029, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitboxes:
+  - hitboxType: 0
+    size: {x: 0.6899595, y: 1.8466489, z: 0.76680714}
+    offset: {x: 0, y: 0, z: 0}
+    pivot: {x: 0.5, y: 0, z: 0.5}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1299,6 +1346,7 @@ GameObject:
   - component: {fileID: 1205606854}
   - component: {fileID: 1205606853}
   - component: {fileID: 1205606852}
+  - component: {fileID: 1205606855}
   m_Layer: 0
   m_Name: Enemy (1)
   m_TagString: Untagged
@@ -1364,6 +1412,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 860223776}
+--- !u!114 &1205606855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205606850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 152d2249234dca74eb69c9157e4e0f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityScale: 0
+  drag: 0.2
 --- !u!1 &1262114082
 GameObject:
   m_ObjectHideFlags: 0

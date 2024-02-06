@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : BehaviourController
+public class Character : BehaviourController, IDamagable
 {
     #region Variables
 
@@ -21,6 +22,7 @@ public class Character : BehaviourController
     private MoveBehaviour moveBehaviour = null;
     private JumpBehaviour jumpBehaviour = null;
     private AttackBehaviour attackBehaviour = null;
+    private HitBehaviour hitBehaviour = null;
 
     #endregion Variables
 
@@ -75,6 +77,19 @@ public class Character : BehaviourController
 
     #endregion Properties
 
+    #region IDamagable Implementation
+
+    public HitboxController DamageHitboxController { set; get; }
+
+    public void OnDamage(DNFTransform attacker, List<int> damages, float knockBackPower, Vector3 knockBackDirection)
+    {
+        curBehaviour.OnCancel();
+
+        hitBehaviour.Hit(knockBackPower * 0.2f, knockBackDirection * knockBackPower);
+    }
+
+    #endregion IDamagable Implementation
+
     #region Unity Events
 
     protected virtual void Awake()
@@ -88,9 +103,14 @@ public class Character : BehaviourController
         moveBehaviour = GetComponent<MoveBehaviour>();
         jumpBehaviour = GetComponent<JumpBehaviour>();
         attackBehaviour = GetComponent<AttackBehaviour>();
+        hitBehaviour = GetComponent<HitBehaviour>();
 
         behaviourDictionary.Add(BehaviourCodeList.IDLE_BEHAVIOUR_CODE, idleBehaviour);
         behaviourDictionary.Add(BehaviourCodeList.ATTACK_BEHAVIOUR_CODE, attackBehaviour);
+        behaviourDictionary.Add(BehaviourCodeList.HIT_BEHAVIOUR_CODE, hitBehaviour);
+
+        DamageHitboxController = GetComponent<HitboxController>();
+        DamageHitboxController.Init(dnfTransform);
 
         curBehaviour = idleBehaviour;
     }
@@ -123,11 +143,15 @@ public class Character : BehaviourController
         CanLookBack = true;
         CanJump = true;
         CanAttack = true;
+
+        DamageHitboxController.EnableHitbox(0);
     }
 
     protected virtual void Update()
     {
         curBehaviour.OnUpdate();
+
+        DamageHitboxController.CalculateHitbox();
     }
 
     protected virtual void FixedUpdate()

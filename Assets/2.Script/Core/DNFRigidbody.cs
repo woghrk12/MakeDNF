@@ -27,7 +27,11 @@ public class DNFRigidbody : MonoBehaviour
     /// <summary>
     /// Linear velocity of the DNFRigidbody in units per second.
     /// </summary>
-    public Vector3 Velocity => velocity;
+    public Vector3 Velocity
+    {
+        set { velocity = value; }
+        get => velocity;
+    }
 
     #endregion Properties
 

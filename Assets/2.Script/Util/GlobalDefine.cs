@@ -30,8 +30,8 @@ public class ResourcePath
 public class BehaviourCodeList
 {
     public static readonly int IDLE_BEHAVIOUR_CODE = typeof(IdleBehaviour).GetHashCode();
-    public static readonly int JUMP_BEHAVIOUR_CODE = typeof(JumpBehaviour).GetHashCode();
     public static readonly int ATTACK_BEHAVIOUR_CODE = typeof(AttackBehaviour).GetHashCode();
+    public static readonly int HIT_BEHAVIOUR_CODE = typeof(HitBehaviour).GetHashCode();
 }
 
 public enum EKeyName { NONE = -1, BASEATTACK, JUMP, SKILL1, SKILL2, SKILL3, SKILL4, INVENTORY, SKILL, STATUS }
