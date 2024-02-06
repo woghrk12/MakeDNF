@@ -16,8 +16,7 @@ public partial class Crescent_FireKnight
         private FollowingVFX slashEffect = null;
 
         private bool isDash = false;
-        private float dashRange = 20f;
-        private float curDashDistance = 0f;
+        private float dashSpeed = 20f;
         private Vector3 dashDirection = Vector3.zero;
 
         #endregion Variables
@@ -44,7 +43,6 @@ public partial class Crescent_FireKnight
 
             isDash = false;
             dashDirection = Vector3.zero;
-            curDashDistance = 0f;
 
             phase = EStatePhase.PREDELAY;
 
@@ -146,13 +144,15 @@ public partial class Crescent_FireKnight
         {
             if (!isDash) return;
             if (phase == EStatePhase.NONE || phase == EStatePhase.PREDELAY || phase == EStatePhase.STOPMOTION) return;
+
+            AnimatorStateInfo animatorStateInfo = character.Animator.GetCurrentAnimatorStateInfo(0);
             
-            float curDashPower = EaseHelper.EaseOutQuart(1f, 0f, curDashDistance / dashRange);
-            Vector3 dashDirection = Time.fixedDeltaTime * curDashPower * 10f * this.dashDirection;
-
+            if (!animatorStateInfo.IsName("Crescent")) return;
+            
+            float dashRatio = EaseHelper.EaseInSine(1f, 0f, animatorStateInfo.normalizedTime);
+            Vector3 dashDirection = Time.fixedDeltaTime * dashRatio * dashSpeed * this.dashDirection;
+            Debug.Log(dashRatio);
             character.DNFRigidbody.MoveDirection(dashDirection);
-
-            curDashDistance += dashDirection.x > 0f ? dashDirection.x : -dashDirection.x;
         }
 
         public override void OnLateUpdate()
