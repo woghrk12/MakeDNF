@@ -151,7 +151,7 @@ public partial class Crescent_FireKnight
             
             float dashRatio = EaseHelper.EaseInSine(1f, 0f, animatorStateInfo.normalizedTime);
             Vector3 dashDirection = Time.fixedDeltaTime * dashRatio * dashSpeed * this.dashDirection;
-            Debug.Log(dashRatio);
+            
             character.DNFRigidbody.MoveDirection(dashDirection);
         }
 
