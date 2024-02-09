@@ -58,31 +58,49 @@ public class InputManager
         }
     }
 
+    /// <summary>
+    /// Register the delegate method to call when the player moves the joystick.
+    /// </summary>
     public void AddMovementDelegate(PlayerJoystick.InputDirection movementDelegate)
     {
         playerJoystick.InputDirectionDelegate += movementDelegate;
     }
 
+    /// <summary>
+    /// Unregister the delegate method to call when the player moves the joystick.
+    /// </summary>
     public void RemoveMovementDelegate(PlayerJoystick.InputDirection movementDelegate)
     {
         playerJoystick.InputDirectionDelegate -= movementDelegate;
     }
 
+    /// <summary>
+    /// Register the delegate method to call when the player press the button.
+    /// </summary>
     public void AddButtonDownDelegate(EKeyName keyName, PlayerButton.ButtonDown buttonDownDelegate)
     {
         playerButtonDictionary[keyName].ButtonDownDelegate += buttonDownDelegate;
     }
 
+    /// <summary>
+    /// Unregister the delegate method to call when the player press the button.
+    /// </summary>
     public void RemoveButtonDownDelegate(EKeyName keyName, PlayerButton.ButtonDown buttonDownDelegate)
     {
         playerButtonDictionary[keyName].ButtonDownDelegate -= buttonDownDelegate;
     }
 
+    /// <summary>
+    /// Register the delegate method to call when the player release the button.
+    /// </summary>
     public void AddButtonUpDelegate(EKeyName keyName, PlayerButton.ButtonUp buttonUpDelegate)
     {
         playerButtonDictionary[keyName].ButtonUpDelegate += buttonUpDelegate;
     }
 
+    /// <summary>
+    /// Unregister the delegate method to call when the player release the button.
+    /// </summary>
     public void RemoveButtonUpDelegate(EKeyName keyName, PlayerButton.ButtonUp buttonUpDelegate)
     {
         playerButtonDictionary[keyName].ButtonUpDelegate -= buttonUpDelegate;

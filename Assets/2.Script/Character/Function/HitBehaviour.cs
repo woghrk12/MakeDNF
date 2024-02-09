@@ -1,13 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The generic behaviour class when the character is hit.
+/// </summary>
 public class HitBehaviour : GenericBehaviour<Character>
 {
+    /// <summary>
+    /// The enum for player hit state.
+    /// <para>
+    /// STIFFNESS : The state where the character pauses briefly upon being hit. 
+    /// DURATION : The state for the hit animation and knock back effect.
+    /// </para>
+    /// </summary>
     private enum EState { NONE = -1, STIFFNESS, DURATION }
 
     #region Variables
 
+    [Header("Variables for hit stiffness effect")]
     private EState state = EState.NONE;
     private float hitStiffnessTime = 0.08f;
     private float hitDuration = 0f;
@@ -37,6 +46,13 @@ public class HitBehaviour : GenericBehaviour<Character>
 
     #region Methods
 
+    /// <summary>
+    /// Transition the character into a hit state.
+    /// During the hit duration, the character cannot move or jump, and only skills available in the hit state can be used.
+    /// The knockBackVector parameter includes the knockback force, so that knockBackVector will be Vector3.zero if there is no knockback effect.
+    /// </summary>
+    /// <param name="hitDuration">The time it takes for the character to return to the Idle state after being hit</param>
+    /// <param name="knockBackVector">The direction for knock back effect</param>
     public void Hit(float hitDuration, Vector3 knockBackVector)
     {
         this.hitDuration = hitDuration;

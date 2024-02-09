@@ -8,7 +8,14 @@ public partial class BaseAttack_FireKnight
 
         private BaseAttack_FireKnight stateController = null;
 
+        /// <summary>
+        /// The flag indicating whether to continuously use the basic attack.
+        /// </summary>
         private bool isContinue = false;
+        
+        /// <summary>
+        /// The flag indicating whether to block player's key input.
+        /// </summary>
         private bool isBlockKey = true;
 
         #endregion Variables

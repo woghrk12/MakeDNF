@@ -7,13 +7,16 @@ public class ObjectPoolTool : EditorWindow
 
     private static readonly string enumName = "EObjectPoolList";
 
+    [Header("Database variable")]
     private static ObjectPoolData objectPoolData = null;
 
+    [Header("Variables for selecting and modifying data")]
     private static int selection = -1;
     private static ObjectPoolClip selectedClip = null;
     private static bool isClipDirty = false;
     private static bool isDataDirty = false;
 
+    [Header("Position variables for scrolling the area")]
     private Vector2 listScrollPos = Vector2.zero;
     private Vector2 settingScrollPos = Vector2.zero;
 
@@ -57,6 +60,10 @@ public class ObjectPoolTool : EditorWindow
         GetWindow<ObjectPoolTool>(false, "Object Pool Tool").Show();
     }
 
+    /// <summary>
+    /// Load the object pool database from the Assets folder.
+    /// If the database does not exist, create a new database and save it.
+    /// </summary>
     private static void LoadData()
     {
         if (objectPoolData == null)
@@ -91,6 +98,9 @@ public class ObjectPoolTool : EditorWindow
         isDataDirty = false;
     }
 
+    /// <summary>
+    /// Save the object pool database at the specified path and write an Enum file.
+    /// </summary>
     private static void SaveData()
     {
         ObjectPoolData savedData = AssetDatabase.LoadAssetAtPath<ObjectPoolData>(FilePath.OBJECT_POOL_DATA_PATH);
@@ -119,6 +129,10 @@ public class ObjectPoolTool : EditorWindow
 
     #region Layer
 
+    /// <summary>
+    /// Display the top layer of the ObjectPool tool editor.
+    /// This layer includes buttons for adding or removing data at the top of the editor.
+    /// </summary>
     private void DisplayTopLayer()
     {
         EditorGUILayout.BeginHorizontal();
@@ -179,6 +193,11 @@ public class ObjectPoolTool : EditorWindow
         EditorGUILayout.EndHorizontal();
     }
 
+    /// <summary>
+    /// Display the list layer of the ObjectPool tool editor.
+    /// This layer includes the list of elements currently present in the database.
+    /// Allow the user to click on an element to display a layer for editing the element.
+    /// </summary>
     private void DisplayListLayer()
     {
         EditorGUILayout.BeginVertical(GUILayout.Width(EditorHelper.UI_WIDTH_MIDDLE));
@@ -214,6 +233,11 @@ public class ObjectPoolTool : EditorWindow
         EditorGUILayout.EndVertical();
     }
 
+    /// <summary>
+    /// Display the info layer of the ObjectPool tool editor.
+    /// When users select an element in the list layer, this layer displays information about the selected data.
+    /// Users can also edit the data from this layer.
+    /// </summary>
     private void DisplayInfoLayer()
     {
         EditorGUILayout.BeginVertical();
@@ -259,6 +283,10 @@ public class ObjectPoolTool : EditorWindow
         EditorGUILayout.EndVertical();
     }
 
+    /// <summary>
+    /// Display the bottom layer of the ObjectPool tool editor.
+    /// This layer incldues buttons for reloading or saving the database at the bottom of the editor.
+    /// </summary>
     private void DisplayBottomLayer()
     {
         EditorGUILayout.BeginHorizontal();

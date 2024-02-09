@@ -6,7 +6,10 @@ public partial class SwiftDemonSlash_FireKnight : Skill
 
     #region Variables
 
-    private int numCombo = 12;
+    /// <summary>
+    /// The number of slash attacks.
+    /// </summary>
+    private int numSlash = 12;
 
     #endregion Variables
 

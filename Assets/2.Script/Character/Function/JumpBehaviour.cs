@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// The generic behaviour class when the character jumps.
+/// JumpBehaviour is not overriden by other actions, and is only controlled through a flag variables.
+/// </summary>
 public class JumpBehaviour : GenericBehaviour<Character>
 {
     private enum EPhase { NONE = -1, PREDELAY, JUMPUP, JUMPDOWN, POSTDELAY }

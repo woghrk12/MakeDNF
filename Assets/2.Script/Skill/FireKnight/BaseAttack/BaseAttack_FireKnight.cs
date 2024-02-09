@@ -7,6 +7,9 @@ public partial class BaseAttack_FireKnight : Skill, IAttackable
 
     #region Variables
 
+    /// <summary>
+    /// The list of objects hit after the skill is activated.
+    /// </summary>
     private List<IDamagable> alreadyHitObjects = new();
 
     #endregion Variables

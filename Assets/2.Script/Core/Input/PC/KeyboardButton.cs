@@ -12,7 +12,7 @@ public class KeyboardButton : PlayerButton
 
     protected override void Update()
     {
-        SetButtonState();
+        HandleInputFlag();
 
         base.Update();
     }
@@ -21,7 +21,10 @@ public class KeyboardButton : PlayerButton
 
     #region Methods
 
-    private void SetButtonState()
+    /// <summary>
+    /// Handle the flag variable based on the player's button input status.
+    /// </summary>
+    private void HandleInputFlag()
     {
         if (Input.GetKeyDown(keyCode))
         {

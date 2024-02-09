@@ -6,6 +6,7 @@ public class ScreenButton : PlayerButton, IPointerDownHandler, IDragHandler, IPo
 {
     #region Variables
 
+    [Header("Components to control the user input")]
     private Image buttonImage = null;
     private RectTransform buttonTransform = null;
 
@@ -34,18 +35,18 @@ public class ScreenButton : PlayerButton, IPointerDownHandler, IDragHandler, IPo
 
     #region Interface Implements
 
-    #region IPointerDownHandler
-
+    /// <summary>
+    /// The event method called when the player press the button.
+    /// </summary>
     public void OnPointerDown(PointerEventData eventData)
     {
         isPressed = true;
         buttonImage.color = pressedColor;
     }
 
-    #endregion IPointerDownHandler
-
-    #region IDragHandler
-
+    /// <summary>
+    /// The event method called when the player is holding down the button.
+    /// </summary>
     public void OnDrag(PointerEventData eventData)
     {
         if (!isPressed) return;
@@ -69,17 +70,14 @@ public class ScreenButton : PlayerButton, IPointerDownHandler, IDragHandler, IPo
         }
     }
 
-    #endregion IDragHandler
-
-    #region IPointerUpHandler
-
+    /// <summary>
+    /// The event method called when the player release the button.
+    /// </summary>
     public void OnPointerUp(PointerEventData eventData)
     {
         isPressed = false;
         buttonImage.color = normalColor;
     }
-
-    #endregion IPointerUpHandler
 
     #endregion Interface Implements
 }

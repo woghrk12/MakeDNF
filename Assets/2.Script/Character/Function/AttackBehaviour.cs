@@ -1,16 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The generic behaviour class when the character performs a base attack or uses a skill.
+/// </summary>
 public class AttackBehaviour : GenericBehaviour<Character>
 {
     #region Variables
 
+    /// <summary>
+    /// The dictionary for using the skills registered to key slot.
+    /// Key : the name of key the user will input.
+    /// Value : the skill registered to the key slot.
+    /// </summary>
     private Dictionary<EKeyName, Skill> registeredSkillDictionary = new();
 
     [Header("Animation key hash")]
     private int isAttackHash = 0;
     private int endAttackHash = 0;
 
+    /// <summary>
+    /// The skill currently being used (activated) by the character.
+    /// </summary>
     private Skill curSkill = null;
 
     #endregion Variables
@@ -147,6 +158,10 @@ public class AttackBehaviour : GenericBehaviour<Character>
 
     #region Events
 
+    /// <summary>
+    /// The event method called when the player press the skill button.
+    /// </summary>
+    /// <param name="keyName">The name of the button which the player press</param>
     public void OnSkillButtonPressed(EKeyName keyName)
     {
         if (!registeredSkillDictionary.ContainsKey(keyName)) return;
@@ -154,6 +169,10 @@ public class AttackBehaviour : GenericBehaviour<Character>
         registeredSkillDictionary[keyName].OnSkillButtonPressed();
     }
 
+    /// <summary>
+    /// The event method called when the player release the skill button.
+    /// </summary>
+    /// <param name="keyName">The name of the button which the player release</param>
     public void OnSkillButtonReleased(EKeyName keyName)
     {
         if (!registeredSkillDictionary.ContainsKey(keyName)) return;

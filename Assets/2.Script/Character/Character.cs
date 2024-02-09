@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,12 +27,24 @@ public class Character : BehaviourController, IDamagable
 
     #region Properties
 
+    /// <summary>
+    /// The animator component of the character.
+    /// </summary>
     public Animator Animator => animator;
 
+    /// <summary>
+    /// The DNFTransform component of the character.
+    /// </summary>
     public DNFTransform DNFTransform => dnfTransform;
 
+    /// <summary>
+    /// The DNFRigidbody component of the character.
+    /// </summary>
     public DNFRigidbody DNFRigidbody => dnfRigidbody;
 
+    /// <summary>
+    /// The current behaviour code of the character.
+    /// </summary>
     public int CurBehaviourCode => curBehaviour.BehaviourCode;
 
     /// <summary>
@@ -194,6 +205,10 @@ public class Character : BehaviourController, IDamagable
 
     #region Event
 
+    /// <summary>
+    /// The event method called when the player control the joystick.
+    /// </summary>
+    /// <param name="direction">The direction vector received through the joystick</param>
     public void OnJoystickMoved(Vector3 direction)
     {
         if (!CanMove) return;
@@ -201,6 +216,9 @@ public class Character : BehaviourController, IDamagable
         moveBehaviour.Move(direction);
     }
 
+    /// <summary>
+    /// The event method called when the player press the jump button.
+    /// </summary>
     public void OnJumpButtonPressed()
     {
         if (!CanJump) return;
@@ -208,6 +226,9 @@ public class Character : BehaviourController, IDamagable
         jumpBehaviour.Jump();
     }
 
+    /// <summary>
+    /// The event method called when the player press the base attack button.
+    /// </summary>
     public void OnAttackButtonPressed()
     {
         attackBehaviour.OnSkillButtonPressed(EKeyName.BASEATTACK);
@@ -218,11 +239,18 @@ public class Character : BehaviourController, IDamagable
         attackBehaviour.Attack(EKeyName.BASEATTACK);
     }
 
+    /// <summary>
+    /// The event method called when the player release the base attack button.
+    /// </summary>
     public void OnAttackButtonReleased()
     {
         attackBehaviour.OnSkillButtonReleased(EKeyName.BASEATTACK);
     }
 
+    /// <summary>
+    /// The event method called when the player press the skill button.
+    /// </summary>
+    /// <param name="keyName">The name of skill button</param>
     public void OnSkillButtonPressed(EKeyName keyName)
     {
         attackBehaviour.OnSkillButtonPressed(keyName);
@@ -233,6 +261,10 @@ public class Character : BehaviourController, IDamagable
         attackBehaviour.Attack(keyName);
     }
 
+    /// <summary>
+    /// The event method called when the player release the skill button.
+    /// </summary>
+    /// <param name="keyName">The name of skill button</param>
     public void OnSkillButtonReleased(EKeyName keyName)
     {
         attackBehaviour.OnSkillButtonReleased(keyName);

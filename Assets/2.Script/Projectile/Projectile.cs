@@ -25,7 +25,7 @@ public abstract class Projectile : MonoBehaviour
     #region Properties
 
     /// <summary>
-    /// The index of the object pool to return the gameObject.
+    /// A index indicating which queue of the object pool the object will be returned to.
     /// </summary>
     protected abstract EObjectPoolList ObjectPoolIndex { get; }
 

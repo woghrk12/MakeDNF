@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class ProjectileState
@@ -34,10 +32,30 @@ public abstract class ProjectileState
 
     #region Methods
 
+    /// <summary>
+    /// The event method called when the projectile state is activated.
+    /// It serves as an entry point for any logics that need to occur at the beginning.
+    /// </summary>
     public virtual void OnStart() { }
+
+    /// <summary>
+    /// The event method called every frame update.
+    /// </summary>
     public virtual void OnUpdate() { }
+
+    /// <summary>
+    /// The event method called every fixed frame update.
+    /// </summary>
     public virtual void OnFixedUpdate() { }
+
+    /// <summary>
+    /// The event method called after every update method has been executed.
+    /// </summary>
     public virtual void OnLateUpdate() { }
+
+    /// <summary>
+    /// The event method called when the projectile state is completed.
+    /// </summary>
     public virtual void OnComplete() { }
 
     #endregion Methods

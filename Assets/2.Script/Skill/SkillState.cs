@@ -55,14 +55,45 @@ public abstract class SkillState
 
     #region Methods
 
+    /// <summary>
+    /// The event method called when the skill state is activated.
+    /// It serves as an entry point for any logics that need to occur at the beginning.
+    /// </summary>
     public virtual void OnStart() { }
+
+    /// <summary>
+    /// The event method called every frame update.
+    /// </summary>
     public virtual void OnUpdate() { }
+
+    /// <summary>
+    /// The event method called every fixed frame update.
+    /// </summary>
     public virtual void OnFixedUpdate() { }
+
+    /// <summary>
+    /// The event method called after every update method has been executed.
+    /// </summary>
     public virtual void OnLateUpdate() { }
+
+    /// <summary>
+    /// The event method called when the skill state is completed.
+    /// </summary>
     public virtual void OnComplete() { }
+
+    /// <summary>
+    /// The event method called when the skill is canceled by another skill.
+    /// </summary>
     public virtual void OnCancel() { }
 
+    /// <summary>
+    /// The event method called when the player press the button associated with the skill.
+    /// </summary>
     public virtual void OnSkillButtonPressed() { }
+
+    /// <summary>
+    /// The event method called when the player release the button associated with the skill.
+    /// </summary>
     public virtual void OnSkillButtonReleased() { }
 
     #endregion Methods

@@ -86,16 +86,25 @@ public class ScreenJoystick : PlayerJoystick, IPointerDownHandler, IDragHandler,
 
     #region Interface Implements
 
+    /// <summary>
+    /// The event method called when the player press the joystick.
+    /// </summary>
     public void OnPointerDown(PointerEventData eventData)
     {
         ControlHandle(eventData.position);
     }
 
+    /// <summary>
+    /// The event method called when the player is holding down the joystick.
+    /// </summary>
     public void OnDrag(PointerEventData eventData)
     {
         ControlHandle(eventData.position);
     }
 
+    /// <summary>
+    /// The event method called when the player release the joystick.
+    /// </summary>
     public void OnPointerUp(PointerEventData eventData)
     {
         inputDir = Vector3.zero;

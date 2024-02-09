@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public partial class SwiftDemonSlash_FireKnight
@@ -10,7 +8,10 @@ public partial class SwiftDemonSlash_FireKnight
 
         private SwiftDemonSlash_FireKnight stateController = null;
 
-        private int curCombo = 0;
+        /// <summary>
+        /// The number of slash attacks performed so far.
+        /// </summary>
+        private int curSlash = 0;
 
         #endregion Variables
 
@@ -34,7 +35,7 @@ public partial class SwiftDemonSlash_FireKnight
             character.CanMove = false;
             character.CanJump = false;
 
-            curCombo = 0;
+            curSlash = 0;
 
             phase = EStatePhase.PREDELAY;
         }
@@ -46,9 +47,9 @@ public partial class SwiftDemonSlash_FireKnight
             switch (phase)
             {
                 case EStatePhase.PREDELAY:
-                    if (!animatorStateInfo.IsName("SlashCombo_" + (curCombo % 2).ToString())) return;
+                    if (!animatorStateInfo.IsName("SlashCombo_" + (curSlash % 2).ToString())) return;
 
-                    switch (curCombo % 4)
+                    switch (curSlash % 4)
                     {
                         case 0:
                             GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Slash_3_FireKnight).GetComponent<Projectile>().Activate(character.DNFTransform);
@@ -67,7 +68,7 @@ public partial class SwiftDemonSlash_FireKnight
                             break;
                     }
 
-                    curCombo++;
+                    curSlash++;
 
                     phase = EStatePhase.MOTIONINPROGRESS;
 
@@ -76,7 +77,7 @@ public partial class SwiftDemonSlash_FireKnight
                 case EStatePhase.MOTIONINPROGRESS:
                     if (animatorStateInfo.normalizedTime < 1f) return;
                     
-                    if (curCombo < stateController.numCombo)
+                    if (curSlash < stateController.numSlash)
                     {
                         character.Animator.SetBool(continueHash, true);
                         character.Animator.SetTrigger(skillHash);

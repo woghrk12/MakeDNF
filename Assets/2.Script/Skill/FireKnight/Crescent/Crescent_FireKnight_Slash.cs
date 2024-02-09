@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Crescent_FireKnight
@@ -13,8 +11,10 @@ public partial class Crescent_FireKnight
         private Crescent_FireKnight stateController = null;
 
         private EHitboxState hitboxState = EHitboxState.NONE;
+        
         private FollowingVFX slashEffect = null;
 
+        [Header("Variables for dash during the skill")]
         private bool isDash = false;
         private float dashSpeed = 20f;
         private Vector3 dashDirection = Vector3.zero;
@@ -208,6 +208,10 @@ public partial class Crescent_FireKnight
 
         #endregion Override
 
+        /// <summary>
+        /// The event method called when the player control the joystick during the skill.
+        /// </summary>
+        /// <param name="direction">The direction vector received through the joystick</param>
         public void OnJoystickMoved(Vector3 direction)
         {
             if (phase == EStatePhase.PREDELAY)

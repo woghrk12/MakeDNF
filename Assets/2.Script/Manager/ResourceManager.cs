@@ -19,6 +19,9 @@ public class ResourceManager
 
     #region Methods
 
+    /// <summary>
+    /// Initialize the resource manager class by preloading the database from the asset folder.
+    /// </summary>
     public void Init()
     {
         effectData = Load<EffectData>(ResourcePath.EFFECT_DATA);
@@ -36,11 +39,22 @@ public class ResourceManager
         }
     }
 
+    /// <summary>
+    /// Load the object of the given type existing in the path.
+    /// </summary>
+    /// <param name="path">The path from the asset folder</param>
+    /// <returns>The loaded object</returns>
     public T Load<T>(string path) where T : Object
     {
         return Resources.Load<T>(path);
     }
 
+    /// <summary>
+    /// Instantiate the object existing in the path.
+    /// </summary>
+    /// <param name="path">The path from the asset folder</param>
+    /// <param name="parent">The parent transform of the instantiated object</param>
+    /// <returns>The gameobject object instantiated in the scene</returns>
     public GameObject Instantiate(string path, Transform parent = null)
     {
         GameObject source = Load<GameObject>(path);

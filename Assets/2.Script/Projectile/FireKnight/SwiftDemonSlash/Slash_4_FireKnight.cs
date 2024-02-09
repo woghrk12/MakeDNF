@@ -7,6 +7,9 @@ public partial class Slash_4_FireKnight : Projectile, IAttackable
 
     #region Variables
 
+    /// <summary>
+    /// The list of objects hit after the projectile is activated.
+    /// </summary>
     private List<IDamagable> alreadyHitObjects = new();
 
     #endregion Variables

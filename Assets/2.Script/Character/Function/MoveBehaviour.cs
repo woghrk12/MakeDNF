@@ -1,6 +1,9 @@
-using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// The generic behaviour class when the character moves.
+/// MoveBehaviour is not overriden by other actions, and is only controlled through a flag variables.
+/// </summary>
 public class MoveBehaviour : GenericBehaviour<Character>
 {
     #region Variables

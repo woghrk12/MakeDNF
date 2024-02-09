@@ -72,7 +72,7 @@ public partial class Slash_2_FireKnight
 
             if (stateController.CalculateOnHit(GameManager.Room.Monsters))
             { 
-                // Spawn hit effect
+                // TODO : Spawn hit effect
             }
         }
 

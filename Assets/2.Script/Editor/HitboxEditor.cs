@@ -64,8 +64,7 @@ public class HitboxEditor : Editor
 
     private void OnSceneGUI()
     {
-        // Display all hitboxes in the scene when in play mode
-        if (Application.isPlaying)
+        if (Application.isPlaying) // Display all hitboxes in the scene when in play mode
         {
             foreach (HitboxController controller in hitboxControllerList)
             {
@@ -87,8 +86,7 @@ public class HitboxEditor : Editor
                 DrawHitbox(activeHitbox.HitboxType, position, offset, size, pivot, localScale, activeHitbox.DNFTransform.IsLeft);
             }
         }
-        // Edit the selected hitbox when not in play mode
-        else
+        else // Edit the selected hitbox when not in play mode
         {
             DrawGUI();
 

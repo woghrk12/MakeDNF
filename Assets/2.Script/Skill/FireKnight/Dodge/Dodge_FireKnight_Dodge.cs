@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Dodge_FireKnight
@@ -10,6 +8,7 @@ public partial class Dodge_FireKnight
 
         private Dodge_FireKnight stateController = null;
 
+        [Header("Variables for dodge dash during the skill")]
         private float dodgeSpeed = 15f;
         private Vector3 dodgeDirection = Vector3.zero;
 
