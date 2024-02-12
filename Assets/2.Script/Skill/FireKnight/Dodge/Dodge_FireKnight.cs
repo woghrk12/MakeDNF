@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public partial class Dodge_FireKnight : Skill
+public partial class Dodge_FireKnight : ActiveSkill
 {
     private enum EState { NONE = -1, DODGE }
 

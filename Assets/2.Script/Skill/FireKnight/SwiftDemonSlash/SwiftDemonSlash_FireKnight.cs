@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public partial class SwiftDemonSlash_FireKnight : Skill
+public partial class SwiftDemonSlash_FireKnight : ActiveSkill
 {
     private enum EState { NONE = -1, COMBO, FINISH }
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class BaseAttack_FireKnight : Skill, IAttackable
+public partial class BaseAttack_FireKnight : ActiveSkill, IAttackable
 {
     private enum EState { NONE = -1, FIRST, SECOND, THIRD, JUMP }
 

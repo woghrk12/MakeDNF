@@ -13,7 +13,7 @@ public class AttackBehaviour : GenericBehaviour<Character>
     /// Key : the name of key the user will input.
     /// Value : the skill registered to the key slot.
     /// </summary>
-    private Dictionary<EKeyName, Skill> registeredSkillDictionary = new();
+    private Dictionary<EKeyName, ActiveSkill> registeredSkillDictionary = new();
 
     [Header("Animation key hash")]
     private int isAttackHash = 0;
@@ -22,7 +22,7 @@ public class AttackBehaviour : GenericBehaviour<Character>
     /// <summary>
     /// The skill currently being used (activated) by the character.
     /// </summary>
-    private Skill curSkill = null;
+    private ActiveSkill curSkill = null;
 
     #endregion Variables
 
@@ -58,7 +58,7 @@ public class AttackBehaviour : GenericBehaviour<Character>
     /// </summary>
     /// <param name="keyName">The key to register the skill</param>
     /// <param name="skill">The skill to register to the key</param>
-    public void RegisterSkill(EKeyName keyName, Skill skill)
+    public void RegisterSkill(EKeyName keyName, ActiveSkill skill)
     {
         switch (keyName)
         {
