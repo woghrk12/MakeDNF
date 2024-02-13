@@ -84,8 +84,9 @@ public abstract class Projectile : MonoBehaviour
     /// Activates the projectile, initiating its travel and behaviour.
     /// </summary>
     /// <param name="subjectTransform">The DNF transform of the object that created the projectile</param>
+    /// <param name="targetTransform">The DNF transform of the target object</param>
     /// <param name="sizeEff">The size ratio of the projectile</param>
-    public abstract void Activate(DNFTransform subjectTransform, float sizeEff = 1f);
+    public abstract void Activate(DNFTransform subjectTransform, DNFTransform targetTransform = null, float sizeEff = 1f);
 
     /// <summary>
     /// Clears the projectile, marking it as completed and preparing for potential recycling.

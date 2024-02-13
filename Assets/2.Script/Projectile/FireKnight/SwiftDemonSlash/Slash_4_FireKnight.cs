@@ -67,7 +67,7 @@ public partial class Slash_4_FireKnight : Projectile, IAttackable
 
     #region Override
 
-    public override void Activate(DNFTransform subjectTransform, float sizeEff = 1)
+    public override void Activate(DNFTransform subjectTransform, DNFTransform targetTransform = null, float sizeEff = 1f)
     {
         AttackDNFTransform = subjectTransform;
 
