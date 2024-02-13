@@ -33,7 +33,7 @@ public partial class BaseAttack_FireKnight : ActiveSkill, IAttackable
         foreach (IDamagable target in targets)
         {
             if (alreadyHitObjects.Contains(target)) continue;
-            if (AttackHitboxController.CheckCollision(target.DefenseHitboxController)) ;
+            if (AttackHitboxController.CheckCollision(target.DefenseHitboxController))
             {
                 target.OnDamage(character.DNFTransform, null, 3f, character.DNFTransform.IsLeft ? Vector3.left : Vector3.right);
                 character.AttackEvent?.Invoke(target.DefenseDNFTransform);
