@@ -141,10 +141,11 @@ public class Character : BehaviourController, IDamagable
     {
         // Debug
         Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
-        attackBehaviour.RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<BaseAttack_FireKnight>());
-        attackBehaviour.RegisterSkill(EKeyName.SKILL1, FindObjectOfType<SwiftDemonSlash_FireKnight>());
-        attackBehaviour.RegisterSkill(EKeyName.SKILL2, FindObjectOfType<Crescent_FireKnight>());
-        attackBehaviour.RegisterSkill(EKeyName.SKILL3, FindObjectOfType<Dodge_FireKnight>());
+        // Debug : Register the active skills
+        attackBehaviour.RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<FireKnightSkill.BaseAttack>());
+        attackBehaviour.RegisterSkill(EKeyName.SKILL1, FindObjectOfType<FireKnightSkill.SwiftDemonSlash>());
+        attackBehaviour.RegisterSkill(EKeyName.SKILL2, FindObjectOfType<FireKnightSkill.Crescent>());
+        attackBehaviour.RegisterSkill(EKeyName.SKILL3, FindObjectOfType<FireKnightSkill.Dodge>());
 
         GameManager.Input.AddMovementDelegate(OnJoystickMoved);
 
