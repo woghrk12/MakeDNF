@@ -10,6 +10,9 @@ public abstract class Projectile : MonoBehaviour
     protected DNFTransform dnfTransform = null;
     protected DNFRigidbody dnfRigidbody = null;
 
+    /// <summary>
+    /// The DNFTransform component that create the projectile.
+    /// </summary>
     protected DNFTransform spawnerTransform = null;
 
     /// <summary>
