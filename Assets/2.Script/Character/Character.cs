@@ -141,11 +141,17 @@ public class Character : BehaviourController, IDamagable
     {
         // Debug
         Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
+        
         // Debug : Register the active skills
         attackBehaviour.RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<FireKnightSkill.BaseAttack>());
         attackBehaviour.RegisterSkill(EKeyName.SKILL1, FindObjectOfType<FireKnightSkill.SwiftDemonSlash>());
         attackBehaviour.RegisterSkill(EKeyName.SKILL2, FindObjectOfType<FireKnightSkill.Crescent>());
         attackBehaviour.RegisterSkill(EKeyName.SKILL3, FindObjectOfType<FireKnightSkill.Dodge>());
+
+        // Debug : Register the passive skills
+        PassiveSkill magicSwordMedley = FindObjectOfType<FireKnightSkill.MagicSwordMedley>();
+        magicSwordMedley.Init(this);
+        magicSwordMedley.ApplySkillEffects();
 
         GameManager.Input.AddMovementDelegate(OnJoystickMoved);
 
