@@ -36,7 +36,10 @@ public partial class Crescent_FireKnight : ActiveSkill, IAttackable
             if (AttackHitboxController.CheckCollision(target.DefenseHitboxController))
             {
                 target.OnDamage(character.DNFTransform, null, 3f, character.DNFTransform.IsLeft ? Vector3.left : Vector3.right);
+                character.AttackEvent?.Invoke(target.DefenseDNFTransform);
+
                 alreadyHitObjects.Add(target);
+                
                 count++;
             }
         }

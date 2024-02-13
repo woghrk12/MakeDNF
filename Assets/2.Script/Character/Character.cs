@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -87,6 +88,11 @@ public class Character : BehaviourController, IDamagable
         set { attackBehaviour.CanAttack = value; }
         get => attackBehaviour.CanAttack;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Action<DNFTransform> AttackEvent { set; get; }
 
     #endregion Properties
 

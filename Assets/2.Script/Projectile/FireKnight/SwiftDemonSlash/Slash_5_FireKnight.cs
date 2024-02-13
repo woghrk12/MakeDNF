@@ -36,7 +36,10 @@ public partial class Slash_5_FireKnight : Projectile, IAttackable
             if (AttackHitboxController.CheckCollision(target.DefenseHitboxController))
             {
                 target.OnDamage(AttackDNFTransform, null, 0f, Vector3.zero);
+                spawnerTransform.GetComponent<Character>().AttackEvent?.Invoke(target.DefenseDNFTransform);
+
                 alreadyHitObjects.Add(target);
+                
                 count++;
             }
         }
