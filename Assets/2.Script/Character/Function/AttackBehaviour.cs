@@ -76,7 +76,7 @@ public class AttackBehaviour : GenericBehaviour<Character>
                     registeredSkillDictionary.Add(keyName, skill);
                 }
 
-                skill.Init(controller as Character, this);
+                skill.Init(controller, this);
                 break;
 
             default:
