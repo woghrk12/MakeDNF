@@ -22,6 +22,8 @@ public partial class BaseAttack_FireKnight : ActiveSkill, IAttackable
 
     #region IAttackable Implementation
 
+    public DNFTransform AttackDNFTransform { set; get; }
+
     public HitboxController AttackHitboxController { set; get; }
 
     public bool CalculateOnHit(List<IDamagable> targets)
@@ -31,7 +33,7 @@ public partial class BaseAttack_FireKnight : ActiveSkill, IAttackable
         foreach (IDamagable target in targets)
         {
             if (alreadyHitObjects.Contains(target)) continue;
-            if (AttackHitboxController.CheckCollision(target.DamageHitboxController))
+            if (AttackHitboxController.CheckCollision(target.DefenseHitboxController)) ;
             {
                 target.OnDamage(character.DNFTransform, null, 3f, character.DNFTransform.IsLeft ? Vector3.left : Vector3.right);
                 alreadyHitObjects.Add(target);
@@ -52,8 +54,9 @@ public partial class BaseAttack_FireKnight : ActiveSkill, IAttackable
     {
         base.Init(character, attackController);
 
+        AttackDNFTransform = character.DNFTransform;
         AttackHitboxController = GetComponent<HitboxController>();
-        AttackHitboxController.Init(character.DNFTransform);
+        AttackHitboxController.Init(AttackDNFTransform);
 
         skillHash = Animator.StringToHash(AnimatorKey.Character.BASE_ATTACK);
         

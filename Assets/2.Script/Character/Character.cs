@@ -92,7 +92,9 @@ public class Character : BehaviourController, IDamagable
 
     #region IDamagable Implementation
 
-    public HitboxController DamageHitboxController { set; get; }
+    public DNFTransform DefenseDNFTransform { set; get; }
+
+    public HitboxController DefenseHitboxController { set; get; }
 
     public void OnDamage(DNFTransform attacker, List<int> damages, float knockBackPower, Vector3 knockBackDirection)
     {
@@ -122,8 +124,9 @@ public class Character : BehaviourController, IDamagable
         behaviourDictionary.Add(BehaviourCodeList.ATTACK_BEHAVIOUR_CODE, attackBehaviour);
         behaviourDictionary.Add(BehaviourCodeList.HIT_BEHAVIOUR_CODE, hitBehaviour);
 
-        DamageHitboxController = GetComponent<HitboxController>();
-        DamageHitboxController.Init(dnfTransform);
+        DefenseDNFTransform = dnfTransform;
+        DefenseHitboxController = GetComponent<HitboxController>();
+        DefenseHitboxController.Init(dnfTransform);
 
         curBehaviour = idleBehaviour;
     }
@@ -158,14 +161,14 @@ public class Character : BehaviourController, IDamagable
         CanJump = true;
         CanAttack = true;
 
-        DamageHitboxController.EnableHitbox(0);
+        DefenseHitboxController.EnableHitbox(0);
     }
 
     protected virtual void Update()
     {
         curBehaviour.OnUpdate();
 
-        DamageHitboxController.CalculateHitbox();
+        DefenseHitboxController.CalculateHitbox();
     }
 
     protected virtual void FixedUpdate()

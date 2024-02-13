@@ -4,8 +4,16 @@ using UnityEngine;
 
 public enum EHitboxType { BOX, CIRCLE }
 
+/// <summary>
+/// Interface representing an subject capable of performing attacks.
+/// </summary>
 public interface IAttackable
 {
+    /// <summary>
+    /// DNFTransform component of the attacking subject.
+    /// </summary>
+    public DNFTransform AttackDNFTransform { set;  get; }
+
     /// <summary>
     /// Hitbox controller component for representing the attack range.
     /// </summary>
@@ -19,12 +27,20 @@ public interface IAttackable
     public bool CalculateOnHit(List<IDamagable> targets);
 }
 
+/// <summary>
+/// Interface representing an object capable of receiving damage.
+/// </summary>
 public interface IDamagable
 {
     /// <summary>
+    /// DNFTransform component of the defending object.
+    /// </summary>
+    public DNFTransform DefenseDNFTransform { set;  get; }
+
+    /// <summary>
     /// Hitbox controller component used to check whether the object has been hit.
     /// </summary>
-    public HitboxController DamageHitboxController { set; get; }
+    public HitboxController DefenseHitboxController { set; get; }
 
     /// <summary>
     /// The event method called when the object is hit.

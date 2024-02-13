@@ -22,6 +22,8 @@ public partial class Slash_2_FireKnight : Projectile, IAttackable
 
     #region IAttackable Implementation
 
+    public DNFTransform AttackDNFTransform { set; get; }
+
     public HitboxController AttackHitboxController { set; get;}
 
     public bool CalculateOnHit(List<IDamagable> targets)
@@ -31,9 +33,9 @@ public partial class Slash_2_FireKnight : Projectile, IAttackable
         foreach (IDamagable target in targets)
         {
             if (alreadyHitObjects.Contains(target)) continue;
-            if (AttackHitboxController.CheckCollision(target.DamageHitboxController))
+            if (AttackHitboxController.CheckCollision(target.DefenseHitboxController))
             {
-                target.OnDamage(spawnerTransform, null, 5f, dnfTransform.IsLeft ? Vector3.left : Vector3.right);
+                target.OnDamage(AttackDNFTransform, null, 5f, dnfTransform.IsLeft ? Vector3.left : Vector3.right);
                 alreadyHitObjects.Add(target);
                 count++;
             }
@@ -64,11 +66,11 @@ public partial class Slash_2_FireKnight : Projectile, IAttackable
 
     public override void Activate(DNFTransform subjectTransform, float sizeEff = 1)
     {
-        spawnerTransform = subjectTransform;
+        AttackDNFTransform = subjectTransform;
 
         // Set projectile transform
-        dnfTransform.Position = subjectTransform.Position;
-        dnfTransform.IsLeft = subjectTransform.IsLeft;
+        dnfTransform.Position = AttackDNFTransform.Position;
+        dnfTransform.IsLeft = AttackDNFTransform.IsLeft;
         dnfTransform.LocalScale = sizeEff;
 
         AttackHitboxController.CalculateHitbox();
