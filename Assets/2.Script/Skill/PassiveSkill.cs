@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public abstract class PassiveSkill : Skill
 {
     #region Variables
@@ -29,6 +25,11 @@ public abstract class PassiveSkill : Skill
     /// Apply the effects of acquiring a passive skill to the character.
     /// </summary>
     public abstract void ApplySkillEffects();
+
+    /// <summary>
+    /// Remove the effects of a passive skill from the character.
+    /// </summary>
+    public abstract void RemoveSkillEffects();
 
     #endregion Methods
 }
