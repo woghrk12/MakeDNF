@@ -8,7 +8,6 @@ public abstract class Projectile : MonoBehaviour
     protected Animator animator = null;
 
     protected DNFTransform dnfTransform = null;
-    protected DNFRigidbody dnfRigidbody = null;
 
     /// <summary>
     /// The DNFTransform component that create the projectile.
@@ -41,7 +40,6 @@ public abstract class Projectile : MonoBehaviour
         animator = GetComponent<Animator>();
 
         dnfTransform = GetComponent<DNFTransform>();
-        dnfRigidbody = GetComponent<DNFRigidbody>();
     }
 
     private void Update()
