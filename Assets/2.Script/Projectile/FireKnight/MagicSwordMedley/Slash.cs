@@ -43,7 +43,7 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
                 if (AttackHitboxController.CheckCollision(target.DefenseHitboxController))
                 {
                     target.OnDamage(AttackDNFTransform, null, 0f, Vector3.zero);
-                    spawnerTransform.GetComponent<Character>().AttackEvent?.Invoke(target.DefenseDNFTransform);
+                    spawnerTransform.GetComponent<Character>().AttackEvent?.Invoke(target.DefenseDNFTransform, EAttackType.SKILL);
 
                     alreadyHitObjects.Add(target);
 
