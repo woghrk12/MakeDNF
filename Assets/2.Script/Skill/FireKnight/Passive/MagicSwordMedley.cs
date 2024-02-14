@@ -34,7 +34,7 @@ namespace FireKnightSkill
 
         public override void ApplySkillEffects()
         {
-            cooldownTimer = 0f;
+            cooldownTimer = cooldown;
 
             character.AttackEvent += SpawnProjectile;
         }
@@ -48,11 +48,18 @@ namespace FireKnightSkill
 
         public void SpawnProjectile(DNFTransform target, EAttackType attackType)
         {
-            if (cooldownTimer < cooldown) return;
+            if (attackType == EAttackType.BASEATTACK)
+            {
+                GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.MagicSwordMedley_Slash).GetComponent<Projectile>().Activate(character.DNFTransform, target);
+            }
+            else if (attackType == EAttackType.SKILL)
+            {
+                if (cooldownTimer < cooldown) return;
 
-            GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.MagicSwordMedley_Slash).GetComponent<Projectile>().Activate(character.DNFTransform, target);
+                GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.MagicSwordMedley_Meteor).GetComponent<Projectile>().Activate(character.DNFTransform, target);
 
-            cooldownTimer = 0f;
+                cooldownTimer = 0f;
+            }
         }
 
         #endregion Methods
