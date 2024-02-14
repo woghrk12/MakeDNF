@@ -92,7 +92,7 @@ public class Character : BehaviourController, IDamagable
     /// <summary>
     /// 
     /// </summary>
-    public Action<DNFTransform> AttackEvent { set; get; }
+    public Action<DNFTransform, EAttackType> AttackEvent { set; get; }
 
     #endregion Properties
 

@@ -38,7 +38,7 @@ namespace FireKnightSkill
                 if (AttackHitboxController.CheckCollision(target.DefenseHitboxController))
                 {
                     target.OnDamage(character.DNFTransform, null, 3f, character.DNFTransform.IsLeft ? Vector3.left : Vector3.right);
-                    character.AttackEvent?.Invoke(target.DefenseDNFTransform);
+                    character.AttackEvent?.Invoke(target.DefenseDNFTransform, EAttackType.SKILL);
 
                     alreadyHitObjects.Add(target);
 

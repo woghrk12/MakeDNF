@@ -35,3 +35,4 @@ public class BehaviourCodeList
 }
 
 public enum EKeyName { NONE = -1, BASEATTACK, JUMP, SKILL1, SKILL2, SKILL3, SKILL4, INVENTORY, SKILL, STATUS }
+public enum EAttackType { NONE = -1, BASEATTACK, SKILL }

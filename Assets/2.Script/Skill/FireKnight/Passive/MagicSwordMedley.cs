@@ -46,7 +46,7 @@ namespace FireKnightSkill
 
         #endregion Override
 
-        public void SpawnProjectile(DNFTransform target)
+        public void SpawnProjectile(DNFTransform target, EAttackType attackType)
         {
             if (cooldownTimer < cooldown) return;
 
