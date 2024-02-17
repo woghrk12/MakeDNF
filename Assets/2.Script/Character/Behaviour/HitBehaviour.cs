@@ -1,9 +1,9 @@
 using UnityEngine;
 
 /// <summary>
-/// The generic behaviour class when the character is hit.
+/// The behaviour class when the character is hit.
 /// </summary>
-public class HitBehaviour : GenericBehaviour<Character>
+public class HitBehaviour : CharacterBehaviour
 {
     /// <summary>
     /// The enum for player hit state.
@@ -35,8 +35,6 @@ public class HitBehaviour : GenericBehaviour<Character>
     {
         base.Awake();
 
-        controller = GetComponent<Character>();
-
         normalSpeedHash = Animator.StringToHash(AnimatorKey.Character.NORMAL_SPEED);
         doHitHash = Animator.StringToHash(AnimatorKey.Character.DO_HIT);
         isHitHash = Animator.StringToHash(AnimatorKey.Character.IS_HIT);
@@ -57,24 +55,24 @@ public class HitBehaviour : GenericBehaviour<Character>
     {
         this.hitDuration = hitDuration;
 
-        controller.DNFRigidbody.Velocity = Vector3.zero;
-        controller.DNFRigidbody.AddForce(knockBackVector);
+        character.DNFRigidbody.Velocity = Vector3.zero;
+        character.DNFRigidbody.AddForce(knockBackVector);
 
-        controller.SetBehaviour(behaviourCode);
+        character.SetBehaviour(behaviourCode);
     }
 
     public override void OnStart()
     {
         timer = 0f;
 
-        controller.CanMove = false;
-        controller.CanJump = false;
+        character.CanMove = false;
+        character.CanJump = false;
 
-        controller.Animator.SetTrigger(doHitHash);
-        controller.Animator.SetBool(isHitHash, true);
-        controller.Animator.SetFloat(normalSpeedHash, 0f);
+        character.Animator.SetTrigger(doHitHash);
+        character.Animator.SetBool(isHitHash, true);
+        character.Animator.SetFloat(normalSpeedHash, 0f);
 
-        controller.DNFRigidbody.enabled = false;
+        character.DNFRigidbody.enabled = false;
 
         state = EState.STIFFNESS;
     }
@@ -90,8 +88,8 @@ public class HitBehaviour : GenericBehaviour<Character>
 
                 timer = 0f;
 
-                controller.DNFRigidbody.enabled = true;
-                controller.Animator.SetFloat(normalSpeedHash, 1f);
+                character.DNFRigidbody.enabled = true;
+                character.Animator.SetFloat(normalSpeedHash, 1f);
 
                 state = EState.DURATION;
 
@@ -108,21 +106,21 @@ public class HitBehaviour : GenericBehaviour<Character>
 
     public override void OnComplete()
     {
-        controller.CanMove = true;
-        controller.CanJump = true;
+        character.CanMove = true;
+        character.CanJump = true;
 
-        controller.Animator.SetBool(isHitHash, false);
-        controller.Animator.SetFloat(normalSpeedHash, 1f);
+        character.Animator.SetBool(isHitHash, false);
+        character.Animator.SetFloat(normalSpeedHash, 1f);
 
-        controller.SetBehaviour(BehaviourCodeList.IDLE_BEHAVIOUR_CODE);
+        character.SetBehaviour(BehaviourCodeList.IDLE_BEHAVIOUR_CODE);
     }
 
     public override void OnCancel()
     {
-        controller.DNFRigidbody.enabled = true;
+        character.DNFRigidbody.enabled = true;
 
-        controller.Animator.SetBool(isHitHash, false);
-        controller.Animator.SetFloat(normalSpeedHash, 1f);
+        character.Animator.SetBool(isHitHash, false);
+        character.Animator.SetFloat(normalSpeedHash, 1f);
     }
 
     #endregion Methods

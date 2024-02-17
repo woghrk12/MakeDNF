@@ -1,10 +1,9 @@
 using UnityEngine;
 
 /// <summary>
-/// The generic behaviour class when the character jumps.
-/// JumpBehaviour is not overriden by other actions, and is only controlled through a flag variables.
+/// The behaviour class when the character jumps.
 /// </summary>
-public class JumpBehaviour : GenericBehaviour<Character>
+public class JumpBehaviour : CharacterBehaviour
 {
     private enum EPhase { NONE = -1, PREDELAY, JUMPUP, JUMPDOWN, POSTDELAY }
 
@@ -43,8 +42,6 @@ public class JumpBehaviour : GenericBehaviour<Character>
     {
         base.Awake();
 
-        controller = GetComponent<Character>();
-
         isJumpHash = Animator.StringToHash(AnimatorKey.Character.IS_JUMP);
         isJumpUpHash = Animator.StringToHash(AnimatorKey.Character.IS_JUMP_UP);
         isJumpDownHash = Animator.StringToHash(AnimatorKey.Character.IS_JUMP_DOWN);
@@ -71,16 +68,16 @@ public class JumpBehaviour : GenericBehaviour<Character>
 
         phase = EPhase.PREDELAY;
 
-        controller.CanMove = false;
+        character.CanMove = false;
 
-        controller.Animator.SetBool(isJumpHash, true);
+        character.Animator.SetBool(isJumpHash, true);
     }
 
     public override void OnFixedUpdate()
     {
         if (phase == EPhase.NONE) return;
 
-        AnimatorStateInfo animatorStateInfo = controller.Animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo animatorStateInfo = character.Animator.GetCurrentAnimatorStateInfo(0);
 
         switch (phase)
         {
@@ -88,32 +85,32 @@ public class JumpBehaviour : GenericBehaviour<Character>
                 if (!animatorStateInfo.IsName("JumpUpReady")) return;
                 if (animatorStateInfo.normalizedTime < 1f) return;
 
-                controller.Animator.SetBool(isJumpUpHash, true);
-                
-                controller.DNFRigidbody.AddForce(new Vector3(0f, jumpPower, 0f));
+                character.Animator.SetBool(isJumpUpHash, true);
 
-                controller.CanMove = true;
+                character.DNFRigidbody.AddForce(new Vector3(0f, jumpPower, 0f));
+
+                character.CanMove = true;
 
                 phase = EPhase.JUMPUP;
 
                 break;
 
             case EPhase.JUMPUP:
-                if (controller.DNFRigidbody.Velocity.y > 0f) return;
+                if (character.DNFRigidbody.Velocity.y > 0f) return;
 
-                controller.Animator.SetBool(isJumpUpHash, false);
-                controller.Animator.SetBool(isJumpDownHash, true);
+                character.Animator.SetBool(isJumpUpHash, false);
+                character.Animator.SetBool(isJumpDownHash, true);
 
                 phase = EPhase.JUMPDOWN;
 
                 break;
 
             case EPhase.JUMPDOWN:
-                if (!controller.DNFRigidbody.IsGround) return;
+                if (!character.DNFRigidbody.IsGround) return;
 
-                controller.Animator.SetBool(isJumpDownHash, false);
+                character.Animator.SetBool(isJumpDownHash, false);
 
-                controller.CanMove = false;
+                character.CanMove = false;
 
                 phase = EPhase.POSTDELAY;
 
@@ -133,12 +130,12 @@ public class JumpBehaviour : GenericBehaviour<Character>
     {
         phase = EPhase.NONE;
 
-        controller.Animator.SetBool(isJumpHash, false);
-        controller.Animator.SetBool(isJumpUpHash, false);
-        controller.Animator.SetBool(isJumpDownHash, false);
+        character.Animator.SetBool(isJumpHash, false);
+        character.Animator.SetBool(isJumpUpHash, false);
+        character.Animator.SetBool(isJumpDownHash, false);
 
-        controller.CanMove = true;
-        controller.CanLookBack = true;
+        character.CanMove = true;
+        character.CanLookBack = true;
 
         CanJump = true;
     }

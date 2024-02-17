@@ -1,10 +1,9 @@
 using UnityEngine;
 
 /// <summary>
-/// The generic behaviour class when the character moves.
-/// MoveBehaviour is not overriden by other actions, and is only controlled through a flag variables.
+/// The behaviour class when the character moves.
 /// </summary>
-public class MoveBehaviour : GenericBehaviour<Character>
+public class MoveBehaviour : CharacterBehaviour
 {
     #region Variables
 
@@ -37,8 +36,6 @@ public class MoveBehaviour : GenericBehaviour<Character>
     {
         base.Awake();
 
-        controller = GetComponent<Character>();
-
         isWalkHash = Animator.StringToHash(AnimatorKey.Character.IS_WALK);
     }
 
@@ -53,17 +50,17 @@ public class MoveBehaviour : GenericBehaviour<Character>
     /// <param name="moveDir">The direction to move character</param>
     public void Move(Vector3 moveDir)
     {
-        controller.Animator.SetBool(isWalkHash, moveDir != Vector3.zero);
+        character.Animator.SetBool(isWalkHash, moveDir != Vector3.zero);
 
         moveDir.x *= xMoveSpeed * Time.fixedDeltaTime;
         moveDir.z *= zMoveSpeed * Time.fixedDeltaTime;
 
         if (CanLookBack && moveDir.x != 0f)
         {
-            controller.DNFTransform.IsLeft = moveDir.x < 0f;
+            character.DNFTransform.IsLeft = moveDir.x < 0f;
         }
 
-        controller.DNFRigidbody.MoveDirection(moveDir);
+        character.DNFRigidbody.MoveDirection(moveDir);
     }
 
     #endregion Methods

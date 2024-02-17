@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// The generic behaviour class when the character performs a base attack or uses a skill.
+/// The behaviour class when the character performs a base attack or uses a skill.
 /// </summary>
-public class AttackBehaviour : GenericBehaviour<Character>
+public class AttackBehaviour : CharacterBehaviour
 {
     #region Variables
 
@@ -41,8 +41,6 @@ public class AttackBehaviour : GenericBehaviour<Character>
     {
         base.Awake();
 
-        controller = GetComponent<Character>();
-
         isAttackHash = Animator.StringToHash(AnimatorKey.Character.IS_ATTACK);
         endAttackHash = Animator.StringToHash(AnimatorKey.Character.END_ATTACK);
     }
@@ -76,7 +74,7 @@ public class AttackBehaviour : GenericBehaviour<Character>
                     registeredSkillDictionary.Add(keyName, skill);
                 }
 
-                skill.Init(controller, this);
+                skill.Init(character, this);
                 break;
 
             default:
@@ -105,14 +103,14 @@ public class AttackBehaviour : GenericBehaviour<Character>
 
         curSkill = registeredSkillDictionary[keyName];
 
-        controller.SetBehaviour(behaviourCode);
+        character.SetBehaviour(behaviourCode);
     }
 
     #region Override
 
     public override void OnStart()
     {
-        controller.Animator.SetBool(isAttackHash, true);
+        character.Animator.SetBool(isAttackHash, true);
 
         curSkill.OnStart();
     }
@@ -134,18 +132,18 @@ public class AttackBehaviour : GenericBehaviour<Character>
 
     public override void OnComplete()
     {
-        controller.Animator.SetBool(isAttackHash, false);
-        controller.Animator.SetTrigger(endAttackHash);
+        character.Animator.SetBool(isAttackHash, false);
+        character.Animator.SetTrigger(endAttackHash);
 
         curSkill = null;
 
-        controller.SetBehaviour(BehaviourCodeList.IDLE_BEHAVIOUR_CODE);
+        character.SetBehaviour(BehaviourCodeList.IDLE_BEHAVIOUR_CODE);
     }
 
     public override void OnCancel()
     {
-        controller.Animator.SetBool(isAttackHash, false);
-        controller.Animator.SetTrigger(endAttackHash);
+        character.Animator.SetBool(isAttackHash, false);
+        character.Animator.SetTrigger(endAttackHash);
 
         if (curSkill != null)
         {

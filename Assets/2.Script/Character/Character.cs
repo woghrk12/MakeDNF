@@ -2,13 +2,16 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : BehaviourController, IDamagable
+/// <summary>
+/// The class of state machine controller for character.
+/// </summary>
+public class Character : MonoBehaviour, IDamagable
 {
     #region Variables
 
     [Header("Variables for controller's behaviour")]
-    private Dictionary<int, GenericBehaviour<Character>> behaviourDictionary = new();
-    private GenericBehaviour<Character> curBehaviour = null;
+    private Dictionary<int, CharacterBehaviour> behaviourDictionary = new();
+    private CharacterBehaviour curBehaviour = null;
 
     [Header("Unity components")]
     private Animator animator = null;
@@ -126,19 +129,15 @@ public class Character : BehaviourController, IDamagable
         attackBehaviour = GetComponent<AttackBehaviour>();
         hitBehaviour = GetComponent<HitBehaviour>();
 
-        behaviourDictionary.Add(BehaviourCodeList.IDLE_BEHAVIOUR_CODE, idleBehaviour);
-        behaviourDictionary.Add(BehaviourCodeList.ATTACK_BEHAVIOUR_CODE, attackBehaviour);
-        behaviourDictionary.Add(BehaviourCodeList.HIT_BEHAVIOUR_CODE, hitBehaviour);
-
         DefenseDNFTransform = dnfTransform;
         DefenseHitboxController = GetComponent<HitboxController>();
         DefenseHitboxController.Init(dnfTransform);
-
-        curBehaviour = idleBehaviour;
     }
 
     protected virtual void Start()
     {
+        SetBehaviour(BehaviourCodeList.IDLE_BEHAVIOUR_CODE);
+
         // Debug
         Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
         
@@ -200,24 +199,26 @@ public class Character : BehaviourController, IDamagable
 
     #region Methods
 
-    #region Override
-
     /// <summary>
     /// Set the current behaviour of the character to the received behaviour code.
     /// </summary>
     /// <param name="behaviourCode">The hash code of the behaviour to set</param>
-    public override void SetBehaviour(int behaviourCode)
+    public void SetBehaviour(int behaviourCode)
     {
         if (!behaviourDictionary.ContainsKey(behaviourCode))
         {
-            throw new System.Exception($"There is no behaviour matching the given code. Input : {behaviourCode}");
+            throw new Exception($"There is no behaviour matching the given code. Input : {behaviourCode}");
         }
 
         curBehaviour = behaviourDictionary[behaviourCode];
         curBehaviour.OnStart();
     }
 
-    #endregion Override
+    /// <summary>
+    /// Add behaviour to the behaviour controller.
+    /// </summary>
+    /// <param name="behaviour">Behaviour to be added to the behaviour dictionary</param>
+    public void AddBehaviour(CharacterBehaviour behaviour) => behaviourDictionary.Add(behaviour.BehaviourCode, behaviour);
 
     #region Event
 
