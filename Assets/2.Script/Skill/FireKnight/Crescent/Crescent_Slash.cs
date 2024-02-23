@@ -201,11 +201,16 @@ namespace FireKnightSkill
                     stateController.AttackHitboxController.DisableHitbox();
                 }
 
-                slashEffect.ReturnEffect();
-                slashEffect = null;
+                if (slashEffect != null)
+                {
+                    slashEffect.ReturnEffect();
+                    slashEffect = null;
+                }
 
                 character.Animator.ResetTrigger(skillHash);
                 character.Animator.SetFloat(attackSpeedHash, attackSpeed);
+
+                character.Animator.SetTrigger(cancelHash);
             }
 
             #endregion Override
