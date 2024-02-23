@@ -25,6 +25,11 @@ public class JumpBehaviour : CharacterBehaviour
     #region Properties
 
     /// <summary>
+    /// Hash code value for the jump behaviour.
+    /// </summary>
+    public override int BehaviourCode => typeof(JumpBehaviour).GetHashCode();
+
+    /// <summary>
     /// A flag variable indicating whether the controller is allowed to jump.
     /// </summary>
     public bool CanJump { set; get; }

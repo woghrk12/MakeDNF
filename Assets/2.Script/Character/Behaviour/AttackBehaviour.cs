@@ -29,6 +29,11 @@ public class AttackBehaviour : CharacterBehaviour
     #region Properties
 
     /// <summary>
+    /// Hash code value for the attack behaviour.
+    /// </summary>
+    public override int BehaviourCode => typeof(AttackBehaviour).GetHashCode();
+        
+    /// <summary>
     /// A flag variable indicating whether the controller is allowed to attack.
     /// </summary>
     public bool CanAttack { set; get; }
@@ -40,7 +45,7 @@ public class AttackBehaviour : CharacterBehaviour
     protected override void Awake()
     {
         base.Awake();
-
+        
         isAttackHash = Animator.StringToHash(AnimatorKey.Character.IS_ATTACK);
         endAttackHash = Animator.StringToHash(AnimatorKey.Character.END_ATTACK);
     }
@@ -103,7 +108,7 @@ public class AttackBehaviour : CharacterBehaviour
 
         curSkill = registeredSkillDictionary[keyName];
 
-        character.SetBehaviour(behaviourCode);
+        character.SetBehaviour(BehaviourCode);
     }
 
     #region Override

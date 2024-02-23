@@ -129,6 +129,12 @@ public class Character : MonoBehaviour, IDamagable
         attackBehaviour = GetComponent<AttackBehaviour>();
         hitBehaviour = GetComponent<HitBehaviour>();
 
+        behaviourDictionary.Add(idleBehaviour.BehaviourCode, idleBehaviour);
+        behaviourDictionary.Add(moveBehaviour.BehaviourCode, moveBehaviour);
+        behaviourDictionary.Add(jumpBehaviour.BehaviourCode, jumpBehaviour);
+        behaviourDictionary.Add(attackBehaviour.BehaviourCode, attackBehaviour);
+        behaviourDictionary.Add(hitBehaviour.BehaviourCode, hitBehaviour);
+
         DefenseDNFTransform = dnfTransform;
         DefenseHitboxController = GetComponent<HitboxController>();
         DefenseHitboxController.Init(dnfTransform);
@@ -213,12 +219,6 @@ public class Character : MonoBehaviour, IDamagable
         curBehaviour = behaviourDictionary[behaviourCode];
         curBehaviour.OnStart();
     }
-
-    /// <summary>
-    /// Add behaviour to the behaviour controller.
-    /// </summary>
-    /// <param name="behaviour">Behaviour to be added to the behaviour dictionary</param>
-    public void AddBehaviour(CharacterBehaviour behaviour) => behaviourDictionary.Add(behaviour.BehaviourCode, behaviour);
 
     #region Event
 

@@ -29,6 +29,15 @@ public class HitBehaviour : CharacterBehaviour
 
     #endregion Variables
 
+    #region Properties
+
+    /// <summary>
+    /// Hash code value for the hit behaviour.
+    /// </summary>
+    public override int BehaviourCode => typeof(HitBehaviour).GetHashCode();
+
+    #endregion Properties
+
     #region Unity Events
 
     protected override void Awake()
@@ -58,7 +67,7 @@ public class HitBehaviour : CharacterBehaviour
         character.DNFRigidbody.Velocity = Vector3.zero;
         character.DNFRigidbody.AddForce(knockBackVector);
 
-        character.SetBehaviour(behaviourCode);
+        character.SetBehaviour(BehaviourCode);
     }
 
     public override void OnStart()

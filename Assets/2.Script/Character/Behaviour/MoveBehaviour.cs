@@ -19,6 +19,11 @@ public class MoveBehaviour : CharacterBehaviour
     #region Properties
 
     /// <summary>
+    /// Hash code value for the move behaviour.
+    /// </summary>
+    public override int BehaviourCode => typeof(MoveBehaviour).GetHashCode();
+
+    /// <summary>
     /// A flag variable indicating whether the controller is allowed to move.
     /// </summary>
     public bool CanMove { set; get; }

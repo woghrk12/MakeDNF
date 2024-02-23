@@ -7,8 +7,6 @@ public abstract class CharacterBehaviour : MonoBehaviour
 
     protected Character character = null;
 
-    protected int behaviourCode = 0;
-
     #endregion Variables
 
     #region Properties
@@ -16,7 +14,7 @@ public abstract class CharacterBehaviour : MonoBehaviour
     /// <summary>
     /// Hash code value for the behaviour.
     /// </summary>
-    public int BehaviourCode => behaviourCode;
+    public abstract int BehaviourCode { get; }
 
     #endregion Properties
 
@@ -25,10 +23,6 @@ public abstract class CharacterBehaviour : MonoBehaviour
     protected virtual void Awake()
     {
         character = GetComponent<Character>();
-
-        behaviourCode = GetType().GetHashCode();
-
-        character.AddBehaviour(this);
     }
 
     #endregion Unity Events
