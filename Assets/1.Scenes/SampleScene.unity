@@ -157,7 +157,8 @@ MonoBehaviour:
     Name: 
     NeedMana: 0
     SkillDescription: 
-    CancelList: []
+    CancelList:
+    - {fileID: 271300689}
   CancelList: 
 --- !u!114 &67677946
 MonoBehaviour:
@@ -1135,7 +1136,8 @@ MonoBehaviour:
     Name: 
     NeedMana: 0
     SkillDescription: 
-    CancelList: []
+    CancelList:
+    - {fileID: 271300689}
   CancelList: 
 --- !u!4 &943867042
 Transform:
@@ -1782,7 +1784,10 @@ MonoBehaviour:
     Name: 
     NeedMana: 0
     SkillDescription: 
-    CancelList: []
+    CancelList:
+    - {fileID: 943867041}
+    - {fileID: 67677945}
+    - {fileID: 271300689}
   CancelList: 
 --- !u!4 &1948580553
 Transform:
