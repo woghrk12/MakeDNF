@@ -46,7 +46,7 @@ namespace FireKnightSkill
 
         #endregion Override
 
-        public void SpawnProjectile(DNFTransform target, EAttackType attackType)
+        private void SpawnProjectile(DNFTransform target, EAttackType attackType)
         {
             if (attackType == EAttackType.BASEATTACK)
             {
