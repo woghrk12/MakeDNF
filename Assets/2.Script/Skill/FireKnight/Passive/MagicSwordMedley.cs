@@ -46,6 +46,11 @@ namespace FireKnightSkill
 
         #endregion Override
 
+        /// <summary>
+        /// Spawn the projectile object based on the given transform.
+        /// </summary>
+        /// <param name="target">The DNF transform component of the target</param>
+        /// <param name="attackType">The type of attack performed by the character</param>
         private void SpawnProjectile(DNFTransform target, EAttackType attackType)
         {
             if (attackType == EAttackType.BASEATTACK)
