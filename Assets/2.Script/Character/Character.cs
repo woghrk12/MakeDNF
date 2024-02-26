@@ -93,7 +93,7 @@ public class Character : MonoBehaviour, IDamagable
     }
 
     /// <summary>
-    /// 
+    /// The event triggered when a character successfully executes an attack.
     /// </summary>
     public Action<DNFTransform, EAttackType> AttackEvent { set; get; }
 
