@@ -29,7 +29,7 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
             public override void OnStart()
             {
-                stateController.alreadyHitObjects.Clear();
+                stateController.AlreadyHitTargets.Clear();
 
                 stateController.AttackerHitboxController.EnableHitbox((int)EState.SHOT);
             }

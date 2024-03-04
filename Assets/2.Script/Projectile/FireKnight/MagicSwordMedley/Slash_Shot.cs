@@ -30,7 +30,7 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
             public override void OnStart()
             {
-                stateController.alreadyHitObjects.Clear();
+                stateController.AlreadyHitTargets.Clear();
 
                 phase = EStatePhase.PREDELAY;
             }

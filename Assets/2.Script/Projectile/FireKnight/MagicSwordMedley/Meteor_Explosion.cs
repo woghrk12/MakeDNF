@@ -37,7 +37,7 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
                 stateController.animator.SetTrigger(stateHash);
 
-                stateController.alreadyHitObjects.Clear();
+                stateController.AlreadyHitTargets.Clear();
 
                 stateController.AttackerHitboxController.EnableHitbox((int)EState.EXPLOSION);
             }

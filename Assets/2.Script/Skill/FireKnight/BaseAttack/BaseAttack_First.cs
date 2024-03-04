@@ -51,7 +51,7 @@ namespace FireKnightSkill
 
                 phase = EStatePhase.PREDELAY;
 
-                stateController.alreadyHitObjects.Clear();
+                stateController.AlreadyHitTargets.Clear();
 
                 attackSpeed = character.Animator.GetFloat(attackSpeedHash);
             }

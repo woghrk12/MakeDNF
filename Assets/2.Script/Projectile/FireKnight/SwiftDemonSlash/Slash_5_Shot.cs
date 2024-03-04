@@ -30,7 +30,7 @@ namespace FireKnightSkill.SwiftDemonSlashProjectile
 
             public override void OnStart()
             {
-                stateController.alreadyHitObjects.Clear();
+                stateController.AlreadyHitTargets.Clear();
 
                 phase = EStatePhase.PREDELAY;
             }

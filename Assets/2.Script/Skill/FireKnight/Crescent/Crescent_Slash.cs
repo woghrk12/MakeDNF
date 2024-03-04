@@ -48,7 +48,7 @@ namespace FireKnightSkill
 
                 phase = EStatePhase.PREDELAY;
 
-                stateController.alreadyHitObjects.Clear();
+                stateController.AlreadyHitTargets.Clear();
 
                 attackSpeed = character.Animator.GetFloat(attackSpeedHash);
 
@@ -89,7 +89,7 @@ namespace FireKnightSkill
                                 hitboxState = EHitboxState.SECOND;
                                 stateController.AttackerHitboxController.EnableHitbox((int)EHitboxState.SECOND);
 
-                                stateController.alreadyHitObjects.Clear();
+                                stateController.AlreadyHitTargets.Clear();
 
                                 return;
 
@@ -99,7 +99,7 @@ namespace FireKnightSkill
                                 hitboxState = EHitboxState.THIRD;
                                 stateController.AttackerHitboxController.EnableHitbox((int)EHitboxState.THIRD);
 
-                                stateController.alreadyHitObjects.Clear();
+                                stateController.AlreadyHitTargets.Clear();
 
                                 return;
 

@@ -11,11 +11,6 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
         private DNFRigidbody dnfRigidbody = null;
 
-        /// <summary>
-        /// The list of objects hit after the projectile is activated.
-        /// </summary>
-        private List<IDamagable> alreadyHitObjects = new();
-
         [SerializeField] private float speed = 0f;
         private Vector3 moveDirection = Vector3.zero;
 
@@ -33,19 +28,21 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
         public HitboxController AttackerHitboxController { set; get; }
 
+        public List<IDamagable> AlreadyHitTargets { set; get; }
+
         public bool CalculateOnHit(List<IDamagable> targets)
         {
             int count = 0;
 
             foreach (IDamagable target in targets)
             {
-                if (alreadyHitObjects.Contains(target)) continue;
+                if (AlreadyHitTargets.Contains(target)) continue;
                 if (AttackerHitboxController.CheckCollision(target.DefenderHitboxController))
                 {
                     target.OnDamage(AttackerDNFTransform, null, 0f, Vector3.zero);
                     spawnerTransform.GetComponent<Character>().AttackEvent?.Invoke(target.DefenderDNFTransform, EAttackType.ADDITIONAL);
 
-                    alreadyHitObjects.Add(target);
+                    AlreadyHitTargets.Add(target);
 
                     count++;
                 }
@@ -66,6 +63,7 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
             AttackerHitboxController = GetComponent<HitboxController>();
             AttackerHitboxController.Init(dnfTransform);
+            AlreadyHitTargets = new List<IDamagable>();
 
             stateList.Add(new Shot(this));
             stateList.Add(new Explosion(this));

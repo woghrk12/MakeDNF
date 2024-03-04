@@ -7,15 +7,6 @@ namespace FireKnightSkill
     {
         private enum EState { NONE = -1, FIRST, SECOND, THIRD, JUMP }
 
-        #region Variables
-
-        /// <summary>
-        /// The list of objects hit after the skill is activated.
-        /// </summary>
-        private List<IDamagable> alreadyHitObjects = new();
-
-        #endregion Variables
-
         #region Properties
 
         public override int SkillCode => typeof(BaseAttack).GetHashCode();
@@ -28,19 +19,21 @@ namespace FireKnightSkill
 
         public HitboxController AttackerHitboxController { set; get; }
 
+        public List<IDamagable> AlreadyHitTargets { set; get; }
+
         public bool CalculateOnHit(List<IDamagable> targets)
         {
             int count = 0;
 
             foreach (IDamagable target in targets)
             {
-                if (alreadyHitObjects.Contains(target)) continue;
+                if (AlreadyHitTargets.Contains(target)) continue;
                 if (AttackerHitboxController.CheckCollision(target.DefenderHitboxController))
                 {
                     target.OnDamage(character.DNFTransform, null, 3f, character.DNFTransform.IsLeft ? Vector3.left : Vector3.right);
                     character.AttackEvent?.Invoke(target.DefenderDNFTransform, EAttackType.BASEATTACK);
 
-                    alreadyHitObjects.Add(target);
+                    AlreadyHitTargets.Add(target);
 
                     count++;
                 }
@@ -62,6 +55,7 @@ namespace FireKnightSkill
             AttackerDNFTransform = character.DNFTransform;
             AttackerHitboxController = GetComponent<HitboxController>();
             AttackerHitboxController.Init(AttackerDNFTransform);
+            AlreadyHitTargets = new List<IDamagable>();
 
             skillHash = Animator.StringToHash(AnimatorKey.Character.BASE_ATTACK);
 

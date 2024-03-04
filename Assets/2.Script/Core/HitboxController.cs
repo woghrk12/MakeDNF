@@ -20,6 +20,11 @@ public interface IAttackable
     public HitboxController AttackerHitboxController{ set; get; }
     
     /// <summary>
+    /// The list of targets hit after the attacker hitbox is activated.
+    /// </summary>
+    public List<IDamagable> AlreadyHitTargets { set; get; }
+
+    /// <summary>
     /// Check if the targets' hitbox is within the attack range.
     /// </summary>
     /// <param name="targets">The list of objects that can be hit</param>
