@@ -31,7 +31,7 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
             {
                 stateController.alreadyHitObjects.Clear();
 
-                stateController.AttackHitboxController.EnableHitbox((int)EState.SHOT);
+                stateController.AttackerHitboxController.EnableHitbox((int)EState.SHOT);
             }
 
             public override void OnFixedUpdate()
@@ -46,7 +46,7 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
             public override void OnLateUpdate()
             {
-                stateController.AttackHitboxController.CalculateHitbox();
+                stateController.AttackerHitboxController.CalculateHitbox();
 
                 if (stateController.CalculateOnHit(GameManager.Room.Monsters))
                 {

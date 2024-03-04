@@ -39,7 +39,7 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
                 stateController.alreadyHitObjects.Clear();
 
-                stateController.AttackHitboxController.EnableHitbox((int)EState.EXPLOSION);
+                stateController.AttackerHitboxController.EnableHitbox((int)EState.EXPLOSION);
             }
 
             public override void OnUpdate()
@@ -54,7 +54,7 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
             public override void OnLateUpdate()
             {
-                stateController.AttackHitboxController.CalculateHitbox();
+                stateController.AttackerHitboxController.CalculateHitbox();
 
                 if (stateController.CalculateOnHit(GameManager.Room.Monsters))
                 {

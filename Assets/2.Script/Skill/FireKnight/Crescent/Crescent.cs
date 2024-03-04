@@ -24,9 +24,9 @@ namespace FireKnightSkill
 
         #region IAttackable Implementation
 
-        public DNFTransform AttackDNFTransform { set; get; }
+        public DNFTransform AttackerDNFTransform { set; get; }
 
-        public HitboxController AttackHitboxController { set; get; }
+        public HitboxController AttackerHitboxController { set; get; }
 
         public bool CalculateOnHit(List<IDamagable> targets)
         {
@@ -35,10 +35,10 @@ namespace FireKnightSkill
             foreach (IDamagable target in targets)
             {
                 if (alreadyHitObjects.Contains(target)) continue;
-                if (AttackHitboxController.CheckCollision(target.DefenseHitboxController))
+                if (AttackerHitboxController.CheckCollision(target.DefenderHitboxController))
                 {
                     target.OnDamage(character.DNFTransform, null, 3f, character.DNFTransform.IsLeft ? Vector3.left : Vector3.right);
-                    character.AttackEvent?.Invoke(target.DefenseDNFTransform, EAttackType.SKILL);
+                    character.AttackEvent?.Invoke(target.DefenderDNFTransform, EAttackType.SKILL);
 
                     alreadyHitObjects.Add(target);
 
@@ -59,9 +59,9 @@ namespace FireKnightSkill
         {
             base.Init(character, attackController);
 
-            AttackDNFTransform = character.DNFTransform;
-            AttackHitboxController = GetComponent<HitboxController>();
-            AttackHitboxController.Init(AttackDNFTransform);
+            AttackerDNFTransform = character.DNFTransform;
+            AttackerHitboxController = GetComponent<HitboxController>();
+            AttackerHitboxController.Init(AttackerDNFTransform);
 
             skillHash = Animator.StringToHash(AnimatorKey.Character.FireKnight.CRESCENT);
 

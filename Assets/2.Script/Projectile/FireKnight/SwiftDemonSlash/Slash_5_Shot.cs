@@ -44,7 +44,7 @@ namespace FireKnightSkill.SwiftDemonSlashProjectile
                     case EStatePhase.PREDELAY:
                         if (animatorStateInfo.normalizedTime < preDelay) return;
 
-                        stateController.AttackHitboxController.EnableHitbox((int)EState.SHOT);
+                        stateController.AttackerHitboxController.EnableHitbox((int)EState.SHOT);
 
                         phase = EStatePhase.HITBOXACTIVE;
 
@@ -53,7 +53,7 @@ namespace FireKnightSkill.SwiftDemonSlashProjectile
                     case EStatePhase.HITBOXACTIVE:
                         if (animatorStateInfo.normalizedTime < duration) return;
 
-                        stateController.AttackHitboxController.DisableHitbox();
+                        stateController.AttackerHitboxController.DisableHitbox();
 
                         phase = EStatePhase.MOTIONINPROGRESS;
 
@@ -70,7 +70,7 @@ namespace FireKnightSkill.SwiftDemonSlashProjectile
 
             public override void OnLateUpdate()
             {
-                if (!stateController.AttackHitboxController.IsHitboxActivated) return;
+                if (!stateController.AttackerHitboxController.IsHitboxActivated) return;
 
                 if (stateController.CalculateOnHit(GameManager.Room.Monsters))
                 {

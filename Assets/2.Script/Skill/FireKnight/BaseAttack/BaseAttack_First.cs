@@ -65,7 +65,7 @@ namespace FireKnightSkill
                     case EStatePhase.PREDELAY:
                         if (!animatorStateInfo.IsName("BaseAttack_1")) return;
 
-                        stateController.AttackHitboxController.EnableHitbox((int)EState.FIRST);
+                        stateController.AttackerHitboxController.EnableHitbox((int)EState.FIRST);
 
                         isBlockKey = false;
                         character.Animator.SetBool(continueHash, false);
@@ -75,11 +75,11 @@ namespace FireKnightSkill
                         break;
 
                     case EStatePhase.HITBOXACTIVE:
-                        stateController.AttackHitboxController.CalculateHitbox();
+                        stateController.AttackerHitboxController.CalculateHitbox();
 
                         if (animatorStateInfo.normalizedTime < duration) return;
 
-                        stateController.AttackHitboxController.DisableHitbox();
+                        stateController.AttackerHitboxController.DisableHitbox();
 
                         phase = EStatePhase.MOTIONINPROGRESS;
 
@@ -127,7 +127,7 @@ namespace FireKnightSkill
 
             public override void OnLateUpdate()
             {
-                if (!stateController.AttackHitboxController.IsHitboxActivated) return;
+                if (!stateController.AttackerHitboxController.IsHitboxActivated) return;
 
                 if (stateController.CalculateOnHit(GameManager.Room.Monsters))
                 {
@@ -157,9 +157,9 @@ namespace FireKnightSkill
             {
                 phase = EStatePhase.NONE;
 
-                if (stateController.AttackHitboxController.IsHitboxActivated)
+                if (stateController.AttackerHitboxController.IsHitboxActivated)
                 {
-                    stateController.AttackHitboxController.DisableHitbox();
+                    stateController.AttackerHitboxController.DisableHitbox();
                 }
 
                 character.Animator.ResetTrigger(skillHash);

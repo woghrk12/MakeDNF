@@ -12,12 +12,12 @@ public interface IAttackable
     /// <summary>
     /// DNFTransform component of the attacking subject.
     /// </summary>
-    public DNFTransform AttackDNFTransform { set;  get; }
+    public DNFTransform AttackerDNFTransform { set;  get; }
 
     /// <summary>
     /// Hitbox controller component for representing the attack range.
     /// </summary>
-    public HitboxController AttackHitboxController{ set; get; }
+    public HitboxController AttackerHitboxController{ set; get; }
     
     /// <summary>
     /// Check if the targets' hitbox is within the attack range.
@@ -35,12 +35,12 @@ public interface IDamagable
     /// <summary>
     /// DNFTransform component of the defending object.
     /// </summary>
-    public DNFTransform DefenseDNFTransform { set;  get; }
+    public DNFTransform DefenderDNFTransform { set;  get; }
 
     /// <summary>
     /// Hitbox controller component used to check whether the object has been hit.
     /// </summary>
-    public HitboxController DefenseHitboxController { set; get; }
+    public HitboxController DefenderHitboxController { set; get; }
 
     /// <summary>
     /// The event method called when the object is hit.

@@ -29,9 +29,9 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
         #region IAttackable Implementation
 
-        public DNFTransform AttackDNFTransform { set; get; }
+        public DNFTransform AttackerDNFTransform { set; get; }
 
-        public HitboxController AttackHitboxController { set; get; }
+        public HitboxController AttackerHitboxController { set; get; }
 
         public bool CalculateOnHit(List<IDamagable> targets)
         {
@@ -40,10 +40,10 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
             foreach (IDamagable target in targets)
             {
                 if (alreadyHitObjects.Contains(target)) continue;
-                if (AttackHitboxController.CheckCollision(target.DefenseHitboxController))
+                if (AttackerHitboxController.CheckCollision(target.DefenderHitboxController))
                 {
-                    target.OnDamage(AttackDNFTransform, null, 0f, Vector3.zero);
-                    spawnerTransform.GetComponent<Character>().AttackEvent?.Invoke(target.DefenseDNFTransform, EAttackType.ADDITIONAL);
+                    target.OnDamage(AttackerDNFTransform, null, 0f, Vector3.zero);
+                    spawnerTransform.GetComponent<Character>().AttackEvent?.Invoke(target.DefenderDNFTransform, EAttackType.ADDITIONAL);
 
                     alreadyHitObjects.Add(target);
 
@@ -64,8 +64,8 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
             dnfRigidbody = GetComponent<DNFRigidbody>();
 
-            AttackHitboxController = GetComponent<HitboxController>();
-            AttackHitboxController.Init(dnfTransform);
+            AttackerHitboxController = GetComponent<HitboxController>();
+            AttackerHitboxController.Init(dnfTransform);
 
             stateList.Add(new Shot(this));
             stateList.Add(new Explosion(this));
@@ -79,7 +79,7 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
         public override void Activate(DNFTransform subjectTransform, DNFTransform targetTransform = null, float sizeEff = 1f)
         {
-            AttackDNFTransform = spawnerTransform = subjectTransform;
+            AttackerDNFTransform = spawnerTransform = subjectTransform;
 
             // Set projectile transform
             dnfTransform.Position = new Vector3(targetTransform.Position.x, 0f, targetTransform.Position.z) + new Vector3(spawnerTransform.IsLeft ? 5f : -5f, 5f, 0f);
@@ -88,7 +88,7 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
             // Set projectile direction
             moveDirection = ((spawnerTransform.IsLeft ? Vector3.left : Vector3.right) + Vector3.down).normalized;
             
-            AttackHitboxController.CalculateHitbox();
+            AttackerHitboxController.CalculateHitbox();
 
             curState = stateList[(int)EState.SHOT];
             curState.OnStart();

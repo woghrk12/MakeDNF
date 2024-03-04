@@ -61,7 +61,7 @@ namespace FireKnightSkill
                         if (!animatorStateInfo.IsName("BaseAttack_2")) return;
                         if (animatorStateInfo.normalizedTime < preDelay) return;
 
-                        stateController.AttackHitboxController.EnableHitbox((int)EState.SECOND);
+                        stateController.AttackerHitboxController.EnableHitbox((int)EState.SECOND);
 
                         isBlockKey = false;
 
@@ -72,12 +72,12 @@ namespace FireKnightSkill
                         break;
 
                     case EStatePhase.HITBOXACTIVE:
-                        stateController.AttackHitboxController.CalculateHitbox();
+                        stateController.AttackerHitboxController.CalculateHitbox();
 
                         if (!animatorStateInfo.IsName("BaseAttack_2")) return;
                         if (animatorStateInfo.normalizedTime < 1f) return;
 
-                        stateController.AttackHitboxController.DisableHitbox();
+                        stateController.AttackerHitboxController.DisableHitbox();
 
                         character.Animator.SetTrigger(skillHash);
 
@@ -118,7 +118,7 @@ namespace FireKnightSkill
 
             public override void OnLateUpdate()
             {
-                if (!stateController.AttackHitboxController.IsHitboxActivated) return;
+                if (!stateController.AttackerHitboxController.IsHitboxActivated) return;
 
                 if (stateController.CalculateOnHit(GameManager.Room.Monsters))
                 {
@@ -146,9 +146,9 @@ namespace FireKnightSkill
 
             public override void OnCancel()
             {
-                if (stateController.AttackHitboxController.IsHitboxActivated)
+                if (stateController.AttackerHitboxController.IsHitboxActivated)
                 {
-                    stateController.AttackHitboxController.DisableHitbox();
+                    stateController.AttackerHitboxController.DisableHitbox();
                 }
 
                 character.Animator.ResetTrigger(skillHash);

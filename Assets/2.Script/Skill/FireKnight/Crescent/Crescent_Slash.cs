@@ -70,7 +70,7 @@ namespace FireKnightSkill
                         slashEffect.SetMotionSpeed(attackSpeed);
 
                         hitboxState = EHitboxState.FIRST;
-                        stateController.AttackHitboxController.EnableHitbox((int)hitboxState);
+                        stateController.AttackerHitboxController.EnableHitbox((int)hitboxState);
 
                         character.Animator.SetTrigger(skillHash);
 
@@ -87,7 +87,7 @@ namespace FireKnightSkill
                                 if (animatorStateInfo.normalizedTime < 1f / 3f) return;
 
                                 hitboxState = EHitboxState.SECOND;
-                                stateController.AttackHitboxController.EnableHitbox((int)EHitboxState.SECOND);
+                                stateController.AttackerHitboxController.EnableHitbox((int)EHitboxState.SECOND);
 
                                 stateController.alreadyHitObjects.Clear();
 
@@ -97,7 +97,7 @@ namespace FireKnightSkill
                                 if (animatorStateInfo.normalizedTime < 2f / 3f) return;
 
                                 hitboxState = EHitboxState.THIRD;
-                                stateController.AttackHitboxController.EnableHitbox((int)EHitboxState.THIRD);
+                                stateController.AttackerHitboxController.EnableHitbox((int)EHitboxState.THIRD);
 
                                 stateController.alreadyHitObjects.Clear();
 
@@ -107,7 +107,7 @@ namespace FireKnightSkill
                                 if (animatorStateInfo.normalizedTime < 1f) return;
 
                                 hitboxState = EHitboxState.NONE;
-                                stateController.AttackHitboxController.DisableHitbox();
+                                stateController.AttackerHitboxController.DisableHitbox();
 
                                 character.Animator.SetTrigger(skillHash);
 
@@ -159,7 +159,7 @@ namespace FireKnightSkill
 
             public override void OnLateUpdate()
             {
-                if (!stateController.AttackHitboxController.IsHitboxActivated) return;
+                if (!stateController.AttackerHitboxController.IsHitboxActivated) return;
 
                 if (stateController.CalculateOnHit(GameManager.Room.Monsters))
                 {
@@ -196,9 +196,9 @@ namespace FireKnightSkill
 
                 phase = EStatePhase.NONE;
 
-                if (stateController.AttackHitboxController.IsHitboxActivated)
+                if (stateController.AttackerHitboxController.IsHitboxActivated)
                 {
-                    stateController.AttackHitboxController.DisableHitbox();
+                    stateController.AttackerHitboxController.DisableHitbox();
                 }
 
                 if (slashEffect != null)

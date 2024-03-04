@@ -24,9 +24,9 @@ namespace FireKnightSkill.SwiftDemonSlashProjectile
 
         #region IAttackable Implementation
 
-        public DNFTransform AttackDNFTransform { set; get; }
+        public DNFTransform AttackerDNFTransform { set; get; }
 
-        public HitboxController AttackHitboxController { set; get; }
+        public HitboxController AttackerHitboxController { set; get; }
 
         public bool CalculateOnHit(List<IDamagable> targets)
         {
@@ -35,10 +35,10 @@ namespace FireKnightSkill.SwiftDemonSlashProjectile
             foreach (IDamagable target in targets)
             {
                 if (alreadyHitObjects.Contains(target)) continue;
-                if (AttackHitboxController.CheckCollision(target.DefenseHitboxController))
+                if (AttackerHitboxController.CheckCollision(target.DefenderHitboxController))
                 {
-                    target.OnDamage(AttackDNFTransform, null, 0f, Vector3.zero);
-                    spawnerTransform.GetComponent<Character>().AttackEvent?.Invoke(target.DefenseDNFTransform, EAttackType.SKILL);
+                    target.OnDamage(AttackerDNFTransform, null, 0f, Vector3.zero);
+                    spawnerTransform.GetComponent<Character>().AttackEvent?.Invoke(target.DefenderDNFTransform, EAttackType.SKILL);
 
                     alreadyHitObjects.Add(target);
 
@@ -57,8 +57,8 @@ namespace FireKnightSkill.SwiftDemonSlashProjectile
         {
             base.Awake();
 
-            AttackHitboxController = GetComponent<HitboxController>();
-            AttackHitboxController.Init(dnfTransform);
+            AttackerHitboxController = GetComponent<HitboxController>();
+            AttackerHitboxController.Init(dnfTransform);
 
             stateList.Add(new Shot(this));
         }
@@ -71,14 +71,14 @@ namespace FireKnightSkill.SwiftDemonSlashProjectile
 
         public override void Activate(DNFTransform subjectTransform, DNFTransform targetTransform = null, float sizeEff = 1f)
         {
-            AttackDNFTransform = spawnerTransform = subjectTransform;
+            AttackerDNFTransform = spawnerTransform = subjectTransform;
 
             // Set projectile transform
-            dnfTransform.Position = AttackDNFTransform.Position;
-            dnfTransform.IsLeft = AttackDNFTransform.IsLeft;
+            dnfTransform.Position = AttackerDNFTransform.Position;
+            dnfTransform.IsLeft = AttackerDNFTransform.IsLeft;
             dnfTransform.LocalScale = sizeEff;
 
-            AttackHitboxController.CalculateHitbox();
+            AttackerHitboxController.CalculateHitbox();
 
             curState = stateList[(int)EState.SHOT];
             curState.OnStart();

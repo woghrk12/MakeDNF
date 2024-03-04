@@ -101,9 +101,9 @@ public class Character : MonoBehaviour, IDamagable
 
     #region IDamagable Implementation
 
-    public DNFTransform DefenseDNFTransform { set; get; }
+    public DNFTransform DefenderDNFTransform { set; get; }
 
-    public HitboxController DefenseHitboxController { set; get; }
+    public HitboxController DefenderHitboxController { set; get; }
 
     public void OnDamage(DNFTransform attacker, List<int> damages, float knockBackPower, Vector3 knockBackDirection)
     {
@@ -135,9 +135,9 @@ public class Character : MonoBehaviour, IDamagable
         behaviourDictionary.Add(attackBehaviour.BehaviourCode, attackBehaviour);
         behaviourDictionary.Add(hitBehaviour.BehaviourCode, hitBehaviour);
 
-        DefenseDNFTransform = dnfTransform;
-        DefenseHitboxController = GetComponent<HitboxController>();
-        DefenseHitboxController.Init(dnfTransform);
+        DefenderDNFTransform = dnfTransform;
+        DefenderHitboxController = GetComponent<HitboxController>();
+        DefenderHitboxController.Init(dnfTransform);
     }
 
     protected virtual void Start()
@@ -179,14 +179,14 @@ public class Character : MonoBehaviour, IDamagable
         CanJump = true;
         CanAttack = true;
 
-        DefenseHitboxController.EnableHitbox(0);
+        DefenderHitboxController.EnableHitbox(0);
     }
 
     protected virtual void Update()
     {
         curBehaviour.OnUpdate();
 
-        DefenseHitboxController.CalculateHitbox();
+        DefenderHitboxController.CalculateHitbox();
     }
 
     protected virtual void FixedUpdate()

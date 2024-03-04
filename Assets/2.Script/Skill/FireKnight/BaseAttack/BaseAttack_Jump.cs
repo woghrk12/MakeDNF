@@ -51,18 +51,18 @@ namespace FireKnightSkill
                         if (!animatorStateInfo.IsName("BaseAttack_Jump")) return;
                         if (animatorStateInfo.normalizedTime < preDelay) return;
 
-                        stateController.AttackHitboxController.EnableHitbox((int)EState.JUMP);
+                        stateController.AttackerHitboxController.EnableHitbox((int)EState.JUMP);
 
                         phase = EStatePhase.HITBOXACTIVE;
 
                         break;
 
                     case EStatePhase.HITBOXACTIVE:
-                        stateController.AttackHitboxController.CalculateHitbox();
+                        stateController.AttackerHitboxController.CalculateHitbox();
 
                         if (animatorStateInfo.normalizedTime < duration) return;
 
-                        stateController.AttackHitboxController.DisableHitbox();
+                        stateController.AttackerHitboxController.DisableHitbox();
 
                         phase = EStatePhase.MOTIONINPROGRESS;
 
@@ -101,7 +101,7 @@ namespace FireKnightSkill
 
             public override void OnLateUpdate()
             {
-                if (!stateController.AttackHitboxController.IsHitboxActivated) return;
+                if (!stateController.AttackerHitboxController.IsHitboxActivated) return;
 
                 if (stateController.CalculateOnHit(GameManager.Room.Monsters))
                 {
@@ -120,9 +120,9 @@ namespace FireKnightSkill
             {
                 phase = EStatePhase.NONE;
 
-                if (stateController.AttackHitboxController.IsHitboxActivated)
+                if (stateController.AttackerHitboxController.IsHitboxActivated)
                 {
-                    stateController.AttackHitboxController.DisableHitbox();
+                    stateController.AttackerHitboxController.DisableHitbox();
                 }
 
                 character.Animator.ResetTrigger(skillHash);
@@ -135,9 +135,9 @@ namespace FireKnightSkill
             {
                 phase = EStatePhase.NONE;
 
-                if (stateController.AttackHitboxController.IsHitboxActivated)
+                if (stateController.AttackerHitboxController.IsHitboxActivated)
                 {
-                    stateController.AttackHitboxController.DisableHitbox();
+                    stateController.AttackerHitboxController.DisableHitbox();
                 }
 
                 character.Animator.ResetTrigger(skillHash);
