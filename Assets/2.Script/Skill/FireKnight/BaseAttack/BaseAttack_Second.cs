@@ -47,8 +47,6 @@ namespace FireKnightSkill
                 phase = EStatePhase.PREDELAY;
 
                 stateController.AlreadyHitTargets.Clear();
-
-                attackSpeed = character.Animator.GetFloat(attackSpeedHash);
             }
 
             public override void OnUpdate()
@@ -85,19 +83,6 @@ namespace FireKnightSkill
 
                         break;
 
-                    case EStatePhase.STOPMOTION:
-                        if (stiffnessTimer < stiffnessTime)
-                        {
-                            stiffnessTimer += Time.deltaTime;
-                            return;
-                        }
-
-                        character.Animator.SetFloat(attackSpeedHash, attackSpeed);
-
-                        phase = EStatePhase.HITBOXACTIVE;
-
-                        break;
-
                     case EStatePhase.POSTDELAY:
                         if (!animatorStateInfo.IsName("BaseAttack_2_End")) return;
                         if (animatorStateInfo.normalizedTime < 1f) return;
@@ -128,7 +113,6 @@ namespace FireKnightSkill
                 phase = EStatePhase.NONE;
 
                 character.Animator.SetBool(continueHash, false);
-                character.Animator.SetFloat(attackSpeedHash, attackSpeed);
 
                 character.CanMove = true;
                 character.CanJump = true;
@@ -145,7 +129,6 @@ namespace FireKnightSkill
 
                 character.Animator.ResetTrigger(skillHash);
                 character.Animator.SetBool(continueHash, false);
-                character.Animator.SetFloat(attackSpeedHash, attackSpeed);
 
                 character.Animator.SetTrigger(cancelHash);
             }

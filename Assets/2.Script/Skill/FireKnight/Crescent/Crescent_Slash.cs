@@ -50,8 +50,6 @@ namespace FireKnightSkill
 
                 stateController.AlreadyHitTargets.Clear();
 
-                attackSpeed = character.Animator.GetFloat(attackSpeedHash);
-
                 GameManager.Input.AddMovementDelegate(OnJoystickMoved);
             }
 
@@ -67,7 +65,6 @@ namespace FireKnightSkill
 
                         slashEffect = GameManager.Effect.SpawnFromPool(EEffectList.Crescent_Slash).GetComponent<FollowingVFX>();
                         slashEffect.InitEffect(character.DNFTransform);
-                        slashEffect.SetMotionSpeed(attackSpeed);
 
                         hitboxState = EHitboxState.FIRST;
                         stateController.AttackerHitboxController.EnableHitbox((int)hitboxState);
@@ -118,20 +115,6 @@ namespace FireKnightSkill
 
                         break;
 
-                    case EStatePhase.STOPMOTION:
-                        if (stiffnessTimer < stiffnessTime)
-                        {
-                            stiffnessTimer += Time.deltaTime;
-                            return;
-                        }
-
-                        character.Animator.SetFloat(attackSpeedHash, attackSpeed);
-                        slashEffect.SetMotionSpeed(attackSpeed);
-
-                        phase = EStatePhase.HITBOXACTIVE;
-
-                        break;
-
                     case EStatePhase.POSTDELAY:
                         if (!animatorStateInfo.IsName("Crescent_Postdelay")) return;
                         if (animatorStateInfo.normalizedTime < 1f) return;
@@ -145,7 +128,7 @@ namespace FireKnightSkill
             public override void OnFixedUpdate()
             {
                 if (!isDash) return;
-                if (phase == EStatePhase.NONE || phase == EStatePhase.PREDELAY || phase == EStatePhase.STOPMOTION) return;
+                if (phase == EStatePhase.NONE || phase == EStatePhase.PREDELAY) return;
 
                 AnimatorStateInfo animatorStateInfo = character.Animator.GetCurrentAnimatorStateInfo(0);
 
@@ -173,8 +156,6 @@ namespace FireKnightSkill
                 slashEffect.ReturnEffect();
                 slashEffect = null;
 
-                character.Animator.SetFloat(attackSpeedHash, attackSpeed);
-
                 character.CanMove = true;
                 character.CanJump = true;
 
@@ -199,7 +180,6 @@ namespace FireKnightSkill
                 }
 
                 character.Animator.ResetTrigger(skillHash);
-                character.Animator.SetFloat(attackSpeedHash, attackSpeed);
 
                 character.Animator.SetTrigger(cancelHash);
             }
