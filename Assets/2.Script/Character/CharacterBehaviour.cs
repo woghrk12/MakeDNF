@@ -62,24 +62,6 @@ public abstract class CharacterBehaviour : MonoBehaviour
     /// </summary>
     public virtual void OnCancel() { }
 
-    /// <summary>
-    /// The event method called when the player control the joystick.
-    /// </summary>
-    /// <param name="direction">The direction vector in the DNF coordinate received through the joystick</param>
-    public virtual void OnJoystickMoved(Vector3 direction) { }
-
-    /// <summary>
-    /// The event method called when the player press the button.
-    /// </summary>
-    /// <param name="keyName">The enum element indicating the button which player press</param>
-    public virtual void OnButtonPressed(EKeyName keyName) { }
-
-    /// <summary>
-    /// The event method called when the player release the button.
-    /// </summary>
-    /// <param name="keyName">The enum element indicating the button which player release</param>
-    public virtual void OnButtonReleased(EKeyName keyName) { }
-
     #endregion Virtual
 
     #endregion Methods
