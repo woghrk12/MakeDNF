@@ -129,15 +129,7 @@ namespace FireKnightSkill
             {
                 if (!stateController.AttackerHitboxController.IsHitboxActivated) return;
 
-                if (stateController.CalculateOnHit(GameManager.Room.Monsters))
-                {
-                    // Stiffness effect
-                    character.Animator.SetFloat(attackSpeedHash, 0f);
-                    stiffnessTimer = 0f;
-                    phase = EStatePhase.STOPMOTION;
-
-                    // TODO : Spawn hit effects
-                }
+                stateController.CalculateOnHit(GameManager.Room.Monsters);
             }
 
             public override void OnComplete()

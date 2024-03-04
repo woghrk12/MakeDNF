@@ -21,10 +21,8 @@ namespace FireKnightSkill.SwiftDemonSlashProjectile
 
         public List<IDamagable> AlreadyHitTargets { set; get; }
 
-        public bool CalculateOnHit(List<IDamagable> targets)
+        public void CalculateOnHit(List<IDamagable> targets)
         {
-            int count = 0;
-
             foreach (IDamagable target in targets)
             {
                 if (AlreadyHitTargets.Contains(target)) continue;
@@ -34,12 +32,8 @@ namespace FireKnightSkill.SwiftDemonSlashProjectile
                     spawnerTransform.GetComponent<Character>().AttackEvent?.Invoke(target.DefenderDNFTransform, EAttackType.SKILL);
 
                     AlreadyHitTargets.Add(target);
-
-                    count++;
                 }
             }
-
-            return count > 0;
         }
 
         #endregion IAttackable Implementation

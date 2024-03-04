@@ -56,10 +56,7 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
             {
                 stateController.AttackerHitboxController.CalculateHitbox();
 
-                if (stateController.CalculateOnHit(GameManager.Room.Monsters))
-                {
-                    // Spawn hit effect
-                }
+                stateController.CalculateOnHit(GameManager.Room.Monsters);
             }
 
             public override void OnComplete()

@@ -90,15 +90,7 @@ namespace FireKnightSkill
             {
                 if (!stateController.AttackerHitboxController.IsHitboxActivated) return;
 
-                if (stateController.CalculateOnHit(GameManager.Room.Monsters))
-                {
-                    // Stiffness effect
-                    character.Animator.SetFloat(attackSpeedHash, 0f);
-                    stiffnessTimer = 0f;
-                    phase = EStatePhase.STOPMOTION;
-
-                    // TODO : Spawn hit effects
-                }
+                stateController.CalculateOnHit(GameManager.Room.Monsters);
             }
 
             public override void OnComplete()
@@ -106,6 +98,7 @@ namespace FireKnightSkill
                 character.CanMove = true;
                 character.CanJump = true;
 
+                character.Animator.SetFloat(attackSpeedHash, attackSpeed);
                 character.Animator.SetBool(continueHash, false);
 
                 stateController.OnComplete();
@@ -118,8 +111,11 @@ namespace FireKnightSkill
                     stateController.AttackerHitboxController.DisableHitbox();
                 }
 
-                character.Animator.SetTrigger(cancelHash);
+                character.Animator.ResetTrigger(skillHash);
                 character.Animator.SetBool(continueHash, false);
+                character.Animator.SetFloat(attackSpeedHash, attackSpeed);
+
+                character.Animator.SetTrigger(cancelHash);
             }
 
             #endregion Override

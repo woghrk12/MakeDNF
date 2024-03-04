@@ -72,10 +72,7 @@ namespace FireKnightSkill.SwiftDemonSlashProjectile
             {
                 if (!stateController.AttackerHitboxController.IsHitboxActivated) return;
 
-                if (stateController.CalculateOnHit(GameManager.Room.Monsters))
-                {
-                    // TODO : Spawn hit effect
-                }
+                stateController.CalculateOnHit(GameManager.Room.Monsters);
             }
 
             public override void OnComplete()

@@ -30,10 +30,8 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
         public List<IDamagable> AlreadyHitTargets { set; get; }
 
-        public bool CalculateOnHit(List<IDamagable> targets)
+        public void CalculateOnHit(List<IDamagable> targets)
         {
-            int count = 0;
-
             foreach (IDamagable target in targets)
             {
                 if (AlreadyHitTargets.Contains(target)) continue;
@@ -43,12 +41,8 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
                     spawnerTransform.GetComponent<Character>().AttackEvent?.Invoke(target.DefenderDNFTransform, EAttackType.ADDITIONAL);
 
                     AlreadyHitTargets.Add(target);
-
-                    count++;
                 }
             }
-
-            return count > 0;
         }
 
         #endregion IAttackable Implementation
