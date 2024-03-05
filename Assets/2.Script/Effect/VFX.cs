@@ -14,6 +14,9 @@ public abstract class VFX : MonoBehaviour
     protected int shotHash = 0;
     protected int motionSpeedHash = 0;
 
+    private float stopTimer = 0f;
+    private float originalSpeed = 0f;
+
     #endregion Variables
 
     #region Unity Events
@@ -26,6 +29,21 @@ public abstract class VFX : MonoBehaviour
 
         shotHash = Animator.StringToHash(AnimatorKey.Projectile.SHOT);
         motionSpeedHash = Animator.StringToHash(AnimatorKey.Projectile.MOTION_SPEED);
+    }
+
+    protected virtual void Update()
+    {
+        if (stopTimer <= 0f) return;
+
+        stopTimer -= Time.deltaTime;
+
+        if (stopTimer <= 0f)
+        {
+            animator.SetFloat(motionSpeedHash, originalSpeed);
+
+            originalSpeed = 0f;
+            stopTimer = 0f;
+        }
     }
 
     #endregion Unity Events
@@ -57,9 +75,33 @@ public abstract class VFX : MonoBehaviour
 
     #endregion Virtual
 
+    /// <summary>
+    /// Set the motion speed of the animator.
+    /// </summary>
+    /// <param name="motionSpeed">The speed value of the animation</param>
     public void SetMotionSpeed(float motionSpeed)
     {
+        originalSpeed = motionSpeed;
+
         animator.SetFloat(motionSpeedHash, motionSpeed);
+    }
+
+    /// <summary>
+    /// Stop the effect by setting the motion speed to 0.
+    /// The effect revert back to its original speed after a certain amount of time.
+    /// </summary>
+    public void StopEffect()
+    {
+        if (stopTimer > 0f)
+        {
+            stopTimer = GlobalDefine.ATTACK_STIFFNESS_TIME;
+            return;
+        }
+
+        originalSpeed = animator.GetFloat(motionSpeedHash);
+        animator.SetFloat(motionSpeedHash, 0f);
+
+        stopTimer = GlobalDefine.ATTACK_STIFFNESS_TIME;
     }
 
     #endregion Methods

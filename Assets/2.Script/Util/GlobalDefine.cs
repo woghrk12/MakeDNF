@@ -5,6 +5,9 @@ public class GlobalDefine
     public static readonly float CONV_RATE = (float)Y_RATE / X_RATE;
     public static readonly float INV_CONV_RATE = (float)X_RATE / Y_RATE;
 
+    public static readonly float ATTACK_STIFFNESS_TIME = 0.1f;
+    public static readonly float HIT_STIFFNESS_TIME = 0.1f;
+
     public static readonly float EPSILON = 0.0001f;
 }
 
@@ -38,3 +41,4 @@ public class BehaviourCodeList
 
 public enum EKeyName { NONE = -1, BASEATTACK, JUMP, SKILL1, SKILL2, SKILL3, SKILL4, INVENTORY, SKILL, STATUS }
 public enum EAttackType { NONE = -1, BASEATTACK, SKILL, ADDITIONAL }
+public enum EHitType { NONE  = -1, DIRECT, INDIRECT }

@@ -584,6 +584,7 @@ GameObject:
   - component: {fileID: 470650998}
   - component: {fileID: 470650997}
   - component: {fileID: 470650996}
+  - component: {fileID: 470651003}
   - component: {fileID: 470651002}
   - component: {fileID: 470650995}
   - component: {fileID: 470650994}
@@ -753,6 +754,18 @@ MonoBehaviour:
     size: {x: 0.6899595, y: 1.8466489, z: 0.76680714}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0.5, y: 0, z: 0.5}
+--- !u!114 &470651003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470650991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce160c0559d724f42beb6e837f7698ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

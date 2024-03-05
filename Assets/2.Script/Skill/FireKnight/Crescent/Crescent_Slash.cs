@@ -134,7 +134,10 @@ namespace FireKnightSkill
                 float dashRatio = EaseHelper.EaseInSine(1f, 0f, animatorStateInfo.normalizedTime);
                 Vector3 dashDirection = Time.fixedDeltaTime * dashRatio * dashSpeed * this.dashDirection;
 
-                character.DNFRigidbody.MoveDirection(dashDirection);
+                if (character.DNFRigidbody.enabled)
+                {
+                    character.DNFRigidbody.MoveDirection(dashDirection);
+                }
             }
 
             public override void OnLateUpdate()

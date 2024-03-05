@@ -5,7 +5,7 @@ public class AnimatorKey
     public class Character
     {
         [Header("Animator key for motion speed")]
-        public static readonly string NORMAL_SPEED = "NormalSpeed";
+        public static readonly string HIT_SPEED = "HitSpeed";
         public static readonly string MOVE_SPEED = "MoveSpeed";
         public static readonly string ATTACK_SPEED = "AttackSpeed";
 

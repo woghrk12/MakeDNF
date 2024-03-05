@@ -32,6 +32,10 @@ public class Character : MonoBehaviour, IDamagable
     /// </summary>
     private Dictionary<EEffectList, VFX> vfxDictionary = new();
 
+    /// <summary>
+    /// The component to apply stiffness effect to character.
+    /// The stiffness effect occur when the character successfully attack the target or is hit.
+    /// </summary>
     private StiffnessEffect stiffnessEffect = null;
 
     /// <summary>
@@ -145,6 +149,8 @@ public class Character : MonoBehaviour, IDamagable
         DefenderDNFTransform = dnfTransform;
         DefenderHitboxController = GetComponent<HitboxController>();
         DefenderHitboxController.Init(dnfTransform);
+
+        stiffnessEffect = GetComponent<StiffnessEffect>();
     }
 
     protected virtual void Start()
@@ -334,8 +340,24 @@ public class Character : MonoBehaviour, IDamagable
         attackBehaviour.OnSkillButtonReleased(keyName);
     }
 
+    /// <summary>
+    /// The event method called when the character successfully attack the target.
+    /// </summary>
+    /// <param name="targetTransform">The DNFTransform of the target hit by the character</param>
+    /// <param name="attackType">The type of attack</param>
+    /// <param name="hitType">The type of collision</param>
     public void OnAttack(DNFTransform targetTransform, EAttackType attackType, EHitType hitType)
     {
+        if (hitType == EHitType.DIRECT)
+        {
+            stiffnessEffect.ApplyStiffnessEffect(EStiffnessType.ATTACK);
+
+            foreach (KeyValuePair<EEffectList, VFX> vfx in vfxDictionary)
+            {
+                vfx.Value.StopEffect();
+            }
+        }
+
         AttackEvent?.Invoke(targetTransform, attackType);
     }
 

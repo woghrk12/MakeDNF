@@ -5,25 +5,14 @@ using UnityEngine;
 /// </summary>
 public class HitBehaviour : CharacterBehaviour
 {
-    /// <summary>
-    /// The enum for player hit state.
-    /// <para>
-    /// STIFFNESS : The state where the character pauses briefly upon being hit. 
-    /// DURATION : The state for the hit animation and knock back effect.
-    /// </para>
-    /// </summary>
-    private enum EState { NONE = -1, STIFFNESS, DURATION }
-
     #region Variables
 
     [Header("Variables for hit stiffness effect")]
-    private EState state = EState.NONE;
     private float hitStiffnessTime = 0.08f;
     private float hitDuration = 0f;
     private float timer = 0f;
 
     [Header("Animation key hash")]
-    private int normalSpeedHash = 0;
     private int doHitHash = 0;
     private int isHitHash = 0;
 
@@ -44,7 +33,6 @@ public class HitBehaviour : CharacterBehaviour
     {
         base.Awake();
 
-        normalSpeedHash = Animator.StringToHash(AnimatorKey.Character.NORMAL_SPEED);
         doHitHash = Animator.StringToHash(AnimatorKey.Character.DO_HIT);
         isHitHash = Animator.StringToHash(AnimatorKey.Character.IS_HIT);
     }
@@ -79,38 +67,15 @@ public class HitBehaviour : CharacterBehaviour
 
         character.Animator.SetTrigger(doHitHash);
         character.Animator.SetBool(isHitHash, true);
-        character.Animator.SetFloat(normalSpeedHash, 0f);
-
-        character.DNFRigidbody.enabled = false;
-
-        state = EState.STIFFNESS;
     }
 
     public override void OnUpdate()
     {
         timer += Time.deltaTime;
+        
+        if (timer < hitDuration) return;
 
-        switch (state)
-        {
-            case EState.STIFFNESS:
-                if (timer < hitStiffnessTime) return;
-
-                timer = 0f;
-
-                character.DNFRigidbody.enabled = true;
-                character.Animator.SetFloat(normalSpeedHash, 1f);
-
-                state = EState.DURATION;
-
-                break;
-
-            case EState.DURATION:
-                if (timer < hitDuration) return;
-
-                OnComplete();
-
-                break;
-        } 
+        OnComplete();
     }
 
     public override void OnComplete()
@@ -119,7 +84,6 @@ public class HitBehaviour : CharacterBehaviour
         character.CanJump = true;
 
         character.Animator.SetBool(isHitHash, false);
-        character.Animator.SetFloat(normalSpeedHash, 1f);
 
         character.SetBehaviour(BehaviourCodeList.IDLE_BEHAVIOUR_CODE);
     }
@@ -129,7 +93,6 @@ public class HitBehaviour : CharacterBehaviour
         character.DNFRigidbody.enabled = true;
 
         character.Animator.SetBool(isHitHash, false);
-        character.Animator.SetFloat(normalSpeedHash, 1f);
     }
 
     #endregion Methods
