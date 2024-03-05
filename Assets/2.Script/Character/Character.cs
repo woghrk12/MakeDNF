@@ -27,6 +27,13 @@ public class Character : MonoBehaviour, IDamagable
     private AttackBehaviour attackBehaviour = null;
     private HitBehaviour hitBehaviour = null;
 
+    private StiffnessEffect stiffnessEffect = null;
+
+    /// <summary>
+    /// The event triggered when a character successfully executes an attack.
+    /// </summary>
+    public event Action<DNFTransform, EAttackType> AttackEvent = null;
+
     #endregion Variables
 
     #region Properties
@@ -91,11 +98,6 @@ public class Character : MonoBehaviour, IDamagable
         set { attackBehaviour.CanAttack = value; }
         get => attackBehaviour.CanAttack;
     }
-
-    /// <summary>
-    /// The event triggered when a character successfully executes an attack.
-    /// </summary>
-    public Action<DNFTransform, EAttackType> AttackEvent { set; get; }
 
     #endregion Properties
 
@@ -285,6 +287,11 @@ public class Character : MonoBehaviour, IDamagable
     public void OnSkillButtonReleased(EKeyName keyName)
     {
         attackBehaviour.OnSkillButtonReleased(keyName);
+    }
+
+    public void OnAttack(DNFTransform targetTransform, EAttackType attackType, EHitType hitType)
+    {
+        AttackEvent?.Invoke(targetTransform, attackType);
     }
 
     #endregion Event 

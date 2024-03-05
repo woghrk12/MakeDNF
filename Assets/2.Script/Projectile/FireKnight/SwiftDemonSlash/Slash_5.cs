@@ -29,8 +29,8 @@ namespace FireKnightSkill.SwiftDemonSlashProjectile
                 if (AttackerHitboxController.CheckCollision(target.DefenderHitboxController))
                 {
                     target.OnDamage(AttackerDNFTransform, null, 0f, Vector3.zero);
-                    spawnerTransform.GetComponent<Character>().AttackEvent?.Invoke(target.DefenderDNFTransform, EAttackType.SKILL);
-                    
+                    spawnerTransform.GetComponent<Character>().OnAttack(target.DefenderDNFTransform, EAttackType.SKILL, EHitType.INDIRECT);
+
                     AlreadyHitTargets.Add(target);
                 }
             }
