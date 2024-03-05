@@ -14,8 +14,6 @@ namespace FireKnightSkill
 
             private EHitboxState hitboxState = EHitboxState.NONE;
 
-            private FollowingVFX slashEffect = null;
-
             [Header("Variables for dash during the skill")]
             private bool isDash = false;
             private float dashSpeed = 20f;
@@ -63,8 +61,7 @@ namespace FireKnightSkill
                         if (!animatorStateInfo.IsName("Crescent_Predelay")) return;
                         if (animatorStateInfo.normalizedTime < 1f) return;
 
-                        slashEffect = GameManager.Effect.SpawnFromPool(EEffectList.Crescent_Slash).GetComponent<FollowingVFX>();
-                        slashEffect.InitEffect(character.DNFTransform);
+                        character.AddEffect(EEffectList.Crescent_Slash, true);
 
                         hitboxState = EHitboxState.FIRST;
                         stateController.AttackerHitboxController.EnableHitbox((int)hitboxState);
@@ -153,8 +150,7 @@ namespace FireKnightSkill
 
                 phase = EStatePhase.NONE;
 
-                slashEffect.ReturnEffect();
-                slashEffect = null;
+                character.RemoveEffect(EEffectList.Crescent_Slash);
 
                 character.CanMove = true;
                 character.CanJump = true;
@@ -173,11 +169,7 @@ namespace FireKnightSkill
                     stateController.AttackerHitboxController.DisableHitbox();
                 }
 
-                if (slashEffect != null)
-                {
-                    slashEffect.ReturnEffect();
-                    slashEffect = null;
-                }
+                character.RemoveEffect(EEffectList.Crescent_Slash);
 
                 character.Animator.ResetTrigger(skillHash);
 

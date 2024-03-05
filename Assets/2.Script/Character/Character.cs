@@ -27,6 +27,11 @@ public class Character : MonoBehaviour, IDamagable
     private AttackBehaviour attackBehaviour = null;
     private HitBehaviour hitBehaviour = null;
 
+    /// <summary>
+    /// The dictionary containing the visual effect applied to the character.
+    /// </summary>
+    private Dictionary<EEffectList, VFX> vfxDictionary = new();
+
     private StiffnessEffect stiffnessEffect = null;
 
     /// <summary>
@@ -220,6 +225,46 @@ public class Character : MonoBehaviour, IDamagable
 
         curBehaviour = behaviourDictionary[behaviourCode];
         curBehaviour.OnStart();
+    }
+
+    /// <summary>
+    /// Add an effect to the character at the given index.
+    /// If an effect already exists, it removes the existing effect and adds the new ones.
+    /// </summary>
+    /// <param name="effectIndex">The index of effect to be added</param>
+    /// <param name="isAttackEffect"></param>
+    public void AddEffect(EEffectList effectIndex, bool isAttackEffect = false)
+    {
+        if (vfxDictionary.TryGetValue(effectIndex, out VFX oldVfx))
+        {
+            oldVfx.ReturnEffect();
+            vfxDictionary.Remove(effectIndex);
+        }
+
+        VFX vfx = GameManager.Effect.SpawnFromPool(effectIndex).GetComponent<VFX>();
+        vfx.InitEffect(dnfTransform);
+
+        if (isAttackEffect)
+        {
+            float attackSpeed = animator.GetFloat(AnimatorKey.Character.ATTACK_SPEED);
+            vfx.SetMotionSpeed(attackSpeed);
+        }
+
+        vfxDictionary.Add(effectIndex, vfx);
+    }
+
+    /// <summary>
+    /// Remove the effect corresponding to the given index.
+    /// If there is no effect at the specified index for the character, nothing happens.
+    /// </summary>
+    /// <param name="effectIndex">The index of effect to be removed</param>
+    public void RemoveEffect(EEffectList effectIndex)
+    {
+        if (!vfxDictionary.TryGetValue(effectIndex, out VFX vfx)) return;
+
+        vfx.ReturnEffect();
+
+        vfxDictionary.Remove(effectIndex);
     }
 
     #region Event
