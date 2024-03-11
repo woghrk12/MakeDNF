@@ -18,6 +18,8 @@ namespace FireKnightSkill
             {
                 this.stateController = stateController as BaseAttack;
 
+                skillHash = Animator.StringToHash(AnimatorKey.Character.BASE_ATTACK);
+
                 preDelay = 2f / 8f;
                 duration = 7f / 8f;
             }
