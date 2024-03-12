@@ -33,10 +33,20 @@ public class Character : MonoBehaviour, IDamagable
     private Dictionary<EEffectList, VFX> vfxDictionary = new();
 
     /// <summary>
+    /// 
+    /// </summary>
+    private EHitboxState hitboxState = EHitboxState.NONE;
+
+    /// <summary>
     /// The component to apply stiffness effect to character.
     /// The stiffness effect occur when the character successfully attack the target or is hit.
     /// </summary>
     private StiffnessEffect stiffnessEffect = null;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private OutlineEffect outlineEffect = null;
 
     /// <summary>
     /// The event triggered when a character successfully executes an attack.
@@ -114,12 +124,25 @@ public class Character : MonoBehaviour, IDamagable
 
     public DNFTransform DefenderDNFTransform { set; get; }
 
-    public OutlineEffect OutlineEffect { set; get; }
-
     public HitboxController DefenderHitboxController { set; get; }
+
+    public EHitboxState HitboxState
+    {
+        set
+        {
+            hitboxState = value;
+
+            outlineEffect.SetOutlineEffect(hitboxState);
+        }
+        get => hitboxState;
+    }
 
     public void OnDamage(DNFTransform attacker, List<int> damages, float knockBackPower, Vector3 knockBackDirection)
     {
+        stiffnessEffect.ApplyStiffnessEffect();
+
+        if (HitboxState == EHitboxState.SUPERARMOR) return;
+
         curBehaviour.OnCancel();
 
         hitBehaviour.Hit(knockBackPower * 0.2f, knockBackDirection * knockBackPower);
@@ -150,11 +173,11 @@ public class Character : MonoBehaviour, IDamagable
 
         DefenderDNFTransform = dnfTransform;
         DefenderHitboxController = GetComponent<HitboxController>();
-        OutlineEffect = GetComponent<OutlineEffect>();
-
+        
         DefenderHitboxController.Init(dnfTransform);
 
         stiffnessEffect = GetComponent<StiffnessEffect>();
+        outlineEffect = GetComponent<OutlineEffect>();
     }
 
     protected virtual void Start()
@@ -201,19 +224,6 @@ public class Character : MonoBehaviour, IDamagable
 
     protected virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            OutlineEffect.SetOutlineEffect(EHitboxState.SUPERARMOR);
-        }
-        else if (Input.GetKeyDown(KeyCode.F2))
-        {
-            OutlineEffect.SetOutlineEffect(EHitboxState.INVINCIBILITY);
-        }
-        else if (Input.GetKeyDown(KeyCode.F3))
-        {
-            OutlineEffect.SetOutlineEffect(EHitboxState.NONE);
-        }
-
         curBehaviour.OnUpdate();
 
         DefenderHitboxController.CalculateHitbox();
@@ -367,7 +377,7 @@ public class Character : MonoBehaviour, IDamagable
     {
         if (hitType == EHitType.DIRECT)
         {
-            stiffnessEffect.ApplyStiffnessEffect(EStiffnessType.ATTACK);
+            stiffnessEffect.ApplyStiffnessEffect();
 
             foreach (KeyValuePair<EEffectList, VFX> vfx in vfxDictionary)
             {

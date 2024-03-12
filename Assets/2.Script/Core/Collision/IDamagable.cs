@@ -29,7 +29,7 @@ public interface IDamagable
     /// <summary>
     /// 
     /// </summary>
-    public OutlineEffect OutlineEffect { set; get; }
+    public EHitboxState HitboxState { set; get; }
 
     /// <summary>
     /// The event method called when the object is hit.
