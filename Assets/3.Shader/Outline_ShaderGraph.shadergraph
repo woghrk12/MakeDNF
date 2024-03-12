@@ -5,13 +5,12 @@
     "m_Properties": [
         {
             "m_Id": "c83d3d2733154584b08bcb30e4a1deef"
-        }
-    ],
-    "m_Keywords": [
+        },
         {
-            "m_Id": "f48cc4fffbfa42bca7cf3e95e10468ff"
+            "m_Id": "418ee0026d0e4cb9ae88d88e8059f0c9"
         }
     ],
+    "m_Keywords": [],
     "m_Dropdowns": [],
     "m_CategoryData": [
         {
@@ -95,9 +94,6 @@
             "m_Id": "b7897ef98d2946c68a9fd42252fb1565"
         },
         {
-            "m_Id": "c9c9596f3d0646d8b1e7ad7758489c35"
-        },
-        {
             "m_Id": "ecb78b82223948e3bd9ac92d5701ceb8"
         },
         {
@@ -105,6 +101,9 @@
         },
         {
             "m_Id": "99b57edc0bb2427ba1afa573b92a3f76"
+        },
+        {
+            "m_Id": "38d0e88dc56847f29df2def6f673904d"
         }
     ],
     "m_GroupDatas": [],
@@ -136,6 +135,20 @@
                     "m_Id": "f078bbbacfbc4b679fb30838a80c62f0"
                 },
                 "m_SlotId": 1
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "38d0e88dc56847f29df2def6f673904d"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "ecb78b82223948e3bd9ac92d5701ceb8"
+                },
+                "m_SlotId": 0
             }
         },
         {
@@ -358,20 +371,6 @@
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "f078bbbacfbc4b679fb30838a80c62f0"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "c9c9596f3d0646d8b1e7ad7758489c35"
-                },
-                "m_SlotId": 0
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "ecb78b82223948e3bd9ac92d5701ceb8"
                 },
                 "m_SlotId": 0
             }
@@ -1137,6 +1136,42 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "38d0e88dc56847f29df2def6f673904d",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -273.0,
+            "y": 1312.0,
+            "width": 102.99998474121094,
+            "height": 34.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "bde6f4ee0e024f71b150c67a53cce298"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "418ee0026d0e4cb9ae88d88e8059f0c9"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
     "m_ObjectId": "392fa0af3c63459b8de927f61904ded3",
     "m_Id": 1,
@@ -1357,6 +1392,34 @@
 }
 
 {
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "418ee0026d0e4cb9ae88d88e8059f0c9",
+    "m_Guid": {
+        "m_GuidSerialized": "b9b09d10-7109-4883-91e3-03a7d74cc9b7"
+    },
+    "m_Name": "State",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "State",
+    "m_DefaultReferenceName": "_State",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.0,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.TilingAndOffsetNode",
     "m_ObjectId": "438489a134ba4272adedd149f411d06d",
@@ -1460,30 +1523,6 @@
         "y": 1.0,
         "z": 1.0,
         "w": 1.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
-    "m_ObjectId": "4d67c00a80c149729454e0f94c96a157",
-    "m_Id": 1,
-    "m_DisplayName": "Invincibility",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "INVINCIBILITY",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 1.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
     },
     "m_DefaultValue": {
         "x": 0.0,
@@ -3027,30 +3066,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
-    "m_ObjectId": "b7a642238719482abc3071da7d1787a9",
-    "m_Id": 0,
-    "m_DisplayName": "Out",
-    "m_SlotType": 1,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Out",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    }
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "ba77580fdff14198a4706bd2995d0036",
     "m_Id": 6,
@@ -3122,6 +3137,21 @@
     "m_NormalMapSpace": 0,
     "m_EnableGlobalMipBias": true,
     "m_MipSamplingMode": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "bde6f4ee0e024f71b150c67a53cce298",
+    "m_Id": 0,
+    "m_DisplayName": "State",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -3202,48 +3232,6 @@
     "useTilingAndOffset": false,
     "m_Modifiable": true,
     "m_DefaultType": 0
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.KeywordNode",
-    "m_ObjectId": "c9c9596f3d0646d8b1e7ad7758489c35",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "State",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": -359.0,
-            "y": 1272.0,
-            "width": 208.00003051757813,
-            "height": 302.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "b7a642238719482abc3071da7d1787a9"
-        },
-        {
-            "m_Id": "f711a76f776a4f2d83852c2409bc9e48"
-        },
-        {
-            "m_Id": "4d67c00a80c149729454e0f94c96a157"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_DismissedVersion": 0,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_Keyword": {
-        "m_Id": "f48cc4fffbfa42bca7cf3e95e10468ff"
-    }
 }
 
 {
@@ -3365,7 +3353,7 @@
             "m_Id": "c83d3d2733154584b08bcb30e4a1deef"
         },
         {
-            "m_Id": "f48cc4fffbfa42bca7cf3e95e10468ff"
+            "m_Id": "418ee0026d0e4cb9ae88d88e8059f0c9"
         }
     ]
 }
@@ -3864,42 +3852,6 @@
 }
 
 {
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.ShaderKeyword",
-    "m_ObjectId": "f48cc4fffbfa42bca7cf3e95e10468ff",
-    "m_Guid": {
-        "m_GuidSerialized": "c8f32593-7093-49c0-8169-8afe66f8b055"
-    },
-    "m_Name": "State",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "State",
-    "m_DefaultReferenceName": "_STATE",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_KeywordType": 1,
-    "m_KeywordDefinition": 0,
-    "m_KeywordScope": 0,
-    "m_KeywordStages": 63,
-    "m_Entries": [
-        {
-            "id": 4,
-            "displayName": "SuperArmor",
-            "referenceName": "SUPERARMOR"
-        },
-        {
-            "id": 1,
-            "displayName": "Invincibility",
-            "referenceName": "INVINCIBILITY"
-        }
-    ],
-    "m_Value": 0,
-    "m_IsEditable": true
-}
-
-{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.SamplerStateMaterialSlot",
     "m_ObjectId": "f50d3817b1634fce92f06ec2aac08af9",
@@ -3927,29 +3879,5 @@
     "m_Labels": [
         "Z"
     ]
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
-    "m_ObjectId": "f711a76f776a4f2d83852c2409bc9e48",
-    "m_Id": 4,
-    "m_DisplayName": "SuperArmor",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "SUPERARMOR",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    }
 }
 

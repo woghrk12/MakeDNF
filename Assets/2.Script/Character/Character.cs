@@ -114,6 +114,8 @@ public class Character : MonoBehaviour, IDamagable
 
     public DNFTransform DefenderDNFTransform { set; get; }
 
+    public OutlineEffect OutlineEffect { set; get; }
+
     public HitboxController DefenderHitboxController { set; get; }
 
     public void OnDamage(DNFTransform attacker, List<int> damages, float knockBackPower, Vector3 knockBackDirection)
@@ -148,6 +150,8 @@ public class Character : MonoBehaviour, IDamagable
 
         DefenderDNFTransform = dnfTransform;
         DefenderHitboxController = GetComponent<HitboxController>();
+        OutlineEffect = GetComponent<OutlineEffect>();
+
         DefenderHitboxController.Init(dnfTransform);
 
         stiffnessEffect = GetComponent<StiffnessEffect>();
@@ -197,6 +201,19 @@ public class Character : MonoBehaviour, IDamagable
 
     protected virtual void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            OutlineEffect.SetOutlineEffect(EHitboxState.SUPERARMOR);
+        }
+        else if (Input.GetKeyDown(KeyCode.F2))
+        {
+            OutlineEffect.SetOutlineEffect(EHitboxState.INVINCIBILITY);
+        }
+        else if (Input.GetKeyDown(KeyCode.F3))
+        {
+            OutlineEffect.SetOutlineEffect(EHitboxState.NONE);
+        }
+
         curBehaviour.OnUpdate();
 
         DefenderHitboxController.CalculateHitbox();

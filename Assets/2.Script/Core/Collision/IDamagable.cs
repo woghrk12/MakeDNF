@@ -2,6 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
+/// Enumeration representing the states of a hitbox.
+/// <para>
+/// NONE : the object owning hitboxes takes damage and experience knockback effect upon being hit.
+/// SUPERARMOR : the object owning hitboxes takes damage upon being hit but does not experience knockback effect.
+/// INVINCIBILITY : the object owning hitboxes is immune to all attacks.
+/// </para>
+/// </summary>
+public enum EHitboxState { NONE = -1, SUPERARMOR, INVINCIBILITY }
+
+/// <summary>
 /// Interface representing an object capable of receiving damage.
 /// </summary>
 public interface IDamagable
@@ -15,6 +25,11 @@ public interface IDamagable
     /// Hitbox controller component used to check whether the object has been hit.
     /// </summary>
     public HitboxController DefenderHitboxController { set; get; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public OutlineEffect OutlineEffect { set; get; }
 
     /// <summary>
     /// The event method called when the object is hit.
