@@ -25,6 +25,7 @@ namespace FireKnightSkill
         {
             foreach (IDamagable target in targets)
             {
+                if (target.HitboxState == EHitboxState.INVINCIBILITY) continue;
                 if (AlreadyHitTargets.Contains(target)) continue;
                 if (AttackerHitboxController.CheckCollision(target.DefenderHitboxController))
                 {
