@@ -14,11 +14,6 @@ public class OutlineEffect : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    [SerializeField] private SpriteRenderer originSpriteRenderer = null;
-
-    /// <summary>
-    /// 
-    /// </summary>
     [SerializeField] private SpriteRenderer outlineSpriteRenderer = null;
 
     /// <summary>
@@ -34,8 +29,6 @@ public class OutlineEffect : MonoBehaviour
 
     private void Update()
     {
-        outlineSpriteRenderer.sprite = originSpriteRenderer.sprite;
-
         if (localScaleValue > 1f)
         {
             localScaleValue -= 0.04f;

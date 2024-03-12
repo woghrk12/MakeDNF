@@ -72,6 +72,8 @@ namespace FireKnightSkill
 
         public override void OnStart()
         {
+            character.HitboxState = EHitboxState.SUPERARMOR;
+
             character.Animator.SetTrigger(skillHash);
 
             SetState((int)EState.SLASH);
@@ -80,6 +82,8 @@ namespace FireKnightSkill
         public override void OnComplete()
         {
             curState = null;
+
+            character.HitboxState = EHitboxState.NONE;
 
             attackController.OnComplete();
         }

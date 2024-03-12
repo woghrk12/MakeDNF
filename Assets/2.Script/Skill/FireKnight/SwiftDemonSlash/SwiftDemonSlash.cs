@@ -50,6 +50,8 @@ namespace FireKnightSkill
 
         public override void OnStart()
         {
+            character.HitboxState = EHitboxState.INVINCIBILITY;
+
             character.Animator.SetTrigger(skillHash);
 
             curState = stateList[(int)EState.COMBO];
@@ -59,6 +61,8 @@ namespace FireKnightSkill
         public override void OnComplete()
         {
             curState = null;
+
+            character.HitboxState = EHitboxState.NONE;
 
             attackController.OnComplete();
         }
