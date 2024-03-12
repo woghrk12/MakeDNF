@@ -1,7 +1,5 @@
 using UnityEngine;
 
-public enum EStiffnessType { NONE = -1, ATTACK, HIT }
-
 public class StiffnessEffect : MonoBehaviour
 {
     #region Variables
@@ -13,10 +11,8 @@ public class StiffnessEffect : MonoBehaviour
     private int attackSpeedHash = 0;
     private int hitSpeedHash = 0;
 
-    private float attackStiffnessTimer = 0f;
+    private float stiffnessTimer = 0f;
     private float attackSpeed = 0f;
-
-    private float hitStiffnessTimer = 0f;
     private float hitSpeed = 0f;
 
     #endregion Variables
@@ -37,31 +33,18 @@ public class StiffnessEffect : MonoBehaviour
 
     private void Update()
     {
-        if (attackStiffnessTimer > 0f)
+        if (stiffnessTimer > 0f)
         {
-            attackStiffnessTimer -= Time.deltaTime;
+            stiffnessTimer -= Time.deltaTime;
 
-            if (attackStiffnessTimer < 0f)
+            if (stiffnessTimer < 0f)
             {
                 dnfRigidbody.enabled = true;
 
                 animator.SetFloat(attackSpeedHash, attackSpeed);
-                attackSpeed = 0f;
-                attackStiffnessTimer = 0f;
-            }
-        }
-
-        if (hitStiffnessTimer > 0f)
-        {
-            hitStiffnessTimer -= Time.deltaTime;
-
-            if (hitStiffnessTimer < 0f)
-            {
-                dnfRigidbody.enabled = true;
-
                 animator.SetFloat(hitSpeedHash, hitSpeed);
-                hitSpeed = 0f;
-                hitStiffnessTimer = 0f;
+
+                stiffnessTimer = 0f;
             }
         }
     }
@@ -70,44 +53,23 @@ public class StiffnessEffect : MonoBehaviour
 
     #region Methods
 
-    public void ApplyStiffnessEffect(EStiffnessType stiffnessType)
+    public void ApplyStiffnessEffect()
     {
         dnfRigidbody.enabled = false;
 
-        if (stiffnessType == EStiffnessType.ATTACK)
+        if (stiffnessTimer > 0f)
         {
-            if (attackStiffnessTimer > 0f)
-            {
-                attackStiffnessTimer = GlobalDefine.ATTACK_STIFFNESS_TIME;
-                return;
-            }
-
-            animator.SetFloat(hitSpeedHash, hitSpeed);
-            hitSpeed = 0f;
-            hitStiffnessTimer = 0f;
-
-            attackSpeed = animator.GetFloat(attackSpeedHash);
-            animator.SetFloat(attackSpeedHash, 0f);
-
-            attackStiffnessTimer = GlobalDefine.ATTACK_STIFFNESS_TIME;
+            stiffnessTimer = GlobalDefine.STIFFNESS_TIME;
+            return;
         }
-        else if (stiffnessType == EStiffnessType.HIT)
-        {
-            if (hitStiffnessTimer > 0f)
-            {
-                hitStiffnessTimer = GlobalDefine.HIT_STIFFNESS_TIME;
-                return;
-            }
 
-            animator.SetFloat(attackSpeedHash, attackSpeed);
-            attackSpeed = 0f;
-            attackStiffnessTimer = 0f;
+        attackSpeed = animator.GetFloat(attackSpeedHash);
+        hitSpeed = animator.GetFloat(hitSpeedHash);
 
-            hitSpeed = animator.GetFloat(hitSpeedHash);
-            animator.SetFloat(hitSpeedHash, 0f);
+        animator.SetFloat(attackSpeedHash, 0f);
+        animator.SetFloat(hitSpeedHash, 0f);
 
-            hitStiffnessTimer = GlobalDefine.HIT_STIFFNESS_TIME;
-        }
+        stiffnessTimer = GlobalDefine.STIFFNESS_TIME;
     }
 
     #endregion Methods

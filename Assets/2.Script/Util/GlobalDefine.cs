@@ -5,8 +5,7 @@ public class GlobalDefine
     public static readonly float CONV_RATE = (float)Y_RATE / X_RATE;
     public static readonly float INV_CONV_RATE = (float)X_RATE / Y_RATE;
 
-    public static readonly float ATTACK_STIFFNESS_TIME = 0.1f;
-    public static readonly float HIT_STIFFNESS_TIME = 0.1f;
+    public static readonly float STIFFNESS_TIME = 0.1f;
 
     public static readonly float EPSILON = 0.0001f;
 }

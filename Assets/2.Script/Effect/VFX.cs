@@ -94,14 +94,14 @@ public abstract class VFX : MonoBehaviour
     {
         if (stopTimer > 0f)
         {
-            stopTimer = GlobalDefine.ATTACK_STIFFNESS_TIME;
+            stopTimer = GlobalDefine.STIFFNESS_TIME;
             return;
         }
 
         originalSpeed = animator.GetFloat(motionSpeedHash);
         animator.SetFloat(motionSpeedHash, 0f);
 
-        stopTimer = GlobalDefine.ATTACK_STIFFNESS_TIME;
+        stopTimer = GlobalDefine.STIFFNESS_TIME;
     }
 
     #endregion Methods

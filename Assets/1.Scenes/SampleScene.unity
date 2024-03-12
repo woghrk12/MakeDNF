@@ -1682,7 +1682,7 @@ GameObject:
   - component: {fileID: 1456370525}
   - component: {fileID: 1456370526}
   m_Layer: 0
-  m_Name: Sprite (1)
+  m_Name: Outline Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
