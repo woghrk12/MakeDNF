@@ -8,7 +8,6 @@ public class HitBehaviour : CharacterBehaviour
     #region Variables
 
     [Header("Variables for hit stiffness effect")]
-    private float hitStiffnessTime = 0.08f;
     private float hitDuration = 0f;
     private float timer = 0f;
 
