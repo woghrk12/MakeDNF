@@ -46,7 +46,7 @@ public class OutlineEffect : MonoBehaviour
 
     #region Methods
 
-    public void SetOutlineEffect(EHitboxState hitboxState)
+    public void ApplyOutlineEffect(EHitboxState hitboxState)
     {
         if (this.hitboxState == hitboxState) return;
 

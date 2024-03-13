@@ -132,7 +132,7 @@ public class Character : MonoBehaviour, IDamagable
         {
             hitboxState = value;
 
-            outlineEffect.SetOutlineEffect(hitboxState);
+            outlineEffect.ApplyOutlineEffect(hitboxState);
         }
         get => hitboxState;
     }
