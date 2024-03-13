@@ -11,6 +11,7 @@ public class StiffnessEffect : MonoBehaviour
     private int attackSpeedHash = 0;
     private int hitSpeedHash = 0;
 
+    [Header("Variables for stiffness effect")]
     private float stiffnessTimer = 0f;
     private float attackSpeed = 0f;
     private float hitSpeed = 0f;
@@ -53,6 +54,10 @@ public class StiffnessEffect : MonoBehaviour
 
     #region Methods
 
+    /// <summary>
+    /// Apply the stiffness effect to the object.
+    /// The animation briefly pauses, and the DNFRigidbody component momentarily turns off.
+    /// </summary>
     public void ApplyStiffnessEffect()
     {
         dnfRigidbody.enabled = false;

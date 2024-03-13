@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OutlineEffect : MonoBehaviour
@@ -7,20 +5,23 @@ public class OutlineEffect : MonoBehaviour
     #region Variables
 
     /// <summary>
-    /// 
+    /// The transform component of the outline object.
     /// </summary>
     [SerializeField] private Transform outlineTransform = null;
 
     /// <summary>
-    /// 
+    /// The sprite renderer component of the outline object.
     /// </summary>
     [SerializeField] private SpriteRenderer outlineSpriteRenderer = null;
 
     /// <summary>
-    /// 
+    /// The value of local scale for outline effect object.
     /// </summary>
     private float localScaleValue = 1f;
 
+    /// <summary>
+    /// The hitbox state of the object with applied outline effect.
+    /// </summary>
     private EHitboxState hitboxState = EHitboxState.NONE;
 
     #endregion Variables
@@ -46,6 +47,14 @@ public class OutlineEffect : MonoBehaviour
 
     #region Methods
 
+    /// <summary>
+    /// Apply the outline effect to the object.
+    /// When the hitbox state of the object is NONE state, the outline will disappear.
+    /// When the hitbox state of the object is SUPERARMOR state, the outline starts large and gradually shrinks.
+    /// And the outline will alternate between yellow and red colors.
+    /// When the hitbox state of the object is INVINCIBILITY state, the outline color will be white.
+    /// </summary>
+    /// <param name="hitboxState">The hitbox state of the object to which the outline effect will be applied</param>
     public void ApplyOutlineEffect(EHitboxState hitboxState)
     {
         if (this.hitboxState == hitboxState) return;

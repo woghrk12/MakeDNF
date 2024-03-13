@@ -27,7 +27,7 @@ public interface IDamagable
     public HitboxController DefenderHitboxController { set; get; }
 
     /// <summary>
-    /// 
+    /// The hitbox state of the object.
     /// </summary>
     public EHitboxState HitboxState { set; get; }
 

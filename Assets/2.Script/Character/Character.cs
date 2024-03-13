@@ -44,7 +44,7 @@ public class Character : MonoBehaviour, IDamagable
     private StiffnessEffect stiffnessEffect = null;
 
     /// <summary>
-    /// 
+    /// The component to apply outline effect to character.
     /// </summary>
     private OutlineEffect outlineEffect = null;
 
