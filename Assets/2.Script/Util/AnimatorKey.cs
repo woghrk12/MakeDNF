@@ -32,6 +32,7 @@ public class AnimatorKey
             public static readonly string SLASH_COMBO = "SlashCombo";
             public static readonly string CRESCENT = "Crescent";
             public static readonly string DODGE = "Dodge";
+            public static readonly string BLADE_WALTZ = "BladeWaltz";
         }
     }
 

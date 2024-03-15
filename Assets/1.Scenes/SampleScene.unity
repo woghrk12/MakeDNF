@@ -828,6 +828,78 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineTransform: {fileID: 1456370525}
   outlineSpriteRenderer: {fileID: 1456370526}
+--- !u!1 &488960511
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 488960514}
+  - component: {fileID: 488960513}
+  - component: {fileID: 488960512}
+  m_Layer: 0
+  m_Name: BladeWaltz
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &488960512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488960511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2c6d0d5f6bc5fe45aeedf65e3028693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillStat:
+    Name: 
+    NeedMana: 0
+    SkillDescription: 
+    CancelList: []
+  CancelList: 
+--- !u!114 &488960513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488960511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add4c21ad3853494895ead04007e7029, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitboxes:
+  - hitboxType: 0
+    size: {x: 8, y: 3.4, z: 3.4}
+    offset: {x: 0, y: 0, z: 0}
+    pivot: {x: 0, y: 0, z: 0.5}
+  - hitboxType: 0
+    size: {x: 8, y: 3.4, z: 3.4}
+    offset: {x: 0, y: 0, z: 0}
+    pivot: {x: 0, y: 0, z: 0.5}
+--- !u!4 &488960514
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488960511}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1933,6 +2005,7 @@ MonoBehaviour:
     - {fileID: 943867041}
     - {fileID: 67677945}
     - {fileID: 271300689}
+    - {fileID: 488960512}
   CancelList: 
 --- !u!4 &1948580553
 Transform:
@@ -2210,4 +2283,5 @@ SceneRoots:
   - {fileID: 943867042}
   - {fileID: 67677947}
   - {fileID: 1948580553}
+  - {fileID: 488960514}
   - {fileID: 998844314}

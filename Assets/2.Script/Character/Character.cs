@@ -192,6 +192,7 @@ public class Character : MonoBehaviour, IDamagable
         attackBehaviour.RegisterSkill(EKeyName.SKILL1, FindObjectOfType<FireKnightSkill.SwiftDemonSlash>());
         attackBehaviour.RegisterSkill(EKeyName.SKILL2, FindObjectOfType<FireKnightSkill.Crescent>());
         attackBehaviour.RegisterSkill(EKeyName.SKILL3, FindObjectOfType<FireKnightSkill.Dodge>());
+        attackBehaviour.RegisterSkill(EKeyName.SKILL4, FindObjectOfType<FireKnightSkill.BladeWaltz>());
 
         // Debug : Register the passive skills
         PassiveSkill magicSwordMedley = FindObjectOfType<FireKnightSkill.MagicSwordMedley>();

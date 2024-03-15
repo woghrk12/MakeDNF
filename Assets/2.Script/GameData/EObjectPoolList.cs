@@ -9,5 +9,6 @@ public enum EObjectPoolList
     Slash_5_FireKnight = 4,
     MagicSwordMedley_Slash = 5,
     MagicSwordMedley_Meteor = 6,
+    BladeWaltz_Explosion = 7,
 
 }
