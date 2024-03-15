@@ -15,16 +15,7 @@ public class Hitbox
     [SerializeField] private Vector3 offset = Vector3.zero;
     [SerializeField] private Vector3 pivot = Vector3.zero;
 
-    /// <summary>
-    /// The maximum values for each component of the hitbox.
-    /// If the hitbox shape is a circle, the z-value has no effect.
-    /// </summary>
     private Vector3 maxHitboxPos = Vector3.zero;
-
-    /// <summary>
-    /// The minimum values for each component of the hitbox.
-    /// If the hitbox shape is a circle, the z-value has no effect.
-    /// </summary>
     private Vector3 minHitboxPos = Vector3.zero;
 
     #endregion Variables
@@ -97,6 +88,18 @@ public class Hitbox
         }
         get => pivot;
     }
+
+    /// <summary>
+    /// The maximum values for each component of the hitbox.
+    /// If the hitbox shape is a circle, the z-value has no effect.
+    /// </summary>
+    public Vector3 MinHitboxPos => minHitboxPos;
+
+    /// <summary>
+    /// The minimum values for each component of the hitbox.
+    /// If the hitbox shape is a circle, the z-value has no effect.
+    /// </summary>
+    public Vector3 MaxHitboxPos => maxHitboxPos;
 
     #endregion Properties
 

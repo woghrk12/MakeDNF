@@ -1146,7 +1146,7 @@ GameObject:
   - component: {fileID: 943867042}
   - component: {fileID: 943867041}
   m_Layer: 0
-  m_Name: SlashCombo
+  m_Name: SwiftDemonSlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

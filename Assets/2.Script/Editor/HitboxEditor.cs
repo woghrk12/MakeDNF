@@ -73,17 +73,7 @@ public class HitboxEditor : Editor
 
                 Hitbox activeHitbox = controller.ActiveHitbox;
 
-                Transform posTransform = activeHitbox.DNFTransform.transform;
-                Transform yPosTransform = posTransform.childCount > 0 ? posTransform.GetChild(0) : null;
-                Transform scaleTransform = yPosTransform != null && yPosTransform.childCount > 0 ? yPosTransform.GetChild(0) : null;
-
-                Vector3 position = new Vector3(posTransform.position.x, yPosTransform != null ? yPosTransform.localPosition.y : 0f, posTransform.position.y * GlobalDefine.INV_CONV_RATE);
-                Vector3 size = activeHitbox.Size;
-                Vector3 offset = activeHitbox.Offset;
-                Vector3 pivot = activeHitbox.Pivot;
-                float localScale = scaleTransform != null ? scaleTransform.localScale.x : 1f;
-
-                DrawHitbox(activeHitbox.HitboxType, position, offset, size, pivot, localScale, activeHitbox.DNFTransform.IsLeft);
+                DrawHitbox(activeHitbox.HitboxType, activeHitbox.MinHitboxPos, activeHitbox.MaxHitboxPos);
             }
         }
         else // Edit the selected hitbox when not in play mode
@@ -97,9 +87,15 @@ public class HitboxEditor : Editor
             Transform scaleTransform = yPosTransform != null && yPosTransform.childCount > 0 ? yPosTransform.GetChild(0) : null;
 
             Vector3 position = new Vector3(posTransform.position.x, yPosTransform != null ? yPosTransform.localPosition.y : 0f, posTransform.position.y * GlobalDefine.INV_CONV_RATE);
+            Vector3 size = sizeArray[hitboxIndex];
+            Vector3 offset = offsetArray[hitboxIndex];
+            Vector3 pivot = pivotArray[hitboxIndex];
             float localScale = scaleTransform != null ? scaleTransform.localScale.x : 1f;
 
-            DrawHitbox(hitboxTypeArray[hitboxIndex], position, offsetArray[hitboxIndex], sizeArray[hitboxIndex], pivotArray[hitboxIndex], localScale);
+            Vector3 minHitboxPos = position + offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
+            Vector3 maxHitboxPos = position + offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
+
+            DrawHitbox(hitboxTypeArray[hitboxIndex], minHitboxPos, maxHitboxPos);
 
             switch (editMode)
             {
@@ -363,28 +359,12 @@ public class HitboxEditor : Editor
     /// The collider of XZ coordinates will appear red, and the collider of XY coordinates will appear green.
     /// The shape of the collider of XZ coordinates is a circle, it only depends on the X-coordinate.
     /// </summary>
-    private void DrawHitbox(EHitboxType hitboxType, Vector3 position, Vector3 offset, Vector3 size, Vector3 pivot, float localScale, bool isLeft = false)
+    private void DrawHitbox(EHitboxType hitboxType, Vector3 minHitboxPos, Vector3 maxHitboxPos)
     {
-        Vector3 minHitboxRange = offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
-        Vector3 maxHitboxRange = offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
-        Vector3 minHitboxPos = position;
-        Vector3 maxHitboxPos = position;
-
-        if (isLeft)
-        {
-            minHitboxPos += new Vector3(-maxHitboxRange.x, minHitboxRange.y, minHitboxRange.z);
-            maxHitboxPos += new Vector3(-minHitboxRange.x, maxHitboxRange.y, maxHitboxRange.z);
-        }
-        else
-        {
-            minHitboxPos += minHitboxRange;
-            maxHitboxPos += maxHitboxRange;
-        }
-
         Vector3 center = (minHitboxPos + maxHitboxPos) * 0.5f;
         Vector3 wireSize = maxHitboxPos - minHitboxPos;
 
-        // Draw the gizmo of XZ Coordinate
+        //// Draw the gizmo of XZ Coordinate
         Handles.color = Color.red;
         if (hitboxType == EHitboxType.BOX)
         {
