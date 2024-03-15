@@ -9,7 +9,7 @@ namespace FireKnightSkill
     {
         private enum EState { NONE = -1, FIRST, SECOND }
 
-        public const float DASH_DISTANCE = 8f;
+        public const float DASH_DISTANCE = 6f;
 
         #region Variables
 
