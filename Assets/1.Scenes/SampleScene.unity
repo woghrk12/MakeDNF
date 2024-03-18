@@ -268,7 +268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitboxes:
   - hitboxType: 0
-    size: {x: 1, y: 1, z: 1}
+    size: {x: 2.3639116, y: 2.868558, z: 2.066881}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0.5, y: 0, z: 0.5}
 --- !u!114 &178524053
@@ -951,7 +951,8 @@ MonoBehaviour:
     Name: 
     NeedMana: 0
     SkillDescription: 
-    CancelList: []
+    CancelList:
+    - {fileID: 271300689}
   CancelList: 
 --- !u!114 &488960513
 MonoBehaviour:
@@ -2110,9 +2111,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitboxes:
   - hitboxType: 0
-    size: {x: 1, y: 1, z: 1}
+    size: {x: 2.4730225, y: 2.4593856, z: 1.6789247}
     offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0.5, y: 0, z: 0.5}
+    pivot: {x: 0.5, y: 0.26, z: 0.5}
 --- !u!114 &1852172115
 MonoBehaviour:
   m_ObjectHideFlags: 0
