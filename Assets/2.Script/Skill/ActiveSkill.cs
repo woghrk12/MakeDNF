@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class ActiveSkill : Skill
 {
@@ -25,7 +26,7 @@ public abstract class ActiveSkill : Skill
     /// <summary>
     /// The list of the skills that can be canceld while in use.
     /// </summary>
-    public List<int> CancelList = new();
+    [HideInInspector] public List<int> CancelList = new();
 
     #endregion Variables
 
