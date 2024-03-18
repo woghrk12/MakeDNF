@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace FireKnightSkill
 {
-
     public partial class BladeWaltz : ActiveSkill, IAttackable
     {
         private enum EState { NONE = -1, FIRST, SECOND }
@@ -14,6 +13,9 @@ namespace FireKnightSkill
 
         private float dashDistance = 0f;
 
+        /// <summary>
+        /// Explosion object activated when the character slashes or cancels a skill.
+        /// </summary>
         private BladeWaltzProjectile.Explosion explosion = null;
 
         #endregion Variables
