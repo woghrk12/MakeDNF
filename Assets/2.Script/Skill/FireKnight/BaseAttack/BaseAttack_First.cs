@@ -15,11 +15,6 @@ namespace FireKnightSkill
             /// </summary>
             private bool isContinue = false;
 
-            /// <summary>
-            /// The flag indicating whether to block player's key input.
-            /// </summary>
-            private bool isBlockKey = true;
-
             #endregion Variables
 
             #region Constructor
@@ -47,7 +42,6 @@ namespace FireKnightSkill
                 character.CanJump = false;
 
                 isContinue = false;
-                isBlockKey = true;
 
                 phase = EStatePhase.PREDELAY;
 
@@ -65,7 +59,6 @@ namespace FireKnightSkill
 
                         stateController.AttackerHitboxController.EnableHitbox((int)EState.FIRST);
 
-                        isBlockKey = false;
                         character.Animator.SetBool(continueHash, false);
 
                         phase = EStatePhase.HITBOXACTIVE;
@@ -86,7 +79,6 @@ namespace FireKnightSkill
                     case EStatePhase.MOTIONINPROGRESS:
                         if (animatorStateInfo.IsName("BaseAttack_1") && animatorStateInfo.normalizedTime < 1f) return;
 
-                        isBlockKey = true;
                         character.Animator.SetTrigger(skillHash);
 
                         if (isContinue)
@@ -146,7 +138,7 @@ namespace FireKnightSkill
 
             public override void OnSkillButtonPressed()
             {
-                if (isBlockKey) return;
+                if (phase != EStatePhase.HITBOXACTIVE && phase != EStatePhase.MOTIONINPROGRESS) return;
 
                 isContinue = true;
                 character.Animator.SetBool(continueHash, true);

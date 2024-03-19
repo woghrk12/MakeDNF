@@ -15,11 +15,6 @@ namespace FireKnightSkill
             /// </summary>
             private bool isContinue = false;
 
-            /// <summary>
-            /// The flag indicating whether to block player's key input.
-            /// </summary>
-            private bool isBlockKey = true;
-
             [Header("Variables for dash during the skill")]
             [SerializeField] private float dashSpeed = 0.05f;
             private Vector3 dashDirection = Vector3.zero;
@@ -46,7 +41,6 @@ namespace FireKnightSkill
             public override void OnStart()
             {
                 isContinue = false;
-                isBlockKey = true;
 
                 phase = EStatePhase.PREDELAY;
 
@@ -68,8 +62,6 @@ namespace FireKnightSkill
                         GameManager.Input.RemoveMovementDelegate(OnJoystickMoved);
 
                         stateController.AttackerHitboxController.EnableHitbox((int)EState.SECOND);
-
-                        isBlockKey = false;
 
                         character.Animator.SetBool(continueHash, false);
 
@@ -155,7 +147,7 @@ namespace FireKnightSkill
 
             public override void OnSkillButtonPressed()
             {
-                if (isBlockKey) return;
+                if (phase != EStatePhase.HITBOXACTIVE && phase != EStatePhase.MOTIONINPROGRESS) return;
 
                 isContinue = true;
                 character.Animator.SetBool(continueHash, true);
