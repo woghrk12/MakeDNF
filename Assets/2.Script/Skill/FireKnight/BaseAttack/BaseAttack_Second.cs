@@ -20,6 +20,10 @@ namespace FireKnightSkill
             /// </summary>
             private bool isBlockKey = true;
 
+            [Header("Variables for dash during the skill")]
+            [SerializeField] private float dashSpeed = 0.02f;
+            private Vector3 dashDirection = Vector3.zero;
+
             #endregion Variables
 
             #region Constructor
@@ -47,6 +51,8 @@ namespace FireKnightSkill
                 phase = EStatePhase.PREDELAY;
 
                 stateController.AlreadyHitTargets.Clear();
+
+                GameManager.Input.AddMovementDelegate(OnJoystickMoved);
             }
 
             public override void OnUpdate()
@@ -58,6 +64,8 @@ namespace FireKnightSkill
                     case EStatePhase.PREDELAY:
                         if (!animatorStateInfo.IsName("BaseAttack_2")) return;
                         if (animatorStateInfo.normalizedTime < preDelay) return;
+
+                        GameManager.Input.RemoveMovementDelegate(OnJoystickMoved);
 
                         stateController.AttackerHitboxController.EnableHitbox((int)EState.SECOND);
 
@@ -101,6 +109,16 @@ namespace FireKnightSkill
                 }
             }
 
+            public override void OnFixedUpdate()
+            {
+                if (phase != EStatePhase.HITBOXACTIVE && phase != EStatePhase.MOTIONINPROGRESS) return;
+
+                if (character.DNFRigidbody.enabled)
+                {
+                    character.DNFRigidbody.MoveDirection(dashDirection);
+                }
+            }
+
             public override void OnLateUpdate()
             {
                 if (!stateController.AttackerHitboxController.IsHitboxActivated) return;
@@ -122,6 +140,8 @@ namespace FireKnightSkill
 
             public override void OnCancel()
             {
+                GameManager.Input.RemoveMovementDelegate(OnJoystickMoved);
+
                 if (stateController.AttackerHitboxController.IsHitboxActivated)
                 {
                     stateController.AttackerHitboxController.DisableHitbox();
@@ -142,6 +162,25 @@ namespace FireKnightSkill
             }
 
             #endregion Override
+
+
+            /// <summary>
+            /// The event method called when the player control the joystick during the skill.
+            /// </summary>
+            /// <param name="direction">The direction vector received through the joystick</param>
+            public void OnJoystickMoved(Vector3 direction)
+            {
+                if (phase != EStatePhase.PREDELAY) return;
+
+                if (character.DNFTransform.IsLeft)
+                {
+                    dashDirection = (direction.x > 0f ? Vector3.zero : Vector3.left) * dashSpeed;
+                }
+                else
+                {
+                    dashDirection = (direction.x < 0f ? Vector3.zero : Vector3.right) * dashSpeed;
+                }
+            }
 
             #endregion Methods
         }
