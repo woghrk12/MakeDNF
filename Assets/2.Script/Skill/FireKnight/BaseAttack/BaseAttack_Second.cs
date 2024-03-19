@@ -21,7 +21,7 @@ namespace FireKnightSkill
             private bool isBlockKey = true;
 
             [Header("Variables for dash during the skill")]
-            [SerializeField] private float dashSpeed = 0.02f;
+            [SerializeField] private float dashSpeed = 0.05f;
             private Vector3 dashDirection = Vector3.zero;
 
             #endregion Variables
