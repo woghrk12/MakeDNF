@@ -8,12 +8,12 @@ public class CameraManager : MonoBehaviour
     private Transform targetTransform = null;
 
     /// <summary>
-    /// 
+    /// The offset between the camera position and the target position
     /// </summary>
     [SerializeField] private Vector2 offset = Vector2.zero;
 
     /// <summary>
-    /// 
+    /// The power value for shaking the camera.
     /// </summary>
     private float shakePower = 0f;
 
@@ -43,18 +43,19 @@ public class CameraManager : MonoBehaviour
     #region Methods
 
     /// <summary>
-    /// 
+    /// Set the transform component as the target which the camera focus on. 
     /// </summary>
-    /// <param name="transform"></param>
+    /// <param name="transform">The transform component of the target</param>
     public void SetTarget(Transform transform)
     {
         targetTransform = transform;
     }
 
     /// <summary>
-    /// 
+    /// Shake the camera by the given amount of force.
+    /// The greater value between the current force and the given force is applied.
     /// </summary>
-    /// <param name="shakePower"></param>
+    /// <param name="shakePower">The value determining how forcefully the camera shakes</param>
     public void ShakeCamera(float shakePower)
     {
         float power = shakePower * 0.1f;
@@ -68,7 +69,9 @@ public class CameraManager : MonoBehaviour
     #region Helper
 
     /// <summary>
-    /// 
+    /// Calculate the appropriate position for the camera to follow the target 
+    /// based on the target's position and the result of camera shaking.
+    /// It adjusts the camera's position accordingly and outputs the final position.
     /// </summary>
     private void HandleCameraPosition()
     {
