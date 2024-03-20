@@ -62,6 +62,9 @@ namespace FireKnightSkill
                         character.DNFRigidbody.MoveDirection(new Vector3(stateController.dashDistance, 0f, 0f));
 
                         GameManager.Effect.SpawnFromPool(EEffectList.Horizontal_Slash).GetComponent<InstanceVFX>().InitEffect(character.DNFTransform);
+
+                        GameManager.Camera.ShakeCamera(3f);
+
                         phase = EStatePhase.HITBOXACTIVE;
 
                         break;

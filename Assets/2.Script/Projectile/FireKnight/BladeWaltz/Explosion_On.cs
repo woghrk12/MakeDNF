@@ -36,6 +36,8 @@ namespace FireKnightSkill.BladeWaltzProjectile
                 stateController.AlreadyHitTargets.Clear();
 
                 stateController.AttackerHitboxController.EnableHitbox((int)EState.ON);
+
+                GameManager.Camera.ShakeCamera(1f);
             }
 
             public override void OnUpdate()

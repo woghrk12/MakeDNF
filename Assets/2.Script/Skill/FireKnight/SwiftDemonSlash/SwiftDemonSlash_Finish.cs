@@ -46,6 +46,8 @@ namespace FireKnightSkill
 
                         GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Slash_2_FireKnight).GetComponent<Projectile>().Activate(character.DNFTransform);
 
+                        GameManager.Camera.ShakeCamera(5f);
+
                         phase = EStatePhase.MOTIONINPROGRESS;
 
                         break;

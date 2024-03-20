@@ -60,6 +60,8 @@ namespace FireKnightSkill
 
                         stateController.explosion.TriggerExplosion();
 
+                        GameManager.Camera.ShakeCamera(5f);
+
                         phase = EStatePhase.HITBOXACTIVE;
 
                         break;

@@ -23,6 +23,8 @@ namespace FireKnightSkill
 
         public void CalculateOnHit(List<IDamagable> targets)
         {
+            int count = 0;
+
             foreach (IDamagable target in targets)
             {
                 if (target.HitboxState == EHitboxState.INVINCIBILITY) continue;
@@ -33,7 +35,14 @@ namespace FireKnightSkill
                     character.OnAttack(target.DefenderDNFTransform, EAttackType.SKILL, EHitType.DIRECT);
 
                     AlreadyHitTargets.Add(target);
+
+                    count++;
                 }
+            }
+
+            if (count > 0)
+            {
+                GameManager.Camera.ShakeCamera(2f);
             }
         }
 
