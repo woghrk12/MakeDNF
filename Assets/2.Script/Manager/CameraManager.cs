@@ -57,7 +57,12 @@ public class CameraManager : MonoBehaviour
     /// <param name="shakePower"></param>
     public void ShakeCamera(float shakePower)
     {
-        this.shakePower = shakePower * 0.1f;
+        float power = shakePower * 0.1f;
+
+        if (this.shakePower < power)
+        {
+            this.shakePower = power;
+        }
     }
 
     #region Helper
