@@ -184,7 +184,7 @@ public class Character : MonoBehaviour, IDamagable
     {
         SetBehaviour(BehaviourCodeList.IDLE_BEHAVIOUR_CODE);
 
-        // Debug
+        // Camera Debug
         Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
         
         // Debug : Register the active skills

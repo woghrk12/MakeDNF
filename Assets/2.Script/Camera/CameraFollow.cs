@@ -37,7 +37,7 @@ public class CameraFollow : MonoBehaviour
     private void Follow(Transform target)
     {
         Vector3 targetPos = new Vector3(target.position.x + offset.x, target.position.y + offset.y, cameraTransform.position.z);
-        cameraTransform.position = Vector3.Lerp(cameraTransform.position, targetPos, Time.deltaTime * 8f);
+        cameraTransform.position = targetPos;
     }
 
     #endregion Methods
