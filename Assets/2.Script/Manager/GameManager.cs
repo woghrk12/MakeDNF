@@ -11,6 +11,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     [Header("Content Manager")]
     private static ObjectPoolManager objectPoolManager = null;
     private static EffectManager effectManager = null;
+    private static CameraManager cameraManager = null;
 
     // Debug
     [SerializeField] private Room room = null;
@@ -24,6 +25,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public static ObjectPoolManager ObjectPool => objectPoolManager;
     public static EffectManager Effect => effectManager;
+    public static CameraManager Camera => cameraManager;
 
     // Debug
     public static Room Room => Instance.room;
@@ -38,6 +40,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
         objectPoolManager = FindObjectOfType<ObjectPoolManager>();
         effectManager = FindObjectOfType<EffectManager>();
+        cameraManager = FindObjectOfType<CameraManager>();
 
         inputManager.Init();
         resourceManager.Init();

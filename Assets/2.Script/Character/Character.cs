@@ -185,7 +185,7 @@ public class Character : MonoBehaviour, IDamagable
         SetBehaviour(BehaviourCodeList.IDLE_BEHAVIOUR_CODE);
 
         // Camera Debug
-        Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
+        GameManager.Camera.SetTarget(transform);
         
         // Debug : Register the active skills
         attackBehaviour.RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<FireKnightSkill.BaseAttack>());
