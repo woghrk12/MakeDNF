@@ -90,6 +90,8 @@ namespace FireKnightSkill
 
             character.Animator.SetTrigger(skillHash);
 
+            character.DNFTransform.IsBoundaryOverride = true;
+
             SetState((int)EState.FIRST);
         }
 
@@ -99,12 +101,16 @@ namespace FireKnightSkill
 
             character.HitboxState = EHitboxState.NONE;
 
+            character.DNFTransform.IsBoundaryOverride = false;
+
             attackController.OnComplete();
         }
 
         public override void OnCancel()
         {
             base.OnCancel();
+
+            character.DNFTransform.IsBoundaryOverride = false;
         }
 
         #endregion Override
