@@ -24,7 +24,10 @@ public class DNFTransform : MonoBehaviour
         set
         {
             Vector3 pos = posTransform.position;
-            pos.x = value;
+
+            Room curRoom = GameManager.Room;
+            pos.x = Mathf.Clamp(value, curRoom.MinXZPos.x, curRoom.MaxXZPos.x);
+
             posTransform.position = pos;
         }
         get => posTransform.position.x;
@@ -57,7 +60,10 @@ public class DNFTransform : MonoBehaviour
         set
         {
             Vector3 pos = posTransform.position;
-            pos.y = value * GlobalDefine.CONV_RATE;
+
+            Room curRoom = GameManager.Room;
+            pos.y = Mathf.Clamp(value * GlobalDefine.CONV_RATE, curRoom.MinXZPos.z, curRoom.MaxXZPos.z);
+            
             posTransform.position = pos;
         }
         get => posTransform.position.y * GlobalDefine.INV_CONV_RATE;
