@@ -5,14 +5,12 @@ public class DNFRigidbody : MonoBehaviour
 {
     #region Variables
 
-    [SerializeField] private float gravityScale = 1f;
-
     private DNFTransform dnfTransform = null;
 
     private Vector3 gravity = new Vector3(0f, -9.81f, 0f);
-
     private Vector3 velocity = Vector3.zero;
 
+    [SerializeField] private float gravityScale = 1f;
     [SerializeField] private float drag = 0.2f;
 
     #endregion Variables
@@ -39,10 +37,10 @@ public class DNFRigidbody : MonoBehaviour
 
     private void Awake()
     {
+        dnfTransform = GetComponent<DNFTransform>();
+
         // Calculate gravitational acceleration
         gravity *= Time.deltaTime;
-
-        dnfTransform = GetComponent<DNFTransform>();
     }
 
     private void FixedUpdate()
