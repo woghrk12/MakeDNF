@@ -1,9 +1,10 @@
-
 /// <summary>
 /// The class of the controller for Fire Knight.
 /// </summary>
 public class FireKnight : Character
 {
+    #region Unity Events
+
     protected override void Start()
     {
         base.Start();
@@ -20,4 +21,6 @@ public class FireKnight : Character
         magicSwordMedley.Init(this);
         magicSwordMedley.ApplySkillEffects();
     }
+
+    #endregion Unity Events
 }
