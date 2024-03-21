@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// The class of state machine controller for character.
+/// The class of the controller for character, which is the parent class of other player classes.
 /// </summary>
 public class Character : MonoBehaviour, IDamagable
 {
@@ -152,7 +152,7 @@ public class Character : MonoBehaviour, IDamagable
 
     #region Unity Events
 
-    protected virtual void Awake()
+    private void Awake()
     {
         animator = GetComponent<Animator>();
 
@@ -187,18 +187,6 @@ public class Character : MonoBehaviour, IDamagable
         // Camera Debug
         GameManager.Camera.SetTarget(transform);
         
-        // Debug : Register the active skills
-        attackBehaviour.RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<FireKnightSkill.BaseAttack>());
-        attackBehaviour.RegisterSkill(EKeyName.SKILL1, FindObjectOfType<FireKnightSkill.SwiftDemonSlash>());
-        attackBehaviour.RegisterSkill(EKeyName.SKILL2, FindObjectOfType<FireKnightSkill.Crescent>());
-        attackBehaviour.RegisterSkill(EKeyName.SKILL3, FindObjectOfType<FireKnightSkill.Dodge>());
-        attackBehaviour.RegisterSkill(EKeyName.SKILL4, FindObjectOfType<FireKnightSkill.BladeWaltz>());
-
-        // Debug : Register the passive skills
-        PassiveSkill magicSwordMedley = FindObjectOfType<FireKnightSkill.MagicSwordMedley>();
-        magicSwordMedley.Init(this);
-        magicSwordMedley.ApplySkillEffects();
-
         GameManager.Input.AddMovementDelegate(OnJoystickMoved);
 
         GameManager.Input.AddButtonDownDelegate(EKeyName.JUMP, OnJumpButtonPressed);
@@ -223,21 +211,21 @@ public class Character : MonoBehaviour, IDamagable
         DefenderHitboxController.EnableHitbox(0);
     }
 
-    protected virtual void Update()
+    private void Update()
     {
         curBehaviour.OnUpdate();
 
         DefenderHitboxController.CalculateHitbox();
     }
 
-    protected virtual void FixedUpdate()
+    private void FixedUpdate()
     {
         jumpBehaviour.OnFixedUpdate();
 
         curBehaviour.OnFixedUpdate();
     }
 
-    protected virtual void LateUpdate()
+    private void LateUpdate()
     {
         curBehaviour.OnLateUpdate();
     }
@@ -301,72 +289,10 @@ public class Character : MonoBehaviour, IDamagable
         vfxDictionary.Remove(effectIndex);
     }
 
+    public void RegisterSkill(EKeyName keyName, ActiveSkill activeSkill)
+        => attackBehaviour.RegisterSkill(keyName, activeSkill);
+
     #region Event
-
-    /// <summary>
-    /// The event method called when the player control the joystick.
-    /// </summary>
-    /// <param name="direction">The direction vector received through the joystick</param>
-    public void OnJoystickMoved(Vector3 direction)
-    {
-        if (!CanMove) return;
-
-        moveBehaviour.Move(direction);
-    }
-
-    /// <summary>
-    /// The event method called when the player press the jump button.
-    /// </summary>
-    public void OnJumpButtonPressed()
-    {
-        if (!CanJump) return;
-
-        jumpBehaviour.Jump();
-    }
-
-    /// <summary>
-    /// The event method called when the player press the base attack button.
-    /// </summary>
-    public void OnAttackButtonPressed()
-    {
-        attackBehaviour.OnSkillButtonPressed(EKeyName.BASEATTACK);
-
-        if (!CanAttack) return;
-        if (!attackBehaviour.CheckCanAttack(EKeyName.BASEATTACK)) return;
-
-        attackBehaviour.Attack(EKeyName.BASEATTACK);
-    }
-
-    /// <summary>
-    /// The event method called when the player release the base attack button.
-    /// </summary>
-    public void OnAttackButtonReleased()
-    {
-        attackBehaviour.OnSkillButtonReleased(EKeyName.BASEATTACK);
-    }
-
-    /// <summary>
-    /// The event method called when the player press the skill button.
-    /// </summary>
-    /// <param name="keyName">The name of skill button</param>
-    public void OnSkillButtonPressed(EKeyName keyName)
-    {
-        attackBehaviour.OnSkillButtonPressed(keyName);
-
-        if (!CanAttack) return;
-        if (!attackBehaviour.CheckCanAttack(keyName)) return;
-
-        attackBehaviour.Attack(keyName);
-    }
-
-    /// <summary>
-    /// The event method called when the player release the skill button.
-    /// </summary>
-    /// <param name="keyName">The name of skill button</param>
-    public void OnSkillButtonReleased(EKeyName keyName)
-    {
-        attackBehaviour.OnSkillButtonReleased(keyName);
-    }
 
     /// <summary>
     /// The event method called when the character successfully attack the target.
@@ -387,6 +313,71 @@ public class Character : MonoBehaviour, IDamagable
         }
 
         AttackEvent?.Invoke(targetTransform, attackType);
+    }
+
+    /// <summary>
+    /// The event method called when the player control the joystick.
+    /// </summary>
+    /// <param name="direction">The direction vector received through the joystick</param>
+    private void OnJoystickMoved(Vector3 direction)
+    {
+        if (!CanMove) return;
+
+        moveBehaviour.Move(direction);
+    }
+
+    /// <summary>
+    /// The event method called when the player press the jump button.
+    /// </summary>
+    private void OnJumpButtonPressed()
+    {
+        if (!CanJump) return;
+
+        jumpBehaviour.Jump();
+    }
+
+    /// <summary>
+    /// The event method called when the player press the base attack button.
+    /// </summary>
+    private void OnAttackButtonPressed()
+    {
+        attackBehaviour.OnSkillButtonPressed(EKeyName.BASEATTACK);
+
+        if (!CanAttack) return;
+        if (!attackBehaviour.CheckCanAttack(EKeyName.BASEATTACK)) return;
+
+        attackBehaviour.Attack(EKeyName.BASEATTACK);
+    }
+
+    /// <summary>
+    /// The event method called when the player release the base attack button.
+    /// </summary>
+    private void OnAttackButtonReleased()
+    {
+        attackBehaviour.OnSkillButtonReleased(EKeyName.BASEATTACK);
+    }
+
+    /// <summary>
+    /// The event method called when the player press the skill button.
+    /// </summary>
+    /// <param name="keyName">The name of skill button</param>
+    private void OnSkillButtonPressed(EKeyName keyName)
+    {
+        attackBehaviour.OnSkillButtonPressed(keyName);
+
+        if (!CanAttack) return;
+        if (!attackBehaviour.CheckCanAttack(keyName)) return;
+
+        attackBehaviour.Attack(keyName);
+    }
+
+    /// <summary>
+    /// The event method called when the player release the skill button.
+    /// </summary>
+    /// <param name="keyName">The name of skill button</param>
+    private void OnSkillButtonReleased(EKeyName keyName)
+    {
+        attackBehaviour.OnSkillButtonReleased(keyName);
     }
 
     #endregion Event 
