@@ -33,7 +33,7 @@ public class Character : MonoBehaviour, IDamagable
     private Dictionary<EEffectList, VFX> vfxDictionary = new();
 
     /// <summary>
-    /// 
+    /// The current state of the character's hitbox.
     /// </summary>
     private EHitboxState hitboxState = EHitboxState.NONE;
 
