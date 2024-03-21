@@ -9,7 +9,9 @@ public class DNFTransform : MonoBehaviour
     private Transform yPosTransform = null;
     private Transform scaleTransform = null;
 
+    [Header("Flag variables")]
     private bool isLeft = false;
+    private bool isBoundaryOverride = false;
 
     #endregion Variables
 
@@ -26,7 +28,7 @@ public class DNFTransform : MonoBehaviour
             Vector3 pos = posTransform.position;
 
             Room curRoom = GameManager.Room;
-            pos.x = Mathf.Clamp(value, curRoom.MinXZPos.x, curRoom.MaxXZPos.x);
+            pos.x = isBoundaryOverride ? value : Mathf.Clamp(value, curRoom.MinXZPos.x, curRoom.MaxXZPos.x);
 
             posTransform.position = pos;
         }
@@ -62,7 +64,9 @@ public class DNFTransform : MonoBehaviour
             Vector3 pos = posTransform.position;
 
             Room curRoom = GameManager.Room;
-            pos.y = Mathf.Clamp(value * GlobalDefine.CONV_RATE, curRoom.MinXZPos.z, curRoom.MaxXZPos.z);
+            pos.y = isBoundaryOverride 
+                ? value * GlobalDefine.CONV_RATE 
+                : Mathf.Clamp(value * GlobalDefine.CONV_RATE, curRoom.MinXZPos.z, curRoom.MaxXZPos.z);
             
             posTransform.position = pos;
         }
@@ -110,6 +114,31 @@ public class DNFTransform : MonoBehaviour
             posTransform.localScale = new Vector3(isLeft ? -1f : 1f, 1f, 1f);
         }
         get => isLeft;
+    }
+
+    /// <summary>
+    /// The flag controls whether the object is allowed to override the map boundary restrictions.
+    /// Return true if the object is allowed to move outside the map boundary.
+    /// </summary>
+    public bool IsBoundaryOverride
+    {
+        set
+        {
+            if (!value)
+            {
+                Vector3 pos = posTransform.position;
+
+                Room curRoom = GameManager.Room;
+
+                pos.x = Mathf.Clamp(pos.x, curRoom.MinXZPos.x, curRoom.MaxXZPos.x);
+                pos.y = Mathf.Clamp(pos.y, curRoom.MinXZPos.z, curRoom.MaxXZPos.z);
+
+                posTransform.position = pos;
+            }
+
+            isBoundaryOverride = value;
+        }
+        get => isBoundaryOverride;
     }
 
     /// <summary>
