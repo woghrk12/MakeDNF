@@ -99,7 +99,8 @@ public class DNFTransform : MonoBehaviour
     public bool HasScaleObj => scaleTransform != null;
 
     /// <summary>
-    /// The direction the object is facing. Return true if the object is facing left.
+    /// The flag controls whether the direction of the object is facing left. 
+    /// Return true if the object is facing left.
     /// </summary>
     public bool IsLeft
     {
