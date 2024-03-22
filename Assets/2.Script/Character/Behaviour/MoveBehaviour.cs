@@ -65,7 +65,10 @@ public class MoveBehaviour : CharacterBehaviour
             character.DNFTransform.IsLeft = moveDir.x < 0f;
         }
 
-        character.DNFRigidbody.MoveDirection(moveDir);
+        if (character.DNFRigidbody.enabled)
+        {
+            character.DNFRigidbody.MoveDirection(moveDir);
+        }
     }
 
     #endregion Methods
