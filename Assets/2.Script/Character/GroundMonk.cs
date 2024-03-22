@@ -10,8 +10,7 @@ public class GroundMonk : Character
         base.Start();
 
         // Register the active skills
-        // TODO : Register the active skills of the Ground Monk
-        //RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<FireKnightSkill.BaseAttack>());
+        RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<GroundMonkSkill.BaseAttack>());
 
         // Register the passive skills
         // TODO : Register the passive skills of the Ground Monk
