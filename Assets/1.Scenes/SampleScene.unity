@@ -3613,6 +3613,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2069182386}
+  - component: {fileID: 2069182388}
   - component: {fileID: 2069182387}
   m_Layer: 0
   m_Name: GattlingPunch
@@ -3652,8 +3653,26 @@ MonoBehaviour:
     Name: 
     NeedMana: 0
     SkillDescription: 
-    CancelList: []
+    CancelList:
+    - {fileID: 165921793}
   CancelList: 
+--- !u!114 &2069182388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069182385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add4c21ad3853494895ead04007e7029, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitboxes:
+  - hitboxType: 0
+    size: {x: 2.7294164, y: 2.1473203, z: 2.1698165}
+    offset: {x: 0, y: 0, z: 0}
+    pivot: {x: 0, y: 0, z: 0.5}
 --- !u!1 &2069336349
 GameObject:
   m_ObjectHideFlags: 0
