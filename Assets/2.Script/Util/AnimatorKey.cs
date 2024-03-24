@@ -34,6 +34,11 @@ public class AnimatorKey
             public static readonly string DODGE = "Dodge";
             public static readonly string BLADE_WALTZ = "BladeWaltz";
         }
+
+        public class GroundMonk
+        {
+            public static readonly string GATTLING_PUNCH = "GattlingPunch";
+        }
     }
 
     public class Projectile
