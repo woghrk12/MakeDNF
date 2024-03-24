@@ -12,7 +12,7 @@ namespace GroundMonkSkill
         /// <summary>
         /// The number of combo attacks.
         /// </summary>
-        private int numCombo = 10;
+        private int numCombo = 7;
 
         #endregion Variables
 
