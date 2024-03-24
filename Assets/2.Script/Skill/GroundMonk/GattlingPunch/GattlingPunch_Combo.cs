@@ -53,6 +53,10 @@ namespace GroundMonkSkill
                     case EStatePhase.PREDELAY:
                         if (!animatorStateInfo.IsName("GattlingPunch_Combo_" + (curCombo % 2).ToString())) return;
 
+                        GameManager.Effect.SpawnFromPool(EEffectList.Side_Dust).GetComponent<InstanceVFX>().InitEffect(character.DNFTransform);
+                        
+                        character.AddEffect(EEffectList.Straight_Fist_1, true);
+                        
                         curCombo++;
 
                         phase = EStatePhase.MOTIONINPROGRESS;
