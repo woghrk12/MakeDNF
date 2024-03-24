@@ -18,7 +18,7 @@ namespace FireKnightSkill
             {
                 this.stateController = stateController;
 
-                skillHash = Animator.StringToHash(AnimatorKey.Character.FireKnight.SLASH_COMBO);
+                skillHash = Animator.StringToHash(AnimatorKey.Character.FireKnight.SWIFT_DEMON_SLASH);
 
                 preDelay = 11f / 18f;
             }
@@ -41,7 +41,7 @@ namespace FireKnightSkill
                 switch (phase)
                 {
                     case EStatePhase.PREDELAY:
-                        if (!animatorStateInfo.IsName("SlashCombo_Finish")) return;
+                        if (!animatorStateInfo.IsName("SwiftDemonSlash_Finsh")) return;
                         if (animatorStateInfo.normalizedTime < preDelay) return;
 
                         GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.Slash_2_FireKnight).GetComponent<Projectile>().Activate(character.DNFTransform);

@@ -29,7 +29,7 @@ namespace FireKnightSkill
         {
             base.Init(character, attackController);
 
-            skillHash = Animator.StringToHash(AnimatorKey.Character.FireKnight.SLASH_COMBO);
+            skillHash = Animator.StringToHash(AnimatorKey.Character.FireKnight.SWIFT_DEMON_SLASH);
 
             stateList.Add(new Combo(character, this));
             stateList.Add(new Finish(character, this));

@@ -23,7 +23,7 @@ namespace FireKnightSkill
             {
                 this.stateController = stateController;
 
-                skillHash = Animator.StringToHash(AnimatorKey.Character.FireKnight.SLASH_COMBO);
+                skillHash = Animator.StringToHash(AnimatorKey.Character.FireKnight.SWIFT_DEMON_SLASH);
             }
 
             #endregion Constructor
@@ -49,7 +49,7 @@ namespace FireKnightSkill
                 switch (phase)
                 {
                     case EStatePhase.PREDELAY:
-                        if (!animatorStateInfo.IsName("SlashCombo_" + (curSlash % 2).ToString())) return;
+                        if (!animatorStateInfo.IsName("SwiftDemonSlash_Combo_" + (curSlash % 2).ToString())) return;
 
                         switch (curSlash % 4)
                         {
