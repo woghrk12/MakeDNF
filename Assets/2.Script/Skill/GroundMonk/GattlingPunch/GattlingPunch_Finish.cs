@@ -46,6 +46,8 @@ namespace GroundMonkSkill
                         if (!animatorStateInfo.IsName("GattlingPunch_Finish")) return;
                         if (animatorStateInfo.normalizedTime < preDelay) return;
 
+                        GameManager.Effect.SpawnFromPool(EEffectList.Side_Dust).GetComponent<InstanceVFX>().InitEffect(character.DNFTransform);
+
                         GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.GattlingPunch_Explosion).GetComponent<Projectile>().Activate(character.DNFTransform);
 
                         GameManager.Camera.ShakeCamera(5f);
