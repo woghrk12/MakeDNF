@@ -21,6 +21,8 @@ namespace GroundMonkSkill
                 this.stateController = stateController;
 
                 skillHash = Animator.StringToHash(AnimatorKey.Character.GroundMonk.GATTLING_PUNCH);
+
+                preDelay = 1f / 6f;
             }
 
             #endregion Constructor
@@ -42,6 +44,11 @@ namespace GroundMonkSkill
                 {
                     case EStatePhase.PREDELAY:
                         if (!animatorStateInfo.IsName("GattlingPunch_Finish")) return;
+                        if (animatorStateInfo.normalizedTime < preDelay) return;
+
+                        GameManager.ObjectPool.SpawnFromPool(EObjectPoolList.GattlingPunch_Explosion).GetComponent<Projectile>().Activate(character.DNFTransform);
+
+                        GameManager.Camera.ShakeCamera(5f);
 
                         phase = EStatePhase.MOTIONINPROGRESS;
 
@@ -54,7 +61,6 @@ namespace GroundMonkSkill
 
                         break;
                 }
-
             }
 
             public override void OnComplete()
