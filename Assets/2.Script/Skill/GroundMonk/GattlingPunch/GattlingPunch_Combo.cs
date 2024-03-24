@@ -13,9 +13,24 @@ namespace GroundMonkSkill
             private GattlingPunch stateController = null;
 
             /// <summary>
+            /// The maximum number of combo attacks
+            /// </summary>
+            private int maxCombo = 0;
+
+            /// <summary>
+            /// The maximum number of combo attacks the player can input additionally.
+            /// </summary>
+            private int maxAdditionalCombo = 3;
+
+            /// <summary>
             /// The number of combo attacks performed so far.
             /// </summary>
             private int curCombo = 0;
+
+            [Header("Variables for attack motion speed")]
+            private int attackSpeedHash = 0;
+            private float attackSpeed = 0f;
+            private float originalAttackSpeed = 0f;
 
             #endregion Variables
 
@@ -26,6 +41,7 @@ namespace GroundMonkSkill
                 this.stateController = stateController;
 
                 skillHash = Animator.StringToHash(AnimatorKey.Character.GroundMonk.GATTLING_PUNCH);
+                attackSpeedHash = Animator.StringToHash(AnimatorKey.Character.ATTACK_SPEED);
             }
 
             #endregion Constructor
@@ -39,7 +55,11 @@ namespace GroundMonkSkill
                 character.CanMove = false;
                 character.CanJump = false;
 
+                maxCombo = stateController.numCombo;
                 curCombo = 0;
+
+                originalAttackSpeed = character.Animator.GetFloat(attackSpeedHash);
+                attackSpeed = originalAttackSpeed;
 
                 phase = EStatePhase.PREDELAY;
             }
@@ -66,7 +86,7 @@ namespace GroundMonkSkill
                     case EStatePhase.MOTIONINPROGRESS:
                         if (animatorStateInfo.normalizedTime < 1f) return;
 
-                        if (curCombo < stateController.numCombo)
+                        if (curCombo < maxCombo)
                         {
                             character.Animator.SetBool(continueHash, true);
                             character.Animator.SetTrigger(skillHash);
@@ -75,6 +95,8 @@ namespace GroundMonkSkill
                         }
                         else
                         {
+                            character.Animator.SetFloat(attackSpeedHash, originalAttackSpeed);
+
                             character.Animator.SetBool(continueHash, false);
                             character.Animator.SetTrigger(skillHash);
 
@@ -89,10 +111,22 @@ namespace GroundMonkSkill
             {
                 phase = EStatePhase.NONE;
 
+                character.Animator.SetFloat(attackSpeedHash, originalAttackSpeed);
+
                 character.Animator.ResetTrigger(skillHash);
                 character.Animator.SetBool(continueHash, false);
 
                 character.Animator.SetTrigger(cancelHash);
+            }
+
+            public override void OnSkillButtonPressed()
+            {
+                if (maxCombo - stateController.numCombo >= maxAdditionalCombo) return;
+
+                maxCombo++;
+                attackSpeed += 0.3f;
+
+                character.Animator.SetFloat(attackSpeedHash, attackSpeed);
             }
 
             #endregion Override
