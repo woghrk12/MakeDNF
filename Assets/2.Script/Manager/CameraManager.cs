@@ -35,12 +35,12 @@ public class CameraManager : MonoBehaviour
     private void LateUpdate()
     {
         if (targetTransform == null) return;
-        
+
         if (shakePower > 0f)
         {
             shakePower -= Time.deltaTime;
         }
-
+     
         HandleCameraPosition();
     }
 
@@ -90,18 +90,18 @@ public class CameraManager : MonoBehaviour
         Vector3 targetPos = targetTransform.position;
         Vector3 cameraPos = new Vector3(targetPos.x + offset.x, targetPos.y + offset.y, cameraTransform.position.z);
 
-        if (shakePower > 0f)
-        { 
-            Vector3 shakeOffset = Random.insideUnitCircle * shakePower;
-            cameraPos += shakeOffset;
-        }
-
         float cameraSize = mainCamera.orthographicSize;
         float ratio = (float)mainCamera.pixelWidth / mainCamera.pixelHeight;
 
         cameraPos.x = Mathf.Clamp(cameraPos.x, cameraBottomLeft.x + cameraSize * ratio, cameraTopRight.x - cameraSize * ratio);
         cameraPos.y = Mathf.Clamp(cameraPos.y, cameraBottomLeft.y + cameraSize, cameraTopRight.y - cameraSize);
-        
+
+        if (shakePower > 0f)
+        {
+            Vector3 shakeOffset = Random.insideUnitCircle * shakePower;
+            cameraPos += shakeOffset;
+        }
+
         cameraTransform.position = cameraPos;
     }
 
