@@ -42,6 +42,8 @@ namespace GroundMonkSkill
 
                 skillHash = Animator.StringToHash(AnimatorKey.Character.GroundMonk.GATTLING_PUNCH);
                 attackSpeedHash = Animator.StringToHash(AnimatorKey.Character.ATTACK_SPEED);
+
+                duration = 2f / 3f;
             }
 
             #endregion Constructor
@@ -62,6 +64,8 @@ namespace GroundMonkSkill
                 attackSpeed = originalAttackSpeed;
 
                 phase = EStatePhase.PREDELAY;
+
+                stateController.AlreadyHitTargets.Clear();
             }
 
             public override void OnUpdate()
@@ -76,8 +80,23 @@ namespace GroundMonkSkill
                         GameManager.Effect.SpawnFromPool(EEffectList.Side_Dust).GetComponent<InstanceVFX>().InitEffect(character.DNFTransform);
                         
                         character.AddEffect(EEffectList.Straight_Fist_1, true);
-                        
+
+                        stateController.AttackerHitboxController.EnableHitbox((int)EState.COMBO);
+
                         curCombo++;
+
+                        phase = EStatePhase.HITBOXACTIVE;
+
+                        break;
+
+                    case EStatePhase.HITBOXACTIVE:
+                        stateController.AttackerHitboxController.CalculateHitbox();
+
+                        if (animatorStateInfo.normalizedTime < duration) return;
+
+                        stateController.AttackerHitboxController.DisableHitbox();
+
+                        stateController.AlreadyHitTargets.Clear();
 
                         phase = EStatePhase.MOTIONINPROGRESS;
 
@@ -105,6 +124,13 @@ namespace GroundMonkSkill
 
                         break;
                 }
+            }
+
+            public override void OnLateUpdate()
+            {
+                if (!stateController.AttackerHitboxController.IsHitboxActivated) return;
+
+                stateController.CalculateOnHit(GameManager.Room.Monsters);
             }
 
             public override void OnCancel()

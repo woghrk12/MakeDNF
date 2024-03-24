@@ -32,7 +32,27 @@ namespace GroundMonkSkill
         
         public void CalculateOnHit(List<IDamagable> targets)
         {
-            throw new System.NotImplementedException();
+            int count = 0;
+
+            foreach (IDamagable target in targets)
+            {
+                if (target.HitboxState == EHitboxState.INVINCIBILITY) continue;
+                if (AlreadyHitTargets.Contains(target)) continue;
+                if (AttackerHitboxController.CheckCollision(target.DefenderHitboxController))
+                {
+                    target.OnDamage(character.DNFTransform, null, 0f, Vector3.zero);
+                    character.OnAttack(target.DefenderDNFTransform, EAttackType.SKILL, EHitType.INDIRECT);
+
+                    AlreadyHitTargets.Add(target);
+
+                    count++;
+                }
+            }
+
+            if (count > 0)
+            {
+                GameManager.Camera.ShakeCamera(2f);
+            }
         }
 
         #endregion IAttackable Implementation
@@ -44,6 +64,11 @@ namespace GroundMonkSkill
         public override void Init(Character character, AttackBehaviour attackController)
         {
             base.Init(character, attackController);
+
+            AttackerDNFTransform = character.DNFTransform;
+            AttackerHitboxController = GetComponent<HitboxController>();
+            AttackerHitboxController.Init(AttackerDNFTransform);
+            AlreadyHitTargets = new List<IDamagable>();
 
             skillHash = Animator.StringToHash(AnimatorKey.Character.GroundMonk.GATTLING_PUNCH);
 
