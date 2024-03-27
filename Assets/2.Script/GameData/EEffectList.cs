@@ -11,5 +11,6 @@ public enum EEffectList
     Straight_Fist_3 = 6,
     Straight_Fist_4 = 7,
     Fist_Explosion = 8,
+    Charging = 9,
 
 }

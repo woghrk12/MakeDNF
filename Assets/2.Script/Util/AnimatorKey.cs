@@ -40,6 +40,7 @@ public class AnimatorKey
             public static readonly string GATTLING_PUNCH = "GattlingPunch";
             public static readonly string SWAY = "Sway";
             public static readonly string STRAIGHT_PUNCH = "StraightPunch";
+            public static readonly string NUCLEAR_PUNCH = "NuclearPunch";
         }
     }
 
