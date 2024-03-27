@@ -12,6 +12,7 @@ public class GroundMonk : Character
         // Register the active skills
         RegisterSkill(EKeyName.BASEATTACK, FindObjectOfType<GroundMonkSkill.BaseAttack>());
         RegisterSkill(EKeyName.SKILL1, FindObjectOfType<GroundMonkSkill.GattlingPunch>());
+        RegisterSkill(EKeyName.SKILL2, FindObjectOfType<GroundMonkSkill.Sway>());
 
         // Register the passive skills
         // TODO : Register the passive skills of the Ground Monk

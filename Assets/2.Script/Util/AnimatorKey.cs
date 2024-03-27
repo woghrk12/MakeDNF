@@ -38,6 +38,7 @@ public class AnimatorKey
         public class GroundMonk
         {
             public static readonly string GATTLING_PUNCH = "GattlingPunch";
+            public static readonly string SWAY = "Sway";
         }
     }
 
