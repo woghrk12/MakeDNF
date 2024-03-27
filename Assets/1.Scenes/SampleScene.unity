@@ -491,7 +491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitboxes:
   - hitboxType: 0
-    size: {x: 2.3, y: 2, z: 1.6}
+    size: {x: 2.7033865, y: 1.8865478, z: 1.6}
     offset: {x: 0.47, y: 0, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
   - hitboxType: 0
@@ -829,6 +829,7 @@ Transform:
   - {fileID: 165921790}
   - {fileID: 2069182386}
   - {fileID: 341345152}
+  - {fileID: 771660286}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &236942929
@@ -1803,6 +1804,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729d605036e7c4c4ab287e2343fd2248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &771660285
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 771660286}
+  - component: {fileID: 771660287}
+  - component: {fileID: 771660288}
+  m_Layer: 0
+  m_Name: StraightPunch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &771660286
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771660285}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 228414561}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &771660287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771660285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add4c21ad3853494895ead04007e7029, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitboxes:
+  - hitboxType: 0
+    size: {x: 3.7228599, y: 2.865663, z: 2.4790845}
+    offset: {x: 0, y: 0, z: 0}
+    pivot: {x: 0, y: 0, z: 0.5}
+--- !u!114 &771660288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771660285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25a17e40552bcee43be23e19903610bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillStat:
+    Name: 
+    NeedMana: 0
+    SkillDescription: 
+    CancelList: []
+  CancelList: 
 --- !u!1 &839168971
 GameObject:
   m_ObjectHideFlags: 0
