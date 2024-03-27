@@ -2619,7 +2619,8 @@ MonoBehaviour:
     Name: 
     NeedMana: 0
     SkillDescription: 
-    CancelList: []
+    CancelList:
+    - {fileID: 165921793}
   CancelList: 
 --- !u!1 &1350189717
 GameObject:
