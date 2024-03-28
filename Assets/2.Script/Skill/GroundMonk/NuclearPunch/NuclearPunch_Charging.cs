@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GroundMonkSkill
@@ -9,6 +10,16 @@ namespace GroundMonkSkill
             #region Variables
 
             private NuclearPunch stateController = null;
+
+            /// <summary>
+            /// The power value gathering enemies around the point of impact during skill charging.
+            /// </summary>
+            private float gatheringPower = 5f;
+
+            /// <summary>
+            /// The range value gathering enemies around the point of impact during skill charging.
+            /// </summary>
+            private float gatheringRange = 5f;
 
             #endregion Variables
 
@@ -54,6 +65,28 @@ namespace GroundMonkSkill
                 stateController.AttackerHitboxController.DisableHitbox();
 
                 character.Animator.SetTrigger(skillHash);
+            }
+
+            public override void OnFixedUpdate()
+            {
+                List<IDamagable> monsters = GameManager.Room.Monsters;
+
+                Vector3 characterPos = character.DNFTransform.Position;
+                bool isLeft = character.DNFTransform.IsLeft;
+
+                Vector3 gatheringPoint = new Vector3(characterPos.x, 0f, characterPos.z)
+                    + new Vector3(isLeft ? -1.4f : 1.4f, 0f, 0f);
+
+                foreach (IDamagable monster in monsters)
+                {
+                    Vector3 monsterPos = monster.DefenderDNFTransform.Position;
+                    Vector3 gatheringVector = gatheringPoint - new Vector3(monsterPos.x, 0f, monsterPos.z);
+
+                    if (gatheringVector.sqrMagnitude > gatheringRange * gatheringRange || gatheringVector.sqrMagnitude < GlobalDefine.EPSILON) continue;
+
+                    gatheringVector = gatheringVector.normalized;
+                    monster.DefenderDNFTransform.Position += gatheringPower * Time.fixedDeltaTime * gatheringVector;
+                }
             }
 
             public override void OnCancel()
