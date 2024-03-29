@@ -63,10 +63,8 @@ namespace GroundMonkSkill.NuclearPunchProjectile
             AttackerDNFTransform = spawnerTransform = subjectTransform;
 
             // Set projectile transform
-            bool isLeft = spawnerTransform.IsLeft;
-
-            dnfTransform.Position = AttackerDNFTransform.Position + new Vector3(isLeft ? -1f : 1f, 0f, 0f);
-            dnfTransform.IsLeft = isLeft;
+            dnfTransform.Position = spawnerTransform.Position;
+            dnfTransform.IsLeft = spawnerTransform.IsLeft;
             dnfTransform.LocalScale = sizeEff;
 
             AttackerHitboxController.CalculateHitbox();
