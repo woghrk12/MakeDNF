@@ -187,16 +187,16 @@ public class Character : MonoBehaviour, IDamagable
         // Camera Debug
         GameManager.Camera.SetTarget(transform);
         
-        GameManager.Input.AddMovementDelegate(OnJoystickMoved);
+        GameManager.Input.AddMovementDelegate(Move);
 
-        GameManager.Input.AddButtonDownDelegate(EKeyName.JUMP, OnJumpButtonPressed);
+        GameManager.Input.AddButtonDownDelegate(EKeyName.JUMP, Jump);
 
-        GameManager.Input.AddButtonDownDelegate(EKeyName.BASEATTACK, OnAttackButtonPressed);
+        GameManager.Input.AddButtonDownDelegate(EKeyName.BASEATTACK, () => Attack(EKeyName.BASEATTACK));
 
-        GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL1, () => OnSkillButtonPressed(EKeyName.SKILL1));
-        GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL2, () => OnSkillButtonPressed(EKeyName.SKILL2));
-        GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL3, () => OnSkillButtonPressed(EKeyName.SKILL3));
-        GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL4, () => OnSkillButtonPressed(EKeyName.SKILL4));
+        GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL1, () => Attack(EKeyName.SKILL1));
+        GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL2, () => Attack(EKeyName.SKILL2));
+        GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL3, () => Attack(EKeyName.SKILL3));
+        GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL4, () => Attack(EKeyName.SKILL4));
 
         CanMove = true;
         CanLookBack = true;
@@ -287,6 +287,43 @@ public class Character : MonoBehaviour, IDamagable
     public void RegisterSkill(EKeyName keyName, ActiveSkill activeSkill)
         => attackBehaviour.RegisterSkill(keyName, activeSkill);
 
+    #region Character Behaviour
+
+    /// <summary>
+    /// Move the character in the direction controlled by the player's joystick input.
+    /// </summary>
+    /// <param name="direction">The direction vector received through the joystick</param>
+    private void Move(Vector3 direction)
+    {
+        if (!CanMove) return;
+
+        moveBehaviour.Move(direction);
+    }
+
+    /// <summary>
+    /// Make the character jump when the player press the jump button.
+    /// </summary>
+    private void Jump()
+    {
+        if (!CanJump) return;
+
+        jumpBehaviour.Jump();
+    }
+
+    /// <summary>
+    /// Make the character perform attack behaviour according to the button pressed by the player.
+    /// </summary>
+    /// <param name="keyName">The name of attack button</param>
+    private void Attack(EKeyName keyName)
+    {
+        if (!CanAttack) return;
+        if (!attackBehaviour.CheckCanAttack(keyName)) return;
+
+        attackBehaviour.Attack(keyName);
+    }
+
+    #endregion Character Behaviour
+
     #region Event
 
     /// <summary>
@@ -309,51 +346,7 @@ public class Character : MonoBehaviour, IDamagable
 
         AttackEvent?.Invoke(targetTransform, attackType);
     }
-
-    /// <summary>
-    /// The event method called when the player control the joystick.
-    /// </summary>
-    /// <param name="direction">The direction vector received through the joystick</param>
-    private void OnJoystickMoved(Vector3 direction)
-    {
-        if (!CanMove) return;
-
-        moveBehaviour.Move(direction);
-    }
-
-    /// <summary>
-    /// The event method called when the player press the jump button.
-    /// </summary>
-    private void OnJumpButtonPressed()
-    {
-        if (!CanJump) return;
-
-        jumpBehaviour.Jump();
-    }
-
-    /// <summary>
-    /// The event method called when the player press the base attack button.
-    /// </summary>
-    private void OnAttackButtonPressed()
-    {
-        if (!CanAttack) return;
-        if (!attackBehaviour.CheckCanAttack(EKeyName.BASEATTACK)) return;
-
-        attackBehaviour.Attack(EKeyName.BASEATTACK);
-    }
-
-    /// <summary>
-    /// The event method called when the player press the skill button.
-    /// </summary>
-    /// <param name="keyName">The name of skill button</param>
-    private void OnSkillButtonPressed(EKeyName keyName)
-    {
-        if (!CanAttack) return;
-        if (!attackBehaviour.CheckCanAttack(keyName)) return;
-
-        attackBehaviour.Attack(keyName);
-    }
-
+    
     #endregion Event 
 
     #endregion Methods
