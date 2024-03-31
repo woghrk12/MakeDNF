@@ -159,31 +159,5 @@ public class AttackBehaviour : CharacterBehaviour
 
     #endregion Override
 
-    #region Events
-
-    /// <summary>
-    /// The event method called when the player press the skill button.
-    /// </summary>
-    /// <param name="keyName">The name of the button which the player press</param>
-    public void OnSkillButtonPressed(EKeyName keyName)
-    {
-        if (!registeredSkillDictionary.ContainsKey(keyName)) return;
-        
-        registeredSkillDictionary[keyName].OnSkillButtonPressed();
-    }
-
-    /// <summary>
-    /// The event method called when the player release the skill button.
-    /// </summary>
-    /// <param name="keyName">The name of the button which the player release</param>
-    public void OnSkillButtonReleased(EKeyName keyName)
-    {
-        if (!registeredSkillDictionary.ContainsKey(keyName)) return;
-
-        registeredSkillDictionary[keyName].OnSkillButtonReleased();
-    }
-
-    #endregion Events
-
     #endregion Methods
 }

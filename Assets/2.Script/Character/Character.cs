@@ -192,16 +192,11 @@ public class Character : MonoBehaviour, IDamagable
         GameManager.Input.AddButtonDownDelegate(EKeyName.JUMP, OnJumpButtonPressed);
 
         GameManager.Input.AddButtonDownDelegate(EKeyName.BASEATTACK, OnAttackButtonPressed);
-        GameManager.Input.AddButtonUpDelegate(EKeyName.BASEATTACK, OnAttackButtonReleased);
 
         GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL1, () => OnSkillButtonPressed(EKeyName.SKILL1));
-        GameManager.Input.AddButtonUpDelegate(EKeyName.SKILL1, () => OnSkillButtonReleased(EKeyName.SKILL1));
         GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL2, () => OnSkillButtonPressed(EKeyName.SKILL2));
-        GameManager.Input.AddButtonUpDelegate(EKeyName.SKILL2, () => OnSkillButtonReleased(EKeyName.SKILL2));
         GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL3, () => OnSkillButtonPressed(EKeyName.SKILL3));
-        GameManager.Input.AddButtonUpDelegate(EKeyName.SKILL3, () => OnSkillButtonReleased(EKeyName.SKILL3));
         GameManager.Input.AddButtonDownDelegate(EKeyName.SKILL4, () => OnSkillButtonPressed(EKeyName.SKILL4));
-        GameManager.Input.AddButtonUpDelegate(EKeyName.SKILL4, () => OnSkillButtonReleased(EKeyName.SKILL4));
 
         CanMove = true;
         CanLookBack = true;
@@ -341,20 +336,10 @@ public class Character : MonoBehaviour, IDamagable
     /// </summary>
     private void OnAttackButtonPressed()
     {
-        attackBehaviour.OnSkillButtonPressed(EKeyName.BASEATTACK);
-
         if (!CanAttack) return;
         if (!attackBehaviour.CheckCanAttack(EKeyName.BASEATTACK)) return;
 
         attackBehaviour.Attack(EKeyName.BASEATTACK);
-    }
-
-    /// <summary>
-    /// The event method called when the player release the base attack button.
-    /// </summary>
-    private void OnAttackButtonReleased()
-    {
-        attackBehaviour.OnSkillButtonReleased(EKeyName.BASEATTACK);
     }
 
     /// <summary>
@@ -363,21 +348,10 @@ public class Character : MonoBehaviour, IDamagable
     /// <param name="keyName">The name of skill button</param>
     private void OnSkillButtonPressed(EKeyName keyName)
     {
-        attackBehaviour.OnSkillButtonPressed(keyName);
-
         if (!CanAttack) return;
         if (!attackBehaviour.CheckCanAttack(keyName)) return;
 
         attackBehaviour.Attack(keyName);
-    }
-
-    /// <summary>
-    /// The event method called when the player release the skill button.
-    /// </summary>
-    /// <param name="keyName">The name of skill button</param>
-    private void OnSkillButtonReleased(EKeyName keyName)
-    {
-        attackBehaviour.OnSkillButtonReleased(keyName);
     }
 
     #endregion Event 
