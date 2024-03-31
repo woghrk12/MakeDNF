@@ -57,7 +57,7 @@ public class JumpBehaviour : CharacterBehaviour
     #region Methods
     
     /// <summary>
-    /// Jump the character.
+    /// Make the character jump.
     /// Perform character jump by modifying the y-value of the local position of Y Pos Transform.
     /// </summary>
     public void Jump()
