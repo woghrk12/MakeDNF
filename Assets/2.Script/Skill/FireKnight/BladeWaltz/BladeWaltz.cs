@@ -56,9 +56,9 @@ namespace FireKnightSkill
 
         #region Override
 
-        public override void Init(Character character, AttackBehaviour attackController)
+        public override void Init(Character character, AttackBehaviour attackController, EKeyName keyName)
         {
-            base.Init(character, attackController);
+            base.Init(character, attackController, keyName);
 
             AttackerDNFTransform = character.DNFTransform;
             AttackerHitboxController = GetComponent<HitboxController>();

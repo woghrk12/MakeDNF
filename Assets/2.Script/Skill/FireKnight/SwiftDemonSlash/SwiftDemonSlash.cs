@@ -25,9 +25,9 @@ namespace FireKnightSkill
 
         #region Override
 
-        public override void Init(Character character, AttackBehaviour attackController)
+        public override void Init(Character character, AttackBehaviour attackController, EKeyName keyName)
         {
-            base.Init(character, attackController);
+            base.Init(character, attackController, keyName);
 
             skillHash = Animator.StringToHash(AnimatorKey.Character.FireKnight.SWIFT_DEMON_SLASH);
 

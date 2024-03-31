@@ -79,7 +79,7 @@ public class AttackBehaviour : CharacterBehaviour
                     registeredSkillDictionary.Add(keyName, skill);
                 }
 
-                skill.Init(character, this);
+                skill.Init(character, this, keyName);
                 break;
 
             default:

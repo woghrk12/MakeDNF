@@ -9,6 +9,11 @@ public abstract class ActiveSkill : Skill
     protected AttackBehaviour attackController = null;
 
     /// <summary>
+    /// The key player need to input for additional skill manipulation.
+    /// </summary>
+    protected EKeyName keyName = EKeyName.NONE;
+
+    /// <summary>
     /// The animator key for character skill usage motion.
     /// </summary>
     protected int skillHash = 0;
@@ -45,10 +50,12 @@ public abstract class ActiveSkill : Skill
     /// </summary>
     /// <param name="character">The character object that possess the skill</param>
     /// <param name="attackController">The controller object for handling the attack behaviour</param>
-    public virtual void Init(Character character, AttackBehaviour attackController)
+    /// <param name="keyName">The key player need to input for additional skill manipulation</param>
+    public virtual void Init(Character character, AttackBehaviour attackController, EKeyName keyName)
     {
         this.character = character;
         this.attackController = attackController;
+        this.keyName = keyName;
 
         foreach (Skill skill in skillStat.CancelList)
         {
