@@ -88,21 +88,6 @@ public abstract class ActiveSkill : Skill
     public virtual void OnStart() { }
 
     /// <summary>
-    /// The event method called when the skill is completed.
-    /// </summary>
-    public virtual void OnComplete() { }
-
-    /// <summary>
-    /// The event method called when the skill is canceled by another skill.
-    /// </summary>
-    public virtual void OnCancel()
-    {
-        curState.OnCancel();
-
-        curState = null;
-    }
-
-    /// <summary>
     /// The event method that calls OnUpdate method of the current skill state every frame update.
     /// If the current skill state is null, do not call anything.
     /// </summary>
@@ -136,12 +121,18 @@ public abstract class ActiveSkill : Skill
     }
 
     /// <summary>
+    /// The event method called when the skill is completed.
     /// </summary>
+    public virtual void OnComplete() { }
 
     /// <summary>
+    /// The event method called when the skill is canceled by another skill.
     /// </summary>
+    public virtual void OnCancel()
     {
+        curState.OnCancel();
 
+        curState = null;
     }
 
     #endregion Virtual
