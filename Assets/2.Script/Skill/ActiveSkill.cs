@@ -9,7 +9,7 @@ public abstract class ActiveSkill : Skill
     protected AttackBehaviour attackController = null;
 
     /// <summary>
-    /// The animator key 
+    /// The animator key for character skill usage motion.
     /// </summary>
     protected int skillHash = 0;
 
