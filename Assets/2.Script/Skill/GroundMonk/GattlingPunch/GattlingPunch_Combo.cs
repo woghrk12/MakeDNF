@@ -66,6 +66,8 @@ namespace GroundMonkSkill
                 phase = EStatePhase.PREDELAY;
 
                 stateController.AlreadyHitTargets.Clear();
+
+                GameManager.Input.AddButtonDownDelegate(stateController.keyName, OnSkillButtonPressed);
             }
 
             public override void OnUpdate()
@@ -114,6 +116,8 @@ namespace GroundMonkSkill
                         }
                         else
                         {
+                            GameManager.Input.RemoveButtonDownDelegate(stateController.keyName, OnSkillButtonPressed);
+
                             character.Animator.SetFloat(attackSpeedHash, originalAttackSpeed);
 
                             character.Animator.SetBool(continueHash, false);
@@ -135,6 +139,8 @@ namespace GroundMonkSkill
 
             public override void OnCancel()
             {
+                GameManager.Input.RemoveButtonDownDelegate(stateController.keyName, OnSkillButtonPressed);
+
                 phase = EStatePhase.NONE;
 
                 character.Animator.SetFloat(attackSpeedHash, originalAttackSpeed);
@@ -145,7 +151,12 @@ namespace GroundMonkSkill
                 character.Animator.SetTrigger(cancelHash);
             }
 
-            public override void OnSkillButtonPressed()
+            #endregion Override
+
+            /// <summary>
+            /// The event method called when the player press the button associated with the skill.
+            /// </summary>
+            public void OnSkillButtonPressed()
             {
                 if (maxCombo - stateController.numCombo >= maxAdditionalCombo) return;
 
@@ -154,8 +165,6 @@ namespace GroundMonkSkill
 
                 character.Animator.SetFloat(attackSpeedHash, attackSpeed);
             }
-
-            #endregion Override
 
             #endregion Methods
         }

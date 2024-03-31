@@ -48,6 +48,7 @@ namespace GroundMonkSkill
                 stateController.AlreadyHitTargets.Clear();
 
                 GameManager.Input.AddMovementDelegate(OnJoystickMoved);
+                GameManager.Input.AddButtonDownDelegate(stateController.keyName, OnSkillButtonPressed);
             }
 
             public override void OnUpdate()
@@ -84,6 +85,7 @@ namespace GroundMonkSkill
                         if (animatorStateInfo.normalizedTime < 1f) return;
 
                         GameManager.Input.RemoveMovementDelegate(OnJoystickMoved);
+                        GameManager.Input.RemoveButtonDownDelegate(stateController.keyName, OnSkillButtonPressed);
 
                         if (isContinue)
                         {
@@ -131,6 +133,7 @@ namespace GroundMonkSkill
             public override void OnCancel()
             {
                 GameManager.Input.RemoveMovementDelegate(OnJoystickMoved);
+                GameManager.Input.RemoveButtonDownDelegate(stateController.keyName, OnSkillButtonPressed);
 
                 if (stateController.AttackerHitboxController.IsHitboxActivated)
                 {
@@ -143,14 +146,7 @@ namespace GroundMonkSkill
                 character.Animator.SetTrigger(cancelHash);
             }
 
-            public override void OnSkillButtonPressed()
-            {
-                isContinue = true;
-                character.Animator.SetBool(continueHash, true);
-            }
-
             #endregion Override
-
 
             /// <summary>
             /// The event method called when the player control the joystick during the skill.
@@ -168,6 +164,15 @@ namespace GroundMonkSkill
                 {
                     dashDirection = (direction.x < 0f ? Vector3.zero : Vector3.right) * dashSpeed;
                 }
+            }
+
+            /// <summary>
+            /// The event method called when the player press the button associated with the skill.
+            /// </summary>
+            public void OnSkillButtonPressed()
+            {
+                isContinue = true;
+                character.Animator.SetBool(continueHash, true);
             }
 
             #endregion Methods

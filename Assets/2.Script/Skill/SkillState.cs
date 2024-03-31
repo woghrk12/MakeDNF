@@ -78,15 +78,5 @@ public abstract class SkillState
     /// </summary>
     public virtual void OnCancel() { }
 
-    /// <summary>
-    /// The event method called when the player press the button associated with the skill.
-    /// </summary>
-    public virtual void OnSkillButtonPressed() { }
-
-    /// <summary>
-    /// The event method called when the player release the button associated with the skill.
-    /// </summary>
-    public virtual void OnSkillButtonReleased() { }
-
     #endregion Methods
 }

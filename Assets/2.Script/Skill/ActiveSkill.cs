@@ -136,25 +136,12 @@ public abstract class ActiveSkill : Skill
     }
 
     /// <summary>
-    /// The event method that calls OnSkillButtonPressed method of the current skill state when the player press the button associated with the skill.
-    /// If the current skill state is null, do not call anything.
     /// </summary>
-    public void OnSkillButtonPressed()
-    {
-        if (curState == null) return;
-
-        curState.OnSkillButtonPressed();
-    }
 
     /// <summary>
-    /// The event method that calls OnSkillButtonReleased method of the current skill state when the player release the button associated with the skill.
-    /// If the current skill state is null, do not call anything.
     /// </summary>
-    public void OnSkillButtonReleased()
     {
-        if (curState == null) return;
 
-        curState.OnSkillButtonReleased();
     }
 
     #endregion Virtual

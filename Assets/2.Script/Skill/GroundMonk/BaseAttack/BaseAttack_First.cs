@@ -44,6 +44,8 @@ namespace GroundMonkSkill
                 phase = EStatePhase.PREDELAY;
 
                 stateController.AlreadyHitTargets.Clear();
+
+                GameManager.Input.AddButtonDownDelegate(stateController.keyName, OnSkillButtonPressed);
             }
 
             public override void OnUpdate()
@@ -78,6 +80,8 @@ namespace GroundMonkSkill
 
                     case EStatePhase.POSTDELAY:
                         if (animatorStateInfo.normalizedTime < 1f) return;
+
+                        GameManager.Input.RemoveButtonDownDelegate(stateController.keyName, OnSkillButtonPressed);
 
                         if (isContinue)
                         {
@@ -127,13 +131,16 @@ namespace GroundMonkSkill
                 character.Animator.SetTrigger(cancelHash);
             }
 
-            public override void OnSkillButtonPressed()
+            #endregion Override
+
+            /// <summary>
+            /// The event method called when the player press the button associated with the skill.
+            /// </summary>
+            public void OnSkillButtonPressed()
             {
                 isContinue = true;
                 character.Animator.SetBool(continueHash, true);
             }
-
-            #endregion Override
 
             #endregion Methods
         }

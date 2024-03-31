@@ -46,6 +46,8 @@ namespace FireKnightSkill
                 phase = EStatePhase.PREDELAY;
 
                 stateController.AlreadyHitTargets.Clear();
+
+                GameManager.Input.AddButtonDownDelegate(stateController.keyName, OnSkillButtonPressed);
             }
 
             public override void OnUpdate()
@@ -111,6 +113,8 @@ namespace FireKnightSkill
 
             public override void OnComplete()
             {
+                GameManager.Input.RemoveButtonDownDelegate(stateController.keyName, OnSkillButtonPressed);
+
                 phase = EStatePhase.NONE;
 
                 character.Animator.SetBool(continueHash, false);
@@ -123,6 +127,8 @@ namespace FireKnightSkill
 
             public override void OnCancel()
             {
+                GameManager.Input.RemoveButtonDownDelegate(stateController.keyName, OnSkillButtonPressed);
+
                 phase = EStatePhase.NONE;
 
                 if (stateController.AttackerHitboxController.IsHitboxActivated)
@@ -136,15 +142,18 @@ namespace FireKnightSkill
                 character.Animator.SetTrigger(cancelHash);
             }
 
-            public override void OnSkillButtonPressed()
+            #endregion Override
+
+            /// <summary>
+            /// The event method called when the player press the button associated with the skill.
+            /// </summary>
+            public void OnSkillButtonPressed()
             {
                 if (phase != EStatePhase.HITBOXACTIVE && phase != EStatePhase.MOTIONINPROGRESS) return;
 
                 isContinue = true;
                 character.Animator.SetBool(continueHash, true);
             }
-
-            #endregion Override
 
             #endregion Methods
         }
