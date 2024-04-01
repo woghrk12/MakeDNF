@@ -35,13 +35,13 @@ namespace FireKnightSkill
             stateList.Add(new On(character, this));
         }
 
-        public override bool CheckCanUseSkill(Skill activeSkill)
+        public override bool CheckCanUseSkill(ActiveSkill curSkill)
         {
             if (!character.CanAttack) return false;
 
             if (character.IsJump) return false;
 
-            if (character.CurBehaviourCode == BehaviourCodeList.ATTACK_BEHAVIOUR_CODE && !CancelList.Contains(activeSkill.SkillCode)) return false;
+            if (character.CurBehaviourCode == BehaviourCodeList.ATTACK_BEHAVIOUR_CODE && !CancelList.Contains(curSkill.SkillCode)) return false;
 
             return true;
         }

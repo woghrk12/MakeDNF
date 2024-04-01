@@ -60,9 +60,9 @@ public abstract class ActiveSkill : Skill
     /// <summary>
     /// Check whether the character can use the skill.
     /// </summary>
-    /// <param name="activeSkill">The skill currently being used (activated) by the character</param>
+    /// <param name="curSkill">The skill currently being used (activated) by the character</param>
     /// <returns>true if the character can use the skill, otherwise false</returns>
-    public virtual bool CheckCanUseSkill(Skill activeSkill)
+    public virtual bool CheckCanUseSkill(ActiveSkill curSkill)
     {
         return true;
     }

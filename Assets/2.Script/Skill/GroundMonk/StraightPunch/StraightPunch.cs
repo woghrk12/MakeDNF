@@ -68,11 +68,11 @@ namespace GroundMonkSkill
             stateList.Add(new Punch(character, this));
         }
 
-        public override bool CheckCanUseSkill(Skill activeSkill)
+        public override bool CheckCanUseSkill(ActiveSkill curSkill)
         {
-            if (activeSkill == null) return false;
+            if (curSkill == null) return false;
 
-            return activeSkill.SkillCode == typeof(Sway).GetHashCode();
+            return curSkill.SkillCode == typeof(Sway).GetHashCode();
         }
 
         public override void OnStart()

@@ -68,7 +68,7 @@ namespace FireKnightSkill
             stateList.Add(new Slash(character, this));
         }
 
-        public override bool CheckCanUseSkill(Skill activeSkill)
+        public override bool CheckCanUseSkill(ActiveSkill curSkill)
         {
             if (!character.CanAttack) return false;
 
@@ -76,7 +76,7 @@ namespace FireKnightSkill
 
             if (character.CurBehaviourCode == BehaviourCodeList.HIT_BEHAVIOUR_CODE) return false;
 
-            if (activeSkill != null && !CancelList.Contains(activeSkill.SkillCode)) return false;
+            if (curSkill != null && !CancelList.Contains(curSkill.SkillCode)) return false;
 
             return true;
         }

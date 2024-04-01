@@ -73,7 +73,7 @@ namespace GroundMonkSkill
             stateList.Add(new Jump(character, this));
         }
 
-        public override bool CheckCanUseSkill(Skill activeSkill)
+        public override bool CheckCanUseSkill(ActiveSkill curSkill)
         {
             if (!character.CanAttack) return false;
 
