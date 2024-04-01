@@ -50,14 +50,19 @@ public enum ESkillType
     PASSIVE = 1 << 1,
 
     /// <summary>
+    /// Represents a base attack skill.
+    /// </summary>
+    BASEATTACK = 1 << 2,
+
+    /// <summary>
     /// Represents a common skills usable by all characters.
     /// </summary>
-    COMMON = 1 << 2,
+    COMMON = 1 << 3,
 
     /// <summary>
     /// Represents a class-specific skills restricted to certain character classes.
     /// </summary>
-    CLASSSPECIFIC = 1 << 3
+    CLASSSPECIFIC = 1 << 4
 }
 
 public abstract class Skill : MonoBehaviour
