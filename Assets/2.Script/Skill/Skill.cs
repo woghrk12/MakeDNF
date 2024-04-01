@@ -32,6 +32,7 @@ public class SkillStat
 /// <summary>
 /// Enumeration representing different types of skills.
 /// </summary>
+[Flags]
 public enum ESkillType 
 {
     /// <summary>
