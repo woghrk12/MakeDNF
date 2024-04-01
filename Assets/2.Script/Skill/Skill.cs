@@ -37,17 +37,27 @@ public enum ESkillType
     /// <summary>
     /// Indicates that the skill type is not specified or valid.
     /// </summary>
-    NONE = -1,
+    NONE = 0,
 
     /// <summary>
     /// Represents an active skill that requires user activation or input to be utilized.
     /// </summary>
-    ACTIVE,
+    ACTIVE = 1 << 0,
 
     /// <summary>
     /// Represents a passive skill that provides ongoing benefits without explicit activation.
     /// </summary>
-    PASSIVE
+    PASSIVE = 1 << 1,
+
+    /// <summary>
+    /// Represents a common skills usable by all characters.
+    /// </summary>
+    COMMON = 1 << 2,
+
+    /// <summary>
+    /// Represents a class-specific skills restricted to certain character classes.
+    /// </summary>
+    CLASSSPECIFIC = 1 << 3
 }
 
 public abstract class Skill : MonoBehaviour
