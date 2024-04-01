@@ -53,6 +53,15 @@ public class Character : MonoBehaviour, IDamagable
     /// </summary>
     public event Action<DNFTransform, EAttackType> AttackEvent = null;
 
+    /// <summary>
+    /// A variable that holds a function for checking whether the character meets additional conditions for using a skill.
+    /// <para>
+    /// ActiveSkill : Represents the skill currently being used by the character.<br />
+    /// bool : Represents the return value of the 'AdditionalSkillCondition' delegate, indicating whether the character cancel the skill currently in use.
+    /// </para>
+    /// </summary>
+    public Func<ActiveSkill, bool> AdditionalSkillCondition = null;
+
     #endregion Variables
 
     #region Properties

@@ -86,7 +86,12 @@ namespace GroundMonkSkill
 
             if (character.CurBehaviourCode == BehaviourCodeList.HIT_BEHAVIOUR_CODE) return false;
 
-            if (curSkill != null && !CancelList.Contains(curSkill.SkillCode)) return false;
+            if (curSkill != null && !CancelList.Contains(curSkill.SkillCode))
+            {
+                if (curSkill.SkillCode == SkillCode) return false;
+                if (ReferenceEquals(character.AdditionalSkillCondition, null)) return false;
+                if (!character.AdditionalSkillCondition(curSkill)) return false;
+            }
 
             return true;
         }

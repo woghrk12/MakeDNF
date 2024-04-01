@@ -17,10 +17,9 @@ public class GroundMonk : Character
         RegisterSkill(EKeyName.SKILL4, FindObjectOfType<GroundMonkSkill.NuclearPunch>());
 
         // Register the passive skills
-        // TODO : Register the passive skills of the Ground Monk
-        // PassiveSkill magicSwordMedley = FindObjectOfType<FireKnightSkill.MagicSwordMedley>();
-        // magicSwordMedley.Init(this);
-        // magicSwordMedley.ApplySkillEffects();
+        PassiveSkill dryOut = FindObjectOfType<GroundMonkSkill.DryOut>();
+        dryOut.Init(this);
+        dryOut.ApplySkillEffects();
     }
 
     #endregion Unity Events
