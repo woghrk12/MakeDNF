@@ -17,6 +17,8 @@ namespace FireKnightSkill
 
         public override int SkillCode => typeof(Dodge).GetHashCode();
 
+        public override ESkillType SkillType => ESkillType.ACTIVE | ESkillType.COMMON;
+
         #endregion Properties
 
         #region Methods

@@ -35,12 +35,6 @@ public abstract class ActiveSkill : Skill
 
     #endregion Variables
 
-    #region Properties
-
-    public override ESkillType SkillType => ESkillType.ACTIVE;
-
-    #endregion Properties
-
     #region Methods
 
     #region Virtual

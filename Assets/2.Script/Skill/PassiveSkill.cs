@@ -1,11 +1,5 @@
 public abstract class PassiveSkill : Skill
 {
-    #region Properties
-
-    public override ESkillType SkillType => ESkillType.PASSIVE;
-
-    #endregion Properties
-
     #region Methods
 
     /// <summary>

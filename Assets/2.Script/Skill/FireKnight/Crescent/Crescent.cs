@@ -11,6 +11,8 @@ namespace FireKnightSkill
 
         public override int SkillCode => typeof(Crescent).GetHashCode();
 
+        public override ESkillType SkillType => ESkillType.ACTIVE | ESkillType.CLASSSPECIFIC;
+
         #endregion Properties
 
         #region IAttackable Implementation

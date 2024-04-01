@@ -11,6 +11,8 @@ namespace GroundMonkSkill
 
         public override int SkillCode => typeof(BaseAttack).GetHashCode();
 
+        public override ESkillType SkillType => ESkillType.ACTIVE | ESkillType.BASEATTACK;
+
         #endregion Properties
 
         #region IAttackable Implementation

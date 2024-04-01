@@ -19,6 +19,8 @@ namespace FireKnightSkill
 
         public override int SkillCode => typeof(SwiftDemonSlash).GetHashCode();
 
+        public override ESkillType SkillType => ESkillType.ACTIVE | ESkillType.CLASSSPECIFIC;
+
         #endregion Properties
 
         #region Methods

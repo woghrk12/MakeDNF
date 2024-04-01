@@ -10,6 +10,8 @@ namespace GroundMonkSkill
 
         public override int SkillCode => typeof(Sway).GetHashCode();
 
+        public override ESkillType SkillType => ESkillType.ACTIVE | ESkillType.COMMON;
+
         #endregion Properties
 
         #region Methods

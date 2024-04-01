@@ -20,6 +20,8 @@ namespace GroundMonkSkill
 
         public override int SkillCode => typeof(GattlingPunch).GetHashCode();
 
+        public override ESkillType SkillType => ESkillType.ACTIVE | ESkillType.CLASSSPECIFIC;
+
         #endregion Properties
 
         #region IAttackable Implementation

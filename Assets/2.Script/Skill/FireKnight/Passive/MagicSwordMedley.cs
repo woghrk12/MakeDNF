@@ -15,6 +15,8 @@ namespace FireKnightSkill
 
         public override int SkillCode => typeof(MagicSwordMedley).GetHashCode();
 
+        public override ESkillType SkillType => ESkillType.PASSIVE | ESkillType.CLASSSPECIFIC;
+
         #endregion Properties
 
         #region Unity Events
