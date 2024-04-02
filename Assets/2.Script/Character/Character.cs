@@ -328,6 +328,7 @@ public class Character : MonoBehaviour, IDamagable
         if (!CanAttack) return;
         if (!attackBehaviour.CheckCanAttack(keyName)) return;
 
+        stiffnessEffect.ResetStiffnessEffect();
         attackBehaviour.Attack(keyName);
     }
 

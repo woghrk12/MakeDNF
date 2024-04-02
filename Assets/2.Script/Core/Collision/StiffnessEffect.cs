@@ -40,12 +40,7 @@ public class StiffnessEffect : MonoBehaviour
 
             if (stiffnessTimer < 0f)
             {
-                dnfRigidbody.enabled = true;
-
-                animator.SetFloat(attackSpeedHash, attackSpeed);
-                animator.SetFloat(hitSpeedHash, hitSpeed);
-
-                stiffnessTimer = 0f;
+                ResetStiffnessEffect();
             }
         }
     }
@@ -75,6 +70,19 @@ public class StiffnessEffect : MonoBehaviour
         animator.SetFloat(hitSpeedHash, 0f);
 
         stiffnessTimer = GlobalDefine.STIFFNESS_TIME;
+    }
+
+    /// <summary>
+    /// Reset the stiffness effect applied to the object.
+    /// </summary>
+    public void ResetStiffnessEffect()
+    {
+        dnfRigidbody.enabled = true;
+
+        animator.SetFloat(attackSpeedHash, attackSpeed);
+        animator.SetFloat(hitSpeedHash, hitSpeed);
+
+        stiffnessTimer = 0f;
     }
 
     #endregion Methods
