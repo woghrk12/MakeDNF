@@ -8,16 +8,25 @@ public class GlobalDefine
     public static readonly float STIFFNESS_TIME = 0.1f;
 
     public static readonly float EPSILON = 0.0001f;
+
+    public static readonly string FIRE_KNIGHT = "FireKnight";
+    public static readonly string GROUND_MONK = "GroundMonk";
 }
 
 public class FilePath
 {
     
     public static readonly string ENUM_TEMPLATE_FILE_PATH = "Assets/Resources/Template/EnumTemplate.txt";
-    
+
     public static readonly string GAME_DATA_SCRIPT_FOLDER_PATH = "Assets/2.Script/GameData/";
     public static readonly string EFFECT_DATA_PATH = "Assets/Resources/GameData/EffectData.asset";
     public static readonly string OBJECT_POOL_DATA_PATH = "Assets/Resources/GameData/ObjectPoolData.asset";
+
+    public static readonly string ACTIVE_SKILL_TEMPLATE_FILE_PATH = "Assets/Resources/Template/ActiveSkillTemplate.txt";
+    public static readonly string PASSIVE_SKILL_TEMPLATE_FILE_PATH = "Assets/Resources/Template/PassiveSkillTemplate.txt";
+    public static readonly string SKILL_STATE_TEMPLATE_FILE_PATH = "Assets/Resources/Template/SkillStateTemplate.txt";
+
+    public static readonly string SKILL_SCRIPT_FOLDER_PATH = "Assets/2.Script/Skill/";
 }
 
 public class ResourcePath
@@ -41,3 +50,4 @@ public class BehaviourCodeList
 public enum EKeyName { NONE = -1, BASEATTACK, JUMP, SKILL1, SKILL2, SKILL3, SKILL4, INVENTORY, SKILL, STATUS }
 public enum EAttackType { NONE = -1, BASEATTACK, SKILL, ADDITIONAL }
 public enum EHitType { NONE  = -1, DIRECT, INDIRECT }
+public enum EClassType { NONE = -1, FIREKNIGHT, GROUNDMONK }
