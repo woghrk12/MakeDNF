@@ -21,18 +21,29 @@ public class SkillCreationTool : EditorWindow
 
         #region Properties
 
+        /// <summary>
+        /// Class type of the character to use the implemented skill.
+        /// </summary>
         public EClassType ClassType 
         {
             set { classType = value; }
             get { return classType; }
         }
 
+        /// <summary>
+        /// The name of skill to be implemented.
+        /// </summary>
         public string SkillName
         {
             set { skillName = value; }
             get { return skillName; }
         }
 
+        /// <summary>
+        /// The type of skill to be implemented.
+        /// The only one option can be selected between ACTIVE and PASSIVE.
+        /// The only one option can be selected among BASEATTACK, COMMON, and CLASSSPECIFIC.
+        /// </summary>
         public ESkillType SkillType
         {
             set
@@ -70,12 +81,21 @@ public class SkillCreationTool : EditorWindow
             get { return skillType; }
         }
 
+        /// <summary>
+        /// A flag variable indicating whether the skill allows for directly attacking enemies.
+        /// This option can only be set if the skill includes the ACTIVE type.
+        /// </summary>
         public bool IsAttackable 
         {
             set { isAttackable = value; }
             get { return isAttackable; }
         }
 
+        /// <summary>
+        /// A list containing the names of each state of the skill.
+        /// This option can only be set if the skill includes the ACTIVE type.
+        /// The skill must contain at least one state.
+        /// </summary>
         public List<string> StateNameList 
         {
             set { stateNameList = value; }
@@ -86,6 +106,10 @@ public class SkillCreationTool : EditorWindow
 
         #region Methods
 
+        /// <summary>
+        /// Validates the skill information set by the user when creating a skill template using the tool.
+        /// </summary>
+        /// <returns>True if the skill information is valid; otherwise, false</returns>
         public bool ValidateSkillInfo()
         {
             if (ClassType == EClassType.NONE)
@@ -139,7 +163,14 @@ public class SkillCreationTool : EditorWindow
 
     #region Variables
 
+    /// <summary>
+    /// The information of the skill to be implemented.
+    /// </summary>
     private static SkillInfo skillInfo = null;
+
+    /// <summary>
+    /// A list for settting the names of each state when the skill includes the ACTIVE type.
+    /// </summary>
     private static ReorderableList stateNameEditorList = null;
 
     #endregion Variables
@@ -207,6 +238,10 @@ public class SkillCreationTool : EditorWindow
 
     #region Layer
 
+    /// <summary>
+    /// Display the info layer of the SkillCreation tool editor.
+    /// Users can edit the data for the skill to be implemented.
+    /// </summary>
     private void DisplayInfoLayer()
     {
         EditorGUILayout.BeginVertical("Box", GUILayout.Width(300f), GUILayout.Height(500f));
@@ -233,6 +268,10 @@ public class SkillCreationTool : EditorWindow
         EditorGUILayout.EndVertical();
     }
 
+    /// <summary>
+    /// Display the bottom layer of the SkillCreation tool editor.
+    /// This layer includes the button for creating the skill template class according to the data.
+    /// </summary>
     private void DisplayBottomLayer()
     {
         EditorGUILayout.BeginVertical();
@@ -247,7 +286,10 @@ public class SkillCreationTool : EditorWindow
 
     #endregion Layer
 
-
+    /// <summary>
+    /// Create skill template scripts by using the skill info the user set.
+    /// If the skill includes the ACTIVE type, skill state template scripts are also created;
+    /// </summary>
     private void CreateSkillScript()
     {
         if (!skillInfo.ValidateSkillInfo()) return;
@@ -379,6 +421,14 @@ public class SkillCreationTool : EditorWindow
 
     #region Helper
 
+    /// <summary>
+    /// Get the substring between the start marker and the end marker from the original string with the markers removed..
+    /// The returned substring from the original string will be removed.
+    /// </summary>
+    /// <param name="original">The original string from which the substring is to be extracted</param>
+    /// <param name="startMarker">The marker indicating the start of the substring</param>
+    /// <param name="endMarker">The marker indicating the end of the substring</param>
+    /// <returns>A pair consisting of the index of the original string where the substring was located and the extracted substring</returns>
     private System.Tuple<int, string> GetTextBetweenMarker(ref string original, string startMarker, string endMarker)
     {
         int startIndex = original.IndexOf(startMarker);
@@ -394,6 +444,12 @@ public class SkillCreationTool : EditorWindow
         return new System.Tuple<int, string>(startIndex, subString);
     }
 
+    /// <summary>
+    /// Remove the substring between the start marker and the end marker from the original string with the markers removed..
+    /// </summary>
+    /// <param name="original">The original string from which the substring is to be removed</param>
+    /// <param name="startMarker">The marker indicating the start of the substring</param>
+    /// <param name="endMarker">The marker indicating the end of the substring</param>
     private void RemoveTextBetweenMarkers(ref string original, string startMarker, string endMarker)
     {
         int startIndex = original.IndexOf(startMarker);
