@@ -4,10 +4,14 @@ public class DNFTransform : MonoBehaviour
 {
     #region Variables
 
-    [Header("Transform objects for Character Transform")]
-    private Transform posTransform = null;
-    private Transform yPosTransform = null;
-    private Transform scaleTransform = null;
+    /// <summary>
+    /// The cached Transform component of the target object.
+    /// </summary>
+    private Transform cachedTransform = null;
+
+    [Header("Transform variables")]
+    [SerializeField] private Vector3 position = Vector3.zero;
+    [SerializeField] private float localScale = 1f;
 
     [Header("Flag variables")]
     private bool isLeft = false;
@@ -18,64 +22,56 @@ public class DNFTransform : MonoBehaviour
     #region Properties
 
     /// <summary>
-    /// X component of the DNFTransform.
-    /// It changes in proportion to the x-value of the position in the posTransform.
+    /// X component of the position in the DNF coordinate.
+    /// It changes in proportion to the x-value of the position of the cachedTransform.
     /// </summary>
     public float X
     {
         set
         {
-            Vector3 pos = posTransform.position;
-
             Room curRoom = GameManager.Room;
-            pos.x = isBoundaryOverride ? value : Mathf.Clamp(value, curRoom.MinXZPos.x, curRoom.MaxXZPos.x);
+            position.x = isBoundaryOverride ? value : Mathf.Clamp(value, curRoom.MinXZPos.x, curRoom.MaxXZPos.x);
 
-            posTransform.position = pos;
+            cachedTransform.position = ConvertPosToWorldCoord(position);
         }
-        get => posTransform.position.x;
+        get => position.x;
     }
 
     /// <summary>
-    /// Y component of the DNFTransform.
-    /// It changes in proportion to the y-value of the local position in the yPosTransform.
+    /// Y component of the position in the DNF coordinate.
+    /// It changes in proportion to the y-value of the position of the cahcedTransform.
+    /// The value is always non-negative.
     /// </summary>
     public float Y
     {
         set
         {
-            if (!HasYObj) return;
+            position.y = value >= 0f ? value : 0f;
 
-            Vector3 pos = yPosTransform.localPosition;
-            pos.y = value;
-            yPosTransform.localPosition = pos;
+            cachedTransform.position = ConvertPosToWorldCoord(position);
         }
-        get => HasYObj ? yPosTransform.localPosition.y : 0f;
+        get => position.y;
     }
 
     /// <summary>
     /// Z component of the DNFTransform.
-    /// It changes in proportion to the screen ratio for the y-value of the position in the posTransform.
+    /// It changes in proportion to the screen ratio for the y-value of the position of the cachedTransform.
     /// Refer to the GlobalDefine class. (ConvRate, InvConvRate)
     /// </summary>
     public float Z
     {
         set
         {
-            Vector3 pos = posTransform.position;
-
             Room curRoom = GameManager.Room;
-            pos.y = isBoundaryOverride 
-                ? value * GlobalDefine.CONV_RATE 
-                : Mathf.Clamp(value * GlobalDefine.CONV_RATE, curRoom.MinXZPos.z, curRoom.MaxXZPos.z);
-            
-            posTransform.position = pos;
+            position.z = isBoundaryOverride ? value : Mathf.Clamp(value, curRoom.MinXZPos.z, curRoom.MaxXZPos.z);
+
+            cachedTransform.position = ConvertPosToWorldCoord(position);
         }
-        get => posTransform.position.y * GlobalDefine.INV_CONV_RATE;
+        get => position.z;
     }
 
     /// <summary>
-    /// The world position of DNFTransform.
-    /// If yPosTransform do not exists, the y-value of DNFTransform will be fixed at 0.
+    /// The world position in the DNF coordinate.
     /// </summary>
     public Vector3 Position
     {
@@ -83,27 +79,13 @@ public class DNFTransform : MonoBehaviour
         {
             X = value.x;
             Z = value.z;
-
-            if (HasYObj)
-            {
-                Y = value.y;
-            }
+            Y = value.y;
         }
-        get => new Vector3(X, HasYObj ? Y : 0f, Z);
+        get => position;
     }
 
     /// <summary>
-    /// Return whether yPosTransform exists or not.
-    /// </summary>
-    public bool HasYObj => yPosTransform != null;
-
-    /// <summary>
-    /// Return whether scaleTransform exists or not.
-    /// </summary>
-    public bool HasScaleObj => scaleTransform != null;
-
-    /// <summary>
-    /// The flag controls whether the direction of the object is facing left. 
+    /// The flag indicating whether the direction of the object is facing left. 
     /// Return true if the object is facing left.
     /// </summary>
     public bool IsLeft
@@ -111,13 +93,14 @@ public class DNFTransform : MonoBehaviour
         set
         {
             isLeft = value;
-            posTransform.localScale = new Vector3(isLeft ? -1f : 1f, 1f, 1f);
+
+            cachedTransform.localScale = new Vector3((isLeft ? -1f : 1f) * localScale, localScale, 1f); 
         }
         get => isLeft;
     }
 
     /// <summary>
-    /// The flag controls whether the object is allowed to override the map boundary restrictions.
+    /// The flag indicating whether the object is allowed to override the map boundary restrictions.
     /// Return true if the object is allowed to move outside the map boundary.
     /// </summary>
     public bool IsBoundaryOverride
@@ -126,14 +109,12 @@ public class DNFTransform : MonoBehaviour
         {
             if (!value)
             {
-                Vector3 pos = posTransform.position;
-
                 Room curRoom = GameManager.Room;
 
-                pos.x = Mathf.Clamp(pos.x, curRoom.MinXZPos.x, curRoom.MaxXZPos.x);
-                pos.y = Mathf.Clamp(pos.y, curRoom.MinXZPos.z, curRoom.MaxXZPos.z);
+                position.x = Mathf.Clamp(position.x, curRoom.MinXZPos.x, curRoom.MaxXZPos.x);
+                position.z = Mathf.Clamp(position.z, curRoom.MinXZPos.z, curRoom.MaxXZPos.z);
 
-                posTransform.position = pos;
+                cachedTransform.position = ConvertPosToWorldCoord(position);
             }
 
             isBoundaryOverride = value;
@@ -143,17 +124,23 @@ public class DNFTransform : MonoBehaviour
 
     /// <summary>
     /// Scale value of the object.
-    /// Modify the x and y values of the localScale in the scaleTransform.
+    /// Modify the x and y values of the localScale of the cachedTransform.
+    /// The scale value is always greater than 0.
     /// </summary>
     public float LocalScale
     {
         set
         {
-            if (!HasScaleObj) return;
+            if (value <= 0f)
+            {
+                throw new System.Exception($"Local scale value cannot be less than 0.\nInput scale value : {value}");
+            }
 
-            scaleTransform.localScale = new Vector3(value, value, 1f);
+            localScale = value;
+
+            cachedTransform.localScale = new Vector3((IsLeft ? -1f : 1f) * localScale, localScale, 1f);
         }
-        get => HasScaleObj ? scaleTransform.localScale.x : 1f;
+        get => localScale;
     }
 
     #endregion Properties
@@ -162,10 +149,22 @@ public class DNFTransform : MonoBehaviour
 
     private void Awake()
     {
-        posTransform = transform;
-        yPosTransform = posTransform.childCount > 0 ? posTransform.GetChild(0) : null;
-        scaleTransform = yPosTransform != null && yPosTransform.childCount > 0 ? yPosTransform.GetChild(0) : null;
+        cachedTransform = GetComponent<Transform>();
     }
 
     #endregion Unity Events
+
+    #region Methods
+
+    /// <summary>
+    /// Convert the position in the DNF coordinate into the position in the world coordinate.
+    /// </summary>
+    /// <param name="dnfPosition">The position value in the DNF coordinate to be converted into the world coordinate</param>
+    /// <returns>The position value converted into world coordinate</returns>
+    private Vector3 ConvertPosToWorldCoord(Vector3 dnfPosition)
+    {
+        return new Vector3(dnfPosition.x, dnfPosition.y + dnfPosition.z * GlobalDefine.CONV_RATE, 0f);
+    }
+
+    #endregion Methods
 }

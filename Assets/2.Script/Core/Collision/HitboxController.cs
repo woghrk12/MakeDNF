@@ -261,8 +261,6 @@ public class Hitbox
     /// <returns>true if a collision occurs in Y coordinate</returns>
     private bool CheckYCollision(Hitbox hitbox1, Hitbox hitbox2)
     {
-        if (!hitbox1.dnfTransform.HasYObj || !hitbox2.dnfTransform.HasYObj) return true;
-
         if (hitbox1.maxHitboxPos.y < hitbox2.minHitboxPos.y || hitbox1.minHitboxPos.y > hitbox2.maxHitboxPos.y) return false;
 
         return true;
