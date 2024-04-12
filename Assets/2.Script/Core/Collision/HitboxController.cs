@@ -8,102 +8,47 @@ public class Hitbox
 {
     #region Variables
 
-    private DNFTransform dnfTransform = null;
-
-    [SerializeField] private EHitboxType hitboxType = EHitboxType.BOX;
-    [SerializeField] private Vector3 size = Vector3.zero;
-    [SerializeField] private Vector3 offset = Vector3.zero;
-    [SerializeField] private Vector3 pivot = Vector3.zero;
-
-    private Vector3 maxHitboxPos = Vector3.zero;
-    private Vector3 minHitboxPos = Vector3.zero;
-
-    #endregion Variables
-
-#if UNITY_EDITOR
-
-    #region Properties
-
     /// <summary>
     /// DNF transform component used to calculate the hitbox.
     /// </summary>
-    public DNFTransform DNFTransform => dnfTransform;
+    private DNFTransform dnfTransform = null;
 
     /// <summary>
     /// The shape of the hitbox on the XZ plane.
     /// The shape of the hitbox is either box-shaped or circle-shaped.
     /// </summary>
-    public EHitboxType HitboxType
-    {
-        set 
-        {
-            hitboxType = value; 
-        }
-        get => hitboxType;
-    }
+    [SerializeField] private EHitboxType hitboxType = EHitboxType.BOX;
 
     /// <summary>
     /// The component determining the size of the hitbox.
     /// Each component of the size is a non-negative value.
     /// </summary>
-    public Vector3 Size
-    {
-        set
-        {
-            Vector3 input = value;
-
-            if (input.x < 0f) input.x = 0f;
-            if (input.y < 0f) input.y = 0f;
-            if (input.z < 0f) input.z = 0f;
-
-            size = input;
-        }
-        get => size;
-    }
+    [SerializeField] private Vector3 size = Vector3.zero;
 
     /// <summary>
     /// The component determining how far the hitbox is from the object's position.
     /// </summary>
-    public Vector3 Offset
-    {
-        set { offset = value; }
-        get => offset;
-    }
+    [SerializeField] private Vector3 offset = Vector3.zero;
 
     /// <summary>
     /// The component determining the ratio of the center point of the hitbox.
     /// Each component of the pivot will be clamped between 0 and 1.
     /// </summary>
-    public Vector3 Pivot
-    {
-        set
-        {
-            Vector3 input = value;
-
-            input.x = Mathf.Clamp01(input.x);
-            input.y = Mathf.Clamp01(input.y);
-            input.z = Mathf.Clamp01(input.z);
-
-            pivot = input;
-        }
-        get => pivot;
-    }
+    [SerializeField] private Vector3 pivot = Vector3.zero;
 
     /// <summary>
     /// The maximum values for each component of the hitbox.
     /// If the hitbox shape is a circle, the z-value has no effect.
     /// </summary>
-    public Vector3 MinHitboxPos => minHitboxPos;
+    [SerializeField] private Vector3 maxHitboxPos = Vector3.zero;
 
     /// <summary>
     /// The minimum values for each component of the hitbox.
     /// If the hitbox shape is a circle, the z-value has no effect.
     /// </summary>
-    public Vector3 MaxHitboxPos => maxHitboxPos;
+    [SerializeField] private Vector3 minHitboxPos = Vector3.zero;
 
-    #endregion Properties
-
-#endif
+    #endregion Variables
 
     #region Methods
 
@@ -123,8 +68,8 @@ public class Hitbox
         Vector3 position = dnfTransform.Position;
         float localScale = dnfTransform.LocalScale;
 
-        Vector3 minHitboxPos = Offset - localScale * new Vector3(Size.x * Pivot.x, Size.y * Pivot.y, Size.z * Pivot.z);
-        Vector3 maxHitboxPos = Offset + localScale * new Vector3(Size.x * (1f - Pivot.x), Size.y * (1f - Pivot.y), Size.z * (1f - Pivot.z));
+        Vector3 minHitboxPos = offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
+        Vector3 maxHitboxPos = offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
 
         if (dnfTransform.IsLeft)
         {
@@ -295,7 +240,7 @@ public class HitboxController : MonoBehaviour
     #region Variables
 
     [SerializeField, HideInInspector] private Hitbox[] hitboxes = new Hitbox[0];
-    private Hitbox activeHitbox = null;
+    [SerializeField, HideInInspector] private Hitbox activeHitbox = null;
 
     #endregion Variables
 
@@ -306,27 +251,6 @@ public class HitboxController : MonoBehaviour
     /// Return true if the hitbox currently activated, and false otherwise.
     /// </summary>
     public bool IsHitboxActivated => activeHitbox != null;
-
-#if UNITY_EDITOR
-
-    /// <summary>
-    /// The array of the hitboxes for editing and debugging.
-    /// </summary>
-    public Hitbox[] Hitboxes
-    {
-        set 
-        {
-            hitboxes = value; 
-        }
-        get => hitboxes;
-    }
-
-    /// <summary>
-    /// The currently active hitbox component.
-    /// </summary>
-    public Hitbox ActiveHitbox => activeHitbox;
-
-#endif
 
     #endregion Properties
 
