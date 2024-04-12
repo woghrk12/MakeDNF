@@ -14,8 +14,8 @@ public class DNFTransform : MonoBehaviour
     [SerializeField] private float localScale = 1f;
 
     [Header("Flag variables")]
-    private bool isLeft = false;
-    private bool isBoundaryOverride = false;
+    [SerializeField] private bool isLeft = false;
+    [SerializeField] private bool isBoundaryOverride = false;
 
     #endregion Variables
 

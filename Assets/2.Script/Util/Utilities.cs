@@ -39,5 +39,15 @@ public class Utilities
         return waitForSeconds;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="dnfPosition"></param>
+    /// <returns></returns>
+    public static Vector3 ConvertDNFPosToWorldPos(Vector3 dnfPosition)
+    {
+        return new Vector3(dnfPosition.x, dnfPosition.y + dnfPosition.z * GlobalDefine.CONV_RATE, 0f);
+    }
+
     #endregion Methods
 }

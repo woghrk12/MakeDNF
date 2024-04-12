@@ -288,6 +288,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
+  localScale: 1
+  isLeft: 0
+  isBoundaryOverride: 0
 --- !u!114 &65192262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,6 +621,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
+  localScale: 1
+  isLeft: 0
+  isBoundaryOverride: 0
 --- !u!114 &178524054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1292,6 +1298,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
+  localScale: 1
+  isLeft: 0
+  isBoundaryOverride: 0
 --- !u!95 &470650998
 Animator:
   serializedVersion: 5
@@ -1680,7 +1689,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 236942931}
-  m_Father: {fileID: 911908689}
+  m_Father: {fileID: 854903506}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &585941431
 SpriteRenderer:
@@ -2139,7 +2148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3853bc98249b3004aa7c2adb01d0933c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
+  position: {x: 3.4237776, y: 0, z: 0}
+  localScale: 1
+  isLeft: 0
+  isBoundaryOverride: 0
 --- !u!95 &854903505
 Animator:
   serializedVersion: 5
@@ -2170,10 +2182,11 @@ Transform:
   m_GameObject: {fileID: 854903492}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.4237776, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 585941430}
   - {fileID: 1766663340}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2217,8 +2230,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 585941430}
+  m_Children: []
   m_Father: {fileID: 1766663340}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &943867040
@@ -3500,6 +3512,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
+  localScale: 1
+  isLeft: 0
+  isBoundaryOverride: 0
 --- !u!114 &1852172116
 MonoBehaviour:
   m_ObjectHideFlags: 0
