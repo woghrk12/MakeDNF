@@ -10,23 +10,24 @@ public class HitboxEditor : Editor
 
     #region Variables
 
-    [Header("Hitbox Controller components for debug mode")]
+    [Header("Hitbox Controller components for play mode")]
     private List<HitboxController> hitboxControllerList = new();
 
     [Header("Hitbox Controller components for edit mode")]
     private HitboxController targetHitboxController = null;
+    private DNFTransform targetDNFTransform = null;
 
-    [Header("The variables for switching the edit mode")]
+    [Header("Property variables of the target component")]
+    private SerializedProperty hitboxesProperty = null;
+    private SerializedProperty hitboxTypeProperty = null;
+    private SerializedProperty sizeProperty = null;
+    private SerializedProperty offsetProperty = null;
+    private SerializedProperty pivotProperty = null;
+
+    [Header("The variables for controlling the editor")]
+    private int hitboxIndex = 0;
     private ECoordinateMode coordMode = ECoordinateMode.XZ;
     private EHitboxEditMode editMode = EHitboxEditMode.NONE;
-
-    [Header("The variables for temporary info of the hitbox")]
-    private int hitboxIndex = 0;
-    private EHitboxType[] hitboxTypeArray = null;
-    private Vector3[] sizeArray = null;
-    private Vector3[] offsetArray = null;
-    private Vector3[] pivotArray = null;
-    private bool isDataDirty = false;
 
     #endregion Variables
 
@@ -34,134 +35,120 @@ public class HitboxEditor : Editor
 
     private void OnEnable()
     {
-        hitboxControllerList.Clear();
-
-        hitboxIndex = 0;
-        hitboxTypeArray = new EHitboxType[0];
-        sizeArray = new Vector3[0];
-        offsetArray = new Vector3[0];
-        pivotArray = new Vector3[0];
-        isDataDirty = false;
-
-        HitboxController[] controllers = FindObjectsOfType<HitboxController>(true);
-        foreach (HitboxController controller in controllers)
+        if (Application.isPlaying)
         {
-            hitboxControllerList.Add(controller);
+            hitboxControllerList = new List<HitboxController>();
+            
+            HitboxController[] controllers = FindObjectsOfType<HitboxController>(true);
+            
+            foreach (HitboxController controller in controllers)
+            {
+                hitboxControllerList.Add(controller);
+            }
         }
+        else
+        {
+            targetHitboxController = target as HitboxController;
+            targetDNFTransform = targetHitboxController.GetComponent<DNFTransform>();
 
-        targetHitboxController = target as HitboxController;
+            coordMode = ECoordinateMode.XZ;
+            editMode = EHitboxEditMode.NONE;
 
-        LoadData();
+            hitboxIndex = 0;
+
+            hitboxesProperty = serializedObject.FindProperty("hitboxes");
+
+            if (hitboxesProperty.arraySize <= 0) return;
+
+            SerializedProperty hitboxProperty = hitboxesProperty.GetArrayElementAtIndex(hitboxIndex);
+
+            hitboxTypeProperty = hitboxProperty.FindPropertyRelative("hitboxType");
+            sizeProperty = hitboxProperty.FindPropertyRelative("size");
+            offsetProperty = hitboxProperty.FindPropertyRelative("offset");
+            pivotProperty = hitboxProperty.FindPropertyRelative("pivot");
+        }
     }
 
     private void OnDisable()
     {
-        if (isDataDirty && EditorUtility.DisplayDialog("Warning", "Would you like to save the changes?", "Yes", "No"))
-        { 
-            SaveData();
-        }
+        hitboxControllerList = null;
+
+        targetHitboxController = null;
+        hitboxesProperty = null;
+        hitboxTypeProperty = null;
+        sizeProperty = null;
+        offsetProperty = null;
+        pivotProperty = null;
     }
 
     private void OnSceneGUI()
     {
         if (Application.isPlaying) // Display all hitboxes in the scene when in play mode
         {
-            foreach (HitboxController controller in hitboxControllerList)
+            foreach (HitboxController hitboxController in hitboxControllerList)
             {
-                if (!controller.gameObject.activeSelf) continue;
-                if (controller.ActiveHitbox == null) continue;
+                if (!hitboxController.gameObject.activeSelf) continue;
+                if (!hitboxController.IsHitboxActivated) continue;
 
-                Hitbox activeHitbox = controller.ActiveHitbox;
+                SerializedObject serializedObject = new SerializedObject(hitboxController);
 
-                DrawHitbox(activeHitbox.HitboxType, activeHitbox.MinHitboxPos, activeHitbox.MaxHitboxPos);
+                SerializedProperty activeHitboxProperty = serializedObject.FindProperty("activeHitbox");
+
+                EHitboxType hitboxType = (EHitboxType)activeHitboxProperty.FindPropertyRelative("hitboxType").intValue;
+                Vector3 minHitboxPos = activeHitboxProperty.FindPropertyRelative("minHitboxPos").vector3Value;
+                Vector3 maxHitboxPos = activeHitboxProperty.FindPropertyRelative("maxHitboxPos").vector3Value;
+
+                DrawHitbox(hitboxType, minHitboxPos, maxHitboxPos);
             }
         }
-        else // Edit the selected hitbox when not in play mode
+        else // Edit the selected hitbox when in edit mode
         {
+            serializedObject.Update();
+
             DrawGUI();
 
-            if (hitboxTypeArray.Length <= 0) return;
+            if (hitboxesProperty.arraySize <= 0) return;
 
-            Transform posTransform = targetHitboxController.transform;
-            Transform yPosTransform = posTransform.childCount > 0 ? posTransform.GetChild(0) : null;
-            Transform scaleTransform = yPosTransform != null && yPosTransform.childCount > 0 ? yPosTransform.GetChild(0) : null;
+            Vector3 position = targetDNFTransform.Position;
+            float localScale = targetDNFTransform.LocalScale;
 
-            Vector3 position = new Vector3(posTransform.position.x, yPosTransform != null ? yPosTransform.localPosition.y : 0f, posTransform.position.y * GlobalDefine.INV_CONV_RATE);
-            Vector3 size = sizeArray[hitboxIndex];
-            Vector3 offset = offsetArray[hitboxIndex];
-            Vector3 pivot = pivotArray[hitboxIndex];
-            float localScale = scaleTransform != null ? scaleTransform.localScale.x : 1f;
+            EHitboxType hitboxType = (EHitboxType)hitboxTypeProperty.intValue;
+            Vector3 size = sizeProperty.vector3Value;
+            Vector3 offset = offsetProperty.vector3Value;
+            Vector3 pivot = pivotProperty.vector3Value;
 
             Vector3 minHitboxPos = position + offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
             Vector3 maxHitboxPos = position + offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
 
-            DrawHitbox(hitboxTypeArray[hitboxIndex], minHitboxPos, maxHitboxPos);
+            DrawHitbox(hitboxType, minHitboxPos, maxHitboxPos);
 
             switch (editMode)
             {
                 case EHitboxEditMode.SIZE:
-                    DrawSizeHandler(hitboxTypeArray[hitboxIndex], position, offsetArray[hitboxIndex], ref sizeArray[hitboxIndex], pivotArray[hitboxIndex], localScale);
+                    DrawSizeHandler(hitboxType, position, ref size, offset, pivot, localScale);
                     break;
 
                 case EHitboxEditMode.OFFSET:
-                    DrawOffsetHandler(hitboxTypeArray[hitboxIndex], position, ref offsetArray[hitboxIndex], sizeArray[hitboxIndex], pivotArray[hitboxIndex], localScale);
+                    DrawOffsetHandler(hitboxType, position, size, ref offset, pivot, localScale);
                     break;
 
                 case EHitboxEditMode.PIVOT:
-                    DrawPivotHandler(hitboxTypeArray[hitboxIndex], position, offsetArray[hitboxIndex], sizeArray[hitboxIndex], ref pivotArray[hitboxIndex], localScale);
+                    DrawPivotHandler(hitboxType, position, size, offset, ref pivot, localScale);
                     break;
             }
+
+            hitboxTypeProperty.intValue = (int)hitboxType;
+            sizeProperty.vector3Value = size;
+            offsetProperty.vector3Value = offset;
+            pivotProperty.vector3Value = pivot;
+
+            serializedObject.ApplyModifiedProperties();
         }
     }
 
     #endregion Unity Events
 
     #region Methods
-
-    /// <summary>
-    /// Load hitbox data from the target object.
-    /// </summary>
-    private void LoadData()
-    {
-        int numHitbox = targetHitboxController.Hitboxes.Length;
-
-        hitboxTypeArray = new EHitboxType[numHitbox];
-        sizeArray = new Vector3[numHitbox];
-        offsetArray = new Vector3[numHitbox];
-        pivotArray = new Vector3[numHitbox];
-
-        for (int index = 0; index < numHitbox; index++)
-        {
-            hitboxTypeArray[index] = targetHitboxController.Hitboxes[index].HitboxType;
-            sizeArray[index] = targetHitboxController.Hitboxes[index].Size;
-            offsetArray[index] = targetHitboxController.Hitboxes[index].Offset;
-            pivotArray[index] = targetHitboxController.Hitboxes[index].Pivot;
-        }
-    }
-
-    /// <summary>
-    /// Save the modified hitbox data to the target object.
-    /// </summary>
-    private void SaveData()
-    {
-        int numHitbox = hitboxTypeArray.Length;
-
-        targetHitboxController.Hitboxes = new Hitbox[numHitbox];
-
-        for (int index = 0; index < numHitbox; index++)
-        {
-            Hitbox hitbox = new();
-
-            hitbox.HitboxType = hitboxTypeArray[index];
-            hitbox.Size = sizeArray[index];
-            hitbox.Offset = offsetArray[index];
-            hitbox.Pivot = pivotArray[index];
-
-            targetHitboxController.Hitboxes[index] = hitbox;
-        }
-
-        isDataDirty = false;
-    }
 
     #region GUI
 
@@ -196,54 +183,26 @@ public class HitboxEditor : Editor
 
                         if (GUILayout.Button("Add"))
                         {
-                            hitboxTypeArray = ArrayHelper.Add(EHitboxType.BOX, hitboxTypeArray);
-                            sizeArray = ArrayHelper.Add(new Vector3(1f, 1f, 1f), sizeArray);
-                            offsetArray = ArrayHelper.Add(Vector3.zero, offsetArray);
-                            pivotArray = ArrayHelper.Add(new Vector3(0.5f, 0f, 0.5f), pivotArray);
-                            
-                            hitboxIndex = hitboxTypeArray.Length - 1;
-                            isDataDirty = true;
+                            hitboxesProperty.InsertArrayElementAtIndex(hitboxesProperty.arraySize);
                         }
 
-                        GUI.enabled = hitboxTypeArray.Length > 0;
+                        GUI.enabled = hitboxesProperty.arraySize > 0;
 
                         if (GUILayout.Button("Remove"))
                         {
-                            hitboxTypeArray = ArrayHelper.Remove(hitboxIndex, hitboxTypeArray);
-                            sizeArray = ArrayHelper.Remove(hitboxIndex, sizeArray);
-                            offsetArray = ArrayHelper.Remove(hitboxIndex, offsetArray);
-                            pivotArray = ArrayHelper.Remove(hitboxIndex, pivotArray);
-
-                            hitboxIndex = hitboxIndex >= hitboxTypeArray.Length ? 0 : hitboxIndex;
-                            isDataDirty = true;
+                            hitboxesProperty.DeleteArrayElementAtIndex(hitboxIndex);
+                            hitboxIndex = hitboxIndex >= hitboxesProperty.arraySize ? 0 : hitboxIndex;
                         }
 
                         GUI.enabled = true;
                     }
                     EditorGUILayout.EndHorizontal();
 
-                    if (hitboxTypeArray.Length > 0)
+                    if (hitboxesProperty.arraySize > 0)
                     {
                         DrawHitboxInfoLayer();
                         DrawEditModeLayer();
                     }
-
-                    EditorGUILayout.BeginHorizontal();
-                    {
-                        GUI.backgroundColor = Color.yellow;
-
-                        if (GUILayout.Button("Reload") && EditorUtility.DisplayDialog("Warning", "Are you sure to reload the hitbox data?", "Yes", "No"))
-                        {
-                            LoadData();
-                            Debug.Log("Hitbox info is reloaded!");
-                        }
-                        if (GUILayout.Button("Save") && EditorUtility.DisplayDialog("Warning", "Are you sure to save the hitbox data?", "Yes", "No"))
-                        {
-                            SaveData();
-                            Debug.Log("Hitbox info is saved!");
-                        }
-                    }
-                    EditorGUILayout.EndHorizontal();
                 }
                 EditorGUILayout.EndVertical();
             }
@@ -263,55 +222,31 @@ public class HitboxEditor : Editor
             EditorGUILayout.LabelField($"Hitbox Index : {hitboxIndex}");
 
             // Display GUI to edit the hitbox value
-            EHitboxType hitboxType = (EHitboxType)EditorGUILayout.EnumPopup("Hitbox Type", hitboxTypeArray[hitboxIndex]);
-            if (hitboxType != hitboxTypeArray[hitboxIndex])
-            {
-                hitboxTypeArray[hitboxIndex] = hitboxType;
-                isDataDirty = true;
-            }
+            EHitboxType hitboxType = (EHitboxType)EditorGUILayout.EnumPopup("Hitbox Type", (EHitboxType)hitboxTypeProperty.intValue);
+            hitboxTypeProperty.intValue = (int)hitboxType;
             
-            Vector3 size = EditorGUILayout.Vector3Field("Hitbox Size", sizeArray[hitboxIndex]);
-            if ((size - sizeArray[hitboxIndex]).sqrMagnitude > GlobalDefine.EPSILON)
-            {
-                sizeArray[hitboxIndex] = size;
-                isDataDirty = true;
-            }
-
-            Vector3 offset = EditorGUILayout.Vector3Field("Hitbox Offset", offsetArray[hitboxIndex]);
-            if ((offset - offsetArray[hitboxIndex]).sqrMagnitude > GlobalDefine.EPSILON)
-            {
-                offsetArray[hitboxIndex] = offset;
-                isDataDirty = true;
-            }
-
-            Vector3 pivot = EditorGUILayout.Vector3Field("Hitbox Pivot", pivotArray[hitboxIndex]);
-            if ((pivot - pivotArray[hitboxIndex]).sqrMagnitude > GlobalDefine.EPSILON)
-            {
-                pivotArray[hitboxIndex] = pivot;
-                isDataDirty = true;
-            }
+            sizeProperty.vector3Value = EditorGUILayout.Vector3Field("Hitbox Size", sizeProperty.vector3Value);
+            offsetProperty.vector3Value = EditorGUILayout.Vector3Field("Hitbox Size", offsetProperty.vector3Value);
+            pivotProperty.vector3Value = EditorGUILayout.Vector3Field("Hitbox Size", pivotProperty.vector3Value);
 
             // Select the hitbox to edit
-            if (hitboxTypeArray.Length > 0)
+            EditorGUILayout.BeginHorizontal();
             {
-                EditorGUILayout.BeginHorizontal();
+                GUI.enabled = hitboxIndex - 1 >= 0;
+                if (GUILayout.Button("<<"))
                 {
-                    GUI.enabled = hitboxIndex - 1 >= 0;
-                    if (GUILayout.Button("<<"))
-                    {
-                        hitboxIndex--;
-                    }
-
-                    GUI.enabled = hitboxIndex + 1 < hitboxTypeArray.Length;
-                    if (GUILayout.Button(">>"))
-                    {
-                        hitboxIndex++;
-                    }
-
-                    GUI.enabled = true;
+                    hitboxIndex--;
                 }
-                EditorGUILayout.EndHorizontal();
+
+                GUI.enabled = hitboxIndex + 1 < hitboxesProperty.arraySize;
+                if (GUILayout.Button(">>"))
+                {
+                    hitboxIndex++;
+                }
+
+                GUI.enabled = true;
             }
+            EditorGUILayout.EndHorizontal();
         }
         EditorGUILayout.EndVertical();
     }
@@ -394,7 +329,7 @@ public class HitboxEditor : Editor
     /// The criterion for the arrow changing direction is 0.5f.
     /// The minimum value for the size is 0f.
     /// </summary>
-    private void DrawSizeHandler(EHitboxType hitboxType, Vector3 position, Vector3 offset, ref Vector3 size, Vector3 pivot, float localScale)
+    private void DrawSizeHandler(EHitboxType hitboxType, Vector3 position, ref Vector3 size, Vector3 offset, Vector3 pivot, float localScale)
     {
         Vector3 minHitboxPos = position + offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
         Vector3 maxHitboxPos = position + offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
@@ -418,8 +353,6 @@ public class HitboxEditor : Editor
             if (size.x < 0f) size.x = 0f;
         }
 
-        if (Mathf.Abs(size.x - x) > GlobalDefine.EPSILON) isDataDirty = true;
-
         if (coordMode == ECoordinateMode.XZ)
         {
             // Draw the gizmo of Z direction
@@ -440,8 +373,6 @@ public class HitboxEditor : Editor
 
                 if (size.z < 0f) size.z = 0f;
             }
-
-            if (Mathf.Abs(size.z - z) > GlobalDefine.EPSILON) isDataDirty = true;
         }
         else
         {
@@ -463,8 +394,6 @@ public class HitboxEditor : Editor
 
                 if (size.y < 0f) size.y = 0f;
             }
-
-            if (Mathf.Abs(size.y - y) > GlobalDefine.EPSILON) isDataDirty = true;
         }
     }
 
@@ -472,7 +401,7 @@ public class HitboxEditor : Editor
     /// Draw the controllers of the hitbox offset.
     /// Determine how far apart the position of the object is from the position of the hitbox.
     /// </summary>
-    private void DrawOffsetHandler(EHitboxType hitboxType, Vector3 position, ref Vector3 offset, Vector3 size, Vector3 pivot, float localScale)
+    private void DrawOffsetHandler(EHitboxType hitboxType, Vector3 position, Vector3 size, ref Vector3 offset, Vector3 pivot, float localScale)
     {
         Vector3 changedPos = position + offset;
 
@@ -483,8 +412,6 @@ public class HitboxEditor : Editor
         changedPos = Handles.Slider(new Vector3(changedPos.x, changedPos.y + changedPos.z * GlobalDefine.CONV_RATE, 0f), Vector3.right);
         offset.x = changedPos.x - position.x;
 
-        if (Mathf.Abs(offset.x - x) > GlobalDefine.EPSILON) isDataDirty = true;
-
         if (coordMode == ECoordinateMode.XZ)
         {
             // Draw the gizmo of Z direction
@@ -493,8 +420,6 @@ public class HitboxEditor : Editor
 
             changedPos = Handles.Slider(new Vector3(changedPos.x, changedPos.y + changedPos.z * GlobalDefine.CONV_RATE, 0f), Vector3.up);
             offset.z = (changedPos.y - position.y) * GlobalDefine.INV_CONV_RATE - position.z;
-
-            if (Mathf.Abs(offset.z - z) > GlobalDefine.EPSILON) isDataDirty = true;
         }
         else
         {
@@ -504,8 +429,6 @@ public class HitboxEditor : Editor
 
             changedPos = Handles.Slider(new Vector3(changedPos.x, changedPos.y + changedPos.z * GlobalDefine.CONV_RATE, 0f), Vector3.up);
             offset.y = changedPos.y - position.z * GlobalDefine.CONV_RATE - position.y;
-
-            if (Mathf.Abs(offset.y - y) > GlobalDefine.EPSILON) isDataDirty = true;
         }
     }
 
@@ -514,7 +437,7 @@ public class HitboxEditor : Editor
     /// Scale the hitbox with the pivot as the reference.
     /// The value of pivot is between 0f and 1f.
     /// </summary>
-    private void DrawPivotHandler(EHitboxType hitboxType, Vector3 position, Vector3 offset, Vector3 size, ref Vector3 pivot, float localScale)
+    private void DrawPivotHandler(EHitboxType hitboxType, Vector3 position, Vector3 size, Vector3 offset, ref Vector3 pivot, float localScale)
     {
         Vector3 minHitboxPos = position + offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
         Vector3 maxHitboxPos = position + offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
@@ -526,10 +449,7 @@ public class HitboxEditor : Editor
         Vector3 xHandlerPos = Handles.Slider(new Vector3(Mathf.Lerp(minHitboxPos.x, maxHitboxPos.x, pivot.x), minHitboxPos.y + minHitboxPos.z * GlobalDefine.CONV_RATE, 0f), Vector3.right);
         pivot.x = (xHandlerPos.x - minHitboxPos.x) / (maxHitboxPos.x - minHitboxPos.x);
 
-        if (pivot.x < 0f) pivot.x = 0f;
-        if (pivot.x > 1f) pivot.x = 1f;
-
-        if (Mathf.Abs(pivot.x - x) > GlobalDefine.EPSILON) isDataDirty = true;
+        pivot.x = Mathf.Clamp01(pivot.x);
 
         if (coordMode == ECoordinateMode.XZ)
         {
@@ -540,10 +460,7 @@ public class HitboxEditor : Editor
             Vector3 zHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, Mathf.Lerp(minHitboxPos.z, maxHitboxPos.z, pivot.z) * GlobalDefine.CONV_RATE, 0f), Vector3.up);
             pivot.z = (zHandlerPos.y * GlobalDefine.INV_CONV_RATE - minHitboxPos.z) / (maxHitboxPos.z - minHitboxPos.z);
 
-            if (pivot.z < 0f) pivot.z = 0f;
-            if (pivot.z > 1f) pivot.z = 1f;
-
-            if (Mathf.Abs(pivot.z - z) > GlobalDefine.EPSILON) isDataDirty = true;
+            pivot.y = Mathf.Clamp01(pivot.y);
         }
         else
         {
@@ -554,10 +471,7 @@ public class HitboxEditor : Editor
             Vector3 yHandlerPos = Handles.Slider(new Vector3(minHitboxPos.x, Mathf.Lerp(minHitboxPos.y, maxHitboxPos.y, pivot.y) + minHitboxPos.z * GlobalDefine.CONV_RATE, 0f), Vector3.up);
             pivot.y = (yHandlerPos.y - minHitboxPos.z * GlobalDefine.CONV_RATE - minHitboxPos.y) / (maxHitboxPos.y - minHitboxPos.y);
 
-            if (pivot.y < 0f) pivot.y = 0f;
-            if (pivot.y > 1f) pivot.y = 1f;
-
-            if (Mathf.Abs(pivot.y - y) > GlobalDefine.EPSILON) isDataDirty = true;
+            pivot.z = Mathf.Clamp01(pivot.z);
         }
     }
 
