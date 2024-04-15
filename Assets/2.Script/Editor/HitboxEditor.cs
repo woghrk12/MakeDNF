@@ -38,14 +38,7 @@ public class HitboxEditor : Editor
     {
         if (Application.isPlaying)
         {
-            hitboxControllerList = new List<HitboxController>();
-            
-            HitboxController[] controllers = FindObjectsOfType<HitboxController>(true);
-            
-            foreach (HitboxController controller in controllers)
-            {
-                hitboxControllerList.Add(controller);
-            }
+            FindAllHitboxController();
         }
         else
         {
@@ -156,6 +149,11 @@ public class HitboxEditor : Editor
             if (GUILayout.Button("Deactive Scene GUI"))
             {
                 isActiveSceneGUI = false;
+            }
+            
+            if (Application.isPlaying && GUILayout.Button("Find Hitbox Controller"))
+            {
+                FindAllHitboxController();
             }
         }
         else
@@ -497,6 +495,22 @@ public class HitboxEditor : Editor
     }
 
     #endregion Scene GUI
+
+    #region Helper
+
+    private void FindAllHitboxController()
+    {
+        hitboxControllerList = new List<HitboxController>();
+
+        HitboxController[] controllers = FindObjectsOfType<HitboxController>(true);
+
+        foreach (HitboxController controller in controllers)
+        {
+            hitboxControllerList.Add(controller);
+        }
+    }
+
+    #endregion Helper
 
     #endregion Methods
 }
