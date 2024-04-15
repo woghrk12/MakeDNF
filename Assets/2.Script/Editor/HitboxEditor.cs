@@ -10,10 +10,7 @@ public class HitboxEditor : Editor
 
     #region Variables
 
-    [Header("Hitbox Controller components for play mode")]
-    private List<HitboxController> hitboxControllerList = new();
-
-    [Header("Hitbox Controller components for edit mode")]
+    [Header("Components to edit the hitboxes")]
     private HitboxController targetHitboxController = null;
     private DNFTransform targetDNFTransform = null;
 
@@ -36,37 +33,28 @@ public class HitboxEditor : Editor
 
     private void OnEnable()
     {
-        if (Application.isPlaying)
-        {
-            FindAllHitboxController();
-        }
-        else
-        {
-            targetHitboxController = target as HitboxController;
-            targetDNFTransform = targetHitboxController.GetComponent<DNFTransform>();
+        targetHitboxController = target as HitboxController;
+        targetDNFTransform = targetHitboxController.GetComponent<DNFTransform>();
 
-            coordMode = ECoordinateMode.XZ;
-            editMode = EHitboxEditMode.NONE;
+        coordMode = ECoordinateMode.XZ;
+        editMode = EHitboxEditMode.NONE;
 
-            hitboxIndex = 0;
+        hitboxIndex = 0;
 
-            hitboxesProperty = serializedObject.FindProperty("hitboxes");
+        hitboxesProperty = serializedObject.FindProperty("hitboxes");
 
-            if (hitboxesProperty.arraySize <= 0) return;
+        if (hitboxesProperty.arraySize <= 0) return;
 
-            SerializedProperty hitboxProperty = hitboxesProperty.GetArrayElementAtIndex(hitboxIndex);
+        SerializedProperty hitboxProperty = hitboxesProperty.GetArrayElementAtIndex(hitboxIndex);
 
-            hitboxTypeProperty = hitboxProperty.FindPropertyRelative("hitboxType");
-            sizeProperty = hitboxProperty.FindPropertyRelative("size");
-            offsetProperty = hitboxProperty.FindPropertyRelative("offset");
-            pivotProperty = hitboxProperty.FindPropertyRelative("pivot");
-        }
+        hitboxTypeProperty = hitboxProperty.FindPropertyRelative("hitboxType");
+        sizeProperty = hitboxProperty.FindPropertyRelative("size");
+        offsetProperty = hitboxProperty.FindPropertyRelative("offset");
+        pivotProperty = hitboxProperty.FindPropertyRelative("pivot");
     }
 
     private void OnDisable()
     {
-        hitboxControllerList = null;
-
         targetHitboxController = null;
         hitboxesProperty = null;
         hitboxTypeProperty = null;
@@ -79,67 +67,46 @@ public class HitboxEditor : Editor
     {
         if (!isActiveSceneGUI) return;
 
-        if (Application.isPlaying) // Display all hitboxes in the scene when in play mode
+        serializedObject.Update();
+
+        DrawGUI();
+
+        if (hitboxesProperty.arraySize <= 0) return;
+
+        Vector3 position = ReferenceEquals(targetDNFTransform, null) ? Vector3.zero : targetDNFTransform.Position;
+        float localScale = ReferenceEquals(targetDNFTransform, null) ? 1f : targetDNFTransform.LocalScale;
+
+        EHitboxType hitboxType = (EHitboxType)hitboxTypeProperty.intValue;
+        Vector3 size = sizeProperty.vector3Value;
+        Vector3 offset = offsetProperty.vector3Value;
+        Vector3 pivot = pivotProperty.vector3Value;
+
+        Vector3 minHitboxPos = position + offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
+        Vector3 maxHitboxPos = position + offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
+
+        DrawHitbox(hitboxType, minHitboxPos, maxHitboxPos);
+
+        switch (editMode)
         {
-            foreach (HitboxController hitboxController in hitboxControllerList)
-            {
-                if (!hitboxController.gameObject.activeSelf) continue;
-                if (!hitboxController.IsHitboxActivated) continue;
+            case EHitboxEditMode.SIZE:
+                DrawSizeHandler(hitboxType, position, ref size, offset, pivot, localScale);
+                break;
 
-                SerializedObject serializedObject = new SerializedObject(hitboxController);
+            case EHitboxEditMode.OFFSET:
+                DrawOffsetHandler(hitboxType, position, size, ref offset, pivot, localScale);
+                break;
 
-                SerializedProperty activeHitboxProperty = serializedObject.FindProperty("activeHitbox");
-
-                EHitboxType hitboxType = (EHitboxType)activeHitboxProperty.FindPropertyRelative("hitboxType").intValue;
-                Vector3 minHitboxPos = activeHitboxProperty.FindPropertyRelative("minHitboxPos").vector3Value;
-                Vector3 maxHitboxPos = activeHitboxProperty.FindPropertyRelative("maxHitboxPos").vector3Value;
-
-                DrawHitbox(hitboxType, minHitboxPos, maxHitboxPos);
-            }
+            case EHitboxEditMode.PIVOT:
+                DrawPivotHandler(hitboxType, position, size, offset, ref pivot, localScale);
+                break;
         }
-        else // Edit the selected hitbox when in edit mode
-        {
-            serializedObject.Update();
 
-            DrawGUI();
+        hitboxTypeProperty.intValue = (int)hitboxType;
+        sizeProperty.vector3Value = size;
+        offsetProperty.vector3Value = offset;
+        pivotProperty.vector3Value = pivot;
 
-            if (hitboxesProperty.arraySize <= 0) return;
-
-            Vector3 position = ReferenceEquals(targetDNFTransform, null) ? Vector3.zero : targetDNFTransform.Position;
-            float localScale = ReferenceEquals(targetDNFTransform, null) ? 1f : targetDNFTransform.LocalScale;
-
-            EHitboxType hitboxType = (EHitboxType)hitboxTypeProperty.intValue;
-            Vector3 size = sizeProperty.vector3Value;
-            Vector3 offset = offsetProperty.vector3Value;
-            Vector3 pivot = pivotProperty.vector3Value;
-
-            Vector3 minHitboxPos = position + offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
-            Vector3 maxHitboxPos = position + offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
-
-            DrawHitbox(hitboxType, minHitboxPos, maxHitboxPos);
-
-            switch (editMode)
-            {
-                case EHitboxEditMode.SIZE:
-                    DrawSizeHandler(hitboxType, position, ref size, offset, pivot, localScale);
-                    break;
-
-                case EHitboxEditMode.OFFSET:
-                    DrawOffsetHandler(hitboxType, position, size, ref offset, pivot, localScale);
-                    break;
-
-                case EHitboxEditMode.PIVOT:
-                    DrawPivotHandler(hitboxType, position, size, offset, ref pivot, localScale);
-                    break;
-            }
-
-            hitboxTypeProperty.intValue = (int)hitboxType;
-            sizeProperty.vector3Value = size;
-            offsetProperty.vector3Value = offset;
-            pivotProperty.vector3Value = pivot;
-
-            serializedObject.ApplyModifiedProperties();
-        }
+        serializedObject.ApplyModifiedProperties();
     }
 
     public override void OnInspectorGUI()
@@ -149,11 +116,6 @@ public class HitboxEditor : Editor
             if (GUILayout.Button("Deactive Scene GUI"))
             {
                 isActiveSceneGUI = false;
-            }
-            
-            if (Application.isPlaying && GUILayout.Button("Find Hitbox Controller"))
-            {
-                FindAllHitboxController();
             }
         }
         else
@@ -495,22 +457,6 @@ public class HitboxEditor : Editor
     }
 
     #endregion Scene GUI
-
-    #region Helper
-
-    private void FindAllHitboxController()
-    {
-        hitboxControllerList = new List<HitboxController>();
-
-        HitboxController[] controllers = FindObjectsOfType<HitboxController>(true);
-
-        foreach (HitboxController controller in controllers)
-        {
-            hitboxControllerList.Add(controller);
-        }
-    }
-
-    #endregion Helper
 
     #endregion Methods
 }
