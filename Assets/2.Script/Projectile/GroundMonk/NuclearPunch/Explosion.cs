@@ -67,8 +67,6 @@ namespace GroundMonkSkill.NuclearPunchProjectile
             dnfTransform.IsLeft = spawnerTransform.IsLeft;
             dnfTransform.LocalScale = sizeEff;
 
-            AttackerHitboxController.CalculateHitbox();
-
             SetState((int)EState.ON);
         }
 

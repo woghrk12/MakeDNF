@@ -32,6 +32,8 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
             {
                 stateController.AlreadyHitTargets.Clear();
 
+                stateController.AttackerHitboxController.EnableHitbox((int)EState.SHOT);
+
                 phase = EStatePhase.PREDELAY;
             }
 
@@ -77,6 +79,8 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
             public override void OnComplete()
             {
+                stateController.AttackerHitboxController.DisableHitbox();
+
                 stateController.Complete();
             }
 

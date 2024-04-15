@@ -67,8 +67,6 @@ namespace FireKnightSkill.SwiftDemonSlashProjectile
             dnfTransform.IsLeft = AttackerDNFTransform.IsLeft;
             dnfTransform.LocalScale = sizeEff;
 
-            AttackerHitboxController.CalculateHitbox();
-
             curState = stateList[(int)EState.SHOT];
             curState.OnStart();
         }

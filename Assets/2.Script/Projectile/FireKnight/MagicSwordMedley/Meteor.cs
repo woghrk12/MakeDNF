@@ -80,8 +80,6 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
             // Set projectile direction
             moveDirection = ((spawnerTransform.IsLeft ? Vector3.left : Vector3.right) + Vector3.down).normalized;
-            
-            AttackerHitboxController.CalculateHitbox();
 
             curState = stateList[(int)EState.SHOT];
             curState.OnStart();

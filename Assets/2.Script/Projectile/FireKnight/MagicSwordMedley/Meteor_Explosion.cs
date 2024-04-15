@@ -52,13 +52,13 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
             public override void OnLateUpdate()
             {
-                stateController.AttackerHitboxController.CalculateHitbox();
-
                 stateController.CalculateOnHit(GameManager.Room.Monsters);
             }
 
             public override void OnComplete()
             {
+                stateController.AttackerHitboxController.DisableHitbox();
+
                 stateController.Complete();
             }
 

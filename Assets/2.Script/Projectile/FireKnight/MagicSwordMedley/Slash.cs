@@ -76,8 +76,6 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
             dnfTransform.Position = targetTransform.Position;
             spriteTransform.Rotate(0f, 0f, Random.Range(0f, 360f));
 
-            AttackerHitboxController.CalculateHitbox();
-
             curState = stateList[(int)EState.SHOT];
             curState.OnStart();
         }

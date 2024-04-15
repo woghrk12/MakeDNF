@@ -77,6 +77,8 @@ namespace FireKnightSkill.SwiftDemonSlashProjectile
 
             public override void OnComplete()
             {
+                stateController.AttackerHitboxController.DisableHitbox();
+
                 stateController.Complete();
             }
 
