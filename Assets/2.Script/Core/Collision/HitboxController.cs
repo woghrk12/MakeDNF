@@ -272,6 +272,8 @@ public class HitboxController : MonoBehaviour
         {
             hitbox.Init(dnfTransform);
         }
+
+        activeHitbox = null;
     }
 
     /// <summary>

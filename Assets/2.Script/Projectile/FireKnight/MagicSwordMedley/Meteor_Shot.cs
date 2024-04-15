@@ -35,6 +35,8 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
             public override void OnFixedUpdate()
             {
                 stateController.dnfRigidbody.MoveDirection(Time.fixedDeltaTime * stateController.speed * stateController.moveDirection);
+                
+                stateController.AttackerHitboxController.CalculateHitbox();
 
                 if (stateController.dnfRigidbody.IsGround)
                 {
@@ -44,8 +46,6 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
 
             public override void OnLateUpdate()
             {
-                stateController.AttackerHitboxController.CalculateHitbox();
-
                 stateController.CalculateOnHit(GameManager.Room.Monsters);
             }
 
