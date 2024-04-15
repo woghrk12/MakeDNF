@@ -105,8 +105,8 @@ public class HitboxEditor : Editor
 
             if (hitboxesProperty.arraySize <= 0) return;
 
-            Vector3 position = targetDNFTransform.Position;
-            float localScale = targetDNFTransform.LocalScale;
+            Vector3 position = ReferenceEquals(targetDNFTransform, null) ? Vector3.zero : targetDNFTransform.Position;
+            float localScale = ReferenceEquals(targetDNFTransform, null) ? 1f : targetDNFTransform.LocalScale;
 
             EHitboxType hitboxType = (EHitboxType)hitboxTypeProperty.intValue;
             Vector3 size = sizeProperty.vector3Value;
