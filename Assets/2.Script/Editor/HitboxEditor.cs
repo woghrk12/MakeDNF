@@ -217,12 +217,26 @@ public class HitboxEditor : Editor
                 if (GUILayout.Button("<<"))
                 {
                     hitboxIndex--;
+
+                    SerializedProperty hitboxProperty = hitboxesProperty.GetArrayElementAtIndex(hitboxIndex);
+
+                    hitboxTypeProperty = hitboxProperty.FindPropertyRelative("hitboxType");
+                    sizeProperty = hitboxProperty.FindPropertyRelative("size");
+                    offsetProperty = hitboxProperty.FindPropertyRelative("offset");
+                    pivotProperty = hitboxProperty.FindPropertyRelative("pivot");
                 }
 
                 GUI.enabled = hitboxIndex + 1 < hitboxesProperty.arraySize;
                 if (GUILayout.Button(">>"))
                 {
                     hitboxIndex++;
+
+                    SerializedProperty hitboxProperty = hitboxesProperty.GetArrayElementAtIndex(hitboxIndex);
+
+                    hitboxTypeProperty = hitboxProperty.FindPropertyRelative("hitboxType");
+                    sizeProperty = hitboxProperty.FindPropertyRelative("size");
+                    offsetProperty = hitboxProperty.FindPropertyRelative("offset");
+                    pivotProperty = hitboxProperty.FindPropertyRelative("pivot");
                 }
 
                 GUI.enabled = true;
