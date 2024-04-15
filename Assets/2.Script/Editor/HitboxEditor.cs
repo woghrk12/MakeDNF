@@ -28,6 +28,7 @@ public class HitboxEditor : Editor
     private int hitboxIndex = 0;
     private ECoordinateMode coordMode = ECoordinateMode.XZ;
     private EHitboxEditMode editMode = EHitboxEditMode.NONE;
+    private bool isActiveSceneGUI = false;
 
     #endregion Variables
 
@@ -83,6 +84,8 @@ public class HitboxEditor : Editor
 
     private void OnSceneGUI()
     {
+        if (!isActiveSceneGUI) return;
+
         if (Application.isPlaying) // Display all hitboxes in the scene when in play mode
         {
             foreach (HitboxController hitboxController in hitboxControllerList)
@@ -143,6 +146,24 @@ public class HitboxEditor : Editor
             pivotProperty.vector3Value = pivot;
 
             serializedObject.ApplyModifiedProperties();
+        }
+    }
+
+    public override void OnInspectorGUI()
+    {
+        if (isActiveSceneGUI)
+        {
+            if (GUILayout.Button("Deactive Scene GUI"))
+            {
+                isActiveSceneGUI = false;
+            }
+        }
+        else
+        {
+            if (GUILayout.Button("Active Scene GUI"))
+            {
+                isActiveSceneGUI = true;
+            }
         }
     }
 
