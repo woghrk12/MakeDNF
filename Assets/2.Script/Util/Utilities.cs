@@ -40,10 +40,10 @@ public class Utilities
     }
 
     /// <summary>
-    /// 
+    /// Convert the position in the DNF coordinate into the position in the world coordinate.
     /// </summary>
-    /// <param name="dnfPosition"></param>
-    /// <returns></returns>
+    /// <param name="dnfPosition">The position value in the DNF coordinate to be converted into the world coordinate</param>
+    /// <returns>The position value converted into world coordinate</returns>
     public static Vector3 ConvertDNFPosToWorldPos(Vector3 dnfPosition)
     {
         return new Vector3(dnfPosition.x, dnfPosition.y + dnfPosition.z * GlobalDefine.CONV_RATE, 0f);

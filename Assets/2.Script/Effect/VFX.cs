@@ -60,7 +60,7 @@ public abstract class VFX : MonoBehaviour
     {
         this.targetTransform = targetTransform;
 
-        cachedTransform.position = new Vector3(targetTransform.Position.x, targetTransform.Position.y + targetTransform.Position.z * GlobalDefine.CONV_RATE, 0f);
+        cachedTransform.position = Utilities.ConvertDNFPosToWorldPos(targetTransform.Position);
         cachedTransform.localScale = new Vector3(targetTransform.IsLeft ? -1f : 1f, 1f, 1f);
     }
 

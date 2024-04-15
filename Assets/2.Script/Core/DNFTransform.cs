@@ -32,7 +32,7 @@ public class DNFTransform : MonoBehaviour
             Room curRoom = GameManager.Room;
             position.x = isBoundaryOverride ? value : Mathf.Clamp(value, curRoom.MinXZPos.x, curRoom.MaxXZPos.x);
 
-            cachedTransform.position = ConvertPosToWorldCoord(position);
+            cachedTransform.position = Utilities.ConvertDNFPosToWorldPos(position);
         }
         get => position.x;
     }
@@ -48,7 +48,7 @@ public class DNFTransform : MonoBehaviour
         {
             position.y = value >= 0f ? value : 0f;
 
-            cachedTransform.position = ConvertPosToWorldCoord(position);
+            cachedTransform.position = Utilities.ConvertDNFPosToWorldPos(position);
         }
         get => position.y;
     }
@@ -65,7 +65,7 @@ public class DNFTransform : MonoBehaviour
             Room curRoom = GameManager.Room;
             position.z = isBoundaryOverride ? value : Mathf.Clamp(value, curRoom.MinXZPos.z, curRoom.MaxXZPos.z);
 
-            cachedTransform.position = ConvertPosToWorldCoord(position);
+            cachedTransform.position = Utilities.ConvertDNFPosToWorldPos(position);
         }
         get => position.z;
     }
@@ -114,7 +114,7 @@ public class DNFTransform : MonoBehaviour
                 position.x = Mathf.Clamp(position.x, curRoom.MinXZPos.x, curRoom.MaxXZPos.x);
                 position.z = Mathf.Clamp(position.z, curRoom.MinXZPos.z, curRoom.MaxXZPos.z);
 
-                cachedTransform.position = ConvertPosToWorldCoord(position);
+                cachedTransform.position = Utilities.ConvertDNFPosToWorldPos(position);
             }
 
             isBoundaryOverride = value;
@@ -153,18 +153,4 @@ public class DNFTransform : MonoBehaviour
     }
 
     #endregion Unity Events
-
-    #region Methods
-
-    /// <summary>
-    /// Convert the position in the DNF coordinate into the position in the world coordinate.
-    /// </summary>
-    /// <param name="dnfPosition">The position value in the DNF coordinate to be converted into the world coordinate</param>
-    /// <returns>The position value converted into world coordinate</returns>
-    private Vector3 ConvertPosToWorldCoord(Vector3 dnfPosition)
-    {
-        return new Vector3(dnfPosition.x, dnfPosition.y + dnfPosition.z * GlobalDefine.CONV_RATE, 0f);
-    }
-
-    #endregion Methods
 }
