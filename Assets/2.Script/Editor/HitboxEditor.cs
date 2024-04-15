@@ -224,8 +224,8 @@ public class HitboxEditor : Editor
             hitboxTypeProperty.intValue = (int)hitboxType;
             
             sizeProperty.vector3Value = EditorGUILayout.Vector3Field("Hitbox Size", sizeProperty.vector3Value);
-            offsetProperty.vector3Value = EditorGUILayout.Vector3Field("Hitbox Size", offsetProperty.vector3Value);
-            pivotProperty.vector3Value = EditorGUILayout.Vector3Field("Hitbox Size", pivotProperty.vector3Value);
+            offsetProperty.vector3Value = EditorGUILayout.Vector3Field("Hitbox Offset", offsetProperty.vector3Value);
+            pivotProperty.vector3Value = EditorGUILayout.Vector3Field("Hitbox Pivot", pivotProperty.vector3Value);
 
             // Select the hitbox to edit
             EditorGUILayout.BeginHorizontal();
