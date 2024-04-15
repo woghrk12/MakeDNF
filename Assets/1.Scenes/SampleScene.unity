@@ -482,12 +482,6 @@ MonoBehaviour:
     pivot: {x: 0, y: 0, z: 0.5}
     maxHitboxPos: {x: 0, y: 0, z: 0}
     minHitboxPos: {x: 0, y: 0, z: 0}
-  - hitboxType: 0
-    size: {x: 4.6400194, y: 2.903688, z: 2.6735718}
-    offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0.5, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
   activeHitbox:
     hitboxType: 0
     size: {x: 0, y: 0, z: 0}
@@ -774,7 +768,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &228414561
 Transform:
   m_ObjectHideFlags: 0
@@ -959,12 +953,6 @@ MonoBehaviour:
   - hitboxType: 0
     size: {x: 3.2247152, y: 3.3272364, z: 2.093562}
     offset: {x: 0.7073978, y: 0, z: 0}
-    pivot: {x: 0, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
-  - hitboxType: 0
-    size: {x: 3.6963139, y: 1.6971457, z: 1.4738766}
-    offset: {x: 0, y: 0.3998335, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
     maxHitboxPos: {x: 0, y: 0, z: 0}
     minHitboxPos: {x: 0, y: 0, z: 0}
@@ -1169,7 +1157,7 @@ GameObject:
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &470650993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1965,7 +1953,7 @@ GameObject:
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &854903494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2123,7 +2111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3853bc98249b3004aa7c2adb01d0933c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 2.559723, y: 0.0000000055879354, z: 0.48931375}
+  position: {x: 2.559723, y: 0, z: 0.48931375}
   localScale: 1
   isLeft: 0
   isBoundaryOverride: 0

@@ -29,6 +29,29 @@ public class HitboxEditor : Editor
 
     #endregion Variables
 
+    #region Property
+
+    /// <summary>
+    /// The index of currently selected hitbox of the hitbox controller to be edited.
+    /// </summary>
+    private int HitboxIndex
+    {
+        set
+        {
+            hitboxIndex = value;
+
+            SerializedProperty hitboxProperty = hitboxesProperty.GetArrayElementAtIndex(hitboxIndex);
+
+            hitboxTypeProperty = hitboxProperty.FindPropertyRelative("hitboxType");
+            sizeProperty = hitboxProperty.FindPropertyRelative("size");
+            offsetProperty = hitboxProperty.FindPropertyRelative("offset");
+            pivotProperty = hitboxProperty.FindPropertyRelative("pivot");
+        }
+        get => hitboxIndex;
+    }
+
+    #endregion Property
+
     #region Unity Events
 
     private void OnEnable()
@@ -39,18 +62,11 @@ public class HitboxEditor : Editor
         coordMode = ECoordinateMode.XZ;
         editMode = EHitboxEditMode.NONE;
 
-        hitboxIndex = 0;
-
         hitboxesProperty = serializedObject.FindProperty("hitboxes");
 
         if (hitboxesProperty.arraySize <= 0) return;
 
-        SerializedProperty hitboxProperty = hitboxesProperty.GetArrayElementAtIndex(hitboxIndex);
-
-        hitboxTypeProperty = hitboxProperty.FindPropertyRelative("hitboxType");
-        sizeProperty = hitboxProperty.FindPropertyRelative("size");
-        offsetProperty = hitboxProperty.FindPropertyRelative("offset");
-        pivotProperty = hitboxProperty.FindPropertyRelative("pivot");
+        HitboxIndex = 0;
     }
 
     private void OnDisable()
@@ -165,6 +181,7 @@ public class HitboxEditor : Editor
                         if (GUILayout.Button("Add"))
                         {
                             hitboxesProperty.InsertArrayElementAtIndex(hitboxesProperty.arraySize);
+                            HitboxIndex = hitboxesProperty.arraySize - 1;
                         }
 
                         GUI.enabled = hitboxesProperty.arraySize > 0;
@@ -172,7 +189,7 @@ public class HitboxEditor : Editor
                         if (GUILayout.Button("Remove"))
                         {
                             hitboxesProperty.DeleteArrayElementAtIndex(hitboxIndex);
-                            hitboxIndex = hitboxIndex >= hitboxesProperty.arraySize ? 0 : hitboxIndex;
+                            HitboxIndex = HitboxIndex >= hitboxesProperty.arraySize ? 0 : HitboxIndex;
                         }
 
                         GUI.enabled = true;
@@ -216,27 +233,13 @@ public class HitboxEditor : Editor
                 GUI.enabled = hitboxIndex - 1 >= 0;
                 if (GUILayout.Button("<<"))
                 {
-                    hitboxIndex--;
-
-                    SerializedProperty hitboxProperty = hitboxesProperty.GetArrayElementAtIndex(hitboxIndex);
-
-                    hitboxTypeProperty = hitboxProperty.FindPropertyRelative("hitboxType");
-                    sizeProperty = hitboxProperty.FindPropertyRelative("size");
-                    offsetProperty = hitboxProperty.FindPropertyRelative("offset");
-                    pivotProperty = hitboxProperty.FindPropertyRelative("pivot");
+                    HitboxIndex--;
                 }
 
                 GUI.enabled = hitboxIndex + 1 < hitboxesProperty.arraySize;
                 if (GUILayout.Button(">>"))
                 {
-                    hitboxIndex++;
-
-                    SerializedProperty hitboxProperty = hitboxesProperty.GetArrayElementAtIndex(hitboxIndex);
-
-                    hitboxTypeProperty = hitboxProperty.FindPropertyRelative("hitboxType");
-                    sizeProperty = hitboxProperty.FindPropertyRelative("size");
-                    offsetProperty = hitboxProperty.FindPropertyRelative("offset");
-                    pivotProperty = hitboxProperty.FindPropertyRelative("pivot");
+                    HitboxIndex++;
                 }
 
                 GUI.enabled = true;
