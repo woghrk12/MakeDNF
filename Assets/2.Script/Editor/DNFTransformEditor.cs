@@ -177,19 +177,22 @@ public class DNFTransformEditor : Editor
         {
             // Draw the gizmo of X direction
             Handles.color = Color.red;
-            Vector3 xHandlerPos = Handles.Slider(Utilities.ConvertDNFPosToWorldPos(position), Vector3.right);
+            Vector3 xzPosition = new Vector3(position.x, 0f, position.z);
+            Vector3 xHandlerPos = Handles.Slider(Utilities.ConvertDNFPosToWorldPos(xzPosition), Vector3.right);
             position.x = xHandlerPos.x;
 
             // Draw the gizmo of Z direction
             Handles.color = Color.blue;
-            Vector3 zHandlerPos = Handles.Slider(Utilities.ConvertDNFPosToWorldPos(position), Vector3.up);
-            position.z = (zHandlerPos.y - position.y) * GlobalDefine.INV_CONV_RATE;
+            xzPosition = new Vector3(position.x, 0f, position.z);
+            Vector3 zHandlerPos = Handles.Slider(Utilities.ConvertDNFPosToWorldPos(xzPosition), Vector3.up);
+            position.z = zHandlerPos.y * GlobalDefine.INV_CONV_RATE;
 
             // Draw the gizmo of XZ direction
-            Vector3 xzHandlerPos = Handles.Slider2D(Utilities.ConvertDNFPosToWorldPos(position) + handleOffset, Vector3.forward, Vector3.right, Vector3.up, handleSize, Handles.RectangleHandleCap, 0.1f);
+            xzPosition = new Vector3(position.x, 0f, position.z);
+            Vector3 xzHandlerPos = Handles.Slider2D(Utilities.ConvertDNFPosToWorldPos(xzPosition) + handleOffset, Vector3.forward, Vector3.right, Vector3.up, handleSize, Handles.RectangleHandleCap, 0.1f);
             xzHandlerPos -= handleOffset;
             position.x = xzHandlerPos.x;
-            position.z = (xzHandlerPos.y - position.y) * GlobalDefine.INV_CONV_RATE;
+            position.z = xzHandlerPos.y * GlobalDefine.INV_CONV_RATE;
         }
 
         positionProperty.vector3Value = position;
