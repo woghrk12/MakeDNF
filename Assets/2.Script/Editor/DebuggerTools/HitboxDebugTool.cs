@@ -6,10 +6,9 @@ public class HitboxDebugTool : EditorWindow
 {
     #region Variables
 
-    private List<HitboxController> hitboxControllerList = new();
-    private string[] nameList = null;
+    private static List<HitboxController> hitboxControllerList = new();
 
-    private int selection = -1;
+    private static int selection = -1;
 
     private Vector2 listScrollPos = Vector2.zero;
 
@@ -24,8 +23,6 @@ public class HitboxDebugTool : EditorWindow
         selection = -1;
         hitboxControllerList.Clear();
 
-        FindAllHitboxController();
-
         SceneView.duringSceneGui += OnSceneGUI;
     }
 
@@ -33,7 +30,6 @@ public class HitboxDebugTool : EditorWindow
     {
         selection = -1;
         hitboxControllerList.Clear();
-        nameList = null;
 
         SceneView.duringSceneGui -= OnSceneGUI;
     }
@@ -56,14 +52,32 @@ public class HitboxDebugTool : EditorWindow
 
     #region Methods
 
+    /// <summary>
+    /// Init the Hitbox Debug Tool, opening the Hitbox Debug Tool.
+    /// </summary>
     [MenuItem("Tools/Debug/Hitbox Debug Tool")]
     private static void Init()
     {
         GetWindow<HitboxDebugTool>(false, "Hitbox Debug Tool").Show();
     }
 
+    /// <summary>
+    /// Init the Hitbox Debug Tool when entering the play mode.
+    /// Find all Hitbox Controller components existing in the scene.
+    /// </summary>
+    [InitializeOnEnterPlayMode]
+    private static void InitOnEnterPlayMode()
+    {
+        selection = -1;
+        hitboxControllerList.Clear();
+    }
+
     #region Layer
 
+    /// <summary>
+    /// Display the top layer of the Hitbox Debug Tool editor.
+    /// This layer includes buttons for controling the editor.
+    /// </summary>
     private void DisplayTopLayer()
     {
         EditorGUILayout.BeginVertical();
@@ -73,6 +87,9 @@ public class HitboxDebugTool : EditorWindow
                 if (GUILayout.Button("Deactivate Tool"))
                 {
                     isActiveTool = false;
+
+                    selection = -1;
+                    hitboxControllerList.Clear();
                 }
             }
             else
@@ -96,9 +113,15 @@ public class HitboxDebugTool : EditorWindow
         EditorGUILayout.EndVertical();
     }
 
+    /// <summary>
+    /// Display the list layer of the Hitbox Debug Tool editor.
+    /// This layer includes the list of all elements in the scene containing the Hitbox Controller component.
+    /// Allow the user to click on an element to focus the camera on the selected element.
+    /// If the activeSelf of the target is false or the active hitbox of the target is null, the button according to the target is deactivated.
+    /// </summary>
     private void DisplayListLayer()
     {
-        EditorGUILayout.BeginVertical(GUILayout.Width(EditorHelper.UI_WIDTH_MIDDLE));
+        EditorGUILayout.BeginVertical(GUILayout.Width(EditorHelper.UI_WIDTH_LARGE));
         {
             EditorGUILayout.LabelField("Hitbox Controller List", EditorStyles.boldLabel);
             EditorGUILayout.Separator();
@@ -106,7 +129,17 @@ public class HitboxDebugTool : EditorWindow
             {
                 listScrollPos = EditorGUILayout.BeginScrollView(listScrollPos);
                 {
-                    selection = GUILayout.SelectionGrid(selection, nameList, 1);
+                    for (int index = 0; index < hitboxControllerList.Count; index++)
+                    {
+                        HitboxController controller = hitboxControllerList[index];
+
+                        GUI.enabled = controller.gameObject.activeSelf && controller.IsHitboxActivated;
+
+                        if (GUILayout.Button(controller.gameObject.name))
+                        {
+                            selection = index;
+                        }
+                    }
                 }
                 EditorGUILayout.EndScrollView();
             }
@@ -119,6 +152,9 @@ public class HitboxDebugTool : EditorWindow
 
     #region Events
 
+    /// <summary>
+    /// The event method called every Scene GUI update.
+    /// </summary>
     private void OnSceneGUI(SceneView sceneView)
     {
         if (!Application.isPlaying) return;
@@ -160,21 +196,16 @@ public class HitboxDebugTool : EditorWindow
     #region Helper
 
     /// <summary>
-    /// 
+    /// Find all Hitbox Controller components existing in the scene.
     /// </summary>
     private void FindAllHitboxController()
     {
         hitboxControllerList.Clear();
-        nameList = new string[0];
 
         HitboxController[] controllers = FindObjectsOfType<HitboxController>(true);
 
-        for (int index = 0; index < controllers.Length; index++)
+        foreach (HitboxController controller in controllers)
         {
-            HitboxController controller = controllers[index];
-
-            nameList = ArrayHelper.Add(controller.gameObject.name, nameList);
-
             hitboxControllerList.Add(controller);
         }
     }

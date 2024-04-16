@@ -275,15 +275,9 @@ MonoBehaviour:
     size: {x: 2.3639116, y: 2.868558, z: 2.066881}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0.5, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
-  activeHitbox:
-    hitboxType: 0
-    size: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0, y: 0, z: 0}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
+  hitboxType: 0
+  minHitboxPos: {x: 0, y: 0, z: 0}
+  maxHitboxPos: {x: 0, y: 0, z: 0}
 --- !u!114 &65192261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,27 +364,17 @@ MonoBehaviour:
     size: {x: 3.8188438, y: 2, z: 3}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 1, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
   - hitboxType: 0
     size: {x: 7.9380374, y: 2, z: 2}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0.4623318, y: 0, z: 1}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
   - hitboxType: 0
     size: {x: 4.1392365, y: 2, z: 3}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
-  activeHitbox:
-    hitboxType: 0
-    size: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0, y: 0, z: 0}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
+  hitboxType: 0
+  minHitboxPos: {x: 0, y: 0, z: 0}
+  maxHitboxPos: {x: 0, y: 0, z: 0}
 --- !u!4 &67677947
 Transform:
   m_ObjectHideFlags: 0
@@ -456,39 +440,25 @@ MonoBehaviour:
     size: {x: 2.7033865, y: 1.8865478, z: 1.6}
     offset: {x: 0.47, y: 0, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
   - hitboxType: 0
     size: {x: 2.3, y: 2, z: 1.6}
     offset: {x: 0.47, y: 0, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
   - hitboxType: 0
     size: {x: 2.4, y: 2, z: 1.6}
     offset: {x: 0.47, y: 0, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
   - hitboxType: 0
     size: {x: 2.4, y: 2.3137949, z: 1.6}
     offset: {x: 0.47, y: 0, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
   - hitboxType: 0
     size: {x: 1.9974732, y: 2.366094, z: 1.6}
     offset: {x: 0.42816067, y: 0, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
-  activeHitbox:
-    hitboxType: 0
-    size: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0, y: 0, z: 0}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
+  hitboxType: 0
+  minHitboxPos: {x: 0, y: 0, z: 0}
+  maxHitboxPos: {x: 0, y: 0, z: 0}
 --- !u!114 &165921793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -579,15 +549,9 @@ MonoBehaviour:
     size: {x: 2.3639116, y: 2.868558, z: 2.066881}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0.5, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
-  activeHitbox:
-    hitboxType: 0
-    size: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0, y: 0, z: 0}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
+  hitboxType: 0
+  minHitboxPos: {x: 0, y: 0, z: 0}
+  maxHitboxPos: {x: 0, y: 0, z: 0}
 --- !u!114 &178524053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -942,27 +906,17 @@ MonoBehaviour:
     size: {x: 2.894004, y: 3.3880925, z: 1.622185}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
   - hitboxType: 0
     size: {x: 4.9780626, y: 2.3306568, z: 1.5833015}
     offset: {x: 0.3690772, y: 0, z: 0}
     pivot: {x: 0.5, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
   - hitboxType: 0
     size: {x: 3.2247152, y: 3.3272364, z: 2.093562}
     offset: {x: 0.7073978, y: 0, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
-  activeHitbox:
-    hitboxType: 0
-    size: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0, y: 0, z: 0}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
+  hitboxType: 0
+  minHitboxPos: {x: 0, y: 0, z: 0}
+  maxHitboxPos: {x: 0, y: 0, z: 0}
 --- !u!1 &341345151
 GameObject:
   m_ObjectHideFlags: 0
@@ -1305,15 +1259,9 @@ MonoBehaviour:
     size: {x: 0.6899595, y: 1.8466489, z: 0.76680714}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0.5, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
-  activeHitbox:
-    hitboxType: 0
-    size: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0, y: 0, z: 0}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
+  hitboxType: 0
+  minHitboxPos: {x: 0, y: 0, z: 0}
+  maxHitboxPos: {x: 0, y: 0, z: 0}
 --- !u!114 &470651003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1422,21 +1370,13 @@ MonoBehaviour:
     size: {x: 8.9, y: 3.4, z: 3.4}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
   - hitboxType: 0
     size: {x: 10.3, y: 3.4, z: 3.4}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
-  activeHitbox:
-    hitboxType: 0
-    size: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0, y: 0, z: 0}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
+  hitboxType: 0
+  minHitboxPos: {x: 0, y: 0, z: 0}
+  maxHitboxPos: {x: 0, y: 0, z: 0}
 --- !u!4 &488960514
 Transform:
   m_ObjectHideFlags: 0
@@ -1813,15 +1753,9 @@ MonoBehaviour:
     size: {x: 3.7228599, y: 2.865663, z: 2.4790845}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
-  activeHitbox:
-    hitboxType: 0
-    size: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0, y: 0, z: 0}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
+  hitboxType: 0
+  minHitboxPos: {x: 0, y: 0, z: 0}
+  maxHitboxPos: {x: 0, y: 0, z: 0}
 --- !u!114 &771660288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2034,15 +1968,9 @@ MonoBehaviour:
     size: {x: 0.6899595, y: 1.8466489, z: 0.76680714}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0.5, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
-  activeHitbox:
-    hitboxType: 0
-    size: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0, y: 0, z: 0}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
+  hitboxType: 0
+  minHitboxPos: {x: 0, y: 0, z: 0}
+  maxHitboxPos: {x: 0, y: 0, z: 0}
 --- !u!114 &854903500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2551,15 +2479,9 @@ MonoBehaviour:
     size: {x: 0.9409938, y: 0.83951336, z: 1.2464577}
     offset: {x: 1.2085304, y: 0.8532764, z: 0}
     pivot: {x: 0.5, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
-  activeHitbox:
-    hitboxType: 0
-    size: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0, y: 0, z: 0}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
+  hitboxType: 0
+  minHitboxPos: {x: 0, y: 0, z: 0}
+  maxHitboxPos: {x: 0, y: 0, z: 0}
 --- !u!114 &1263938028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3259,7 +3181,7 @@ Transform:
   m_GameObject: {fileID: 1852172110}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.230717, y: 1.5712526, z: 0}
+  m_LocalPosition: {x: 7.2319636, y: 1.2178899, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3311,15 +3233,9 @@ MonoBehaviour:
     size: {x: 2.4730225, y: 2.4593856, z: 1.6789247}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0.5, y: 0.27999997, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
-  activeHitbox:
-    hitboxType: 0
-    size: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0, y: 0, z: 0}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
+  hitboxType: 0
+  minHitboxPos: {x: 0, y: 0, z: 0}
+  maxHitboxPos: {x: 0, y: 0, z: 0}
 --- !u!114 &1852172115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3332,7 +3248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3853bc98249b3004aa7c2adb01d0933c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 5.230717, y: 2, z: -0.76221764}
+  position: {x: 7.2319636, y: 2.1795485, z: -1.7096153}
   localScale: 1
   isLeft: 0
   isBoundaryOverride: 0
@@ -3674,15 +3590,9 @@ MonoBehaviour:
     size: {x: 2.7294164, y: 2.1473203, z: 2.1698165}
     offset: {x: 0, y: 0, z: 0}
     pivot: {x: 0, y: 0, z: 0.5}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
-  activeHitbox:
-    hitboxType: 0
-    size: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0, y: 0, z: 0}
-    maxHitboxPos: {x: 0, y: 0, z: 0}
-    minHitboxPos: {x: 0, y: 0, z: 0}
+  hitboxType: 0
+  minHitboxPos: {x: 0, y: 0, z: 0}
+  maxHitboxPos: {x: 0, y: 0, z: 0}
 --- !u!1 &2069336349
 GameObject:
   m_ObjectHideFlags: 0
