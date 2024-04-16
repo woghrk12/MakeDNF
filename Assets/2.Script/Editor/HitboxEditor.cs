@@ -81,6 +81,7 @@ public class HitboxEditor : Editor
 
     private void OnSceneGUI()
     {
+        if (Application.isPlaying) return;
         if (!isActiveSceneGUI) return;
 
         serializedObject.Update();
