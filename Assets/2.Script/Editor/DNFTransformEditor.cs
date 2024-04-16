@@ -144,6 +144,14 @@ public class DNFTransformEditor : Editor
 
     #region Methods
 
+    /// <summary>
+    /// Draw the handlers to control the position of DNFTransform component.
+    /// The arrow handler with red color will be used to control X value of the position.
+    /// The arrow handler with green color will be used to control Y value of the position.
+    /// The arrow handler with blue color will be used to control Z value of the position.
+    /// The box handler with green color will be used to control X, Y value of the position.
+    /// The box handler with blue color will be used to control X, Z value of the position.
+    /// </summary>
     private void DrawPositionHandler()
     {
         Vector3 position = positionProperty.vector3Value;
