@@ -130,14 +130,14 @@ public class HitboxEditor : Editor
     {
         if (isActiveSceneGUI)
         {
-            if (GUILayout.Button("Deactive Scene GUI"))
+            if (GUILayout.Button("Deactivate Scene GUI"))
             {
                 isActiveSceneGUI = false;
             }
         }
         else
         {
-            if (GUILayout.Button("Active Scene GUI"))
+            if (GUILayout.Button("Activate Scene GUI"))
             {
                 isActiveSceneGUI = true;
             }
