@@ -61,7 +61,7 @@ public partial class HitboxController : MonoBehaviour
     /// The index of currently active hitbox.
     /// If the index is less than 0, the current hitbox is turned off and does not cause any collision. 
     /// </summary>
-    [SerializeField] private int activeHitboxIndex = -1;
+    private int activeHitboxIndex = -1;
 
     /// <summary>
     /// The shape of the hitbox on the XZ plane.
