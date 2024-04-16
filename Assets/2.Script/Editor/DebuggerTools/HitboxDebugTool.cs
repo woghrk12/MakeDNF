@@ -10,9 +10,9 @@ public class HitboxDebugTool : EditorWindow
 
     private static int selection = -1;
 
-    private Vector2 listScrollPos = Vector2.zero;
+    private static Vector2 listScrollPos = Vector2.zero;
 
-    private bool isActiveTool = false;
+    private static bool isActiveTool = false;
 
     #endregion Variables
 
@@ -22,6 +22,8 @@ public class HitboxDebugTool : EditorWindow
     {
         selection = -1;
         hitboxControllerList.Clear();
+
+        isActiveTool = false;
 
         SceneView.duringSceneGui += OnSceneGUI;
     }
@@ -70,6 +72,8 @@ public class HitboxDebugTool : EditorWindow
     {
         selection = -1;
         hitboxControllerList.Clear();
+
+        isActiveTool = false;
     }
 
     #region Layer
