@@ -2111,7 +2111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3853bc98249b3004aa7c2adb01d0933c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 2.559723, y: 0, z: 0.48931375}
+  position: {x: 3.7382877, y: 0, z: 0.18999587}
   localScale: 1
   isLeft: 0
   isBoundaryOverride: 0
@@ -2145,7 +2145,7 @@ Transform:
   m_GameObject: {fileID: 854903492}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.559723, y: 0.275239, z: 0}
+  m_LocalPosition: {x: 3.7382877, y: 0.10687268, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3310,7 +3310,7 @@ MonoBehaviour:
   - hitboxType: 0
     size: {x: 2.4730225, y: 2.4593856, z: 1.6789247}
     offset: {x: 0, y: 0, z: 0}
-    pivot: {x: 0.5, y: 0, z: 0.5}
+    pivot: {x: 0.5, y: 0.27999997, z: 0.5}
     maxHitboxPos: {x: 0, y: 0, z: 0}
     minHitboxPos: {x: 0, y: 0, z: 0}
   activeHitbox:

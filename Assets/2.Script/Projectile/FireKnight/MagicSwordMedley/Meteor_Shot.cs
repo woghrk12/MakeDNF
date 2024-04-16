@@ -35,8 +35,6 @@ namespace FireKnightSkill.MagicSwordMedleyProjectile
             public override void OnFixedUpdate()
             {
                 stateController.dnfRigidbody.MoveDirection(Time.fixedDeltaTime * stateController.speed * stateController.moveDirection);
-                
-                stateController.AttackerHitboxController.CalculateHitbox();
 
                 if (stateController.dnfRigidbody.IsGround)
                 {

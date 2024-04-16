@@ -9,11 +9,6 @@ public class Hitbox
     #region Variables
 
     /// <summary>
-    /// DNF transform component used to calculate the hitbox.
-    /// </summary>
-    private DNFTransform dnfTransform = null;
-
-    /// <summary>
     /// The shape of the hitbox on the XZ plane.
     /// The shape of the hitbox is either box-shaped or circle-shaped.
     /// </summary>
@@ -36,59 +31,136 @@ public class Hitbox
     /// </summary>
     [SerializeField] private Vector3 pivot = Vector3.zero;
 
+    #endregion Variables
+
+    #region Property
+
+    public EHitboxType HitboxType => hitboxType;
+
+    public Vector3 Size => size;
+
+    public Vector3 Offset => offset;
+
+    public Vector3 Pivot => pivot;
+
+    #endregion Property
+}
+
+public partial class HitboxController : MonoBehaviour
+{
+    #region Variables
+
+    /// <summary>
+    /// DNF transform component used to calculate the hitbox.
+    /// </summary>
+    private DNFTransform dnfTransform = null;
+
+    [SerializeField] private Hitbox[] hitboxes = new Hitbox[0];
+
+    /// <summary>
+    /// The index of currently active hitbox.
+    /// If the index is less than 0, the current hitbox is turned off and does not cause any collision. 
+    /// </summary>
+    [SerializeField] private int activeHitboxIndex = -1;
+
+    /// <summary>
+    /// The shape of the hitbox on the XZ plane.
+    /// The shape of the hitbox is either box-shaped or circle-shaped.
+    /// </summary>
+    [SerializeField] private EHitboxType hitboxType = EHitboxType.BOX;
+
     /// <summary>
     /// The maximum values for each component of the hitbox.
     /// If the hitbox shape is a circle, the z-value has no effect.
     /// </summary>
-    [SerializeField] private Vector3 maxHitboxPos = Vector3.zero;
+    [SerializeField] private Vector3 minHitboxPos = Vector3.zero;
 
     /// <summary>
     /// The minimum values for each component of the hitbox.
     /// If the hitbox shape is a circle, the z-value has no effect.
     /// </summary>
-    [SerializeField] private Vector3 minHitboxPos = Vector3.zero;
+    [SerializeField] private Vector3 maxHitboxPos = Vector3.zero;
 
     #endregion Variables
+
+    #region Properties
+
+    /// <summary>
+    /// Determine whether the current hitbox is activated.
+    /// Return true if the hitbox currently activated, and false otherwise.
+    /// </summary>
+    public bool IsHitboxActivated => activeHitboxIndex >= 0;
+
+    #endregion Properties
+
+    #region Unity Events
+
+    private void Update()
+    {
+        if (!IsHitboxActivated) return;
+
+        CalculateHitbox();
+    }
+
+    #endregion Unity Events
 
     #region Methods
 
     /// <summary>
-    /// Initialize the hitbox.
+    /// Initialize the hitbox controller component.
+    /// Use the given DNFTransform component to calculate the shape of the hitboxes.
     /// </summary>
+    /// <param name="dnfTransform">DNFTransform component to be used when calculating the shape of hitboxes</param>
     public void Init(DNFTransform dnfTransform)
     {
+        if (hitboxes.Length <= 0)
+        {
+            throw new Exception($"There is no hitbox. GameObject : {gameObject.name}");
+        }
+
         this.dnfTransform = dnfTransform;
     }
 
     /// <summary>
-    /// Calculate the hitbox by using the value according to DNF transform.
+    /// Enable the hitbox corresponding to the received index.
     /// </summary>
-    public void CalculateHitbox()
+    /// <param name="index">The index of the hitbox to be activated</param>
+    public void EnableHitbox(int index)
     {
-        Vector3 position = dnfTransform.Position;
-        float localScale = dnfTransform.LocalScale;
-
-        Vector3 minHitboxPos = offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
-        Vector3 maxHitboxPos = offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
-
-        if (dnfTransform.IsLeft)
+        if (index < 0 || index >= hitboxes.Length)
         {
-            this.minHitboxPos = position + new Vector3(-maxHitboxPos.x, minHitboxPos.y, minHitboxPos.z);
-            this.maxHitboxPos = position + new Vector3(-minHitboxPos.x, maxHitboxPos.y, maxHitboxPos.z);
+            throw new Exception($"Out of range. GameObject : {gameObject.name}. Input index : {index}");
         }
-        else
-        {
-            this.minHitboxPos = position + minHitboxPos;
-            this.maxHitboxPos = position + maxHitboxPos;
-        }
+
+        activeHitboxIndex = index;
+
+        hitboxType = hitboxes[activeHitboxIndex].HitboxType;
+
+        CalculateHitbox();
     }
 
     /// <summary>
+    /// Disable the currently active hitbox.
+    /// </summary>
+    public void DisableHitbox()
+    {
+        if (!IsHitboxActivated) return;
+
+        activeHitboxIndex = -1;
+        minHitboxPos = Vector3.zero;
+        maxHitboxPos = Vector3.zero;
+    }
+
+    /// <summary>
+    /// Check whether the collision occur.
     /// Call the appropriate collision detection function based on the shapes of the two hitboxes.
     /// </summary>
-    /// <returns>true if a collision occurs</returns>
-    public bool CheckCollision(Hitbox other)
+    /// <param name="other">The other hitbox controller for collision checks</param>
+    /// <returns>True if both controller's active hitbox is not null and a collision has occurred</returns>
+    public bool CheckCollision(HitboxController other)
     {
+        if (!IsHitboxActivated || !other.IsHitboxActivated) return false;
+
         if (hitboxType == EHitboxType.BOX)
         {
             if (other.hitboxType == EHitboxType.BOX)
@@ -113,12 +185,44 @@ public class Hitbox
         }
     }
 
+    #region Helper
+
+    /// <summary>
+    /// Calculate the currently active hitbox range.
+    /// </summary>
+    private void CalculateHitbox()
+    {
+        if (!IsHitboxActivated) return;
+
+        Vector3 position = dnfTransform.Position;
+        float localScale = dnfTransform.LocalScale;
+
+        Hitbox activeHitbox = hitboxes[activeHitboxIndex];
+        Vector3 size = activeHitbox.Size;
+        Vector3 offset = activeHitbox.Offset;
+        Vector3 pivot = activeHitbox.Pivot;
+
+        Vector3 minHitboxPos = offset - localScale * new Vector3(size.x * pivot.x, size.y * pivot.y, size.z * pivot.z);
+        Vector3 maxHitboxPos = offset + localScale * new Vector3(size.x * (1f - pivot.x), size.y * (1f - pivot.y), size.z * (1f - pivot.z));
+
+        if (dnfTransform.IsLeft)
+        {
+            this.minHitboxPos = position + new Vector3(-maxHitboxPos.x, minHitboxPos.y, minHitboxPos.z);
+            this.maxHitboxPos = position + new Vector3(-minHitboxPos.x, maxHitboxPos.y, maxHitboxPos.z);
+        }
+        else
+        {
+            this.minHitboxPos = position + minHitboxPos;
+            this.maxHitboxPos = position + maxHitboxPos;
+        }
+    }
+
     /// <summary>
     /// Check for collisions between box-shaped hitbox objects in the XZ coordinate.
     /// Compare the maximum and minimum values along each axis.
     /// </summary>
-    /// <returns>true if a collision occurs in XZ coordinate</returns>
-    private bool CheckBB(Hitbox box1, Hitbox box2)
+    /// <returns>True if a collision occurs in XZ coordinate</returns>
+    private bool CheckBB(HitboxController box1, HitboxController box2)
     {
         Vector3 fromMinHitboxPos = box1.minHitboxPos;
         Vector3 fromMaxHitboxPos = box1.maxHitboxPos;
@@ -135,8 +239,8 @@ public class Hitbox
     /// Check for collisions between circle-shaped hitbox objects.
     /// Compare the distance between the centers of each circle with the sum of their radius.
     /// </summary>
-    /// <returns>true if a collision occurs in XZ coordinate</returns>
-    private bool CheckCC(Hitbox circle1, Hitbox circle2)
+    /// <returns>True if a collision occurs in XZ coordinate</returns>
+    private bool CheckCC(HitboxController circle1, HitboxController circle2)
     {
         Vector3 fromMinHitboxPos = circle1.minHitboxPos;
         Vector3 fromMaxHitboxPos = circle1.maxHitboxPos;
@@ -157,8 +261,8 @@ public class Hitbox
     /// Check for collisions between the box-shaped hitbox and the circle-shaped hitbox.
     /// Divide the space around the box into 9 regions and determine based on the position of the circle.
     /// </summary>
-    /// <returns>true if a collision occurs in XZ coordinate</returns>
-    private bool CheckBC(Hitbox box, Hitbox circle)
+    /// <returns>True if a collision occurs in XZ coordinate</returns>
+    private bool CheckBC(HitboxController box, HitboxController circle)
     {
         Vector3 boxMinHitboxPos = box.minHitboxPos;
         Vector3 boxMaxHitboxPos = box.maxHitboxPos;
@@ -203,15 +307,13 @@ public class Hitbox
     /// Check for collisions between hitbox objects in the Y coordinate.
     /// Compare the range of maximum and minimum y-values.
     /// </summary>
-    /// <returns>true if a collision occurs in Y coordinate</returns>
-    private bool CheckYCollision(Hitbox hitbox1, Hitbox hitbox2)
+    /// <returns>True if a collision occurs in Y coordinate</returns>
+    private bool CheckYCollision(HitboxController hitbox1, HitboxController hitbox2)
     {
         if (hitbox1.maxHitboxPos.y < hitbox2.minHitboxPos.y || hitbox1.minHitboxPos.y > hitbox2.maxHitboxPos.y) return false;
 
         return true;
     }
-
-    #region Helper
 
     /// <summary>
     /// Check if the point is inside the circle.
@@ -231,97 +333,6 @@ public class Hitbox
     }
 
     #endregion Helper
-
-    #endregion Methods
-}
-
-public class HitboxController : MonoBehaviour
-{
-    #region Variables
-
-    [SerializeField, HideInInspector] private Hitbox[] hitboxes = new Hitbox[0];
-    [SerializeField, HideInInspector] private Hitbox activeHitbox = null;
-
-    #endregion Variables
-
-    #region Properties
-
-    /// <summary>
-    /// Determine whether the current hitbox is activated.
-    /// Return true if the hitbox currently activated, and false otherwise.
-    /// </summary>
-    public bool IsHitboxActivated => activeHitbox != null;
-
-    #endregion Properties
-
-    #region Methods
-
-    /// <summary>
-    /// Initialize the hitbox controller component.
-    /// Use the given DNFTransform component to calculate the shape of the hitboxes.
-    /// </summary>
-    /// <param name="dnfTransform">DNFTransform component to be used when calculating the shape of hitboxes</param>
-    public void Init(DNFTransform dnfTransform)
-    {
-        if (hitboxes.Length <= 0)
-        {
-            throw new Exception($"There is no hitbox. GameObject : {gameObject.name}");
-        }
-
-        foreach (Hitbox hitbox in hitboxes)
-        {
-            hitbox.Init(dnfTransform);
-        }
-
-        activeHitbox = null;
-    }
-
-    /// <summary>
-    /// Enable the hitbox corresponding to the received index.
-    /// </summary>
-    /// <param name="index">The index of the hitbox to be activated</param>
-    public void EnableHitbox(int index)
-    {
-        if (index < 0 || index >= hitboxes.Length)
-        {
-            throw new Exception($"Out of range. GameObject : {gameObject.name}. Input index : {index}");
-        }
-
-        activeHitbox = hitboxes[index];
-        activeHitbox.CalculateHitbox();
-    }
-
-    /// <summary>
-    /// Disable the active hitbox.
-    /// </summary>
-    public void DisableHitbox()
-    {
-        if (!IsHitboxActivated) return;
-
-        activeHitbox = null;
-    }
-
-    /// <summary>
-    /// Calculate the active hitbox range.
-    /// </summary>
-    public void CalculateHitbox()
-    {
-        if (!IsHitboxActivated) return;
-
-        activeHitbox.CalculateHitbox();
-    }
-
-    /// <summary>
-    /// Check whether the collision occur.
-    /// </summary>
-    /// <param name="other">The other hitbox controller for collision checks</param>
-    /// <returns>True if both controller's active hitbox is not null and a collision has occurred</returns>
-    public bool CheckCollision(HitboxController other)
-    {
-        return activeHitbox != null 
-            && other.activeHitbox != null
-            && activeHitbox.CheckCollision(other.activeHitbox);
-    }
 
     #endregion Methods
 }

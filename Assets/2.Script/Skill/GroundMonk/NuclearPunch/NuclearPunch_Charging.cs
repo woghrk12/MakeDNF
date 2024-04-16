@@ -59,7 +59,6 @@ namespace GroundMonkSkill
 
                 stateController.AttackerHitboxController.EnableHitbox((int)EState.CHARGING);
                 
-                stateController.AttackerHitboxController.CalculateHitbox();
                 stateController.CalculateOnHit(GameManager.Room.Monsters);
 
                 stateController.AttackerHitboxController.DisableHitbox();

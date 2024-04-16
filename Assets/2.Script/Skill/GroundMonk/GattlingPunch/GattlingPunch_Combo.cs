@@ -92,8 +92,6 @@ namespace GroundMonkSkill
                         break;
 
                     case EStatePhase.HITBOXACTIVE:
-                        stateController.AttackerHitboxController.CalculateHitbox();
-
                         if (animatorStateInfo.normalizedTime < duration) return;
 
                         stateController.AttackerHitboxController.DisableHitbox();

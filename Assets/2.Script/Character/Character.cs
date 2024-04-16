@@ -218,8 +218,6 @@ public class Character : MonoBehaviour, IDamagable
     private void Update()
     {
         curBehaviour.OnUpdate();
-
-        DefenderHitboxController.CalculateHitbox();
     }
 
     private void FixedUpdate()

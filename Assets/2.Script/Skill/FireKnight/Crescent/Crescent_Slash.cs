@@ -144,8 +144,6 @@ namespace FireKnightSkill
             {
                 if (!stateController.AttackerHitboxController.IsHitboxActivated) return;
 
-                stateController.AttackerHitboxController.CalculateHitbox();
-
                 stateController.CalculateOnHit(GameManager.Room.Monsters);
             }
 

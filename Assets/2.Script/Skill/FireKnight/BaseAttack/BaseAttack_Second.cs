@@ -71,8 +71,6 @@ namespace FireKnightSkill
                         break;
 
                     case EStatePhase.HITBOXACTIVE:
-                        stateController.AttackerHitboxController.CalculateHitbox();
-
                         if (!animatorStateInfo.IsName("BaseAttack_2")) return;
                         if (animatorStateInfo.normalizedTime < 1f) return;
 
