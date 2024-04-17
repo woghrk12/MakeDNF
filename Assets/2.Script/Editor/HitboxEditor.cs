@@ -25,7 +25,7 @@ public class HitboxEditor : Editor
     private int hitboxIndex = 0;
     private ECoordinateMode coordMode = ECoordinateMode.XZ;
     private EHitboxEditMode editMode = EHitboxEditMode.NONE;
-    private bool isActiveSceneGUI = true;
+    private bool isActiveSceneGUI = false;
 
     #endregion Variables
 
