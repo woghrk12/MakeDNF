@@ -410,7 +410,7 @@ public class SkillCreationTool : EditorWindow
                 stateTemplate = stateTemplate.Replace("$SkillName$", skillInfo.SkillName);
                 stateTemplate = stateTemplate.Replace("$SkillStateName$", stateName);
 
-                File.WriteAllText(folderPath + stateName + ".cs", stateTemplate);
+                File.WriteAllText(folderPath + skillInfo.SkillName + "_" + stateName + ".cs", stateTemplate);
             }
         }
       
