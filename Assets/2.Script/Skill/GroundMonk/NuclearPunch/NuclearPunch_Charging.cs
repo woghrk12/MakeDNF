@@ -68,7 +68,7 @@ namespace GroundMonkSkill
 
             public override void OnFixedUpdate()
             {
-                List<IDamagable> monsters = GameManager.Room.Monsters;
+                IDamagable[] monsters = GameManager.Room.Monsters;
 
                 Vector3 characterPos = character.DNFTransform.Position;
                 bool isLeft = character.DNFTransform.IsLeft;

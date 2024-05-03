@@ -21,7 +21,7 @@ namespace GroundMonkSkill.GattlingPunchProjectile
         
         public List<IDamagable> AlreadyHitTargets { set; get; }
 
-        public void CalculateOnHit(List<IDamagable> targets)
+        public void CalculateOnHit(IDamagable[] targets)
         {
             foreach (IDamagable target in targets)
             {

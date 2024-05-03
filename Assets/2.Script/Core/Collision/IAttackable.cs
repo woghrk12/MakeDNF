@@ -24,5 +24,5 @@ public interface IAttackable
     /// Calculate hit detection for each target in the given list.
     /// </summary>
     /// <param name="targets">The list of targets to perform hit detection on</param>
-    public void CalculateOnHit(List<IDamagable> targets);
+    public void CalculateOnHit(IDamagable[] targets);
 }
