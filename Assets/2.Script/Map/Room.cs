@@ -3,12 +3,6 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    #region Variables
-
-    [SerializeField] private Transform monsterParent = null;
-
-    #endregion Variables
-
     #region Properties
 
     public IDamagable[] Players { private set; get; }
@@ -31,6 +25,7 @@ public class Room : MonoBehaviour
     {
         Players = FindObjectsOfType<Character>();
 
+        var monsterParent = transform.Find("Monsters");
         var monsterList = new List<IDamagable>();
         foreach (Transform child in monsterParent)
         {
