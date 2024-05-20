@@ -244,6 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineTransform: {fileID: 1508536862}
   outlineSpriteRenderer: {fileID: 1508536863}
+  outlineOffset: 1
 --- !u!114 &65192259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,6 +597,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineTransform: {fileID: 2069336350}
   outlineSpriteRenderer: {fileID: 2069336351}
+  outlineOffset: 1
 --- !u!114 &178524056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1406,6 +1408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineTransform: {fileID: 1456370525}
   outlineSpriteRenderer: {fileID: 1456370526}
+  outlineOffset: 3
 --- !u!114 &470651005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2199,6 +2202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineTransform: {fileID: 236942931}
   outlineSpriteRenderer: {fileID: 236942930}
+  outlineOffset: 3
 --- !u!114 &854903502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4309,6 +4313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineTransform: {fileID: 2059975447}
   outlineSpriteRenderer: {fileID: 2059975448}
+  outlineOffset: 7
 --- !u!114 &1852172113
 MonoBehaviour:
   m_ObjectHideFlags: 0

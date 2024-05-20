@@ -15,6 +15,11 @@ public class OutlineEffect : MonoBehaviour
     [SerializeField] private SpriteRenderer outlineSpriteRenderer = null;
 
     /// <summary>
+    /// The offset value determining the thickness of the outline.
+    /// </summary>
+    [SerializeField] private float outlineOffset = 0f;
+
+    /// <summary>
     /// The value of local scale for outline effect object.
     /// </summary>
     private float localScaleValue = 1f;
@@ -27,6 +32,13 @@ public class OutlineEffect : MonoBehaviour
     #endregion Variables
 
     #region Unity Events
+
+    private void Awake()
+    {
+        var inst = Instantiate(outlineSpriteRenderer.material);
+        outlineSpriteRenderer.material = inst;
+        outlineSpriteRenderer.material.SetFloat("_OutlineOffset", outlineOffset);
+    }
 
     private void Update()
     {
