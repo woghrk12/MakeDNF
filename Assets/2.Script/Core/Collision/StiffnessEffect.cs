@@ -15,6 +15,8 @@ public class StiffnessEffect : MonoBehaviour
     private float stiffnessTimer = 0f;
     private float attackSpeed = 0f;
     private float hitSpeed = 0f;
+    private bool hasAttackSpeedHash = false;
+    private bool hasHitSpeedHash = false;
 
     #endregion Variables
 
@@ -30,6 +32,8 @@ public class StiffnessEffect : MonoBehaviour
 
         attackSpeed = animator.GetFloat(attackSpeedHash);
         hitSpeed = animator.GetFloat(hitSpeedHash);
+        hasAttackSpeedHash = attackSpeed > 0;
+        hasHitSpeedHash = hitSpeed > 0;
     }
 
     private void Update()
@@ -63,11 +67,17 @@ public class StiffnessEffect : MonoBehaviour
             return;
         }
 
-        attackSpeed = animator.GetFloat(attackSpeedHash);
-        hitSpeed = animator.GetFloat(hitSpeedHash);
+        if (hasAttackSpeedHash)
+        {
+            attackSpeed = animator.GetFloat(attackSpeedHash);
+            animator.SetFloat(attackSpeedHash, 0f);
+        }
 
-        animator.SetFloat(attackSpeedHash, 0f);
-        animator.SetFloat(hitSpeedHash, 0f);
+        if (hasHitSpeedHash)
+        {
+            hitSpeed = animator.GetFloat(hitSpeedHash);
+            animator.SetFloat(hitSpeedHash, 0f);
+        }
 
         stiffnessTimer = GlobalDefine.STIFFNESS_TIME;
     }
@@ -79,8 +89,15 @@ public class StiffnessEffect : MonoBehaviour
     {
         dnfRigidbody.enabled = true;
 
-        animator.SetFloat(attackSpeedHash, attackSpeed);
-        animator.SetFloat(hitSpeedHash, hitSpeed);
+        if (hasAttackSpeedHash)
+        {
+            animator.SetFloat(attackSpeedHash, attackSpeed);
+        }
+
+        if (hasHitSpeedHash)
+        {
+            animator.SetFloat(hitSpeedHash, hitSpeed);
+        }
 
         stiffnessTimer = 0f;
     }
