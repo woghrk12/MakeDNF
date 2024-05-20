@@ -90,6 +90,18 @@ public class Enemy : MonoBehaviour, IDamagable
     private void Start()
     {
         DefenderHitboxController.EnableHitbox(0);
+
+        TransitionToState(defaultBehaviour);
+    }
+
+    private void Update()
+    {
+        curBehaviour?.OnUpdate(this);
+    }
+
+    private void FixedUpdate()
+    {
+        curBehaviour?.OnFixedUpdate(this);
     }
 
     #endregion Unity Events
