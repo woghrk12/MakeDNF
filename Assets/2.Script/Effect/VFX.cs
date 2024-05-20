@@ -8,7 +8,7 @@ public abstract class VFX : MonoBehaviour
 
     protected Animator animator = null;
 
-    protected Transform cachedTransform = null;
+    protected DNFTransform dnfTransform = null;
     protected DNFTransform targetTransform = null;
 
     protected int shotHash = 0;
@@ -25,7 +25,7 @@ public abstract class VFX : MonoBehaviour
     {
         animator = GetComponent<Animator>();
 
-        cachedTransform = GetComponent<Transform>();
+        dnfTransform = GetComponent<DNFTransform>();
 
         shotHash = Animator.StringToHash(AnimatorKey.Projectile.SHOT);
         motionSpeedHash = Animator.StringToHash(AnimatorKey.Projectile.MOTION_SPEED);
@@ -60,8 +60,8 @@ public abstract class VFX : MonoBehaviour
     {
         this.targetTransform = targetTransform;
 
-        cachedTransform.position = Utilities.ConvertDNFPosToWorldPos(targetTransform.Position);
-        cachedTransform.localScale = new Vector3(targetTransform.IsLeft ? -1f : 1f, 1f, 1f);
+        dnfTransform.Position = this.targetTransform.Position;
+        dnfTransform.IsLeft = this.targetTransform.IsLeft;
     }
 
     /// <summary>

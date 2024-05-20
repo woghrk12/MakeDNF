@@ -6,6 +6,7 @@ public class FollowingVFX : VFX
     {
         if (targetTransform == null) return;
 
-        cachedTransform.position = Utilities.ConvertDNFPosToWorldPos(targetTransform.Position);
+        dnfTransform.Position = targetTransform.Position;
+        dnfTransform.IsLeft = targetTransform.IsLeft;
     }
 }
