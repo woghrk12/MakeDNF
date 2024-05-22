@@ -12,5 +12,6 @@ public enum EObjectPoolList
     BladeWaltz_Explosion = 7,
     GattlingPunch_Explosion = 8,
     NuclearPunch_Explosion = 9,
+    Slider_WarningSign = 10,
 
 }
