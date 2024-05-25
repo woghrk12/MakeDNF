@@ -13,5 +13,6 @@ public enum EObjectPoolList
     GattlingPunch_Explosion = 8,
     NuclearPunch_Explosion = 9,
     Slider_WarningSign = 10,
+    Circle_WarningSign = 11,
 
 }
