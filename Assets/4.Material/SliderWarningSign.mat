@@ -41,7 +41,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FillAmount: 0.51
+    - _FillAmount: 0.5
     - _FillRate: 0.39
     - _LineThickness: 0.05
     - _ProgressBorder: 0.5
@@ -49,8 +49,10 @@ Material:
     - _XOutlineThickness: 0.02
     - _YOutlineThickness: 0.02
     m_Colors:
+    - _Color: {r: 1, g: 0, b: 0, a: 0}
     - _EmptyColor: {r: 0.22167927, g: 1, b: 0, a: 0}
     - _FillColor: {r: 1, g: 0, b: 0, a: 0}
+    - _OutlineColor: {r: 1, g: 0.5, b: 0, a: 0}
     - _UV: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &4811548034083931889
