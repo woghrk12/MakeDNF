@@ -4,13 +4,7 @@
     "m_ObjectId": "e1e616a6a6c24000ae66d06fe8b8ad70",
     "m_Properties": [
         {
-            "m_Id": "27d6b87836e24bb4a5520343c943f1bc"
-        },
-        {
             "m_Id": "8a2afdb352ef4521a887ad7c5347b476"
-        },
-        {
-            "m_Id": "bb15c0b34629422ebd8da80f8930be64"
         },
         {
             "m_Id": "99261f067ecf4f1f972f70549274d365"
@@ -3910,36 +3904,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
-    "m_ObjectId": "27d6b87836e24bb4a5520343c943f1bc",
-    "m_Guid": {
-        "m_GuidSerialized": "5811b438-ba7b-46d4-a2f2-0a688893c37a"
-    },
-    "m_Name": "MainTex",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "MainTex",
-    "m_DefaultReferenceName": "_MainTex",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": {
-        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
-        "m_Guid": ""
-    },
-    "isMainTexture": false,
-    "useTilingAndOffset": false,
-    "m_Modifiable": true,
-    "m_DefaultType": 0
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicValueMaterialSlot",
     "m_ObjectId": "280518f095b743b287af6c61d8fb5a3f",
     "m_Id": 0,
@@ -5271,9 +5235,6 @@
     "m_Name": "",
     "m_ChildObjectList": [
         {
-            "m_Id": "27d6b87836e24bb4a5520343c943f1bc"
-        },
-        {
             "m_Id": "8a2afdb352ef4521a887ad7c5347b476"
         },
         {
@@ -5281,9 +5242,6 @@
         },
         {
             "m_Id": "c701abe500c24ccaa996f293d88d8549"
-        },
-        {
-            "m_Id": "bb15c0b34629422ebd8da80f8930be64"
         },
         {
             "m_Id": "2b3a2c28ad2d43b384babdfad407f73e"
@@ -10415,34 +10373,6 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
-}
-
-{
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
-    "m_ObjectId": "bb15c0b34629422ebd8da80f8930be64",
-    "m_Guid": {
-        "m_GuidSerialized": "06e63fad-5620-4c86-ae9e-673fa797eebd"
-    },
-    "m_Name": "Angle",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Angle",
-    "m_DefaultReferenceName": "_Angle",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": 0.0,
-    "m_FloatType": 0,
-    "m_RangeValues": {
-        "x": 0.0,
-        "y": 1.0
     }
 }
 
