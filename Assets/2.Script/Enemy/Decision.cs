@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Decision : ScriptableObject
+public abstract class Decision : MonoBehaviour
 {
     #region Methods
 

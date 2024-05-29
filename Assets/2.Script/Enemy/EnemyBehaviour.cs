@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyBehaviour : ScriptableObject
+public class EnemyBehaviour : MonoBehaviour
 {
     #region Variables
 
