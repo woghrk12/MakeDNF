@@ -100,5 +100,21 @@ public class Enemy : MonoBehaviour, IDamagable
 
     protected virtual void SetBehaviour() { }
 
+    protected bool CheckAnimationRunning(string name)
+    {
+        if (animator != null)
+        { 
+            AnimatorStateInfo animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+            if (!animatorStateInfo.IsName(name)) return false;
+
+            float normalizedTime = animatorStateInfo.normalizedTime;
+
+            return normalizedTime < 1f;
+        }
+
+        return false;
+    }
+
     #endregion Methods
 }
