@@ -13,16 +13,6 @@ public class Enemy : MonoBehaviour, IDamagable
     private DNFRigidbody dnfRigidbody = null;
 
     /// <summary>
-    /// The default behaviour to be set when the enemy object is initialized.
-    /// </summary>
-    [SerializeField] private EnemyBehaviour defaultBehaviour = null;
-
-    /// <summary>
-    /// The current state of the enemy.
-    /// </summary>
-    private EnemyBehaviour curBehaviour = null;
-
-    /// <summary>
     /// The current state of the enemy's hitbox.
     /// </summary>
     private EHitboxState hitboxState = EHitboxState.NONE;
@@ -37,6 +27,11 @@ public class Enemy : MonoBehaviour, IDamagable
     /// The component to apply outline effect to enemy.
     /// </summary>
     private OutlineEffect outlineEffect = null;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private BehaviourTree.BehaviourTreeController behaviourController = null;
 
     #endregion Variables
 
@@ -91,33 +86,19 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         DefenderHitboxController.EnableHitbox(0);
 
-        TransitionToState(defaultBehaviour);
+        SetBehaviour();
     }
 
     private void Update()
     {
-        curBehaviour?.OnUpdate(this);
-    }
-
-    private void FixedUpdate()
-    {
-        curBehaviour?.OnFixedUpdate(this);
+        behaviourController.Operate();
     }
 
     #endregion Unity Events
 
     #region Methods
 
-    /// <summary>
-    /// Transition from the current behaviour to the next behaviour.
-    /// </summary>
-    public void TransitionToState(EnemyBehaviour nextBehaviour)
-    {
-        curBehaviour?.OnEnd(this);
-
-        curBehaviour = nextBehaviour;
-        curBehaviour.OnStart(this);
-    }
+    protected virtual void SetBehaviour() { }
 
     #endregion Methods
 }
