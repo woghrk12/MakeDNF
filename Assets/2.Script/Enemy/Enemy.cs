@@ -6,11 +6,11 @@ public class Enemy : MonoBehaviour, IDamagable
     #region Variables
 
     [Header("Unity components")]
-    private Animator animator = null;
+    protected Animator animator = null;
 
     [Header("DNF components")]
-    private DNFTransform dnfTransform = null;
-    private DNFRigidbody dnfRigidbody = null;
+    protected DNFTransform dnfTransform = null;
+    protected DNFRigidbody dnfRigidbody = null;
 
     /// <summary>
     /// The current state of the enemy's hitbox.
