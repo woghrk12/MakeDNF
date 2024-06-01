@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     #region Unity Events
 
-    private void Awake()
+    protected virtual void Awake()
     {
         animator = GetComponent<Animator>();
 
