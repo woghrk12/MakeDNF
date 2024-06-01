@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private OutlineEffect outlineEffect = null;
 
     /// <summary>
-    /// 
+    /// The controller component for managing the enemy AI's behaviour tree.
     /// </summary>
     private BehaviourTree.BehaviourTreeController behaviourController = null;
 
