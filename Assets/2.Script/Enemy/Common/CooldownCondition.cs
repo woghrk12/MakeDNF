@@ -22,6 +22,8 @@ namespace BehaviourTree
 
         #endregion Constructor
 
+        #region Methods
+
         protected override bool CheckCondition(Blackboard blackboard)
         {
             if (!blackboard.TryGetVariable(variableName, out FloatVariable variable))
@@ -42,5 +44,7 @@ namespace BehaviourTree
                 return true;
             }
         }
+
+        #endregion Methods
     }
 }
