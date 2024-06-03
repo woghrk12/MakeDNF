@@ -2,6 +2,12 @@ namespace BehaviourTree
 {
     public class Selector : Composite
     {
+        #region Constructor
+
+        public Selector(Enemy controller) : base(controller) { }
+
+        #endregion Constructor
+
         #region Methods
 
         public override ENodeState Evaluate(Blackboard blackboard)

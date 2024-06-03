@@ -2,6 +2,12 @@ namespace BehaviourTree
 {
     public class Sequence : Composite
     {
+        #region Constructor
+
+        public Sequence(Enemy controller) : base(controller) { }
+
+        #endregion Constructor
+
         #region Methods
 
         public override ENodeState Evaluate(Blackboard blackboard)

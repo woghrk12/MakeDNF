@@ -2,6 +2,12 @@ namespace BehaviourTree
 {
     public abstract class Condition : Decorator
     {
+        #region Constructor
+
+        public Condition(Enemy controller) : base(controller) { }
+
+        #endregion Constructor
+
         #region Methods
 
         public override ENodeState Evaluate(Blackboard blackboard)

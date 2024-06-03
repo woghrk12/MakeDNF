@@ -10,6 +10,12 @@ namespace BehaviourTree
 
         #endregion Properties
 
+        #region Constructor
+
+        public Decorator(Enemy controller) : base(controller) { }
+
+        #endregion Constructor
+
         #region Methods
 
         public void AddChild(Node node)
