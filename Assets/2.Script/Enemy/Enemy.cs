@@ -35,6 +35,15 @@ public class Enemy : MonoBehaviour, IDamagable
 
     #endregion Variables
 
+    #region Properties
+
+    /// <summary>
+    /// The animator component of the enemy.
+    /// </summary>
+    public Animator Animator => animator;
+
+    #endregion Properties
+
     #region IDamagable Implementation
 
     public DNFTransform DefenderDNFTransform { set; get; }
