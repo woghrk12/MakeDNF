@@ -14,6 +14,8 @@ namespace BehaviourTree
 
         protected Enemy controller = null;
 
+        protected ENodeState state = ENodeState.NONE;
+
         #endregion Variables
 
         #region Constructor
