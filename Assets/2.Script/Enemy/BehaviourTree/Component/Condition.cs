@@ -14,7 +14,7 @@ namespace BehaviourTree
         {
             if (IsChildEmpty) return ENodeState.FAILURE;
 
-            return CheckCondition(blackboard) ? Child.Evaluate(blackboard) : ENodeState.FAILURE;
+            return (Child.State == ENodeState.RUNNING || CheckCondition(blackboard)) ? Child.Evaluate(blackboard) : ENodeState.FAILURE;
         }
 
         protected abstract bool CheckCondition(Blackboard blackboard);
