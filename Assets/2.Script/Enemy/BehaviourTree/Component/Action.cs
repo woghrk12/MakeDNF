@@ -18,14 +18,14 @@ namespace BehaviourTree
 
         #region Methods
 
-        protected bool CheckCurrentAnimation(string name)
+        protected bool CheckAnimationRunning(string animName)
         {
             if (ReferenceEquals(controller, null)) return false;
             if (ReferenceEquals(controller.Animator, null)) return false;
 
             AnimatorStateInfo animatorStateInfo = controller.Animator.GetCurrentAnimatorStateInfo(0);
 
-            return animatorStateInfo.IsName(name) && animatorStateInfo.normalizedTime < 1f;
+            return animatorStateInfo.IsName(animName) && animatorStateInfo.normalizedTime < 1f;
         }
 
         #endregion Methods
