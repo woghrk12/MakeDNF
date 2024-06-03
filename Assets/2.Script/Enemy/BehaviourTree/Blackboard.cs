@@ -22,6 +22,18 @@ namespace BehaviourTree
 
         public bool CheckHasVariable(string key) => variableDictionary.ContainsKey(key);
 
+        public bool TryGetVariable<T>(string key, out T variable) where T : BlackboardVariable
+        {
+            if (variableDictionary.TryGetValue(key, out BlackboardVariable value))
+            {
+                variable = value as T;
+                return true;
+            }
+
+            variable = null;
+            return false;
+        }
+
         public void AddVariable<T>(string key, T variable) where T : BlackboardVariable
         {
             if (variableDictionary.ContainsKey(key)) return;
