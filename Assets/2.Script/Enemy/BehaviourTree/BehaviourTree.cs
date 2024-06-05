@@ -7,7 +7,7 @@ namespace BehaviourTree
     {
         #region Variables
 
-        private Node rootNode = null;
+        public Node RootNode = null;
 
         #endregion Variables
 
@@ -15,9 +15,10 @@ namespace BehaviourTree
 
         public void Run()
         {
-            if (ReferenceEquals(rootNode, null)) return;
+            if (ReferenceEquals(RootNode, null)) return;
+            if (RootNode.State != ENodeState.RUNNING) return;
 
-            rootNode.Evaluate();
+            RootNode.Evaluate();
         }
 
         #endregion Methods
