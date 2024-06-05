@@ -13,7 +13,7 @@ namespace BehaviourTree
 
         #region Methods
 
-        public void OnUpdate()
+        public void Run()
         {
             if (ReferenceEquals(rootNode, null)) return;
 
