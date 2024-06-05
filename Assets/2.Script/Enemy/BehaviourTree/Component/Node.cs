@@ -1,14 +1,15 @@
+using UnityEngine;
+
 namespace BehaviourTree
 {
     public enum ENodeState
     {
-        NONE = -1,
         RUNNING,
         SUCCESS,
         FAILURE
     }
 
-    public abstract class Node
+    public abstract class Node : ScriptableObject
     {
         #region Variables
 
