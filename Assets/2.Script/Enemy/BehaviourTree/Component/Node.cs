@@ -18,7 +18,9 @@ namespace BehaviourTree
 
         #region Properties
 
-        public ENodeState State { protected set; get; } = ENodeState.NONE;
+        public ENodeState State { protected set; get; } = ENodeState.RUNNING;
+
+        public bool IsStarted { protected set; get; } = false;
 
         #endregion Properties
 
@@ -33,7 +35,30 @@ namespace BehaviourTree
 
         #region Methods
 
-        public abstract ENodeState Evaluate(Blackboard blackboard);
+        public ENodeState Evaluate()
+        {
+            if (!IsStarted)
+            {
+                OnStart();
+                IsStarted = true;
+            }
+
+            State = OnUpdate();
+
+            if (State == ENodeState.SUCCESS || State == ENodeState.FAILURE)
+            {
+                OnStop();
+                IsStarted = false;
+            }
+
+            return State;
+        }
+
+        protected abstract void OnStart();
+
+        protected abstract ENodeState OnUpdate();
+
+        protected abstract void OnStop();
 
         #endregion Methods
     }
