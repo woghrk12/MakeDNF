@@ -11,12 +11,6 @@ namespace BehaviourTree
 
     public abstract class Node : ScriptableObject
     {
-        #region Variables
-
-        protected Enemy controller = null;
-
-        #endregion Variables
-
         #region Properties
 
         public ENodeState State { protected set; get; } = ENodeState.RUNNING;
@@ -24,15 +18,6 @@ namespace BehaviourTree
         public bool IsStarted { protected set; get; } = false;
 
         #endregion Properties
-
-        #region Constructor
-
-        public Node(Enemy controller)
-        {
-            this.controller = controller;
-        }
-
-        #endregion Constructor
 
         #region Methods
 
