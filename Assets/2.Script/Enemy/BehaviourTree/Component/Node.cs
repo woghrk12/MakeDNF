@@ -11,6 +11,13 @@ namespace BehaviourTree
 
     public abstract class Node : ScriptableObject
     {
+        #region Variables
+
+        public string GUID = string.Empty;
+        public Vector2 Position = Vector2.zero;
+
+        #endregion Variables
+
         #region Properties
 
         public ENodeState State { protected set; get; } = ENodeState.RUNNING;
