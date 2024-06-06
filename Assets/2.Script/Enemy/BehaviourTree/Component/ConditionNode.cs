@@ -16,11 +16,11 @@ namespace BehaviourTree
 
         protected override ENodeState OnUpdate()
         {
-            if (childNode.State == ENodeState.RUNNING) return ENodeState.RUNNING;
+            if (ChildNodeList[0].State == ENodeState.RUNNING) return ENodeState.RUNNING;
 
             if (CheckingConditionHandler?.Invoke() ?? false)
             {
-                return childNode.Evaluate();
+                return ChildNodeList[0].Evaluate();
             }
 
             return ENodeState.FAILURE;

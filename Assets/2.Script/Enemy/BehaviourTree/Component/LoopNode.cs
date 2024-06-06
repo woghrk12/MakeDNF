@@ -19,7 +19,7 @@ namespace BehaviourTree
 
         protected override ENodeState OnUpdate()
         {
-            if (childNode.Evaluate() != ENodeState.RUNNING)
+            if (ChildNodeList[0].Evaluate() != ENodeState.RUNNING)
             {
                 curCount++;
             }

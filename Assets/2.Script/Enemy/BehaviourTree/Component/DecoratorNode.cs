@@ -1,10 +1,12 @@
+using System.Collections.Generic;
+
 namespace BehaviourTree
 {
     public abstract class DecoratorNode : Node
     {
         #region Variables
 
-        protected Node childNode = null;
+        public List<Node> ChildNodeList = new();
 
         #endregion Variables
     }
