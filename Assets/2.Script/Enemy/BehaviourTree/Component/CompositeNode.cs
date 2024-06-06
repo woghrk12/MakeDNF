@@ -6,7 +6,7 @@ namespace BehaviourTree
     {
         #region Variables
 
-        protected List<Node> childNodeList = new();
+        public List<Node> ChildNodeList = new();
 
         #endregion Variables
     }

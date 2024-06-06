@@ -17,9 +17,9 @@ namespace BehaviourTree
 
         protected override ENodeState OnUpdate()
         {
-            if (childNodeList.Count == 0) return ENodeState.FAILURE;
+            if (ChildNodeList.Count == 0) return ENodeState.FAILURE;
 
-            switch (childNodeList[index].Evaluate())
+            switch (ChildNodeList[index].Evaluate())
             {
                 case ENodeState.RUNNING:
                     return ENodeState.RUNNING;
@@ -32,7 +32,7 @@ namespace BehaviourTree
                     return ENodeState.SUCCESS;
             }
 
-            return index == childNodeList.Count ? ENodeState.FAILURE : ENodeState.RUNNING;
+            return index == ChildNodeList.Count ? ENodeState.FAILURE : ENodeState.RUNNING;
         }
 
         protected override void OnStop() { }
