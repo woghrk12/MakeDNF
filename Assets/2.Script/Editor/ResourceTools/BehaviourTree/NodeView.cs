@@ -88,7 +88,11 @@ namespace BehaviourTree
 
         private void AddOutputPorts()
         {
-            if (Node is DecoratorNode)
+            if (Node is RootNode)
+            {
+                OutputPort = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
+            }
+            else if (Node is DecoratorNode)
             {
                 OutputPort = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
             }

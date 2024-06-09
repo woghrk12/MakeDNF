@@ -39,7 +39,7 @@ public class BehaviourTreeEditor : EditorWindow
     {
         BehaviourTree.BehaviourTree behaviourTree = Selection.activeObject as BehaviourTree.BehaviourTree;
 
-        if (behaviourTree)
+        if (behaviourTree && AssetDatabase.CanOpenAssetInEditor(behaviourTree.GetInstanceID()))
         {
             behaviourTreeView.PopulateView(behaviourTree);
         }

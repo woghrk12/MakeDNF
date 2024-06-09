@@ -108,6 +108,14 @@ namespace BehaviourTree
             DeleteElements(graphElements);
             graphViewChanged += OnGraphViewChanged;
 
+            if (ReferenceEquals(this.behaviourTree.RootNode, null))
+            {
+                this.behaviourTree.RootNode = behaviourTree.AddNode(typeof(RootNode)) as RootNode;
+
+                EditorUtility.SetDirty(this.behaviourTree);
+                AssetDatabase.SaveAssets();
+            }
+
             // Creates node views
             this.behaviourTree.NodeList.ForEach(node => AddNodeView(node));
 

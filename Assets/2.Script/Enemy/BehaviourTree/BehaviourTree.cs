@@ -51,7 +51,11 @@ namespace BehaviourTree
 
         public void AddChildNode(Node parentNode, Node childNode)
         {
-            if (parentNode is DecoratorNode)
+            if (parentNode is RootNode)
+            {
+                (parentNode as RootNode).ChildNode = childNode;
+            }
+            else if (parentNode is DecoratorNode)
             {
                 (parentNode as DecoratorNode).ChildNode = childNode;
             }
@@ -63,7 +67,11 @@ namespace BehaviourTree
 
         public void RemoveChildNode(Node parentNode, Node childNode)
         {
-            if (parentNode is DecoratorNode)
+            if (parentNode is RootNode)
+            {
+                (parentNode as RootNode).ChildNode = null;
+            }
+            else if (parentNode is DecoratorNode)
             {
                 (parentNode as DecoratorNode).ChildNode = null;
             }
@@ -75,7 +83,13 @@ namespace BehaviourTree
 
         public List<Node> GetChildren(Node parentNode)
         {
-            if (parentNode is DecoratorNode)
+            if (parentNode is RootNode)
+            {
+                RootNode node = parentNode as RootNode;
+
+                return ReferenceEquals(node.ChildNode, null) ? null : new List<Node>() { node.ChildNode };
+            }
+            else if (parentNode is DecoratorNode)
             {
                 DecoratorNode node = parentNode as DecoratorNode;
 
