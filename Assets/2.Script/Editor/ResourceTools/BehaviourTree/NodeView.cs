@@ -1,3 +1,4 @@
+using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ namespace BehaviourTree
 
         public Node Node = null;
 
+        private Action<NodeView> nodeViewSelected = null;
+
         #endregion Variables
 
         #region Properites
@@ -18,6 +21,12 @@ namespace BehaviourTree
         public Port InputPort { private set; get; } = null;
 
         public Port OutputPort { private set; get; } = null;
+
+        public event Action<NodeView> NodeViewSelected
+        {
+            add { nodeViewSelected += value; }
+            remove { nodeViewSelected -= value; }
+        }
 
         #endregion Properties
 
@@ -43,9 +52,16 @@ namespace BehaviourTree
         public override void SetPosition(Rect newPos)
         {
             base.SetPosition(newPos);
-
+                
             Node.Position.x = newPos.xMin;
             Node.Position.y = newPos.yMin;
+        }
+
+        public override void OnSelected()
+        {
+            base.OnSelected();
+
+            nodeViewSelected?.Invoke(this);
         }
 
         private void AddInputPorts()

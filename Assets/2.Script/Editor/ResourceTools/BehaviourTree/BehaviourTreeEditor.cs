@@ -28,6 +28,8 @@ public class BehaviourTreeEditor : EditorWindow
         root.styleSheets.Add(styleSheet);
 
         behaviourTreeView = root.Q<BehaviourTree.BehaviourTreeView>();
+        behaviourTreeView.NodeViewSelected += OnNodeViewSelected;
+
         inspectorView = root.Q<BehaviourTree.InspectorView>();
 
         OnSelectionChange();
@@ -53,6 +55,15 @@ public class BehaviourTreeEditor : EditorWindow
         BehaviourTreeEditor wnd = GetWindow<BehaviourTreeEditor>();
         wnd.titleContent = new GUIContent("BehaviourTreeEditor");
     }
+
+    #region Events
+
+    private void OnNodeViewSelected(BehaviourTree.NodeView nodeView)
+    {
+        inspectorView.UpdateInspector(nodeView);
+    }
+
+    #endregion Events
 
     #endregion Methods
 }

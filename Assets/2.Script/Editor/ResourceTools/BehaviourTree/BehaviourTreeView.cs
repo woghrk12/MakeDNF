@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace BehaviourTree
@@ -14,8 +13,10 @@ namespace BehaviourTree
         public new class UxmlFactory : UxmlFactory<BehaviourTreeView, UxmlTraits> { }
 
         #region Variables
-
+        
         private BehaviourTree behaviourTree = null;
+
+        public event Action<NodeView> NodeViewSelected = null;
 
         #endregion Variables
 
@@ -40,10 +41,10 @@ namespace BehaviourTree
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
-            /*
+            // Find all types by using reflection
+            /* 
             IEnumerable<Type> typesDerivedFromActionNode, typesDerivedFromDecoratorNode, typesDerivedFromCompositeNode;
             
-            // Find all types
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 typesDerivedFromActionNode = assembly.GetTypes()
@@ -67,8 +68,10 @@ namespace BehaviourTree
                 {
                     evt.menu.AppendAction($"[{type.BaseType.Name}] {type.Name}", (action) => AddNode(type));
                 }
-            }*/
+            }
+            */
 
+            // Find all types by using TypeCache class
             var typesDerivedFromActionNode = TypeCache.GetTypesDerivedFrom<ActionNode>();
             foreach (var type in typesDerivedFromActionNode)
             {
@@ -132,7 +135,11 @@ namespace BehaviourTree
 
         private void AddNodeView(Node node)
         {
-            AddElement(new NodeView(node));
+            NodeView nodeView = new NodeView(node);
+
+            nodeView.NodeViewSelected += NodeViewSelected;
+
+            AddElement(nodeView);
         }
 
         private NodeView FindNodeView(Node node)

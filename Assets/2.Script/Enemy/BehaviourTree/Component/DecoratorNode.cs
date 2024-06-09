@@ -1,10 +1,12 @@
+using UnityEngine;
+
 namespace BehaviourTree
 {
     public abstract class DecoratorNode : Node
     {
         #region Variables
 
-        public Node ChildNode = null;
+        [HideInInspector] public Node ChildNode = null;
 
         #endregion Variables
     }

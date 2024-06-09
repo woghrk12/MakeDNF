@@ -1,3 +1,4 @@
+using UnityEngine;
 using System.Collections.Generic;
 
 namespace BehaviourTree
@@ -6,7 +7,7 @@ namespace BehaviourTree
     {
         #region Variables
 
-        public List<Node> ChildNodeList = new();
+        [HideInInspector] public List<Node> ChildNodeList = new();
 
         #endregion Variables
     }

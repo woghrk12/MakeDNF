@@ -13,8 +13,8 @@ namespace BehaviourTree
     {
         #region Variables
 
-        public string GUID = string.Empty;
-        public Vector2 Position = Vector2.zero;
+        [HideInInspector] public string GUID = string.Empty;
+        [HideInInspector] public Vector2 Position = Vector2.zero;
 
         #endregion Variables
 
