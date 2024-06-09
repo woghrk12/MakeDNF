@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -57,6 +58,19 @@ public class BehaviourTreeEditor : EditorWindow
     }
 
     #region Events
+
+    [OnOpenAsset]
+    private static bool OnOpenAsset(int instanceID, int line)
+    {
+        if (Selection.activeObject is BehaviourTree.BehaviourTree)
+        {
+            Init();
+
+            return true;
+        }
+
+        return false;
+    }
 
     private void OnNodeViewSelected(BehaviourTree.NodeView nodeView)
     {
