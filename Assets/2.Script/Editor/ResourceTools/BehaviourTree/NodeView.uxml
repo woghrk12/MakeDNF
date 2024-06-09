@@ -1,0 +1,23 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Assets/2.Script/Editor/ResourceTools/BehaviourTree/NodeView.uss?fileID=7433441132597879392&amp;guid=06c9b8e80a486c54092c6ba2bdfdecd5&amp;type=3#NodeView" />
+    <ui:VisualElement name="node-border">
+        <ui:VisualElement name="contents">
+            <ui:VisualElement name="top">
+                <ui:VisualElement name="input" style="justify-content: flex-start; align-self: auto; flex-shrink: 1; flex-wrap: nowrap; flex-direction: column;" />
+                <ui:VisualElement name="divider" class="vertical" />
+                <ui:VisualElement name="title" style="justify-content: flex-start; align-self: center;">
+                    <ui:Label name="title-label" text="SequnceNode" class="unity-text-element unity-label" />
+                    <ui:VisualElement name="title-button-container">
+                        <ui:VisualElement name="collapse-button">
+                            <ui:VisualElement name="icon" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:Label tabindex="-1" text="This is a description" parse-escape-sequences="true" display-tooltip-when-elided="true" name="description" />
+                <ui:VisualElement name="divider" class="horizontal" />
+                <ui:VisualElement name="output" style="justify-content: flex-start; align-items: center; background-color: rgba(255, 255, 255, 0); align-self: auto; flex-wrap: nowrap; flex-direction: column;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="selection-border" picking-mode="Ignore" />
+</ui:UXML>

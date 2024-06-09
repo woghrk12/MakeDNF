@@ -1,6 +1,7 @@
 using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 using GraphNode = UnityEditor.Experimental.GraphView.Node;
 
@@ -32,7 +33,7 @@ namespace BehaviourTree
 
         #region Constructor
 
-        public NodeView(Node node)
+        public NodeView(Node node) : base("Assets/2.Script/Editor/ResourceTools/BehaviourTree/NodeView.uxml")
         {
             Node = node;
             title = node.name;
@@ -43,6 +44,7 @@ namespace BehaviourTree
 
             AddInputPorts();
             AddOutputPorts();
+            SetupClasses();
         }
 
         #endregion Constructor
@@ -57,31 +59,25 @@ namespace BehaviourTree
             Node.Position.y = newPos.yMin;
         }
 
-        public override void OnSelected()
-        {
-            base.OnSelected();
-
-            nodeViewSelected?.Invoke(this);
-        }
-
         private void AddInputPorts()
         {
             if (Node is ActionNode)
             {
-                InputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
+                InputPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(bool));
             }
             else if (Node is DecoratorNode)
             {
-                InputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
+                InputPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(bool));
             }
             else if (Node is CompositeNode)
             {
-                InputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
+                InputPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(bool));
             }
 
             if (InputPort != null)
             {
                 InputPort.portName = "";
+                InputPort.style.flexDirection = FlexDirection.Column;
                 inputContainer.Add(InputPort);
             }
         }
@@ -90,23 +86,55 @@ namespace BehaviourTree
         {
             if (Node is RootNode)
             {
-                OutputPort = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
+                OutputPort = InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Single, typeof(bool));
             }
             else if (Node is DecoratorNode)
             {
-                OutputPort = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
+                OutputPort = InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Single, typeof(bool));
             }
             else if (Node is CompositeNode)
             {
-                OutputPort = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, typeof(bool));
+                OutputPort = InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(bool));
             }
 
             if (OutputPort != null)
             {
                 OutputPort.portName = "";
+                OutputPort.style.flexDirection = FlexDirection.ColumnReverse;
                 outputContainer.Add(OutputPort);
             }
         }
+
+        private void SetupClasses()
+        {
+            if (Node is RootNode)
+            {
+                AddToClassList("root");
+            }
+            else if (Node is ActionNode)
+            {
+                AddToClassList("action");
+            }
+            else if (Node is DecoratorNode)
+            {
+                AddToClassList("decorator");
+            }
+            else if (Node is CompositeNode)
+            {
+                AddToClassList("composite");
+            }
+        }
+
+        #region Events
+
+        public override void OnSelected()
+        {
+            base.OnSelected();
+
+            nodeViewSelected?.Invoke(this);
+        }
+
+        #endregion Events
 
         #endregion Methods
     }
