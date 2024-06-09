@@ -33,7 +33,12 @@ namespace BehaviourTree
 
             editor = Editor.CreateEditor(nodeView.Node);
 
-            Add(new IMGUIContainer(() => editor.OnInspectorGUI()));
+            Add(new IMGUIContainer(() =>
+            {
+                if (!editor.target) return;
+
+                editor.OnInspectorGUI();
+            }));
         }
 
         #endregion Methods

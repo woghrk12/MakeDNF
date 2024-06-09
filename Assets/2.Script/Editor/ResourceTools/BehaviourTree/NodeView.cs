@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -54,9 +55,13 @@ namespace BehaviourTree
         public override void SetPosition(Rect newPos)
         {
             base.SetPosition(newPos);
-                
+
+            Undo.RecordObject(Node, "Behaviour Tree (Set Position)");
+
             Node.Position.x = newPos.xMin;
             Node.Position.y = newPos.yMin;
+
+            EditorUtility.SetDirty(Node);
         }
 
         private void AddInputPorts()

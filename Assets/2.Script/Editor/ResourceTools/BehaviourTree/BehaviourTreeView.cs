@@ -33,6 +33,8 @@ namespace BehaviourTree
 
             var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/2.Script/Editor/ResourceTools/BehaviourTree/BehaviourTreeEditor.uss");
             styleSheets.Add(styleSheet);
+
+            Undo.undoRedoPerformed += OnUndoRedo;
         }
 
         #endregion Constructor
@@ -191,6 +193,12 @@ namespace BehaviourTree
             }
 
             return graphViewChange;
+        }
+
+        private void OnUndoRedo()
+        {
+            PopulateView(behaviourTree);
+            AssetDatabase.SaveAssets();
         }
 
         #endregion Events

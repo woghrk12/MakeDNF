@@ -33,9 +33,13 @@ namespace BehaviourTree
             node.name = type.Name;
             node.GUID = GUID.Generate().ToString();
 
+            Undo.RecordObject(this, "Behaviour Tree (CreateNode)");
+
             NodeList.Add(node);
 
             AssetDatabase.AddObjectToAsset(node, this);
+            Undo.RegisterCreatedObjectUndo(node, "Behaviour Tree (AddNode)");
+
             AssetDatabase.SaveAssets();
 
             return node;
@@ -43,9 +47,13 @@ namespace BehaviourTree
 
         public void RemoveNode(Node node)
         {
+            Undo.RecordObject(this, "Behaviour Tree (RemoveNode)");
+
             NodeList.Remove(node);
 
-            AssetDatabase.RemoveObjectFromAsset(node);
+            //AssetDatabase.RemoveObjectFromAsset(node);
+            Undo.DestroyObjectImmediate(node);
+
             AssetDatabase.SaveAssets();
         }
 
@@ -53,15 +61,27 @@ namespace BehaviourTree
         {
             if (parentNode is RootNode)
             {
+                Undo.RecordObject(parentNode, "Behaviour Tree (AddChildNode)");
+
                 (parentNode as RootNode).ChildNode = childNode;
+
+                EditorUtility.SetDirty(parentNode);
             }
             else if (parentNode is DecoratorNode)
             {
+                Undo.RecordObject(parentNode, "Behaviour Tree (AddChildNode)");
+
                 (parentNode as DecoratorNode).ChildNode = childNode;
+
+                EditorUtility.SetDirty(parentNode);
             }
             else if (parentNode is CompositeNode)
             {
-                (parentNode as CompositeNode).ChildNodeList.Add(childNode); 
+                Undo.RecordObject(parentNode, "Behaviour Tree (AddChildNode)");
+
+                (parentNode as CompositeNode).ChildNodeList.Add(childNode);
+
+                EditorUtility.SetDirty(parentNode);
             }
         }
 
@@ -69,15 +89,27 @@ namespace BehaviourTree
         {
             if (parentNode is RootNode)
             {
+                Undo.RecordObject(parentNode, "Behaviour Tree (AddChildNode)");
+
                 (parentNode as RootNode).ChildNode = null;
+
+                EditorUtility.SetDirty(parentNode);
             }
             else if (parentNode is DecoratorNode)
             {
+                Undo.RecordObject(parentNode, "Behaviour Tree (AddChildNode)");
+
                 (parentNode as DecoratorNode).ChildNode = null;
+
+                EditorUtility.SetDirty(parentNode);
             }
             else if (parentNode is CompositeNode)
             {
+                Undo.RecordObject(parentNode, "Behaviour Tree (AddChildNode)");
+
                 (parentNode as CompositeNode).ChildNodeList.Remove(childNode);
+
+                EditorUtility.SetDirty(parentNode);
             }
         }
 
