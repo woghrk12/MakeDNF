@@ -47,11 +47,20 @@ namespace BehaviourTree
             return State;
         }
 
+        public virtual Node Clone()
+        {
+            return Instantiate(this);
+        }
+
+        #region Events
+
         protected abstract void OnStart();
 
         protected abstract ENodeState OnUpdate();
 
         protected abstract void OnStop();
+
+        #endregion Events
 
         #endregion Methods
     }

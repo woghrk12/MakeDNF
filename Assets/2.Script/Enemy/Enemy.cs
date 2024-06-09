@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour, IDamagable
     /// <summary>
     /// The controller component for managing the enemy AI's behaviour tree.
     /// </summary>
-    private BehaviourTree.BehaviourTree behaviourController = null;
+    [SerializeField] private BehaviourTree.BehaviourTree behaviourController = null;
 
     #endregion Variables
 
@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour, IDamagable
         DefenderDNFTransform = dnfTransform;
         DefenderHitboxController.Init(dnfTransform);
 
-        behaviourController = ScriptableObject.CreateInstance<BehaviourTree.BehaviourTree>();
+        behaviourController = behaviourController.Clone();
     }
 
     private void Start()

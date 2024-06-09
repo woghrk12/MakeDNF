@@ -103,6 +103,14 @@ namespace BehaviourTree
             return null;
         }
 
+        public BehaviourTree Clone()
+        {
+            BehaviourTree behaviourTree = Instantiate(this);
+            behaviourTree.RootNode = RootNode.Clone();
+
+            return behaviourTree;
+        }
+
         #endregion Methods
     }
 }

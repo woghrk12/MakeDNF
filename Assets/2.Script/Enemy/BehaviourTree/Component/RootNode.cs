@@ -12,6 +12,16 @@ namespace BehaviourTree
 
         #region Methods
 
+        public override Node Clone()
+        {
+            RootNode node = Instantiate(this);
+            node.ChildNode = ChildNode.Clone();
+
+            return node;
+        }
+
+        #region Events
+
         protected override void OnStart() { }
 
         protected override ENodeState OnUpdate()
@@ -22,6 +32,8 @@ namespace BehaviourTree
         }
 
         protected override void OnStop() { }
+
+        #endregion Events
 
         #endregion Methods
     }
