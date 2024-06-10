@@ -37,7 +37,11 @@ namespace BehaviourTree
 
             NodeList.Add(node);
 
-            AssetDatabase.AddObjectToAsset(node, this);
+            if (!Application.isPlaying)
+            {
+                AssetDatabase.AddObjectToAsset(node, this);
+            }
+
             Undo.RegisterCreatedObjectUndo(node, "Behaviour Tree (AddNode)");
 
             AssetDatabase.SaveAssets();
@@ -138,9 +142,22 @@ namespace BehaviourTree
         public BehaviourTree Clone()
         {
             BehaviourTree behaviourTree = Instantiate(this);
-            behaviourTree.RootNode = RootNode.Clone();
+
+            behaviourTree.RootNode = behaviourTree.RootNode.Clone();
+            behaviourTree.NodeList = new List<Node>();
+
+            Traverse(behaviourTree.RootNode, (node) => behaviourTree.NodeList.Add(node));
 
             return behaviourTree;
+        }
+        
+        private void Traverse(Node node, Action<Node> nodeVisited)
+        {
+            if (ReferenceEquals(node, null)) return;
+
+            nodeVisited?.Invoke(node);
+
+            GetChildren(node)?.ForEach((childNode) => Traverse(childNode, nodeVisited));
         }
 
         #endregion Methods

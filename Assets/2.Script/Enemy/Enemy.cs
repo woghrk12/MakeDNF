@@ -42,6 +42,8 @@ public class Enemy : MonoBehaviour, IDamagable
     /// </summary>
     public Animator Animator => animator;
 
+    public BehaviourTree.BehaviourTree BehaviourController => behaviourController;
+
     #endregion Properties
 
     #region IDamagable Implementation

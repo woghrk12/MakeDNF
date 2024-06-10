@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -40,8 +41,27 @@ public class BehaviourTreeEditor : EditorWindow
     {
         BehaviourTree.BehaviourTree behaviourTree = Selection.activeObject as BehaviourTree.BehaviourTree;
 
-        if (behaviourTree && AssetDatabase.CanOpenAssetInEditor(behaviourTree.GetInstanceID()))
+        if (ReferenceEquals(behaviourTree, null))
         {
+            if (ReferenceEquals(Selection.activeGameObject, null)) return;
+
+            if (Selection.activeGameObject.TryGetComponent(out Enemy enemy))
+            {
+                behaviourTree = enemy.BehaviourController;
+            }
+        }
+
+        if (Application.isPlaying)
+        {
+            if (ReferenceEquals(behaviourTree, null)) return;
+
+            behaviourTreeView.PopulateView(behaviourTree);
+        }
+        else
+        {
+            if (ReferenceEquals(behaviourTree, null)) return;
+            if (!AssetDatabase.CanOpenAssetInEditor(behaviourTree.GetInstanceID())) return;
+
             behaviourTreeView.PopulateView(behaviourTree);
         }
     }
