@@ -16,6 +16,8 @@ namespace BehaviourTree
         [HideInInspector] public string GUID = string.Empty;
         [HideInInspector] public Vector2 Position = Vector2.zero;
 
+        [TextArea] public string description = string.Empty;
+
         #endregion Variables
 
         #region Properties

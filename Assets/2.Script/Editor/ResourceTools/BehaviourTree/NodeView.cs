@@ -1,6 +1,7 @@
 using System;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -46,6 +47,10 @@ namespace BehaviourTree
             AddInputPorts();
             AddOutputPorts();
             SetupClasses();
+
+            Label descriptionLabel = this.Q<Label>("description");
+            descriptionLabel.bindingPath = "description";
+            descriptionLabel.Bind(new SerializedObject(node));
         }
 
         #endregion Constructor
