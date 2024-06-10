@@ -192,6 +192,11 @@ namespace BehaviourTree
                 });
             }
 
+            if (!ReferenceEquals(graphViewChange.movedElements, null))
+            {
+                nodes.ForEach(node => (node as NodeView).SortChildNode());
+            }
+
             return graphViewChange;
         }
 

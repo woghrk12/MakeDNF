@@ -130,6 +130,18 @@ namespace BehaviourTree
             }
         }
 
+        public void SortChildNode()
+        {
+            if (Node is not CompositeNode) return;
+
+            (Node as CompositeNode).ChildNodeList.Sort(SortByHorizontalPosition);
+        }
+
+        private int SortByHorizontalPosition(Node leftNode, Node rightNode)
+        {
+            return leftNode.Position.x < rightNode.Position.x ? -1 : 1;
+        }
+
         #region Events
 
         public override void OnSelected()
