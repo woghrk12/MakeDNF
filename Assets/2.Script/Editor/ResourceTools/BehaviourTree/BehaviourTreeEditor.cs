@@ -66,6 +66,11 @@ public class BehaviourTreeEditor : EditorWindow
         }
     }
 
+    private void OnInspectorUpdate()
+    {
+        behaviourTreeView?.UpdateNodeViews();
+    }
+
     #endregion Unity Events
 
     #region Methods

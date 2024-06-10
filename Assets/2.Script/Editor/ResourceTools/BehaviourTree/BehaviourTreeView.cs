@@ -157,6 +157,11 @@ namespace BehaviourTree
             return GetNodeByGuid(node.GUID) as NodeView;
         }
 
+        public void UpdateNodeViews()
+        {
+            nodes.ForEach(node => (node as NodeView).UpdateNodeView());
+        }
+
         #region Events
 
         private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)

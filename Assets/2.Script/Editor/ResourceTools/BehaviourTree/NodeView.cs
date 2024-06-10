@@ -142,6 +142,43 @@ namespace BehaviourTree
             return leftNode.Position.x < rightNode.Position.x ? -1 : 1;
         }
 
+        public void UpdateNodeView()
+        {
+            if (ClassListContains("running"))
+            {
+                RemoveFromClassList("running");
+            }
+
+            if (ClassListContains("failure"))
+            {
+                RemoveFromClassList("failure");
+            }
+
+            if (ClassListContains("success"))
+            {
+                RemoveFromClassList("success");
+            }
+
+            if (!Application.isPlaying) return;
+
+            switch (Node.State)
+            {
+                case ENodeState.RUNNING:
+                    if (!Node.IsStarted) break;
+
+                    AddToClassList("running");
+                    break;
+
+                case ENodeState.FAILURE:
+                    AddToClassList("failure");
+                    break;
+
+                case ENodeState.SUCCESS:
+                    AddToClassList("success");
+                    break;
+            }
+        }
+
         #region Events
 
         public override void OnSelected()

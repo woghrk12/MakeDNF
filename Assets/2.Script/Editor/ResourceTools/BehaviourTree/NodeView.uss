@@ -99,3 +99,27 @@
     background-color: rgb(255, 81, 84);
     min-height: 20px;
 }
+
+#node-state {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.running #node-state {
+    background-color: rgb(255, 206, 0);
+}
+
+.success #node-state {
+    background-color: rgb(17, 255, 0);
+}
+
+.failure #node-state {
+    background-color: rgb(255, 16, 16);
+}
