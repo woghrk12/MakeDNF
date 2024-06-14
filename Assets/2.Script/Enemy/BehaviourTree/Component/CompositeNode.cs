@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace BehaviourTree
 {
@@ -7,19 +7,38 @@ namespace BehaviourTree
     {
         #region Variables
 
-        [HideInInspector] public List<Node> ChildNodeList = new();
+        private List<Node> childNodeList = new();
 
         #endregion Variables
 
+        #region Properties
+
+        public List<Node> ChildNodeList => childNodeList;
+
+        #endregion Properties
+
         #region Methods
 
-        public override Node Clone()
+        public void AddChildNode(Node node)
         {
-            CompositeNode node = Instantiate(this);
-            node.ChildNodeList = ChildNodeList.ConvertAll(childNode => childNode.Clone());
+            if (childNodeList.Contains(node))
+            {
+                Debug.LogWarning($"The node {node.name} already exist.");
+                return;
+            }
 
-            return node;
+            childNodeList.Add(node);
+        }
 
+        public void RemoveChildNode(Node node)
+        {
+            if (!childNodeList.Contains(node))
+            {
+                Debug.LogWarning($"The node {node.name} doesn't exist.");
+                return;
+            }
+
+            childNodeList.Remove(node);
         }
 
         #endregion Methods

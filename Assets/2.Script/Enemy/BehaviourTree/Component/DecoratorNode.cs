@@ -1,23 +1,33 @@
-using UnityEngine;
-
 namespace BehaviourTree
 {
     public abstract class DecoratorNode : Node
     {
         #region Variables
 
-        [HideInInspector] public Node ChildNode = null;
+        private Node childNode = null;
 
         #endregion Variables
 
+        #region Properties
+
+        public Node ChildNode => childNode;
+
+        #endregion Properties
+
         #region Methods
 
-        public override Node Clone()
+        public void AddChildNode(Node node)
         {
-            DecoratorNode node = Instantiate(this);
-            node.ChildNode = ChildNode.Clone();
+            if (!ReferenceEquals(childNode, null) && childNode.GUID.Equals(node.GUID)) return;
 
-            return node;
+            childNode = node;
+        }
+
+        public void RemoveChildNode(Node node)
+        {
+            if (ReferenceEquals(childNode, null)) return;
+
+            childNode = null;
         }
 
         #endregion Methods

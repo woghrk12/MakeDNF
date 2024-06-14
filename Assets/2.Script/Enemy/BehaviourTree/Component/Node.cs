@@ -9,12 +9,15 @@ namespace BehaviourTree
         FAILURE
     }
 
-    public abstract class Node : ScriptableObject
+    [RequireComponent(typeof(BehaviourTree), typeof(Blackboard))]
+    public abstract class Node : MonoBehaviour
     {
         #region Variables
 
         [HideInInspector] public string GUID = string.Empty;
         [HideInInspector] public Vector2 Position = Vector2.zero;
+
+        protected Blackboard blackboard = null;
 
         [TextArea] public string description = string.Empty;
 
@@ -27,6 +30,15 @@ namespace BehaviourTree
         public bool IsStarted { protected set; get; } = false;
 
         #endregion Properties
+
+        #region Unity Events
+
+        protected void Awake()
+        {
+            blackboard = GetComponent<Blackboard>();
+        }
+
+        #endregion Unity Events
 
         #region Methods
 
@@ -47,11 +59,6 @@ namespace BehaviourTree
             }
 
             return State;
-        }
-
-        public virtual Node Clone()
-        {
-            return Instantiate(this);
         }
 
         #region Events
