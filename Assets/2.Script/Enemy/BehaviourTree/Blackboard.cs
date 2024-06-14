@@ -1,19 +1,35 @@
-using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace BehaviourTree
 {
-    public class Blackboard
+    public class Blackboard : MonoBehaviour
     {
         #region Variables
 
-        private Dictionary<string, BlackboardVariable> variableDictionary = new();
+        [SerializeField] private List<BlackboardVariable> variableList = new();
 
-        private List<Type> typeList = new();
+        private Dictionary<string, BlackboardVariable> variableDictionary = new();
 
         #endregion Variables
 
+        #region Unity Events
+
+        private void Awake()
+        {
+            variableDictionary.Clear();
+
+            variableList.ForEach((variable) => variableDictionary.Add(variable.Key, variable));
+        }
+
+        #endregion Unity Events
+
         #region Methods
+
+        public BlackboardVariable[] GetAllVariables()
+        {
+            return variableList.ToArray();
+        }
 
         public T GetVariable<T>(string key) where T : BlackboardVariable
         {
@@ -22,21 +38,13 @@ namespace BehaviourTree
 
         public bool CheckHasVariable(string key) => variableDictionary.ContainsKey(key);
 
-        public bool TryGetVariable<T>(string key, out T variable) where T : BlackboardVariable
+        public void AddVariable(string key, BlackboardVariable variable)
         {
-            if (variableDictionary.TryGetValue(key, out BlackboardVariable value))
+            if (!variableDictionary.ContainsKey(key))
             {
-                variable = value as T;
-                return true;
+                Debug.LogWarning($"Variable {key} already exists.");
+                return;
             }
-
-            variable = null;
-            return false;
-        }
-
-        public void AddVariable<T>(string key, T variable) where T : BlackboardVariable
-        {
-            if (variableDictionary.ContainsKey(key)) return;
 
             variableDictionary.Add(key, variable);
         }
