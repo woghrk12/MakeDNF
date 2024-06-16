@@ -33,7 +33,7 @@ public class BehaviourTreeEditor : EditorWindow
 
         behaviourTreeView = root.Q<BehaviourTree.BehaviourTreeView>();
         inspectorView = root.Q<BehaviourTree.InspectorView>();
-        
+
         behaviourTreeView.NodeViewSelected += OnNodeViewSelected;
 
         OnSelectionChange();
@@ -66,14 +66,7 @@ public class BehaviourTreeEditor : EditorWindow
     }
 
     #region Events
-
-    {
-        {
-
-        }
-
-    }
-
+    
     private void OnNodeViewSelected(BehaviourTree.NodeView nodeView)
     {
         inspectorView.UpdateInspector(nodeView);
