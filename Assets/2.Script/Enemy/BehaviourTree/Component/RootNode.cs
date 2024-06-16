@@ -1,5 +1,8 @@
+using UnityEngine;
+
 namespace BehaviourTree
 {
+    [DisallowMultipleComponent]
     public sealed class RootNode : Node
     {
         #region Variables 

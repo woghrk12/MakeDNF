@@ -5,8 +5,8 @@ using UnityEditor;
 
 namespace BehaviourTree
 {
-    [CreateAssetMenu()]
     public class BehaviourTree : ScriptableObject
+    [DisallowMultipleComponent]
     {
         #region Variables
 
