@@ -234,7 +234,6 @@ namespace BehaviourTree
         private void OnUndoRedo()
         {
             PopulateView(behaviourTree);
-            AssetDatabase.SaveAssets();
         }
 
         #endregion Events
