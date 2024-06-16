@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace BehaviourTree
@@ -116,7 +117,8 @@ namespace BehaviourTree
                 rootNode = this.behaviourTree.gameObject.AddComponent<RootNode>();
 
                 rootNode.GUID = GUID.Generate().ToString();
-                rootNode.hideFlags = UnityEngine.HideFlags.HideInInspector;
+                rootNode.hideFlags = HideFlags.HideInInspector;
+                rootNode.Name = typeof(RootNode).Name;
             }
 
             nodeList = this.behaviourTree.GetComponents<Node>().ToList();
@@ -159,8 +161,10 @@ namespace BehaviourTree
         private void AddNode(Type type)
         {
             Node newNode = Undo.AddComponent(behaviourTree.gameObject, type) as Node;
-            
-            newNode.hideFlags = UnityEngine.HideFlags.HideInInspector;
+
+            newNode.GUID = GUID.Generate().ToString();
+            newNode.Name = type.Name; 
+            newNode.hideFlags = HideFlags.HideInInspector;
 
             AddNodeView(newNode);
         }
