@@ -194,7 +194,11 @@ namespace BehaviourTree
                 {
                     if (element is NodeView)
                     {
-                        nodeList.Remove((element as NodeView).Node);
+                        Node node = (element as NodeView).Node;
+
+                        nodeList.Remove(node);
+
+                        Undo.DestroyObjectImmediate(node);
                     }
                     else if (element is Edge)
                     {
