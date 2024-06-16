@@ -14,6 +14,7 @@ namespace BehaviourTree
     {
         #region Variables
 
+        [HideInInspector] public string Name = string.Empty;
         [HideInInspector] public string GUID = string.Empty;
         [HideInInspector] public Vector2 Position = Vector2.zero;
 

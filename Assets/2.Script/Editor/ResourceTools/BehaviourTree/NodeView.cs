@@ -38,7 +38,7 @@ namespace BehaviourTree
         public NodeView(Node node) : base("Assets/2.Script/Editor/ResourceTools/BehaviourTree/NodeView.uxml")
         {
             Node = node;
-            title = node.name;
+            title = node.Name;
             viewDataKey = node.GUID;
 
             style.left = node.Position.x;
