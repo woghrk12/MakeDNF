@@ -111,8 +111,6 @@ namespace BehaviourTree
             DeleteElements(graphElements);
             graphViewChanged += OnGraphViewChanged;
 
-            nodeList = this.behaviourTree.GetComponents<Node>().ToList();
-
             if (!this.behaviourTree.gameObject.TryGetComponent(out RootNode rootNode))
             {
                 rootNode = this.behaviourTree.gameObject.AddComponent<RootNode>();
@@ -120,6 +118,8 @@ namespace BehaviourTree
                 rootNode.GUID = GUID.Generate().ToString();
                 rootNode.hideFlags = UnityEngine.HideFlags.HideInInspector;
             }
+
+            nodeList = this.behaviourTree.GetComponents<Node>().ToList();
 
             // Creates node views
             nodeList.ForEach(node => AddNodeView(node));
