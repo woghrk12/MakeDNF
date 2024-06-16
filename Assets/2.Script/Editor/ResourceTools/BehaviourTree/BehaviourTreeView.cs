@@ -15,6 +15,7 @@ namespace BehaviourTree
         #region Variables
         
         private BehaviourTree behaviourTree = null;
+        private List<Node> nodeList = new();
 
         public event Action<NodeView> NodeViewSelected = null;
 
@@ -110,37 +111,58 @@ namespace BehaviourTree
             DeleteElements(graphElements);
             graphViewChanged += OnGraphViewChanged;
 
-            if (ReferenceEquals(this.behaviourTree.RootNode, null))
-            {
-                this.behaviourTree.RootNode = behaviourTree.AddNode(typeof(RootNode)) as RootNode;
+            nodeList = this.behaviourTree.GetComponents<Node>().ToList();
 
-                EditorUtility.SetDirty(this.behaviourTree);
-                AssetDatabase.SaveAssets();
+            if (!this.behaviourTree.gameObject.TryGetComponent(out RootNode rootNode))
+            {
+                rootNode = this.behaviourTree.gameObject.AddComponent<RootNode>();
+
+                rootNode.GUID = GUID.Generate().ToString();
+                rootNode.hideFlags = UnityEngine.HideFlags.HideInInspector;
             }
 
             // Creates node views
-            this.behaviourTree.NodeList.ForEach(node => AddNodeView(node));
+            nodeList.ForEach(node => AddNodeView(node));
 
             // Create edges
-            this.behaviourTree.NodeList.ForEach(node =>
+            nodeList.ForEach(node =>
             {
-                List<Node> childNodeList = this.behaviourTree.GetChildren(node);
+                if (!node.HasChild) return;
 
-                if (ReferenceEquals(childNodeList, null)) return;
-                
-                childNodeList.ForEach(childNode =>
+                if (node is RootNode)
                 {
                     NodeView parentNodeView = FindNodeView(node);
-                    NodeView childNodeView = FindNodeView(childNode);
-
+                    NodeView childNodeView = FindNodeView((node as RootNode).ChildNode);
+                    
                     AddElement(parentNodeView.OutputPort.ConnectTo(childNodeView.InputPort));
-                });
+                }
+                else if (node is DecoratorNode)
+                {
+                    NodeView parentNodeView = FindNodeView(node);
+                    NodeView childNodeView = FindNodeView((node as DecoratorNode).ChildNode);
+                    
+                    AddElement(parentNodeView.OutputPort.ConnectTo(childNodeView.InputPort));
+                }
+                else if (node is CompositeNode)
+                {
+                    NodeView parentNodeView = FindNodeView(node);
+                    (node as CompositeNode).ChildNodeList.ForEach((childNode) =>
+                    {
+                        NodeView childNodeView = FindNodeView(childNode);
+                        
+                        AddElement(parentNodeView.OutputPort.ConnectTo(childNodeView.InputPort));
+                    });
+                }
             });
         }
 
         private void AddNode(Type type)
         {
-            AddNodeView(behaviourTree.AddNode(type));
+            Node newNode = Undo.AddComponent(behaviourTree.gameObject, type) as Node;
+            
+            newNode.hideFlags = UnityEngine.HideFlags.HideInInspector;
+
+            AddNodeView(newNode);
         }
 
         private void AddNodeView(Node node)
@@ -172,7 +194,7 @@ namespace BehaviourTree
                 {
                     if (element is NodeView)
                     {
-                        behaviourTree.RemoveNode((element as NodeView).Node);
+                        nodeList.Remove((element as NodeView).Node);
                     }
                     else if (element is Edge)
                     {
@@ -181,7 +203,7 @@ namespace BehaviourTree
                         NodeView parentNodeView = edge.output.node as NodeView;
                         NodeView childNodeView = edge.input.node as NodeView;
 
-                        behaviourTree.RemoveChildNode(parentNodeView.Node, childNodeView.Node);
+                        parentNodeView.Node.RemoveChildNode(childNodeView.Node);
                     }
                 });
             }
@@ -193,7 +215,7 @@ namespace BehaviourTree
                     NodeView parentNodeView = edge.output.node as NodeView;
                     NodeView childNodeView = edge.input.node as NodeView;
 
-                    behaviourTree.AddChildNode(parentNodeView.Node, childNodeView.Node);
+                    parentNodeView.Node.AddChildNode(childNodeView.Node);
                 });
             }
 
