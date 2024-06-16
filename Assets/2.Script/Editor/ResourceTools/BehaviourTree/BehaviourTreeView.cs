@@ -38,6 +38,11 @@ namespace BehaviourTree
             var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/2.Script/Editor/ResourceTools/BehaviourTree/BehaviourTreeEditor.uss");
             styleSheets.Add(styleSheet);
 
+            viewTransformChanged += (graphView) =>
+            {
+                behaviourTree.WorkSpaceOffset = graphView.viewTransform.position;
+            };
+
             Undo.undoRedoPerformed += OnUndoRedo;
         }
 
@@ -166,6 +171,8 @@ namespace BehaviourTree
                     });
                 }
             });
+
+            viewTransform.position = this.behaviourTree.WorkSpaceOffset;
         }
 
         private void AddNode(Type type, Vector2 mousePosition)

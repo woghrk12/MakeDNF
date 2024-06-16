@@ -9,6 +9,8 @@ namespace BehaviourTree
 
         private RootNode rootNode = null;
 
+        [HideInInspector] public Vector2 WorkSpaceOffset = Vector2.zero;
+
         #endregion Variables
 
         #region Unity Events
