@@ -11,6 +11,8 @@ public class BehaviourTreeEditor : EditorWindow
     private BehaviourTree.BehaviourTreeView behaviourTreeView = null;
     private BehaviourTree.InspectorView inspectorView = null;
 
+    private BehaviourTree.BehaviourTree targetBehaviourTree = null;
+
     #endregion Variables
 
     #region Unity Events
@@ -30,40 +32,21 @@ public class BehaviourTreeEditor : EditorWindow
         root.styleSheets.Add(styleSheet);
 
         behaviourTreeView = root.Q<BehaviourTree.BehaviourTreeView>();
-        behaviourTreeView.NodeViewSelected += OnNodeViewSelected;
-
         inspectorView = root.Q<BehaviourTree.InspectorView>();
+        
+        behaviourTreeView.NodeViewSelected += OnNodeViewSelected;
 
         OnSelectionChange();
     }
 
     private void OnSelectionChange()
     {
-        BehaviourTree.BehaviourTree behaviourTree = Selection.activeObject as BehaviourTree.BehaviourTree;
+        if (ReferenceEquals(Selection.activeGameObject, null)) return;
 
-        if (ReferenceEquals(behaviourTree, null))
-        {
-            if (ReferenceEquals(Selection.activeGameObject, null)) return;
+        if (!Selection.activeGameObject.TryGetComponent(out BehaviourTree.BehaviourTree behaviourTree)) return;
 
-            if (Selection.activeGameObject.TryGetComponent(out Enemy enemy))
-            {
-                behaviourTree = enemy.BehaviourController;
-            }
-        }
-
-        if (Application.isPlaying)
-        {
-            if (ReferenceEquals(behaviourTree, null)) return;
-
-            behaviourTreeView.PopulateView(behaviourTree);
-        }
-        else
-        {
-            if (ReferenceEquals(behaviourTree, null)) return;
-            if (!AssetDatabase.CanOpenAssetInEditor(behaviourTree.GetInstanceID())) return;
-
-            behaviourTreeView.PopulateView(behaviourTree);
-        }
+        targetBehaviourTree = behaviourTree;
+        behaviourTreeView.PopulateView(targetBehaviourTree);
     }
 
     private void OnInspectorUpdate()
