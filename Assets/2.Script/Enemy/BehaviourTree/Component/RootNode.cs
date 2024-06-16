@@ -1,6 +1,6 @@
 namespace BehaviourTree
 {
-    public class RootNode : Node
+    public sealed class RootNode : Node
     {
         #region Variables 
 
