@@ -76,7 +76,7 @@ public class BehaviourTreeEditor : EditorWindow
     #region Methods
 
     [MenuItem("Tools/Data/Behaviour Tree Tool")]
-    private static void Init()
+    public static void Init()
     {
         BehaviourTreeEditor wnd = GetWindow<BehaviourTreeEditor>();
         wnd.titleContent = new GUIContent("BehaviourTreeEditor");
