@@ -20,6 +20,8 @@ namespace BehaviourTree
 
         public event Action<NodeView> NodeViewSelected = null;
 
+        private Vector2 cachedMousePosition = Vector2.zero;
+
         #endregion Variables
 
         #region Constructor
@@ -75,23 +77,31 @@ namespace BehaviourTree
             }
             */
 
+            cachedMousePosition = evt.localMousePosition;
+
             // Find all types by using TypeCache class
+            // Add menu for root node
+            evt.menu.AppendAction("RootNode", (action) => AddNode(typeof(RootNode), cachedMousePosition));
+
+            // Add menu for action nodes
             var typesDerivedFromActionNode = TypeCache.GetTypesDerivedFrom<ActionNode>();
             foreach (var type in typesDerivedFromActionNode)
             {
-                evt.menu.AppendAction($"[{type.BaseType.Name}] {type.Name}", (action) => AddNode(type));
+                evt.menu.AppendAction($"{type.BaseType.Name}/{type.Name}", (action) => AddNode(type, cachedMousePosition));
             }
 
+            // Add menu for decorator nodes
             var typesDerivedFromDecoratorNode = TypeCache.GetTypesDerivedFrom<DecoratorNode>();
             foreach (var type in typesDerivedFromDecoratorNode)
             {
-                evt.menu.AppendAction($"[{type.BaseType.Name}] {type.Name}", (action) => AddNode(type));
+                evt.menu.AppendAction($"{type.BaseType.Name}/{type.Name}", (action) => AddNode(type, cachedMousePosition));
             }
 
+            // Add menu for composite nodes
             var typesDerivedFromCompositeNode = TypeCache.GetTypesDerivedFrom<CompositeNode>();
             foreach (var type in typesDerivedFromCompositeNode)
             {
-                evt.menu.AppendAction($"[{type.BaseType.Name}] {type.Name}", (action) => AddNode(type));
+                evt.menu.AppendAction($"{type.BaseType.Name}/{type.Name}", (action) => AddNode(type, cachedMousePosition));
             }
         }
 
@@ -158,12 +168,19 @@ namespace BehaviourTree
             });
         }
 
-        private void AddNode(Type type)
+        private void AddNode(Type type, Vector2 mousePosition)
         {
+            if (type == typeof(RootNode) && behaviourTree.TryGetComponent(out RootNode rootNode))
+            {
+                Debug.LogWarning("Can't add 'RootNode' to Behaviour Tree because a 'RootNode' is already added to the game object.");
+                return;
+            }
+
             Node newNode = Undo.AddComponent(behaviourTree.gameObject, type) as Node;
 
             newNode.GUID = GUID.Generate().ToString();
-            newNode.Name = type.Name; 
+            newNode.Name = type.Name;
+            newNode.Position = mousePosition;
             newNode.hideFlags = HideFlags.HideInInspector;
 
             AddNodeView(newNode);
