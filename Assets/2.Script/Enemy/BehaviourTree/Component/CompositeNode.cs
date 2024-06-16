@@ -15,11 +15,13 @@ namespace BehaviourTree
 
         public List<Node> ChildNodeList => childNodeList;
 
+        public override bool HasChild => childNodeList.Count > 0;
+
         #endregion Properties
 
         #region Methods
 
-        public void AddChildNode(Node node)
+        public sealed override void AddChildNode(Node node)
         {
             if (childNodeList.Contains(node))
             {
@@ -30,7 +32,7 @@ namespace BehaviourTree
             childNodeList.Add(node);
         }
 
-        public void RemoveChildNode(Node node)
+        public sealed override void RemoveChildNode(Node node)
         {
             if (!childNodeList.Contains(node))
             {

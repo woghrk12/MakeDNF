@@ -12,18 +12,20 @@ namespace BehaviourTree
 
         public Node ChildNode => childNode;
 
+        public override bool HasChild => !ReferenceEquals(childNode, null);
+
         #endregion Properties
 
         #region Methods
 
-        public void AddChildNode(Node node)
+        public override void AddChildNode(Node node)
         {
             if (!ReferenceEquals(childNode, null) && childNode.GUID.Equals(node.GUID)) return;
 
             childNode = node;
         }
 
-        public void RemoveChildNode(Node node)
+        public override void RemoveChildNode(Node node)
         {
             if (ReferenceEquals(childNode, null)) return;
 

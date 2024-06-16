@@ -29,6 +29,8 @@ namespace BehaviourTree
 
         public bool IsStarted { protected set; get; } = false;
 
+        public abstract bool HasChild { get; }
+
         #endregion Properties
 
         #region Unity Events
@@ -60,6 +62,10 @@ namespace BehaviourTree
 
             return State;
         }
+
+        public abstract void AddChildNode(Node node);
+
+        public abstract void RemoveChildNode(Node node);
 
         #region Events
 
