@@ -187,7 +187,7 @@ namespace BehaviourTree
 
             newNode.GUID = GUID.Generate().ToString();
             newNode.Name = type.Name;
-            newNode.Position = mousePosition;
+            newNode.Position = mousePosition - (Vector2)viewTransform.position;
             newNode.hideFlags = HideFlags.HideInInspector;
 
             AddNodeView(newNode);
