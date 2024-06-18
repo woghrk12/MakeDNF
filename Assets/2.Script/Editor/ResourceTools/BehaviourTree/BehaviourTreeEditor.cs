@@ -1,6 +1,5 @@
-using System;
 using UnityEditor;
-using UnityEditor.Callbacks;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -34,6 +33,8 @@ public class BehaviourTreeEditor : EditorWindow
         behaviourTreeView = root.Q<BehaviourTree.BehaviourTreeView>();
         inspectorView = root.Q<BehaviourTree.InspectorView>();
 
+        Toolbar toolbar = root.Q<Toolbar>();
+        toolbar.Add(new ToolbarButton(() => behaviourTreeView.FocusRootNode()) { text = "Focus root node" });
         behaviourTreeView.NodeViewSelected += OnNodeViewSelected;
 
         OnSelectionChange();

@@ -212,6 +212,19 @@ namespace BehaviourTree
             nodes.ForEach(node => (node as NodeView).UpdateNodeView());
         }
 
+        public void FocusRootNode()
+        {
+            if (ReferenceEquals(behaviourTree, null)) return;
+            if (!behaviourTree.gameObject.TryGetComponent(out RootNode rootNode)) return;
+
+            Rect nodeViewRect = FindNodeView(rootNode).contentRect;
+
+            Vector2 toolOffset = new Vector2(contentRect.width * 0.5f, contentRect.height * 0.5f);
+            Vector2 nodeViewOffset = new Vector2(nodeViewRect.width * 0.5f, nodeViewRect.height * 0.5f);
+
+            viewTransform.position = (-1f * rootNode.Position) + toolOffset - nodeViewOffset;
+        }
+
         #region Events
 
         private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
