@@ -63,10 +63,8 @@ namespace BehaviourTree
 
             Undo.RecordObject(Node, "Behaviour Tree (Set Position)");
 
-            Node.Position.x = newPos.xMin;
-            Node.Position.y = newPos.yMin;
-
-            EditorUtility.SetDirty(Node);
+            Node.Position.x = newPos.x;
+            Node.Position.y = newPos.y;
         }
 
         private void AddInputPorts()
