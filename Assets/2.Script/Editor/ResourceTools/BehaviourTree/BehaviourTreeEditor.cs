@@ -11,6 +11,8 @@ public class BehaviourTreeEditor : EditorWindow
     private BehaviourTree.InspectorView inspectorView = null;
 
     private BehaviourTree.BehaviourTree targetBehaviourTree = null;
+    
+    private Label workSpaceTextField = null;
 
     #endregion Variables
 
@@ -34,7 +36,12 @@ public class BehaviourTreeEditor : EditorWindow
         inspectorView = root.Q<BehaviourTree.InspectorView>();
 
         Toolbar toolbar = root.Q<Toolbar>();
+
+        workSpaceTextField = new Label();
+        toolbar.Add(workSpaceTextField);
+
         toolbar.Add(new ToolbarButton(() => behaviourTreeView.FocusRootNode()) { text = "Focus root node" });
+
         behaviourTreeView.NodeViewSelected += OnNodeViewSelected;
 
         OnSelectionChange();
@@ -48,6 +55,13 @@ public class BehaviourTreeEditor : EditorWindow
 
         targetBehaviourTree = behaviourTree;
         behaviourTreeView.PopulateView(targetBehaviourTree);
+    }
+
+    private void OnGUI()
+    {
+        Vector3 currentWorkPosition = behaviourTreeView.viewTransform.position;
+
+        workSpaceTextField.text = $"Current work position : {new Vector2(currentWorkPosition.x, currentWorkPosition.y)}";
     }
 
     private void OnInspectorUpdate()
