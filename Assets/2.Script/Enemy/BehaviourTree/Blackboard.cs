@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace BehaviourTree
 {
+    [RequireComponent(typeof(BehaviourTree))]
     public class Blackboard : MonoBehaviour
     {
         #region Variables
