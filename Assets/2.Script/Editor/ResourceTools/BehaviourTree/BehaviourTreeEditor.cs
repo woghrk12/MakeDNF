@@ -59,6 +59,8 @@ public class BehaviourTreeEditor : EditorWindow
 
     private void OnGUI()
     {
+        if (ReferenceEquals(targetBehaviourTree, null)) return;
+
         Vector3 currentWorkPosition = behaviourTreeView.viewTransform.position;
 
         workSpaceTextField.text = $"Current work position : {new Vector2(currentWorkPosition.x, currentWorkPosition.y)}";
