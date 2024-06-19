@@ -1,8 +1,10 @@
+using UnityEngine;
+
 namespace BehaviourTree
 {
     public delegate void ValueModified<T>(T oldValue, T newValue);
 
-    public abstract class BlackboardVariable
+    public abstract class BlackboardVariable : MonoBehaviour
     {
         public string Key = string.Empty;
     }
