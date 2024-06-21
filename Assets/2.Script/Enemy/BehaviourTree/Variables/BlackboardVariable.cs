@@ -13,7 +13,7 @@ namespace BehaviourTree
     {
         #region Variables
 
-        protected T value = default(T);
+        [SerializeField] protected T value = default(T);
 
         protected event ValueModified<T> valueModifiedDelegate = delegate { };
 

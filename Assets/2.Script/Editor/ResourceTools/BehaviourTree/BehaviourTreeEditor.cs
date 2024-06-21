@@ -9,6 +9,7 @@ public class BehaviourTreeEditor : EditorWindow
 
     private BehaviourTree.BehaviourTreeView behaviourTreeView = null;
     private BehaviourTree.InspectorView inspectorView = null;
+    private BehaviourTree.BlackboardView blackboardView = null;
 
     private BehaviourTree.BehaviourTree targetBehaviourTree = null;
     
@@ -34,6 +35,7 @@ public class BehaviourTreeEditor : EditorWindow
 
         behaviourTreeView = root.Q<BehaviourTree.BehaviourTreeView>();
         inspectorView = root.Q<BehaviourTree.InspectorView>();
+        blackboardView = root.Q<BehaviourTree.BlackboardView>();
 
         Toolbar toolbar = root.Q<Toolbar>();
 
@@ -55,6 +57,10 @@ public class BehaviourTreeEditor : EditorWindow
 
         targetBehaviourTree = behaviourTree;
         behaviourTreeView.PopulateView(targetBehaviourTree);
+
+        if (!Selection.activeGameObject.TryGetComponent(out BehaviourTree.Blackboard blackboard)) return;
+
+        blackboardView.PopulateView(blackboard);
     }
 
     private void OnGUI()

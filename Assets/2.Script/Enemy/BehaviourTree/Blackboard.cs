@@ -8,7 +8,7 @@ namespace BehaviourTree
     {
         #region Variables
 
-        [SerializeField] private List<BlackboardVariable> variableList = new();
+        [SerializeField, HideInInspector] private List<BlackboardVariable> variableList = new();
 
         private Dictionary<string, BlackboardVariable> variableDictionary = new();
 
@@ -55,6 +55,16 @@ namespace BehaviourTree
             if (!variableDictionary.ContainsKey(key)) return;
 
             variableDictionary.Remove(key);
+        }
+
+        public void AddVariable(BlackboardVariable variable)
+        {
+            variableList.Add(variable);
+        }
+
+        public void RemoveVariable(BlackboardVariable variable)
+        {
+            variableList.Remove(variable);
         }
 
         #endregion Methods
