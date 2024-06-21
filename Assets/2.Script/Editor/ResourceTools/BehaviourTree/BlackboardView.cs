@@ -84,10 +84,6 @@ namespace BehaviourTree
 
         private void SetupVariableOptions()
         {
-            popupStyle = new GUIStyle(GUI.skin.GetStyle("PaneOptions"));
-            popupStyle.imagePosition = ImagePosition.ImageOnly;
-            popupStyle.margin.top += 3;
-
             var elements = Enum.GetNames(typeof(EVariableOption));
             var elementNameList = new List<string>();
 
@@ -125,6 +121,13 @@ namespace BehaviourTree
 
         private void DisplayVariableListLayer()
         {
+            if (ReferenceEquals(popupStyle, null))
+            {
+                popupStyle = new GUIStyle(GUI.skin.GetStyle("PaneOptions"));
+                popupStyle.imagePosition = ImagePosition.ImageOnly;
+                popupStyle.margin.top += 3;
+            }
+
             isDisplayVariables = EditorGUILayout.Foldout(isDisplayVariables, "Variables", true);
 
             if (isDisplayVariables)
