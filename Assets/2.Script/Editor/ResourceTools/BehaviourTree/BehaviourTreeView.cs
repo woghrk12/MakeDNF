@@ -99,6 +99,15 @@ namespace BehaviourTree
             var typesDerivedFromDecoratorNode = TypeCache.GetTypesDerivedFrom<DecoratorNode>();
             foreach (var type in typesDerivedFromDecoratorNode)
             {
+                if (type.IsAbstract) continue;
+
+                evt.menu.AppendAction($"{type.BaseType.Name}/{type.Name}", (action) => AddNode(type, cachedMousePosition));
+            }
+
+            // Add menu for condition nodes
+            var typesDerivedFromConditionNode = TypeCache.GetTypesDerivedFrom<ConditionNode>();
+            foreach (var type in typesDerivedFromConditionNode)
+            {
                 evt.menu.AppendAction($"{type.BaseType.Name}/{type.Name}", (action) => AddNode(type, cachedMousePosition));
             }
 

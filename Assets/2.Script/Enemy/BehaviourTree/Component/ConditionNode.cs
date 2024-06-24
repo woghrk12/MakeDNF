@@ -1,15 +1,7 @@
-using System;
-
 namespace BehaviourTree
 {
-    public class ConditionNode : DecoratorNode
+    public abstract class ConditionNode : DecoratorNode
     {
-        #region Variables
-
-        public event Func<bool> CheckingConditionHandler = null;
-
-        #endregion Variables
-
         #region Methods
 
         protected override void OnStart() { }
@@ -20,7 +12,7 @@ namespace BehaviourTree
 
             if (ChildNode.State == ENodeState.RUNNING) return ENodeState.RUNNING;
 
-            if (CheckingConditionHandler?.Invoke() ?? false)
+            if (CheckCondition())
             {
                 return ChildNode.Evaluate();
             }
@@ -29,6 +21,8 @@ namespace BehaviourTree
         }
 
         protected override void OnStop() { }
+
+        protected abstract bool CheckCondition();
 
         #endregion Methods
     }
