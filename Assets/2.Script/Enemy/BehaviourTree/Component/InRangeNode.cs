@@ -14,6 +14,10 @@ namespace BehaviourTree
 
         #region Methods
 
+        protected override void OnStart() { }
+
+        protected override void OnStop() { }
+
         protected override bool CheckCondition()
         {
             if (!blackboard.TryGetVariable(targetKey, out DNFTransformVariable targetVariable)) return false;

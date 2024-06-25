@@ -4,8 +4,6 @@ namespace BehaviourTree
     {
         #region Methods
 
-        protected override void OnStart() { }
-
         protected override ENodeState OnUpdate()
         {
             if (ReferenceEquals(ChildNode, null)) return ENodeState.FAILURE;
@@ -19,8 +17,6 @@ namespace BehaviourTree
 
             return ENodeState.FAILURE;
         }
-
-        protected override void OnStop() { }
 
         protected abstract bool CheckCondition();
 
