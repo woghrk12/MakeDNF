@@ -28,6 +28,7 @@ namespace BehaviourTree
 
                 variable.hideFlags = HideFlags.HideInInspector;
                 variable.Value = gameObject.GetComponentInParent<DNFTransform>();
+                variable.Key = dnfTransformKey;
 
                 blackboard.AddVariable(dnfTransformKey, variable);
             }

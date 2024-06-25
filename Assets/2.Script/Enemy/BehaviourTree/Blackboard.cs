@@ -53,7 +53,7 @@ namespace BehaviourTree
 
         public void AddVariable(string key, BlackboardVariable variable)
         {
-            if (!variableDictionary.ContainsKey(key))
+            if (variableDictionary.ContainsKey(key))
             {
                 Debug.LogWarning($"Variable {key} already exists.");
                 return;

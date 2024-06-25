@@ -29,6 +29,7 @@ namespace BehaviourTree
                 variable = gameObject.AddComponent<DNFTransformVariable>();
 
                 variable.hideFlags = HideFlags.HideInInspector;
+                variable.Key = dnfTransformKey;
                 variable.Value = gameObject.GetComponentInParent<DNFTransform>();
 
                 blackboard.AddVariable(dnfTransformKey, variable);
@@ -52,7 +53,9 @@ namespace BehaviourTree
             if (!blackboard.TryGetVariable(targetKey, out DNFTransformVariable targetVariable))
             {
                 targetVariable = gameObject.AddComponent<DNFTransformVariable>();
+
                 targetVariable.hideFlags = HideFlags.HideInInspector;
+                targetVariable.Key = targetKey;
 
                 blackboard.AddVariable(targetKey, targetVariable);
             }
