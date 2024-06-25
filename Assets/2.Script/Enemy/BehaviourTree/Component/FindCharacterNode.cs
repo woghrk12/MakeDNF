@@ -5,20 +5,29 @@ namespace BehaviourTree
 {
     public class FindCharacterNode : ConditionNode
     {
+        #region Variables
+
+        [SerializeField] private string dnfTransformVariableKey = string.Empty;
+        [SerializeField] private string targetTransformVariableKey = string.Empty;
+
+        #endregion Variables
+
+        #region Methods
+
         protected override bool CheckCondition()
         {
             List<IDamagable> characterList = GameManager.Room.CharacterList;
 
             if (characterList.Count <= 0) return false;
 
-            if (!blackboard.TryGetVariable("DNF Transform", out DNFTransformVariable variable))
+            if (!blackboard.TryGetVariable(dnfTransformVariableKey, out DNFTransformVariable variable))
             {
                 variable = gameObject.AddComponent<DNFTransformVariable>();
 
                 variable.hideFlags = HideFlags.HideInInspector;
                 variable.Value = gameObject.GetComponentInParent<DNFTransform>();
 
-                blackboard.AddVariable("DNF Transform", variable);
+                blackboard.AddVariable(dnfTransformVariableKey, variable);
             }
 
             DNFTransform dnfTransform = variable.Value;
@@ -36,17 +45,19 @@ namespace BehaviourTree
                 minDistance = distance;
             }
 
-            if (!blackboard.TryGetVariable("Target Transform", out DNFTransformVariable targetVariable))
+            if (!blackboard.TryGetVariable(targetTransformVariableKey, out DNFTransformVariable targetVariable))
             {
                 targetVariable = gameObject.AddComponent<DNFTransformVariable>();
                 targetVariable.hideFlags = HideFlags.HideInInspector;
 
-                blackboard.AddVariable("Target Transform", targetVariable);
+                blackboard.AddVariable(targetTransformVariableKey, targetVariable);
             }
 
             targetVariable.Value = nearestTransform;
 
             return true;
         }
+
+        #endregion Methods
     }
 }
