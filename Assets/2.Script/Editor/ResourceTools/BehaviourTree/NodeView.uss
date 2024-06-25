@@ -103,6 +103,10 @@
     min-height: 20px;
 }
 
+.decorator.condition #input {
+    background-color: rgb(255, 0, 225);
+}
+
 #node-state {
     position: absolute;
     left: 0;

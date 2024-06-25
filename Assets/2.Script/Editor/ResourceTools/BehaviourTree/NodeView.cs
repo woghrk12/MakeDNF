@@ -119,17 +119,21 @@ namespace BehaviourTree
             {
                 AddToClassList("root");
             }
-            else if (Node is ActionNode)
+            if (Node is ActionNode)
             {
                 AddToClassList("action");
             }
-            else if (Node is DecoratorNode)
+            if (Node is DecoratorNode)
             {
                 AddToClassList("decorator");
             }
-            else if (Node is CompositeNode)
+            if (Node is CompositeNode)
             {
                 AddToClassList("composite");
+            }
+            if (Node is ConditionNode)
+            {
+                AddToClassList("condition");
             }
         }
 
