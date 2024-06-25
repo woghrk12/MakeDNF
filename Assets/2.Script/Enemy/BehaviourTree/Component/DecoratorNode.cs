@@ -1,10 +1,12 @@
+using UnityEngine;
+
 namespace BehaviourTree
 {
     public abstract class DecoratorNode : Node
     {
         #region Variables
 
-        private Node childNode = null;
+        [SerializeField, HideInInspector] private Node childNode = null;
 
         #endregion Variables
 

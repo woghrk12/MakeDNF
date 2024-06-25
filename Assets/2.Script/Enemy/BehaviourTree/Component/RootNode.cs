@@ -7,7 +7,7 @@ namespace BehaviourTree
     {
         #region Variables 
 
-        private Node childNode = null;
+        [SerializeField, HideInInspector] private Node childNode = null;
 
         #endregion Variables
 
