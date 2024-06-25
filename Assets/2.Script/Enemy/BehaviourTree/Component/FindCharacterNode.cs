@@ -7,8 +7,8 @@ namespace BehaviourTree
     {
         #region Variables
 
-        [SerializeField] private string dnfTransformVariableKey = string.Empty;
-        [SerializeField] private string targetTransformVariableKey = string.Empty;
+        [SerializeField] private string dnfTransformKey = string.Empty;
+        [SerializeField] private string targetKey = string.Empty;
 
         #endregion Variables
 
@@ -20,14 +20,14 @@ namespace BehaviourTree
 
             if (characterList.Count <= 0) return false;
 
-            if (!blackboard.TryGetVariable(dnfTransformVariableKey, out DNFTransformVariable variable))
+            if (!blackboard.TryGetVariable(dnfTransformKey, out DNFTransformVariable variable))
             {
                 variable = gameObject.AddComponent<DNFTransformVariable>();
 
                 variable.hideFlags = HideFlags.HideInInspector;
                 variable.Value = gameObject.GetComponentInParent<DNFTransform>();
 
-                blackboard.AddVariable(dnfTransformVariableKey, variable);
+                blackboard.AddVariable(dnfTransformKey, variable);
             }
 
             DNFTransform dnfTransform = variable.Value;
@@ -45,12 +45,12 @@ namespace BehaviourTree
                 minDistance = distance;
             }
 
-            if (!blackboard.TryGetVariable(targetTransformVariableKey, out DNFTransformVariable targetVariable))
+            if (!blackboard.TryGetVariable(targetKey, out DNFTransformVariable targetVariable))
             {
                 targetVariable = gameObject.AddComponent<DNFTransformVariable>();
                 targetVariable.hideFlags = HideFlags.HideInInspector;
 
-                blackboard.AddVariable(targetTransformVariableKey, targetVariable);
+                blackboard.AddVariable(targetKey, targetVariable);
             }
 
             targetVariable.Value = nearestTransform;
