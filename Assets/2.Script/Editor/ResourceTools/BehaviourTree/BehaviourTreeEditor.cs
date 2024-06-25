@@ -15,12 +15,20 @@ public class BehaviourTreeEditor : EditorWindow
     
     private Label workSpaceTextField = null;
 
+    private static EditorWindow cachedEditor = null;
+
     #endregion Variables
 
     #region Unity Events
 
     public void CreateGUI()
     {
+        if (!ReferenceEquals(cachedEditor, null))
+        {
+            DestroyImmediate(this);
+            return;
+        }
+
         // Each editor window contains a root VisualElement object
         VisualElement root = rootVisualElement;
 
@@ -45,6 +53,8 @@ public class BehaviourTreeEditor : EditorWindow
         toolbar.Add(new ToolbarButton(() => behaviourTreeView.FocusRootNode()) { text = "Focus root node" });
 
         behaviourTreeView.NodeViewSelected += OnNodeViewSelected;
+
+        cachedEditor = this;
 
         OnSelectionChange();
     }
@@ -73,6 +83,17 @@ public class BehaviourTreeEditor : EditorWindow
         workSpaceTextField.text = $"Current work position : {new Vector2(currentWorkPosition.x, currentWorkPosition.y)}";
     }
 
+    private void OnEnable()
+    {
+        EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+    }
+
+    private void OnDisable()
+    {
+        EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+    }
+
     #endregion Unity Events
 
     #region Methods
@@ -89,6 +110,20 @@ public class BehaviourTreeEditor : EditorWindow
     private void OnNodeViewSelected(BehaviourTree.NodeView nodeView)
     {
         inspectorView.UpdateInspector(nodeView);
+    }
+
+    private void OnPlayModeStateChanged(PlayModeStateChange obj)
+    {
+        switch (obj)
+        {
+            case PlayModeStateChange.EnteredEditMode:
+                OnSelectionChange();
+                break;
+
+            case PlayModeStateChange.EnteredPlayMode:
+                OnSelectionChange();
+                break;
+        }
     }
 
     #endregion Events
