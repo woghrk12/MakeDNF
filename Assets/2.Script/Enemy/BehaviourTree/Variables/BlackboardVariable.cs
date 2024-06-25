@@ -31,7 +31,7 @@ namespace BehaviourTree
 
                 this.value = value;
             }
-            get => Value;
+            get => value;
         }
 
         #endregion Properties
