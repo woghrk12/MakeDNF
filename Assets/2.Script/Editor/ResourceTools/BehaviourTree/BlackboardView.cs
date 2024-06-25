@@ -49,13 +49,13 @@ namespace BehaviourTree
         public void PopulateView(Blackboard blackboard)
         {
             this.blackboard = blackboard;
-
-            variableListProperty = new SerializedObject(this.blackboard).FindProperty("variableList");
         }
 
         private void UpdateInspector()
         {
             if (ReferenceEquals(blackboard, null)) return;
+
+            variableListProperty = new SerializedObject(blackboard).FindProperty("variableList");
 
             DisplayAddVariableLayer();
 
@@ -194,9 +194,6 @@ namespace BehaviourTree
             selectedVariableType = -1;
 
             GUI.FocusControl("");
-
-            // Update serialized property
-            variableListProperty = new SerializedObject(this.blackboard).FindProperty("variableList");
         }
 
         private void RemoveVariable(BlackboardVariable variable)
@@ -205,9 +202,6 @@ namespace BehaviourTree
 
             blackboard.RemoveVariable(variable);
             Undo.DestroyObjectImmediate(variable);
-
-            // Update serialized property
-            variableListProperty = new SerializedObject(this.blackboard).FindProperty("variableList");
         }
 
         #endregion Methods
