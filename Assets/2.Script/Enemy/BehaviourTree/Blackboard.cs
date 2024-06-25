@@ -47,25 +47,31 @@ namespace BehaviourTree
                 return;
             }
 
+            variableList.Add(variable);
             variableDictionary.Add(key, variable);
         }
 
         public void RemoveVariable(string key)
         {
-            if (!variableDictionary.ContainsKey(key)) return;
+            if (!variableDictionary.TryGetValue(key, out BlackboardVariable variable)) return;
 
+            variableList.Remove(variable);
             variableDictionary.Remove(key);
         }
 
-        public void AddVariable(BlackboardVariable variable)
+#if UNITY_EDITOR
+
+        public void AddVariableForEditor(BlackboardVariable variable)
         {
             variableList.Add(variable);
         }
 
-        public void RemoveVariable(BlackboardVariable variable)
+        public void RemoveVariableForEditor(BlackboardVariable variable)
         {
             variableList.Remove(variable);
         }
+
+#endif
 
         #endregion Methods
     }

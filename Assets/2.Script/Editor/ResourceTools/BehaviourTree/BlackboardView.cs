@@ -187,7 +187,7 @@ namespace BehaviourTree
             variable.Key = newKey;
             variable.hideFlags = HideFlags.HideInInspector;
 
-            blackboard.AddVariable(variable);
+            blackboard.AddVariableForEditor(variable);
 
             // Reset field
             newVariableKey = string.Empty;
@@ -200,7 +200,7 @@ namespace BehaviourTree
         {
             Undo.RecordObject(blackboard, "Behaviour Tree (RemoveVariable)");
 
-            blackboard.RemoveVariable(variable);
+            blackboard.RemoveVariableForEditor(variable);
             Undo.DestroyObjectImmediate(variable);
         }
 
