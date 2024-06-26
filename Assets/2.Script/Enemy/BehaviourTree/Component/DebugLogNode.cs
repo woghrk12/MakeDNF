@@ -12,22 +12,16 @@ namespace BehaviourTree
 
         #region Methods
 
-        protected override void OnStart()
-        {
-            Debug.Log($"OnStart : {Message}");
-        }
+        protected override void OnStart() { }
 
         protected override ENodeState OnUpdate()
         {
-            Debug.Log($"OnUpdate : {Message}");
+            Debug.Log(Message);
 
             return ENodeState.SUCCESS;
         }
 
-        protected override void OnStop()
-        {
-            Debug.Log($"OnStop : {Message}");
-        }
+        protected override void OnStop() { }
 
         #endregion Methods
     }
