@@ -4,7 +4,7 @@ namespace BehaviourTree
 {
     public enum ENodeState
     {
-        NONE = -1;
+        NONE = -1,
         RUNNING,
         SUCCESS,
         FAILURE
