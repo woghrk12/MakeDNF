@@ -43,6 +43,20 @@ namespace BehaviourTree
             childNodeList.Remove(node);
         }
 
+        #region Events
+
+        protected override void OnStop()
+        {
+            if (!HasChild) return;
+
+            foreach (Node node in ChildNodeList)
+            {
+                node.State = ENodeState.NONE;
+            }
+        }
+
+        #endregion Events
+
         #endregion Methods
     }
 }

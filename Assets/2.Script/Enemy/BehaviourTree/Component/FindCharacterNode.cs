@@ -16,8 +16,6 @@ namespace BehaviourTree
 
         protected override void OnStart() { }
 
-        protected override void OnStop() { }
-
         protected override bool CheckCondition()
         {
             List<IDamagable> characterList = GameManager.Room.CharacterList;

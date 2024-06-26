@@ -27,7 +27,7 @@ namespace BehaviourTree
 
         #region Properties
 
-        public ENodeState State { protected set; get; } = ENodeState.NONE;
+        public ENodeState State { set; get; } = ENodeState.NONE;
 
         public bool IsRunning { protected set; get; } = false;
 

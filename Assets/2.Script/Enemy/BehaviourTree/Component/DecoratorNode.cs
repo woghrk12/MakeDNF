@@ -34,6 +34,17 @@ namespace BehaviourTree
             childNode = null;
         }
 
+        #region Events
+
+        protected override void OnStop()
+        {
+            if (!HasChild) return;
+
+            ChildNode.State = ENodeState.NONE;
+        }
+
+        #endregion Events
+
         #endregion Methods
     }
 }

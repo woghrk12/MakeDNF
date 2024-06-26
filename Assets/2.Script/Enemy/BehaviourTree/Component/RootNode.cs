@@ -51,7 +51,12 @@ namespace BehaviourTree
             return ChildNode.Evaluate();
         }
 
-        protected override void OnStop() { }
+        protected override void OnStop() 
+        {
+            if (!HasChild) return;
+
+            ChildNode.State = ENodeState.NONE;
+        }
 
         #endregion Events
 

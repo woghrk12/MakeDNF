@@ -35,8 +35,6 @@ namespace BehaviourTree
             return index == ChildNodeList.Count ? ENodeState.SUCCESS : ENodeState.RUNNING;
         }
 
-        protected override void OnStop() { }
-
         #endregion Methods
     }
 }

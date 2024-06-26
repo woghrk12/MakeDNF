@@ -171,8 +171,6 @@ namespace BehaviourTree
             switch (Node.State)
             {
                 case ENodeState.RUNNING:
-                    if (!Node.IsStarted) break;
-
                     AddToClassList("running");
                     break;
 

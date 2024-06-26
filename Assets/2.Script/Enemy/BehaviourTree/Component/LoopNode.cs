@@ -29,8 +29,6 @@ namespace BehaviourTree
             return curCount == LoopCount ? ENodeState.SUCCESS : ENodeState.RUNNING;
         }
 
-        protected override void OnStop() { }
-
         #endregion Methods
     }
 }
