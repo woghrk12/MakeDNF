@@ -21,6 +21,11 @@ namespace BehaviourTree
 
         #region Methods
 
+        public void StartRootNode()
+        {
+            State = ENodeState.RUNNING;
+        }
+
         public override void AddChildNode(Node node)
         {
             if (!ReferenceEquals(childNode, null) && childNode.GUID.Equals(node.GUID)) return;

@@ -26,6 +26,13 @@ namespace BehaviourTree
             this.rootNode = rootNode;
         }
 
+        private void Start()
+        {
+            if (ReferenceEquals(rootNode, null)) return;
+
+            rootNode.StartRootNode();
+        }
+
         #endregion Unity Events
 
         #region Methods
