@@ -8,11 +8,11 @@ namespace BehaviourTree
         {
             if (ReferenceEquals(ChildNode, null)) return ENodeState.FAILURE;
 
-            if (ChildNode.State == ENodeState.RUNNING) return ENodeState.RUNNING;
-
-            if (CheckCondition())
+            if (State == ENodeState.RUNNING || CheckCondition())
             {
-                return ChildNode.Evaluate();
+                State = ChildNode.Evaluate();
+
+                return State;
             }
 
             return ENodeState.FAILURE;
