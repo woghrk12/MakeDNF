@@ -29,7 +29,7 @@ namespace BehaviourTree
 
         public ENodeState State { protected set; get; } = ENodeState.NONE;
 
-        public bool IsStarted { protected set; get; } = false;
+        public bool IsRunning { protected set; get; } = false;
 
         public abstract bool HasChild { get; }
 
@@ -48,10 +48,10 @@ namespace BehaviourTree
 
         public ENodeState Evaluate()
         {
-            if (!IsStarted)
+            if (!IsRunning)
             {
                 OnStart();
-                IsStarted = true;
+                IsRunning = true;
             }
 
             State = OnUpdate();
@@ -59,7 +59,7 @@ namespace BehaviourTree
             if (State == ENodeState.SUCCESS || State == ENodeState.FAILURE)
             {
                 OnStop();
-                IsStarted = false;
+                IsRunning = false;
             }
 
             return State;
