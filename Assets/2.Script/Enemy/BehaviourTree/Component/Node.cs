@@ -4,6 +4,7 @@ namespace BehaviourTree
 {
     public enum ENodeState
     {
+        NONE = -1;
         RUNNING,
         SUCCESS,
         FAILURE
@@ -26,7 +27,7 @@ namespace BehaviourTree
 
         #region Properties
 
-        public ENodeState State { protected set; get; } = ENodeState.RUNNING;
+        public ENodeState State { protected set; get; } = ENodeState.NONE;
 
         public bool IsStarted { protected set; get; } = false;
 
